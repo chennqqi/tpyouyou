@@ -1,0 +1,173 @@
+<?php
+	$this->_var['pagecss'][] = TMPL_REAL."/css/style.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/weebox.css";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.bgiframe.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.weebox.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.pngfix.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/lazyload.js";
+
+	$this->_var['pagejs'][] = TMPL_REAL."/js/script.js";
+	$this->_var['cpagejs'][] = TMPL_REAL."/js/script.js";
+	
+	$this->_var['pagejs'][] = TMPL_REAL."/js/uc_order.js";
+
+	$this->_var['pagecss'][] = TMPL_REAL."/css/user_common.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/uc_order.css";
+	
+?>
+{include file="inc/header.html"}
+{include file="inc/ur_here.html"}
+<div class="wrap">
+	<div class="blank20"></div>
+	<div class="ticketing">
+		<h3>当前订单状态：
+			{if $order.order_status eq 1 && $order.pay_status eq 0}
+				{if $order.end_time < $NOW_TIME && $order.end_time >0}
+				订单过期
+				{else}
+				{$order.pay_status_format}，请尽快完成付款
+				{if $order.end_time >0}
+				<span class="time_tips" style="width:168px;height:22px;border:1px solid #ffcc99;background-color:#ffffcc;margin-left:15px;padding:2px;font-weight:normal;">
+					<font color="red" weight="normal" size="2">剩余支付时间还有{$order.left_time_format}</font>
+				</span>
+				{/if}
+				{/if}
+			{else}
+				{$order.uc_order_status_format}
+			{/if}
+			</h3>
+		{if $order.order_status eq 1 && $order.pay_status eq 0 && ($order.end_time > $NOW_TIME || $order.end_time == 0)}
+		<p>• 如果您要网上支付，请点击 <a href="{url x="transaction#pay" p="ot=2&sn=$oitem.sn"}" class="fred">付款</a>。</p>
+		{/if}
+		{if ($order.order_status eq 1 && $order.pay_status eq 0) || ($order.order_status eq 1 && $order.pay_status eq 1 && $order.total_price eq 0) }
+			
+			{if $order.order_status eq 1 && $order.pay_status eq 0 && $order.end_time < $NOW_TIME && $order.end_time>0 }
+			<p>• 由于支付超时或客户操作，订单已取消。</p>
+			{elseif $order.pay_status eq 0 || $order.total_price eq 0}
+			<p>• 如果您想取消这笔订单，请点击 <a href="{url x="uc_order#cancelticket" p="id=$order.id"}" class="J_cancelOrders fred">取消订单</a>。</p>
+			{/if}
+		{elseif $order.order_status eq 1 || $order.order_status eq 2 }
+			{if ($order.is_delivery eq 0 && $order.is_refund eq 1 && ($order.end_time > $NOW_TIME || $order.end_time eq 0)) ||  ($order.is_delivery eq 1 && $order.is_refund eq 1 && $order.delivery_time eq 0 && ($order.end_time>$NOW_TIME || $order.end_time eq 0)) || ($order.is_delivery eq 0 && $order.is_expire_refund eq 1 && $order.end_time < $NOW_TIME && $order.end_time >0) || ($order.is_delivery eq 1 && $order.delivery_time eq 0 && $order.is_expire_refund eq 1 && $order.end_time < $NOW_TIME &&  $order.end_time > 0) || $order.order_status eq 1}
+			<p>• 如果您想退改签门票，请点击 <a href="{url x="uc_order#refundticket" p="id=$order.id"}" class=" fred">退票申请</a>。</p>
+			{/if}
+		{/if}
+		<p>• 如果您需要预订该景点的其他门票，请点击 <a href="{$order.other_info.ticket_url}" class="fred">再次预订</a></p>
+	</div>
+	<div class="blank20"></div>
+	<div class="order_info_box">
+		<div class="order_box">
+			<h2>我的订单</h2>
+			<div class="routes_info">
+				<div class="pl10">
+					订单号：<span class="fred">{$order.sn}</span>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					预订时间：{$order.create_time_format}
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					出游时间：{if $order.appoint_time gt 0}{$order.appoint_time_format}{elseif $order.end_time_format}{$order.end_time_format}前{else}不限{/if}
+					<div class="blank10"></div>
+					出票方式：{if $order.is_delivery eq 1}实体票{else}预付电子票{/if}
+				</div>
+				<div class="blank10"></div>
+				<div class="pl10">
+					<table cellpadding="0" cellspacing="0" class="uc_table uc_ordertable" style="text-align:center;">
+						<thead>
+							<tr>
+								<th width="150">景点名称</th>
+								<th width="100">门票名称</th>
+								<th width="80">支付方式</th>
+								<th width="80">单价</th>
+								<th width="80">数量</th>
+								<th width="80">返现金额（单）</th>
+								<th class="last" width="80">总价</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>{$order.other_info.name}</td>
+								<td>&lt;{$order.ticket_name}&gt;{$order.other_info.name_brief}</td>
+								<td>
+									{if $order.item_price eq 0}线下支付{else}网上支付{/if}
+								</td>
+								
+								<td>{$order.item_price_format}</td>
+								<td>{$order.sale_count}张</td>
+							   	<td>{$order.return_money_format}</td>
+								<td>{$order.total_price_format}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="blank10"></div>
+				<div class="pl10">
+					<div class="pl10">
+						<div class="blank10"></div>
+						<b>联系人信息</b>
+						<div class="blank10"></div>
+						取票人姓名：{$order.appoint_name}
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						手机：{$order.appoint_mobile}
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						{if $order.appoint_email}
+						邮箱机：{$order.appoint_email}
+						{/if}
+						{if $order.paper_type gt 0}
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						证件类型：{$order.paper_type_name}
+						{/if}
+						{if $order.paper_sn neq ''}
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						证件号：{$order.paper_sn}
+						{/if}
+					</div>
+				</div>
+				{if $order.is_delivery eq 1}
+				<div class="blank10"></div>
+				 <div class="pl10" style="border-top:1px solid #ccc">
+				 	<div class="blank10"></div>
+					<div class="pl10">
+						<div class="blank10"></div>
+						<b>配送信息</b>
+						<div class="blank10"></div>
+						收件人姓名：{$order.delivery_name}
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						手机：{$order.delivery_mobile}
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<div class="blank10"></div>
+						<table cellpadding="0" cellspacing="0" class="uc_table uc_ordertable" style="text-align:center;">
+							<thead>
+								<tr>
+									<th width="65%">配送地址</th>
+									<th width="10%">邮编</div>
+									<th width="25%">快递单号</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>{$order.provice_name} {$order.city_name} {$order.address}</td>
+									<td>{$order.zip}</td>
+									<td>{$order.delivery_sn}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				{/if}
+				
+				{if $order.order_memo neq ''}
+				<div class="blank10"></div>
+				<div class="pl10" style="border-top:1px solid #ccc">
+					<div class="blank10"></div>
+					<div class="pl10">
+						<b>订单备注：</b>
+						<div class="pl10">
+							{$order.order_memo}
+						</div>
+					</div>
+				</div>
+				{/if}
+			</div>
+		</div>
+	</div>
+</div>
+<div class="blank15"></div>
+{include file="inc/footer.html"}

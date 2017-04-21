@@ -1,0 +1,245 @@
+input,select{
+margin:0px;
+padding:0px;
+}
+/* 当前位置区 */
+.nav_locate{
+width:1000px;
+height:40px;
+line-height:40px;
+margin:0 auto;
+}
+.nav_locate a{
+font-size:12px;
+padding:0 3px;
+}
+/* 当前位置区 */
+.up_main{
+width:1000px;
+height:356px;
+margin:0 auto 10px;
+}
+.ad_pic{
+width:795px;
+height:284px;
+margin-bottom:18px;	
+}
+.process{
+width:795px;
+height:54px;
+background:url(../images/tuan/process.png) no-repeat left top;	
+}
+.ad_info{
+width:170px;
+height:349px;
+padding:5px 12px 0 13px;
+border:1px solid #d2d2d2;
+overflow:hidden;	
+}
+.ad_info h3{
+height:30px;
+line-height:30px;
+color:#4a9824;
+width:170px;
+text-align:right;
+font-size:17px;
+margin-bottom:3px;
+font-family:Microsoft YaHei;
+	
+}
+.ad_info1{
+background:url(../images/tuan/ad_info1.png) no-repeat left center;	
+} 
+.ad_info2{
+background:url(../images/tuan/ad_info2.png) no-repeat left center;	
+} 
+.ad_info3{
+background:url(../images/tuan/ad_info3.png) no-repeat left center;	
+} 
+.ad_info4{
+background:url(../images/tuan/ad_info4.png) no-repeat left center;	
+} 
+.ad_info div{
+line-height:18px;
+color:#909090;
+margin-bottom:12px;
+font-size:12px;	
+}
+
+.main{
+width:1000px;
+height:880px;
+margin:0 auto 10px;
+border:1px solid #d2d2d2;
+}
+.main h2{
+height:45px;
+line-height:45px;
+font-size:16px;
+font-weight:bold;
+text-align:center;
+border-bottom: 1px solid #d8d8d8;
+box-shadow: 0px 3px 3px #d8d8d8;
+}
+.main h3{
+height:32px;
+line-height:32px;
+font-size:14px;
+font-weight:bold;
+text-indent:20px;
+color:#117fb9;
+background:#e4faff;
+margin:20px 0 20px;
+}
+.tra_info{
+margin-bottom:30px;
+}
+.tra_info dl{
+margin-bottom:13px;
+}
+.tra_info dt{
+width:220px;
+text-align:right;
+}
+.tra_info dd{
+font-family:Tahoma;
+z-index:99;
+}
+.tra_info dd img{
+vertical-align:middle;
+}
+.tra_info input{
+width:245px;
+height:14px;
+color:#777;
+padding: 2px 20px 1px 5px;
+vertical-align: middle;
+border: 1px solid #65b3e1;
+}
+.tra_info input.width126{
+width:101px;	
+}
+.tra_info input.width56{
+width:56px;	
+}
+.tra_info input.width150{
+width:150px;	
+}
+.tra_info input.sub{
+width:112px;
+height:33px;
+background:url(../images/tuan/sub.png) no-repeat left center;
+}
+.tra_info input.yzm{
+width:112px;
+margin-right:10px;
+}
+.tra_info textarea{
+width:266px;
+height:60px;
+color:#777;
+border: 1px solid #65b3e1;
+}
+.tra_info textarea.other_require{
+width:500px;
+height:120px;	
+}
+.unit{
+margin-left: -19px;
+color: #999;
+padding: 0 3px;
+position: relative;
+z-index:9;
+display: inline-block;
+}
+
+
+.red{
+color:red;
+}
+
+.main .show_city {
+float: left;
+display: none;
+position: absolute;
+left: 218px;
+top:20px;
+width: 352px;
+z-index: 200;
+height: auto;
+background: #f8f8f8;
+-moz-box-shadow: 3px 3px 4px #c7c6c6;
+-webkit-box-shadow: 3px 3px 4px #c7c6c6;
+box-shadow: 3px 3px 4px #c7c6c6;
+padding-bottom: 10px;
+}
+.main.change_tab .show_city {
+display: block;
+}
+.main .show_city dl {
+overflow: hidden;
+width: 352px;
+padding: 5px 0 0 10px;
+margin: 0 0 -1px;
+}
+.main .show_city dt {
+float: left;
+color: #666;
+width: 328px;
+text-align: left;
+height: 25px;
+line-height: 20px;
+border-bottom: 1px solid #e4e4e4;
+}
+.main .show_city dd {
+float: left;
+width: 328px;
+line-height: 28px;
+border-bottom: 1px solid #e4e4e4;
+}
+.main .show_city dd a:link {
+text-decoration: none;
+}
+.main .show_city dd a {
+color: #666;
+margin: 0 15px 0 0;
+white-space: nowrap;
+}
+.main .show_city dd a, .main .show_city dd span {
+float: left;
+
+}
+#tagContents div.selectTag {
+display: block;
+}
+.start_city_dd.change_tab .show_city {
+display: block;
+}
+.start_city_dd{
+position:relative;
+}
+.start_city_notice,.destination_notice,.start_date_notice,.date_num_notice,.people_num_notice,.yzm_notice,
+.budget_notice,.company_name_notice,.contacts_notice,.mobilephone_notice,.qq_notice,.telephone_notice{
+color:#ff0000;
+padding-left:10px;
+}
+.destination_notice{
+padding-left:14px;	
+}
+.destination_dl{
+position:relative;
+}
+.destination_notice{
+position:absolute;
+}
+
+
+
+
+
+
+
+
+
+
+

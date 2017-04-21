@@ -1,0 +1,161 @@
+<script type="text/javascript">
+var UPDATE_SUCCESS = '{lang v="UPDATE_SUCCESS"}';
+var UPDATE_FAILED = '{lang v="UPDATE_FAILED"}';
+function setsort(dom,id)
+{
+	var html = "<input type='text' value='"+$.trim($(dom).html())+"' class='textInput' style='width:40px;' onblur='blursort(this,"+id+");' />";	
+	var parent = $(dom).parent();
+	$(parent).html(html);
+	var ipt = $(parent).find("input");	
+	$(ipt).focus();
+	$(ipt).select();		
+}
+function blursort(dom,id)
+{
+	var newsort = $.trim($(dom).val());
+	$.ajax({
+		type:  'POST',
+		url:"{$setsorturl}&id="+id+"&sort="+newsort,
+		dataType:"json",
+		cache: false,
+		success: function(obj){
+			var html = "<a href='javascript:void(0);' onclick='setsort(this,"+id+");'>"+obj.message+"</a>";	
+			$(dom).parent().html(html);	
+			if(obj.statusCode==200)
+			{
+				alertMsg.correct(UPDATE_SUCCESS);
+			}
+			else
+			{
+				alertMsg.correct(UPDATE_FAILED);
+			}
+		}
+	});
+	
+}
+
+</script>
+<form id="pagerForm" method="post" action="#rel#">
+	<input type="hidden" name="pageNum" value="{$param.pageNum}" />
+	<input type="hidden" name="numPerPage" value="{$param.pageSize}" />
+	<input type="hidden" name="orderField" value="{$param.orderField}" />
+	<input type="hidden" name="orderDirection" value="{$param.orderDirection}" />
+</form>
+<div class="pageHeader">
+	<form rel="pagerForm" onsubmit="return navTabSearch(this);" action="{$formaction}" method="post">
+	<div class="searchBar">
+		<div class="pageFormContent cf" >
+			<div class="searchtableRow">
+				
+				<table>
+					<tr>
+						<td>
+						{lang v="SPOT_NAME"}：
+						</td>
+						<td>
+						<input type="text" name="name" value="{$param.name}"/>
+						</td>
+						<td>
+						{lang v="HAS_TICKET"}：
+						</td>
+						<td>
+						<select name="has_ticket" class="combox">
+							<option value="3">{lang v="EMPTY_SELECT"}</option>
+							<option value="0" {if $param.has_ticket eq 0}selected=selected{/if}>无</option>
+							<option value="1" {if $param.has_ticket eq 1}selected=selected{/if}>有</option>
+						</select>
+						</td>
+						<td>
+						{lang v="SPOT_CATE"}：
+						</td>
+						<td>
+						<select name="spot_cate" class="combox">
+							<option value="">{lang v="EMPTY_SELECT"}</option>
+							{foreach from=$spot_cate item=cate}
+							<option value="{$cate.name}" {if $param.spot_cate eq $cate.name}selected=selected{/if}>{$cate.name}</option>
+							{/foreach}
+						</select>
+						</td>
+						<td>
+						<div class="buttonActive"><div class="buttonContent"><button type="submit">{lang v="SEARCH"}</button></div></div>
+						</td>
+					</tr>
+				</table>
+				
+			</div>
+
+			
+			
+			
+		</div>
+
+	</div>
+	</form>
+</div>
+
+<div class="pageContent">
+	<div class="panelBar">
+		<ul class="toolBar">
+			<li><a title="{lang v="ADD"}{lang v="NAME"}" target="navTab" rel="spot_addpage" href="{$addurl}" class="add"><span>{lang v="ADD"}</span></a></li>
+			<li><a title="{lang v="CONFIRM_DELETE"}" target="selectedTodo" rel="id" postType="string" href="{$delurl}" class="delete"><span>{lang v="DEL"}</span></a></li>
+		</ul>
+	</div>
+	<table class="table" width="100%" layoutH="140">
+		<thead>
+		<tr>
+				<th width="22"><input type="checkbox" group="id" class="checkboxCtrl"></th>
+				<th  width="50" orderField="id" {if $param.orderField eq 'id'} class="{$param.orderDirection}"{/if}>{lang v="ID"}</th>
+				<th>{lang v="SPOT_NAME"}</th>
+				<th width="100">商家</th>
+				<th width="60">{lang v="SPOT_LEVEl"}</th>
+				<th width="60">成交记录</th>
+				<th width="220">详细地址</th>
+				<th width="60">{lang v="HAS_TICKET"}</th>
+				<th width="100">门票价格</th>
+				<th width="60"  orderField="sort" {if $param.orderField eq 'sort'} class="{$param.orderDirection}"{/if}>{lang v="SORT"}</th>
+				<th width="150">{lang v="TAG_LANG_OPERATE"}</th>
+			</tr>
+		</thead>
+		<tbody>
+		
+			{foreach from=$list item=item}
+			<tr  rel="{$item.id}">
+				<td><input name="id" value="{$item.id}" type="checkbox"></td>
+				<td>{$item.id}</td>
+				<td>{$item.name}</td>
+				<td>{$item.company_name}</td>
+				<td>{$item.level_format}</td>
+				<td>{if $item.show_sale_list eq 1}显示{else}隐藏{/if}</td>
+				<td title="{$item.address}">{$item.address}</td>
+				<td>{if $item.has_ticket eq 0}无{else}有{/if}</td>
+				<td>{$item.ticket_price_format}起</td>
+				<td><a href="javascript:void(0);" onclick="setsort(this,{$item.id});">{$item.sort}</a></td>
+				<td>
+					<a title="{lang v="CONFIRM_DELETE"}" target="ajaxTodo" href="{$delurl}&id={$item.id}" class="btnDel">{lang v="DEL"}</a>
+					<a title="{lang v="EDIT"}{lang v="NAME"}{$item.name}" rel="spot_editpage_{$item.id}" target="navTab" href="{$editurl}&id={$item.id}"  class="btnEdit">{lang v="EDIT"}</a>
+					<a title="预览" href="{$item.preview_url}" class="btnLook" target="_blank">预览</a>
+					
+					<a title="验证码管理{$item.name}" rel="spot_code_listpage_{$item.id}" target="navTab" href="{$verifycodelisturl}&spot_id={$item.id}"  class="btnView">验证码管理</a>
+					
+					<a title="统计详情" rel="op_page" target="dialog" height="300" width=500  href="{$statisticsurl}&id={$item.id}"  class="btnInfo"  style="float:left;">统计</a>
+				</td>
+			</tr>
+			{/foreach}
+		</tbody>
+	</table>
+	<div class="panelBar">
+		<div class="pages">
+			<span>{lang v="DISPLAY_PAGE_SIZE"}</span>
+			<select class="combox" name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value})">
+				<option value="<?php echo ADMIN_PAGE_SIZE1;?>" {if $param.pageSize eq ADMIN_PAGE_SIZE1}selected="selected"{/if} ><?php echo ADMIN_PAGE_SIZE1;?></option>
+				<option value="<?php echo ADMIN_PAGE_SIZE2;?>" {if $param.pageSize eq ADMIN_PAGE_SIZE2}selected="selected"{/if}><?php echo ADMIN_PAGE_SIZE2;?></option>
+				<option value="<?php echo ADMIN_PAGE_SIZE3;?>" {if $param.pageSize eq ADMIN_PAGE_SIZE3}selected="selected"{/if}><?php echo ADMIN_PAGE_SIZE3;?></option>
+				<option value="<?php echo ADMIN_PAGE_SIZE4;?>" {if $param.pageSize eq ADMIN_PAGE_SIZE4}selected="selected"{/if}><?php echo ADMIN_PAGE_SIZE4;?></option>
+			</select>
+			<span>&nbsp;&nbsp;{lang v="PAGE_TOTAL_COUNT" p="$totalCount"}</span>
+		</div>
+		
+		<div class="pagination" targetType="navTab" totalCount="{$totalCount}" numPerPage="{$param.pageSize}" pageNumShown="10" currentPage="{$param.pageNum}"></div>
+
+	</div>
+</div>

@@ -1,0 +1,379 @@
+<script type="text/javascript">
+
+$(document).ready(function(){
+
+		$(navTab.getCurrentPanel()).find("select[name='is_cooperation']").bind("change",function(){
+
+			if($(this).val()==1)
+
+			{
+
+				$(navTab.getCurrentPanel()).find("#company_logo_row").show();
+
+			}
+
+			else
+
+			{
+
+				$(navTab.getCurrentPanel()).find("#company_logo_row").hide();
+
+			}
+
+		});
+
+		if($(navTab.getCurrentPanel()).find("select[name='is_cooperation']").val()==1)
+
+		{
+
+			$(navTab.getCurrentPanel()).find("#company_logo_row").show();
+
+		}
+
+		else
+
+		{
+
+			$(navTab.getCurrentPanel()).find("#company_logo_row").hide();
+
+		}
+
+});
+
+</script>
+
+<h2 class="contentTitle">{lang v="ADD"}{lang v="SUPPLIER"}</h2>
+
+<form action="{$formaction}" method="post" class="pageForm required-validate" onsubmit="return validateCallback(this, navTabAjaxDone)">
+
+<div class="pageContent">
+
+<div class="pageFormContent" layoutH="97">		
+
+
+
+			<table class="formtable">			
+
+			<tr>
+
+				<td class="item_title">{lang v="SUPPLIER_USER_NAME"}:</td>
+
+				<td class="item_input">
+
+					<input type="text" class="required textInput valid"   minlength="1" maxlength="20" name="user_name">
+
+					<label class="tip"></label>
+
+				</td>
+
+			</tr>
+
+			<tr>
+
+				<td class="item_title">{lang v="SUPPLIER_USER_PWD"}:</td>
+
+				<td class="item_input">
+
+					<input type="password" class="required textInput valid"   minlength="5"  maxlength="20" name="user_pwd">
+
+					<label class="tip"></label>
+
+				</td>
+
+			</tr>
+
+			<tr>
+
+				<td class="item_title">{lang v="SORT"}:</td>
+
+				<td class="item_input">
+
+					<input type="text" class="textInput digits"   maxlength="10" name="sort" value="{$sort}">
+
+					<label class="tip"></label>
+
+				</td>
+
+			</tr>
+
+			<tr>
+
+				<td class="item_title">{lang v="SUPPLIER_CONTACT_NAME"}:</td>
+
+				<td class="item_input">
+
+					<input type="text" class="textInput"   maxlength="20" name="contact_name">
+
+					<label class="tip"></label>
+
+				</td>
+
+			</tr>
+
+			
+
+			<tr>
+
+				<td class="item_title">{lang v="SEX"}:</td>
+
+				<td class="item_input">
+
+					<select name="contact_sex" class="combox">
+
+						<option value="-1">{lang v="NOSEX"}</option>
+
+						<option value="0">{lang v="FEMALE"}</option>
+
+						<option value="1">{lang v="MALE"}</option>
+
+						
+
+					</select>
+
+				</td>
+
+			</tr>
+
+			<tr>
+
+				<td class="item_title">{lang v="SUPPLIER_CONTACT_TEL"}:</td>
+
+				<td class="item_input">
+
+					<input type="text" class="textInput"   maxlength="20" name="contact_mobile">
+
+					<label class="tip"></label>
+
+				</td>
+
+			</tr>
+
+			<tr>
+
+				<td class="item_title">{lang v="SUPPLIER_MOBILE"}:</td>
+
+				<td class="item_input">
+
+					<input type="text" class="textInput"   maxlength="20" name="contact_tel">
+
+					<label class="tip"></label>
+
+				</td>
+
+			</tr>
+
+			<tr>
+
+				<td class="item_title">{lang v="SUPPLIER_CONTACT_FAX"}:</td>
+
+				<td class="item_input">
+
+					<input type="text" class="textInput"   maxlength="20" name="contact_fax">
+
+					<label class="tip"></label>
+
+				</td>
+
+			</tr>
+
+			<tr>
+
+				<td class="item_title">{lang v="SUPPLIER_CONTACT_QQ"}:</td>
+
+				<td class="item_input">
+
+					<input type="text" class="textInput digits"   maxlength="20" name="contact_qq">
+
+					<label class="tip"></label>
+
+				</td>
+
+			</tr>
+
+			<tr>
+
+				<td class="item_title">{lang v="SUPPLIER_CONTACT_EMAIL"}:</td>
+
+				<td class="item_input">
+
+					<input type="text" class="textInput email"   maxlength="20" name="contact_email">
+
+					<label class="tip"></label>
+
+				</td>
+
+			</tr>
+
+			<tr>
+
+				<td class="item_title">{lang v="COMPANY_NAME"}:</td>
+
+				<td class="item_input">
+
+					<input type="text" class="textInput required"   maxlength="255" name="company_name">
+
+					<label class="tip"></label>
+
+				</td>
+
+			</tr>
+
+			<tr>
+
+				<td class="item_title">{lang v="COMPANY_ADDRESS"}:</td>
+
+				<td class="item_input">
+
+					<input type="text" class="textInput"   maxlength="255" name="company_address">
+
+					<label class="tip"></label>
+
+				</td>
+
+			</tr>
+
+			<tr>
+
+				<td class="item_title">{lang v="COMPANY_ZIP"}:</td>
+
+				<td class="item_input">
+
+					<input type="text" class="textInput"   maxlength="255" name="company_zip">
+
+					<label class="tip"></label>
+
+				</td>
+
+			</tr>		
+
+			
+
+			<tr>
+
+				<td class="item_title">{lang v="COMPANY_PERSON"}:</td>
+
+				<td class="item_input">
+
+					<select name="company_person" class="combox">
+
+						<option value="1">{lang v="COMPANY_PERSON_1"}</option>
+
+						<option value="2">{lang v="COMPANY_PERSON_2"}</option>
+
+						<option value="3">{lang v="COMPANY_PERSON_3"}</option>
+
+						<option value="4">{lang v="COMPANY_PERSON_4"}</option>
+
+					</select>
+
+				</td>
+
+			</tr>
+
+			<tr>
+
+				<td class="item_title">{lang v="COMPANY_REGIST"}:</td>
+
+				<td class="item_input">
+
+					<input type="text" class="textInput digits"   maxlength="255" name="company_regist">
+
+					<label class="tip"></label>
+
+				</td>
+
+			</tr>		
+
+			<tr>
+
+				<td class="item_title">{lang v="COMPANY_DESCRIPTION"}:</td>
+
+				<td class="item_input">					
+
+				{function name="load_kefile" p1="company_description" p2=""}
+
+				</td>
+
+			</tr>	
+			<tr>
+
+				<td class="item_title">电子合同:</td>
+
+				<td class="item_input">					
+
+				{function name="load_kefile" p1="company_electronco" p2=""}
+
+				</td>
+
+			</tr>		
+	
+
+			<tr>
+
+				<td class="item_title">{lang v="SUPPLIER_IS_VERIFY"}:</td>
+
+				<td class="item_input">
+
+					<select name="is_verify" class="combox">
+
+						<option value="0">{lang v="NO"}</option>
+
+						<option value="1">{lang v="YES"}</option>						
+
+					</select>
+
+				</td>
+
+			</tr>
+
+			<!--<tr>
+
+				<td class="item_title">{lang v="COMPANY_IS_COOPERATION"}:</td>
+
+				<td class="item_input">
+
+					<select name="is_cooperation" class="combox">
+
+						<option value="0">{lang v="NO"}</option>
+
+						<option value="1">{lang v="YES"}</option>						
+
+					</select>
+
+				</td>
+
+			</tr>-->
+
+			<tr id="company_logo_row">
+
+				<td class="item_title">{lang v="COMPANY_LOGO"}:</td>
+
+				<td class="item_input">					
+
+				{function name="load_keimg" p1="logo" p2=""}		
+
+				</td>
+
+			</tr>		
+
+			</table>
+
+					
+
+	</div>
+
+	<div class="formBar">
+
+		<ul>
+
+			<li><div class="buttonActive"><div class="buttonContent"><button type="submit">{lang v="SAVE"}</button></div></div></li>
+
+			<li><div class="button"><div class="buttonContent"><button class="close" type="button">{lang v="CLOSE"}</button></div></div></li>
+
+		</ul>
+
+	</div>
+
+</div>
+
+</form>

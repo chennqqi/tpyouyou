@@ -1,0 +1,106 @@
+<form id="pagerForm" method="post" action="#rel#">
+	<input type="hidden" name="pageNum" value="{$param.pageNum}" />
+	<input type="hidden" name="numPerPage" value="{$param.pageSize}" />
+	<input type="hidden" name="orderField" value="{$param.orderField}" />
+	<input type="hidden" name="orderDirection" value="{$param.orderDirection}" />
+</form>
+<div class="pageHeader" style="overflow:auto; height:50px;">
+	<form rel="pagerForm" onsubmit="return navTabSearch(this);" action="{$formaction}" method="post">
+	<div class="searchBar">
+		<div class="pageFormContent cf" >
+			<div class="searchtableRow"	>
+				
+				<table>
+					
+					<tr>
+						<td colspan = 10>
+						<table>
+							<tr>
+						
+							<td>
+							提交时间：
+							</td>
+							<td>							
+								<input type="text" name="create_time_begin" value="{$param.create_time_begin}" class="required date textInput readonly valid"  datefmt="yyyy-MM-dd"  readonly="true">		
+								<a class="inputDateButton" href="javascript:;">选择</a>								-																			
+							</td>	
+						
+							<td>							
+								
+								<input type="text" name="create_time_end" value="{$param.create_time_end}" class="required date textInput readonly valid"  datefmt="yyyy-MM-dd"  readonly="true">		
+								<a class="inputDateButton" href="javascript:;">选择</a>																				
+							</td>								
+													
+							<td>
+							<div class="buttonActive"><div class="buttonContent"><button type="submit">{lang v="SEARCH"}</button></div></div>
+							<a href="{$exporturl}" title="确定搜索结果导出成csv吗？" target="dwzExport" class="buttonActive"><span>导出搜索结果</span></a>	
+							</td>
+						
+							</tr>
+																		
+						</table>	
+						</td>								
+					</tr>					
+				</table>
+				
+			</div>
+
+			
+			
+			
+		</div>
+
+	</div>
+	</form>
+</div>
+
+<div class="pageContent">
+	<div class="panelBar">
+
+	</div>
+	<table class="table" width="100%" layoutH="140">
+		<thead>
+		<tr>				
+				<th width="50">序号</th>
+				<th>公司名称</th>
+				<th width="130">联系人</th>
+				<th width="130">联系电话</th>
+				<th width="220">提交时间</th>
+				<th width="120">状态</th>
+				<th width="120">操作</th>
+			</tr>
+		</thead>
+		<tbody>
+		
+			{foreach from=$list item=item key=key}
+			<tr rel="{$item.id}">
+				<td>{$item.sort}</td>				
+				<td>{$item.company_name}</td>
+				<td>{$item.company_contact}</td>
+				<td>{$item.company_mobile}</td>
+				<td>{$item.create_time}</td>
+				<td>{$item.status}</td>
+				<td>
+					<a title="查看" rel="company_tour_show_{$item.id}" target="navTab" href="{$editurl}&id={$item.id}"  class="btnEdit">{lang v="EDIT"}</a>
+					<a title="{lang v="CONFIRM_DELETE"}" target="ajaxTodo" href="{$delurl}&id={$item.id}"  class="btnDel">{lang v="DEL"}</a>
+				</td>
+			</tr>
+			{/foreach}
+		</tbody>
+	</table>
+	<div class="panelBar">
+		<div class="pages">
+			<span>{lang v="DISPLAY_PAGE_SIZE"}</span>
+			<select class="combox" name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value})">
+				<option value="<?php echo ADMIN_PAGE_SIZE1;?>" {if $param.pageSize eq ADMIN_PAGE_SIZE1}selected="selected"{/if} ><?php echo ADMIN_PAGE_SIZE1;?></option>
+				<option value="<?php echo ADMIN_PAGE_SIZE2;?>" {if $param.pageSize eq ADMIN_PAGE_SIZE2}selected="selected"{/if}><?php echo ADMIN_PAGE_SIZE2;?></option>
+				<option value="<?php echo ADMIN_PAGE_SIZE3;?>" {if $param.pageSize eq ADMIN_PAGE_SIZE3}selected="selected"{/if}><?php echo ADMIN_PAGE_SIZE3;?></option>
+				<option value="<?php echo ADMIN_PAGE_SIZE4;?>" {if $param.pageSize eq ADMIN_PAGE_SIZE4}selected="selected"{/if}><?php echo ADMIN_PAGE_SIZE4;?></option>
+			</select>
+			<span>&nbsp;&nbsp;{lang v="PAGE_TOTAL_COUNT" p="$totalCount"}</span>
+		</div>
+		
+		<div class="pagination" targetType="navTab" totalCount="{$totalCount}" numPerPage="{$param.pageSize}" pageNumShown="10" currentPage="{$param.pageNum}"></div>
+
+	</div>
+</div>

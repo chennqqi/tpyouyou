@@ -1,0 +1,53 @@
+
+.guide_nav .guide_tab {
+    width: 670px;
+    float: left;
+}
+.guide_nav .guide_tab ul li{
+    float: left;
+}
+.guide_tab ul li span{
+    color: #333;
+    font-size: 14px;
+    font-weight: bold;
+    border-bottom: 2px solid #008ad3;
+    margin-right: 30px;
+    height: 34px;
+    line-height: 34px;
+    width: 64px;
+    text-align: center;
+    display: block;
+}
+.guide_nav .send_guide_btn{
+    width: 100px;
+    float: right;
+}
+.guide_nav .send_guide_btn a{
+    display: block;
+    width: 100px;
+    color: #fff;
+    height: 34px;
+    line-height: 34px;
+    background-color: #008ad3;
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.table_box_item{
+    text-align: left;
+}
+.table_box_item .datatable tr th {
+    background-color: #f5f5f5;
+    padding: 5px 0px;
+}
+
+.table_box_item .datatable tr td {
+    height: 34px;
+    line-height: 34px;
+    border-bottom: 1px dashed #ccc;
+}
+.datatable tr td.page_ctrl {
+    border-bottom: none;
+    text-align: right;
+}

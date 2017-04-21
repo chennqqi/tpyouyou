@@ -1,0 +1,81 @@
+<div class="dt">{if $do_consignee.id gt 0}编辑{else}新增{/if}收货地址</div>
+<div class="bx clearfix">
+	<form action="{url x="profile#do_consignee"}">
+	<div class="item clearfix">
+		<div class="ft">收件人：<span class="em">*</span></div>
+		<div class="fb">
+			<input type="text" name="delivery_name" id="deliveryName" class="txt_input" holder="请填写收件人姓名" value="{$do_consignee.delivery_name}" />
+            <span class="err_structure delivery_err hide" id="deliveryNameError">
+            	<span class="error_notice"><i></i></span>
+            </span>
+		</div>
+	</div>
+	
+	<div class="item clearfix">
+		<div class="ft">邮寄地址：<span class="em">*</span></div>
+		<div class="fb">
+        	<select name="province_id" class="dialog_city f_l" id="J_region_province" onchange="setcity(this,'#J_region_city',{$userinfo.city_id});">
+        		<option value="0">请选择</option>
+        		{foreach from="$province_list" item="province"}
+				<option value="{$province.id}" {if $do_consignee.province_id gt 0}{if $do_consignee.province_id eq $province.id}selected="selected"{/if}{else}{if $province.id eq $userinfo.province_id}selected="selected"{/if}{/if}>{$province.py_first} {$province.name}</option>
+				{/foreach}
+        	</select>
+            <select name="city_id" class="dialog_city f_l" id="J_region_city">
+            </select>
+			<script type="text/javascript">
+				load_region_city('#J_region_province','#J_region_city',{if $do_consignee.city_id gt 0}{$do_consignee.city_id}{else}{$userinfo.city_id}{/if});
+			</script>
+            <span class="err_structure delivery_err hide" id="deliveryProvinceError">
+            	<span class="error_notice">
+                	<i></i>
+                </span>
+            </span>
+            <div class="blank5"></div>
+            <input type="text" name="address" id="deliveryAddress" class="txt_input" holder="请填写详细地址" value="{$do_consignee.address}" />
+            <span class="err_structure delivery_err hide" id="deliveryAddrError">
+                <span class="error_notice">
+                    <i></i>
+                </span>
+            </span>
+		</div>
+	</div>
+	
+	<div class="item clearfix">
+        <div class="ft">邮政编码：<span class="em">*</span></div>
+        <div class="fb">
+            <input type="text" name="zip" id="deliveryCode" class="txt_input" holder="请填写邮政编码"  value="{$do_consignee.zip}" />
+            <span class="err_structure delivery_err hide" id="deliveryCodeError">
+                <span class="error_notice">
+                    <i></i>
+                </span>
+            </span>
+        </div>
+	</div>
+	
+	 <div class="item clearfix">
+        <div class="ft">手机号码：<span class="em">*</span></div>
+        <div class="fb">
+            <input type="text" name="delivery_mobile" id="deliveryTel" class="txt_input" holder="请填写手机号码"  value="{$do_consignee.delivery_mobile}" />
+            <span class="err_structure delivery_err hide" id="deliveryTelError">
+                <span class="error_notice">
+                    <i></i>
+                </span>
+            </span>
+        </div>
+    </div>
+	
+	<div class="item clearfix">
+        <div class="ft">是否默认：</div>
+        <div class="fb">
+            <label><input type="radio" name="is_default" value="1" {if $do_consignee.is_default eq 1}checked="checked"{/if} />是</label>
+			<label><input type="radio" name="is_default" value="0" {if $do_consignee.is_default eq 0 ||$do_consignee.is_default eq ''}checked="checked"{/if} />否</label>
+        </div>
+    </div>
+	
+	<div class="act">
+		<input type="hidden" name="id" value="{$do_consignee.id}" />
+		<a href="javascript:void(0);" class="J_do_consignee">{if $do_consignee.id gt 0}编辑{else}添加{/if}地址</a>
+		{if $do_consignee.id gt 0}<a href="javascript:void(0);" class="j_noedit">取消编辑</a>{/if}
+	</div>
+	</form>
+</div>

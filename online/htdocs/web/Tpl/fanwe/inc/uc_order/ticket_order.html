@@ -1,0 +1,87 @@
+<div class="blank15"></div>
+<div class="search_row">
+	<form action="{url x="uc_order#ticket"}" method="get" class="getform">
+		订单号：
+		<input type="text" name="sn" value="" class="uc_ipt" style="width:100px" /> 
+		下单时间：
+		<input type="text" name="begin_time" value="{$begin_time}" class="uc_ipt uc_datepicker" style="width:100px" />
+		&nbsp;<label>-</label>&nbsp;
+		<input type="text" value="{$end_time}" name="end_time" class="uc_ipt uc_datepicker" style="width:100px" />&nbsp;
+		<input type="submit" value="搜索">
+	</form>
+</div>
+<div class="blank15"></div>
+{if $list}
+<table class="uc_table uc_ordertable">
+	<tbody>
+		<tr>
+			<th width="130">订单编号</th>	
+			<th>产品信息</th>	
+			<th width="100">订单金额</th>
+			<th width="80">订单状态</th>
+			<th width="70">操作</th>
+		</tr>
+		{foreach from="$list" item="oitem"}
+		<tr>
+			<td>
+				订单编号：<br><span class="f_red"><a href="{$oitem.url}">{$oitem.sn}</a></span><br>
+				下单时间：<span class="f_red">{$oitem.create_time_short}</span>
+			</td>		
+			<td >
+				
+				<div class="pro_inf clearfix">
+					<div class="thumb f_l"><img src="{function name="get_spec_image" v=$oitem.image w=60 h=60 g=1}" width="55" /></div>
+					<div class="tit"><a href="{$oitem.ticket_url}" target="_blank">&lt;{$oitem.ticket_name}&gt;{$oitem.name_brief}&nbsp;{$oitem.sale_count}张</a></div>
+				</div>
+				
+			</td>	
+			<td style="text-align:center;">
+				{$oitem.total_price_format}
+			</td>
+			<td style="text-align:center;">
+				
+				<b>
+					{if $oitem.order_status eq 1 && $oitem.pay_status eq 0}
+						{if $oitem.end_time < $NOW_TIME && $oitem.end_time > 0}
+							<a href="{$oitem.url}">订单过期</a>
+						{else}
+							<a href="{$oitem.url}">{$oitem.pay_status_format}</a>
+							{if $oitem.end_time > 0}<p class="surplus_time" style="font-size:13px;color:red;line-height:15px;font-weight:500;margin-left:-4px;">剩余支付时间还有{$oitem.left_time_format}</p>{/if}
+						{/if}
+					{else}
+						<a href="{$oitem.url}">{$oitem.uc_order_status_format}</a>
+					{/if}</b>
+					{if $oitem.refund_status neq 0}
+					
+						<br />
+						{$oitem.refund_status_format}
+					
+					{/if}
+				
+			</td>
+			<td style="text-align:center;" class="op">
+				{if $oitem.order_status neq 4}
+					{if $oitem.op_status_0 eq 1}
+					<a href="{url x="transaction#pay" p="ot=2&sn=$oitem.sn"}" class="toPay">去付款</a>
+					{/if}
+					{if $oitem.op_status_1 eq 1}
+					<a href="{url x="uc_order#cancelticket" p="id=$oitem.id"}" class="J_cancelOrders">取消订单</a>
+					{/if}
+					{if $oitem.op_status_2 eq 1}
+					<a href="{url x="uc_order#refundticket" p="id=$oitem.id"}">{if $oitem.is_appoint_time eq 0}退票申请{else}退票改签{/if}</a>
+					{elseif $oitem.op_status_2 eq 2}
+					<a href="{url x="uc_order#refundticket" p="id=$oitem.id"}">门票列表</a>
+					{/if}					
+				{/if}
+			</td>
+		</tr>
+		{/foreach}
+	</tbody>
+</table>
+<div class="blank15"></div>
+<div class="uc_pager">{$pages}</div>
+{else}
+<div class="empty_box">
+	没有相关的数据
+</div>
+{/if}

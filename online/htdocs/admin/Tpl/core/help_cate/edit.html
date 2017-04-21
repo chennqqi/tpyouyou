@@ -1,0 +1,37 @@
+<h2 class="contentTitle">{lang v="EDIT"}帮助分类</h2>
+<form action="{$formaction}" method="post" class="pageForm required-validate" onsubmit="return validateCallback(this, navTabAjaxDone)">
+<div class="pageContent">
+<div class="pageFormContent" layoutH="97">		
+
+			<table class="formtable">			
+			
+			
+			
+			<tr>
+				<td class="item_title">{lang v="NAME"}:</td>
+				<td class="item_input">
+					<input type="text" class="required textInput valid"   maxlength="20" name="name" value="{$vo.name}">
+					<label class="tip"></label>
+				</td>
+			</tr>
+
+			
+			<tr>
+				<td class="item_title">排序:</td>
+				<td class="item_input">
+					<input type="text" class="required textInput digits"   maxlength="20" name="sort" value="{$vo.sort}">
+				</td>
+			</tr>	
+						
+			</table>
+					
+	</div>
+	<div class="formBar">
+		<ul>
+		<input type="hidden" name="id" value="{$vo.id}" />
+			<li><div class="buttonActive"><div class="buttonContent"><button type="submit">{lang v="SAVE"}</button></div></div></li>
+			<li><div class="button"><div class="buttonContent"><button class="close" type="button">{lang v="CLOSE"}</button></div></div></li>
+		</ul>
+	</div>
+</div>
+</form>

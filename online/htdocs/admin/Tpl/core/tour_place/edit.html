@@ -1,0 +1,64 @@
+<h2 class="contentTitle">{lang v="EDIT"}{lang v="TOUR_PLACE"}</h2>
+<form action="{$formaction}" method="post" class="pageForm required-validate" onsubmit="return validateCallback(this, navTabAjaxDone)">
+<div class="pageContent">
+<div class="pageFormContent" layoutH="97">		
+
+			<table class="formtable">				
+			<tr>
+				<td class="item_title">{lang v="NAME"}:</td>
+				<td class="item_input">
+					<input type="text" class="required textInput valid"   maxlength="20" name="name" value="{$vo.name}">
+					<label class="tip"></label>
+				</td>
+			</tr>
+
+			<tr>
+				<td class="item_title">{lang v="PY"}:</td>
+				<td class="item_input"><input type="text" class="required textInput lettersonly" name="py" value="{$vo.py}" /></td>
+			</tr>	
+			
+			<tr>
+				<td class="item_title">{lang v="CITY"}:</td>
+				<td class="item_input">
+					<input name="tour_city.py"  lookupSend="tour_city_data" type="hidden" value="{$vo.city_match}" />
+					<input size="80" name="tour_city.name" lookupSend="tour_city_data"  type="text" value="{$vo.city_match_row}"  readonly="true"  />
+					<a class="btnLook" href="{$searchcityurl}" lookupGroupSelect="tour_city">{lang v="SELECT_TOUR_CITY"}</a>
+				</td>
+			</tr>	
+			
+			<tr>
+				<td class="item_title">{lang v="TOUR_AREA"}:</td>
+				<td class="item_input">
+					<input name="tour_area.py"  lookupSend="tour_area_data" type="hidden" value="{$vo.area_match}" />
+					<input class="required" size="80" name="tour_area.name" lookupSend="tour_area_data"  type="text"  readonly="true" value="{$vo.area_match_row}"  />
+					<a class="btnLook" href="{$searchareaurl}" lookupGroupSelect="tour_area">{lang v="SELECT_TOUR_AREA"}</a>
+				</td>
+			</tr>	
+			
+			<tr>
+				<td class="item_title">{lang v="TOUR_PLACE_TAG"}:</td>
+				<td class="item_input">					
+					<input  size="80" name="tour_place_tag.tag_name" lookupSend="tour_place_tag_data"  type="text" value="{$vo.tag_match_row}"  />
+					<a class="btnLook" href="{$searchtagurl}" lookupGroupSelect="tour_place_tag">{lang v="SELECT_TOUR_PLACE_TAG"}</a>
+				</td>
+			</tr>	
+						
+			<tr>
+				<td class="item_title">{lang v="IS_RECOMMEND"}:</td>
+				<td class="item_input">
+					<lable>{lang v="YES"}<input type="radio" name="is_recommend" value="1"   {if $vo.is_recommend eq 1}checked="checked"{/if} /></lable>
+					<lable>{lang v="NO"}<input type="radio" name="is_recommend" value="0"  {if $vo.is_recommend eq 0}checked="checked"{/if} /></lable>
+				</td>
+			</tr>
+			</table>
+					
+	</div>
+	<div class="formBar">
+		<ul>
+			<input type="hidden" name="id" value="{$vo.id}" />
+			<li><div class="buttonActive"><div class="buttonContent"><button type="submit">{lang v="SAVE"}</button></div></div></li>
+			<li><div class="button"><div class="buttonContent"><button class="close" type="button">{lang v="CLOSE"}</button></div></div></li>
+		</ul>
+	</div>
+</div>
+</form>

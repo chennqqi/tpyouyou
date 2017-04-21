@@ -1,0 +1,50 @@
+<?php
+
+	$this->_var['pagecss'][] = TMPL_REAL."/css/style.css";
+
+	$this->_var['pagecss'][] = TMPL_REAL."/css/weebox.css";
+
+	$this->_var['pagecss'][] = TMPL_REAL."/css/news.css";
+
+	$this->_var['pagecss'][] = TMPL_REAL."/css/comment.css";
+
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.bgiframe.js";
+
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.weebox.js";
+
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.pngfix.js";
+
+	$this->_var['pagejs'][] = TMPL_REAL."/js/lazyload.js";
+
+	$this->_var['pagejs'][] = TMPL_REAL."/js/script.js";
+
+	$this->_var['cpagejs'][] = TMPL_REAL."/js/script.js";
+
+	$this->_var['pagejs'][] = TMPL_REAL."/js/ajax_pages.js";
+
+	$this->_var['cpagejs'][] = TMPL_REAL."/js/ajax_pages.js";
+
+        $this->_var['cpagejs'][] = TMPL_REAL."/js/jquery-1.9.1.js";
+
+?>
+
+<title>火车票预订查询-悠游旅游网 </title>
+
+{include file="inc/header.html"}
+
+     
+
+     <div style="text-align: center; border:10px solid #ccc;">
+
+         <iframe src='http://www.tieyou.com/code/iframe/list.php?time=0&style=blue1&hezuo=lecheng&utm_source=lecheng&utm_campaign=4758&utm_term=269&trainType=&from={$cityname}&to={$citynames}&date={$checkindate}' width='1000px;'  frameborder="0" scrolling="no"  ></iframe>
+
+        
+
+ </div>
+
+ 
+
+
+
+ {include file="inc/footer.html"}   
+

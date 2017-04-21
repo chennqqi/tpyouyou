@@ -1,0 +1,691 @@
+<?php
+	$this->_var['pagecss'][] = TMPL_REAL."/css/style.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/weebox.css";
+        $this->_var['pagecss'][] = TMPL_REAL."/css/guide_writethread.css";
+        
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.bgiframe.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.weebox.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.pngfix.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/lazyload.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/script.js";
+        $this->_var['pagejs'][] = TMPL_REAL."/js/guide_writethread.js";
+	$this->_var['cpagejs'][] = TMPL_REAL."/js/script.js";
+        
+?>
+{include file="inc/header.html"} 
+
+<link rel="stylesheet" href="{$TMPL}/css/jquery-ui.css">
+<!-- 日期控件 -->
+<script src="{$TMPL}/js/datepicker/core.js"></script>
+<script src="{$TMPL}/js/datepicker/datepicker.js"></script>
+<script src="{$TMPL}/js/datepicker/widget.js"></script>
+
+<link rel="stylesheet" href="{$TMPL}/css/datepicker.css">
+
+<!-- SWFUPLOAD-->
+<link rel="stylesheet" href="{$TMPL}/css/swf.css">
+<script src="{$TMPL}/js/swf/swfupload.js"></script>
+<script src="{$TMPL}/js/swf/handlers.js"></script>
+<script src="{$TMPL}/js/swf/swfupload.queue.js"></script>
+<script src="{$TMPL}/js/swf/fileprogress.js"></script>
+
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$pagecss"}" />
+<script type="text/javascript" src="{function name="parse_script" v="$pagejs"}"></script>
+
+<div class="blank13"></div>
+<div class="wrap">
+	<!--start游记发布容器-->
+    <div class="container">
+		<!--start入口标题-->
+        <div class="guide_title_tip">
+            <i></i><label>游记</label><span>分章节写游记，丰富的行程给爱旅游的朋友更多惊喜</span>
+         </div>
+		 <!--end入口标题-->
+		 <div class="blank20"></div>
+
+		 <!--start游记表单-->
+		 <div class="write_body">
+			<div class="guide_title_box tit_box">
+				<label>游记标题</label>
+
+                                    <div class="input_item"><input class="input_limit input_data" data_type="guide_title"  hide_data="{$guide_item.title}"   maxlength="30" max_data="30" type="text" holder="给TA去个标题吧" value="{$guide_item.title}"/><span >还可以输入<i class="limit_num">30</i>字</span></div>
+
+                        </div>
+			<div class="blank10"></div>
+                        <div class="blank10"></div>
+                        <div class="guide_title_box tit_box">
+				<label>出行方式</label>
+                                    <div class="btn_checkbox_item">
+                                        <a class="gn tour_range {if $guide_item.tour_range eq 1}cur{/if}" rel="1" date_type="tour_range">国内游</a><a class="cj tour_range {if $guide_item.tour_range eq 2}cur{/if}" rel="2" date_type="tour_range">出境游</a><a class="gt tour_range {if $guide_item.tour_range eq 3}cur{/if}" rel="3" date_type="tour_range">周边游</a>
+                                        <span class="f_l">&nbsp;&nbsp;>&nbsp;&nbsp;</span>
+                                        <a class="zz tour_type {if $guide_item.tour_type eq 1}cur{/if}" rel="1" date_type="tour_type">跟团游</a><a class="zb tour_type {if $guide_item.tour_type eq 2}cur{/if}" rel="2" date_type="tour_type">自助游</a><a class="zj tour_type {if $guide_item.tour_type eq 3}cur{/if}" rel="3" date_type="tour_type">自驾游</a>
+                                        <input class="tour_range_v" type="hidden" name="tour_range" value="1"/>
+                                        <input class="tour_type_v" type="hidden" name="tour_type" value="1"/>
+                                    </div>
+
+                        </div>
+			{$day_html}
+                        <div class="blank20"></div>
+                        <div class="add_day_btn_box">
+                            <a href="javascript:void(0);" class="add_day_btn"></a>
+                        </div>
+                        <div class="blank10"></div>
+                        <div class="guide_save_box">
+                            <div class="guide_save_item">
+                                <a class="again_guide_btn" href="javascript:void(0)">保存编辑</a>
+                            </div>
+                        </div>
+		 </div>
+                 
+		 <!--end游记表单-->
+    </div>
+	<!--end游记发布容器-->
+</div>
+<div class="blank20"></div>
+<!--start 添加拍摄地点-->
+<div class="poi_popup">
+    <a href="javascript:void(0);" class="close">X</a>
+    <h3 class="addr_title">添加拍摄地点</h3>
+    <div class="poi_address">
+    	<div class="addr_list"></div>
+        <div class="add_input">
+            <input type="text" name="addr_name"/><a class="add_address_btn" href="javascript:void(0);">确认</a>
+        </div>
+    </div>
+    <div class="blank10"></div>
+    <div class="address_save_box"><a href="javascript:void(0);" class="save_address_list_btn">保存</a></div>
+</div>
+<!--end 添加拍摄地点-->
+
+<!--start 编辑拍摄地点-->
+<div class="poi_popup_edit">
+    <a href="javascript:void(0);" class="close">X</a>
+    <h3 class="addr_title">编辑拍摄地点</h3>
+    <div class="poi_address">
+        <div class="edit_input">
+            <input type="text" name="edit_addr_name"/>
+        </div>
+    </div>
+    <div class="blank10"></div>
+    <div class="address_edit_box"><a href="javascript:void(0);" class="save_edit_address_btn">保存</a></div>
+</div>
+<!--end 编辑拍摄地点-->
+
+<!--start 添加图片 -->
+<div class="add_pic_popup">
+    <a href="javascript:void(0);" class="close" onclick="$.Close_Pic()">X</a>
+     <form id="form1" action="index.php" method="post" enctype="multipart/form-data">
+        <div class="fieldset flash" id="fsUploadProgress">
+
+        </div>
+        <div id="divStatus">0 个文件已上传</div>
+        <div>
+                <span id="spanButtonPlaceHolder"></span>
+                <input id="btnCancel" type="button" value="取消所有上传" onclick="swfu.cancelQueue();" disabled="disabled" style="margin-left: 2px; font-size: 8pt; height: 29px;" />
+        </div>
+    </form>
+</div>
+<!-- end 添加图片-->
+<div class="photo_html_box">
+    <div class="photo_item f_l">
+        <div class="img_box"><img src="" /></div>
+        <div class="img_action">
+            <a href="javascript:void(0)" class="del_img" data_gallery_id="">删除</a>
+        </div>
+    </div>
+</div>
+<script>
+         //全局变量
+            var GUIDE_ID = {$id};
+            var ROUTE_ID;
+            var ROUTE_TIME;
+            var SPOT_ID;
+            var AREA_NAME;
+		var swfu;
+		window.onload = function() {
+			var settings = {
+				flash_url : "<?php echo APP_ROOT;?>/swfupload.swf",
+				upload_url: "{url r="upload#guide"}",
+				post_params: {"PHPSESSID" : "<?php echo session_id(); ?>","dir":"guide"},
+				file_size_limit : "100 MB",
+				file_types : "*.*",
+				file_types_description : "All Files",
+				file_upload_limit : 10,  //配置上传个数
+				file_queue_limit : 0,
+				custom_settings : {
+					progressTarget : "fsUploadProgress",
+					cancelButtonId : "btnCancel"
+				},
+				debug: false,
+
+				// Button settings
+                                button_width: "60",
+                                button_height: "25",
+                                button_placeholder_id: "spanButtonPlaceHolder",
+                                button_image_url : "{$TMPL}/images/upload_btn_img.gif",
+
+				file_queued_handler : fileQueued,
+				file_queue_error_handler : fileQueueError,
+				file_dialog_complete_handler : fileDialogComplete, //当文件选取对话框关闭后触发的事件处理函数
+				upload_start_handler : uploadStart, //开始上传文件前触发的事件处理函数
+				upload_progress_handler : uploadProgress,
+				upload_error_handler : uploadError,
+				upload_success_handler : swf_uploadSuccess, //文件上传成功后触发的事件处理函数
+				upload_complete_handler : uploadComplete,
+				queue_complete_handler : queueComplete
+			};
+
+			swfu = new SWFUpload(settings);
+                        
+                        //SWF 上传图片成功
+                        function swf_uploadSuccess(file, serverData) {
+
+                                var progress = new FileProgress(file, this.customSettings.progressTarget);
+                                progress.setComplete();
+                                progress.setStatus("上传成功");
+                                progress.toggleCancel(false);
+                               var img_obj = eval('('+serverData+')');
+                               var gallery_id;
+                               //保存图片
+                               var ajax_url = "{url r="guide#ajax_save_img"}";
+                               var query = new Object();
+                               query.guide_id = GUIDE_ID;
+                               query.spot_id = SPOT_ID;
+                               query.route_id = ROUTE_ID;
+                               query.area_name = AREA_NAME;
+                               query.image = img_obj.url;
+                               query.route_time = ROUTE_TIME;
+                               query.width = img_obj.width;
+                               query.height = img_obj.height;
+                               query.is_again = 1; //二次编辑
+                               $.ajax({
+                                   type: "POST",
+						url: ajax_url,
+						data: query,
+						cache:false,
+						dataType:"JSON",
+						success: function(result){
+                                                    gallery_id = result.gallery_id;
+  
+                                                        $(".photo_html_box").find(".del_img").attr("data_spot_id",SPOT_ID);
+                                                        $(".photo_html_box").find(".del_img").attr("data_route_id",ROUTE_ID);
+                                                        $(".photo_html_box").find(".del_img").attr("data_gallery_id",gallery_id);
+                                                        $(".photo_html_box").find(".img_box img").attr("src",img_obj.web_url);
+
+
+                                                        var inner_html = $(".photo_html_box").html();
+
+                                                        if($(".photo_content_spot_"+SPOT_ID).find(".photo_item").length){
+                                                            $(".photo_content_spot_"+SPOT_ID).find(".photo_item").last().after(inner_html);
+                                                        }else{
+                                                             $(".photo_content_spot_"+SPOT_ID).html(inner_html+$(".photo_content_spot_"+SPOT_ID).html());
+                                                             var a_obj = $(".photo_content_spot_"+SPOT_ID+" .photo_null").find("a");
+                                                             $(".photo_content_spot_"+SPOT_ID+" .photo_null").html(a_obj);
+                                                             $(".photo_content_spot_"+SPOT_ID+" .photo_null").find("a").addClass("add_img_a_btn");
+                                                        }
+                                                        var count_img = $(".photo_content_spot_"+SPOT_ID).find(".photo_item").length;
+                                                        //统计图片数量
+                                                        $(".poi_dot_spot_"+SPOT_ID).find(".spot_gallery_num span").html(count_img);
+						}
+                               });
+                         }
+	     };
+
+        $(function() {
+          $.datepicker.regional["zh-CN"] = { closeText: "关闭", prevText: "&#x3c;上月", nextText: "下月&#x3e;", currentText: "今天", monthNames: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"], monthNamesShort: ["一", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "十二"], dayNames: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"], dayNamesShort: ["周日", "周一", "周二", "周三", "周四", "周五", "周六"], dayNamesMin: ["日", "一", "二", "三", "四", "五", "六"], weekHeader: "周", dateFormat: "yy-mm-dd", firstDay: 1, isRTL: !1, showMonthAfterYear: !0, yearSuffix: "年" }
+          $.datepicker.setDefaults($.datepicker.regional["zh-CN"]);
+
+            
+            //字数控制
+            $('.input_limit').live('focus keyup input paste',function(){
+                       //采用几个事件来触发（已增加鼠标粘贴事件）
+                       var max_count = $(this).attr('maxlength');
+                       var current_count = $(this).attr("value").length;
+                       var temp_count = max_count - current_count;
+                       if(temp_count>=0 && temp_count<=max_count){
+                              $(this).parent().find("span .limit_num").html(temp_count);
+                       }
+                       if(current_count>max_count){
+                              $(this).attr("value",$(this).attr("value").substring(0, max_count));
+                       }
+
+               });
+
+
+
+            //添加线路
+            $(".add_poi").live("click",function(){
+                ROUTE_ID = $(this).attr('data_route_id');
+                ROUTE_TIME = $(".route_time_"+ROUTE_ID).val();
+
+                if(ROUTE_TIME !="请选择日期"){
+                	$(".poi_popup").addClass("on");
+                }else{
+                    $.showErr("请选择日期");
+                }
+            });
+
+            $(".poi_popup .close").bind("click",function(){
+				$(".poi_popup").removeClass("on");
+            });
+            //添加拍摄地点按钮
+            $(".add_address_btn").bind("click",function(){
+                
+				var addr_name = $("input[name=addr_name]").val();
+                                addr_name = $.trim(addr_name);
+                                if(addr_name.length>0){
+                                    if(addr_name.length>10){
+                                        $.showErr("景点不能超过10个字");
+                                        return false;
+                                    }
+                                    var add_addr_html = '<div class="poi"><span>'+addr_name+'</span><a class="addr_tag" href="javascript:void(0);">x</a></div>';
+                                        $(".addr_list").append(add_addr_html);
+                                        $("input[name=addr_name]").val('');
+                                }else{
+                                    return false;
+                                }
+				
+            });
+			//删除拍摄地点标签
+			$(".addr_tag").live("click",function(){
+				$(this).parent().remove();
+			});
+
+			//保存拍摄地点
+			$(".save_address_list_btn").bind("click",function(){
+				var addr_tags='';
+
+                                if($(".poi span").length>0){
+                                    $(".poi span").each(function(index, domEle){
+                                            addr_tags = addr_tags+$(this).html()+',';
+                                    });
+                                    var query = new Object();
+                                    query.area_list = addr_tags;
+                                    query.route_id = ROUTE_ID;
+                                    query.guide_id = GUIDE_ID;
+                                    query.route_time = ROUTE_TIME;
+                                    query.is_again = 1; //二次编辑
+                                    var ajax_url = "{url r="guide#ajax_save_spot"}";
+                                    $.ajax(
+                                            {
+                                                    type: "POST",
+                                                    url: ajax_url,
+                                                    data: query,
+                                                    dataType:"JSON",
+                                                    success: function(result){
+                                                        if(result.status == -100){
+                                                            $.showErr("请勿提交非法内容");
+                                                            return false;
+                                                        }
+
+                                                        if(result.html_1 !=null && result.html_2 !=null){
+                                                            var html_1 = String(result.html_1);
+                                                            var html_2 = String(result.html_2);
+                                                            if($(".poi_dot_route_"+ROUTE_ID).length>0){ //后面追加
+                                                                    $(".poi_dot_route_"+ROUTE_ID).last().after(html_1);
+                                                                    $(".photo_content_box_route_"+ROUTE_ID).append(html_2);
+                                                            }else{ //第一次添加
+                                                                    $(".poi_box_route_"+ROUTE_ID).html(html_1+$(".poi_box_route_"+ROUTE_ID).html());
+                                                                    $(".photo_content_box_route_"+ROUTE_ID).html(html_2);
+                                                                    $(".poi_dot_route_"+ROUTE_ID).first().addClass("on");
+                                                                    $(".poi_dot_route_"+ROUTE_ID).first().find(".spot_action").show();
+                                                                    $(".poi_dot_route_"+ROUTE_ID).first().find(".spot_gallery_num").hide();
+
+                                                                    $(".photo_content_route_"+ROUTE_ID).first().addClass("on");
+                                                                    return true;
+                                                            }
+
+                                                        }else{
+                                                            $.showErr("请勿提交非法内容");
+                                                        }
+
+                                                    }
+                                            }
+                                    );
+                                    $(".poi_popup").removeClass("on");
+                                    $(".poi_address .addr_list").html('');  
+                                }else{
+                                    $(".poi_popup").removeClass("on");
+                                    return false;
+                                }
+				
+			});
+			//拍摄地点点击事件
+			$(".default_poi").live('mouseover mouseout',
+					function(event){//"mouseenter" or "mouseout" 根据这个标志来切换你的分支
+						if(event.type=="mouseover"){
+							$(this).addClass("hover");
+							$(this).find(".spot_action").show();
+							$(this).find(".spot_gallery_num").hide();
+
+						}
+						if(event.type=="mouseout"){
+							$(this).removeClass("hover");
+							$(this).find(".spot_action").hide();
+							$(this).find(".spot_gallery_num").show();
+						}
+					   // console.log( event.type );
+					}
+			);
+			//编辑拍摄地点
+			$(".edit_spot").live("click",function(){
+				SPOT_ID = $(this).attr('data_spot_id');
+				$("input[name=edit_addr_name]").val($(".poi_dot_spot_"+SPOT_ID+" .spot_area_name").html());
+                                $(".poi_popup_edit").addClass("on");
+			});
+
+			$(".poi_popup_edit close").bind("click",function(){
+				$(".poi_popup_edit").removeClass("on");
+			});
+			$(".save_edit_address_btn").bind("click",function(){
+				var area_name = $("input[name=edit_addr_name]").val();
+                                area_name = $.trim(area_name);
+                                if(area_name.length>0){
+                                    if(area_name.length>10){
+                                        $.showErr("景点不能超过10个字");
+                                        return false;
+                                    }
+                                    $("input[name=edit_addr_name]").val('');
+                                    var query = new Object();
+                                    query.spot_id = SPOT_ID;
+                                    query.area_name = area_name;
+                                    query.is_again = 1; //二次编辑
+                                    var ajax_url = "{url r="guide#ajax_edit_spot"}";
+                                    $.ajax(
+                                            {
+                                                    type: "POST",
+                                                    url: ajax_url,
+                                                    data: query,
+                                                    cache:false,
+                                                    dataType:"json",
+                                                    success: function(result){
+                                                            if(result.status == -100){
+                                                                $.showErr("请勿提交非法内容");
+                                                                return false;
+                                                            }
+                                                            if(result.status){
+                                                                    $(".poi_dot_spot_"+SPOT_ID+" .spot_area_name").html(area_name);
+                                                            }
+                                                            $(".poi_popup_edit").removeClass("on");
+                                                    }
+                                            }
+                                    );
+                                }
+				
+			});
+
+			$(".poi_popup_edit .close").bind("click",function(){
+				$(".poi_popup_edit").removeClass("on");
+			});
+                        //删除景点
+			$(".del_spot").live("click",function(){
+                            if(confirm("确定要删除这个拍摄景点吗？同时会删除景点下面的照片！")){
+                                
+				SPOT_ID = $(this).attr('data_spot_id');
+                                ROUTE_ID = $(this).attr('data_route_id');
+                                
+                                //景点索引
+                                var next_index = $(".poi_box_route_"+ROUTE_ID+" .poi_dot_route_"+ROUTE_ID).index($(".poi_dot_spot_"+SPOT_ID))+1;
+                                var up_index = $(".poi_box_route_"+ROUTE_ID+" .poi_dot_route_"+ROUTE_ID).index($(".poi_dot_spot_"+SPOT_ID))-1;
+                                
+                                var ajax_url = "{url r="guide#ajax_del_spot"}";
+				var query = new Object();
+				query.spot_id = SPOT_ID;
+                                query.is_again = 1; //二次编辑
+				$.ajax(
+					{
+					 	type: "POST",
+						url: ajax_url,
+						data: query,
+						cache:false,
+						dataType:"json",
+						success: function(result){
+							if(result.status){
+                                                                if($(".poi_dot_route_"+ROUTE_ID+":eq("+next_index+")").length){
+                                                                        $(".poi_dot_route_"+ROUTE_ID+":eq("+next_index+")").addClass("on");
+                                                                        var next_spot_id = $(".poi_dot_route_"+ROUTE_ID+":eq("+next_index+")").attr("data_spot_id");
+                                                                        $(".photo_content_spot_"+next_spot_id).addClass("on");
+                                                                        $(".photo_content_spot_"+SPOT_ID).remove();
+                                                                        
+                                                                }else if($(".poi_dot_route_"+ROUTE_ID+":eq("+up_index+")").length){
+                                                                        $(".poi_dot_route_"+ROUTE_ID+":eq("+up_index+")").addClass("on");
+                                                                        var up_spot_id = $(".poi_dot_route_"+ROUTE_ID+":eq("+up_index+")").attr("data_spot_id");
+                                                                        $(".photo_content_spot_"+up_spot_id).addClass("on");
+                                                                        $(".photo_content_spot_"+SPOT_ID).remove();
+                                                                }else{
+                                                                        $(".photo_content_box_route_"+ROUTE_ID).html("");
+                                                                }
+                                                                $(".poi_box_route_"+ROUTE_ID+" .poi_dot_spot_"+SPOT_ID).remove();
+							}else{
+                                                            $.showErr("删除失败请稍后再试");
+							}
+						}
+					}
+				);
+                            }else{
+                                return false;
+                            }
+				
+			});
+                        
+                    //添加图片
+                    $.Add_Pic = function(route_id,spot_id){
+                        ROUTE_ID = route_id;
+                        SPOT_ID = spot_id;
+                        AREA_NAME = $(".poi_dot_spot_"+SPOT_ID).find(".spot_area_name").html();
+                        ROUTE_TIME = $(".route_time_"+ROUTE_ID).val();
+
+                        $(".add_pic_popup").addClass("on");
+                        
+                    };
+                    $.Close_Pic = function(){
+                        $(".add_pic_popup").removeClass("on");
+                        queueComplete(0);
+                        $("#fsUploadProgress").html("");
+                    }
+                    //删除图片
+                    $(".photo_item .del_img").live("click",function(){
+                        var gallery_id = $(this).attr("data_gallery_id");
+                        if(confirm("确认要删除吗？")){
+                            ROUTE_ID = $(this).attr("data_route_id");
+                            SPOT_ID = $(this).attr("data_spot_id");
+                            
+                            var query = new Object();
+                            query.gallery_id = gallery_id;
+                            query.is_again = 1; //二次编辑
+                            var ajax_url = "{url r="guide#ajax_del_img"}";
+                            var obj = $(this);
+                            $.ajax(
+                                            {
+                                                    type: "POST",
+                                                    url: ajax_url,
+                                                    data: query,
+                                                    cache:false,
+                                                    dataType:"json",
+                                                    success: function(result){
+                                                            if(result.status){
+                                                                    obj.parent().parent().remove();
+                                                                    var count_img = $(".photo_content_route_"+ROUTE_ID).find(".photo_item").length;
+                                                                    //统计图片数量
+                                                                    $(".poi_dot_spot_"+SPOT_ID).find(".spot_gallery_num span").html(count_img);
+                                                            }else{
+                                                                $.showErr("删除失败请稍后再试");
+                                                            }
+                                                    }
+                                            }
+                                    );
+                        }else{
+                            return false;
+                        }
+                    });
+                    
+                    $(".default_poi").live("click",function(){
+                        var route_id = $(this).attr("data_route_id");
+                        //获取当前所在的天
+                        
+                        $(".poi_dot_route_"+route_id).removeClass("on");
+                        $(this).addClass("on");
+                        //显示图片集合
+                        $(".photo_content_route_"+route_id).removeClass("on");
+                        SPOT_ID = $(this).attr("data_spot_id");
+                        $(".photo_content_spot_"+SPOT_ID).addClass("on");
+                    });
+                    
+                    //ajax_add_day
+                    $(".add_day_btn").bind("click",function(){
+                        var ajax_url = "{url r="guide#ajax_add_day"}";
+                        var query = new Object();
+                        query.guide_id = GUIDE_ID;
+                        query.is_again = 1; //二次编辑
+                        $.ajax({
+                            type:"POST",
+                            url:ajax_url,
+                            data: query,
+                            cache:false,
+                            dataType:"JSON",
+                            success:function(result){
+                                if(result.status){
+                                    $(".guide_day_item").last().after(result.html);
+                                }
+                            }
+                        });
+                    });
+                    
+                     //删除一天
+                     $.Del_route = function(route_id){
+                         if(confirm("确定要删除这一天吗？同时会删除景点和景点下面的照片！")){
+                                var del_route_id = route_id;
+                                var ajax_url = "{url r="guide#ajax_del_route"}";
+				var query = new Object();
+				query.route_id = del_route_id;
+                                query.is_again = 1; //二次编辑
+				$.ajax(
+					{
+                                            type: "POST",
+						url: ajax_url,
+						data: query,
+						cache:false,
+						dataType:"json",
+						success: function(result){
+                                                    if(result.status){
+                                                        $(".guide_day_item_route_id_"+del_route_id).remove();
+                                                         location.reload() ;
+                                                    }
+                                                    
+                                                }
+                                        });
+                         }else{
+                            return false;
+                        }
+                     };
+			
+                    //保存输入框数据
+                    $(".input_data").live("blur",function(){
+                        var input_data = $(this).val();
+                        var input_hide_data = $(this).attr("hide_data");
+                        if(input_data.length>0 && input_data != input_hide_data){
+                            var guide_id = GUIDE_ID
+                            var route_id = $(this).attr("date_route");
+                            var data_type = $(this).attr("data_type");
+                            //更新数据
+                            var ajax_url = "{url r="guide#ajax_save_input_data"}";
+                            var query = new Object();
+                            var obj = $(this);
+                            query.guide_id = GUIDE_ID;
+                            query.route_id = route_id;
+                            query.data_type = data_type;
+                            query.input_data = input_data;
+                            query.is_again = 1;
+                            $.ajax({
+                                type:"POST",
+                                url:ajax_url,
+                                data:query,
+                                cache:false,
+                                dataType:"JSON",
+                                success:function(result){
+                                     if(result.status == -100){
+                                         obj.val("");
+                                        $.showErr("请勿提交非法内容");
+                                        return false;
+                                    }
+                                }
+                            });
+                        }
+                    });
+                    
+                    //修改时间
+                    $(".route_time").live("change",function(){
+                        var route_time = $(this).val();
+                        var route_id = $(this).attr("data_route");
+                        if(route_time != "请选择日期"){
+                            var ajax_url = "{url r="guide#ajax_save_route_time"}";
+                            var query = new Object();
+                            query.route_id = route_id;
+                            query.route_time = route_time;
+                            query.is_again = 1; //二次编辑
+                            $.ajax({
+                                type:"POST",
+                                url:ajax_url,
+                                data:query,
+                                cache:false,
+                                dataType:"JSON",
+                                success:function(result){
+
+                                }
+                            });
+                        }
+                        
+                    });
+                    
+                   
+                    //二次编辑游记
+                    $(".again_guide_btn").bind("click",function(){
+                        var ajax_url = "{url r="guide#ajax_again_guide"}";
+                        var query = new Object();
+                        query.guide_id = GUIDE_ID;
+                        $.ajax({
+                                type:"POST",
+                                url:ajax_url,
+                                data:query,
+                                cache:false,
+                                dataType:"JSON",
+                                success:function(result){
+                                    if(result.status==1){
+                                        $.showSuccess("编辑成功，前往查看。",function(){window.location.href="{url r="guide#show" p="id=$id"}"; });
+                                    }else{
+                                        $.showErr("系统繁忙请稍候再试！");
+                                    }
+                                    
+                                    return true;
+                                }
+                            });
+                    });
+                    $(".btn_checkbox_item a").bind("click",function(){
+                        var date_type = $(this).attr("date_type");
+                        var rel_data = $(this).attr("rel");
+                        $("."+date_type).removeClass("cur");
+                        $(this).addClass("cur");
+                        $("."+date_type+"_v").val(rel_data);
+                        
+                        var ajax_url = "{url r="guide#ajax_save_tour_type"}";
+                        var query = new Object();
+                        query.guide_id = GUIDE_ID;
+                        query.tour_range = $(".tour_range_v").val();
+                        query.tour_type = $(".tour_type_v").val();
+                        query.is_again = 1; //二次编辑
+                        $.ajax({
+                                type:"POST",
+                                url:ajax_url,
+                                data:query,
+                                cache:false,
+                                dataType:"JSON",
+                                success:function(result){
+                                    return true;
+                                }
+                            });
+                    });
+          });
+
+
+  </script>
+{include file="inc/footer.html"}

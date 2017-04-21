@@ -1,0 +1,11 @@
+jQuery(function(){
+	$(".all_button").hover(function(){
+		$(this).addClass("all_open");
+		$(this).find(".button_a").addClass("open_a");
+		$(this).find(".all_oh_des_left").show()
+	},function(){
+		$(this).removeClass("all_open");
+		$(this).find(".button_a").removeClass("open_a");
+		$(this).find(".all_oh_des_left").hide()
+	});
+});

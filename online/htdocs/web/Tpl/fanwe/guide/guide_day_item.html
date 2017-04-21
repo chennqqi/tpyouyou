@@ -1,0 +1,67 @@
+<!--start 每天的游记-->
+
+			<div class="guide_day_item" data_route_id="{$vo.route_id}">
+                            <div class="blank20"></div>
+					 <div class="t_day">
+						<div class="day_num">
+                                                    第 <span>{$vo.day_num}</span> 天
+						</div>
+						<div class="day_date">
+							<input class="begin_date route_time route_time_{$vo.route_id}" id="begin_date_{$vo.day_num}" data_route="{$vo.route_id}" type="text" readonly="true" value="{$vo.day_date}" title="" ></div>
+						<div>
+                                                    <a class="t_edit" title="修改行程日期" href="javascript:void(0);" onclick="$.Show_Datepicker({$vo.day_num})"></a>
+
+							<a class="t_delete" title="删除行程" href="javascript:void(0);"></a>
+						</div>
+					</div>
+
+                    <div class="t_day_box">
+						<div class="write_box">
+
+								<div class="input_item">
+									<input class="input_limit input_data" data_type="route_title" date_route="{$vo.route_id}" maxlength="30" max_data="30" type="text" holder="输入当日标题" /><span >还可以输入<i class="limit_num">30</i>字</span>
+								</div>
+
+								<!--POI列表-->
+								<div class="poi_box ui-sortable poi_box_route_{$vo.route_id}" data_route_id="{$vo.route_id}">
+
+									<div class="poi_dot add_poi" data_route_id="{$vo.route_id}"></div>
+								</div>
+								<!--POI列表 end-->
+
+								<!--图片列表-->
+                                                                
+								<div class="photo_content_box_route_{$vo.route_id} clearfix"></div>
+
+								<!--图片列表 end-->
+								<div class="blank10"></div>
+								<div class="write_box">
+									<div class="textarea_item">
+                                                                            <textarea  class="input_limit input_data" data_type="route_content" date_route="{$vo.route_id}"  maxlength="1000"  placeholder="记录旅途的点点滴滴"></textarea>
+                                                                            <span >还可以输入<i class="limit_num">1000</i>字</span>
+                                                                        </div>
+								</div>
+						</div>
+					</div>
+					<div class="blank20"></div>
+                                <div class="blank20"></div>
+                                <script>
+                                    $(function(){
+
+                                          $( "#begin_date_{$vo.day_num}" ).datepicker({
+                                               format:'Y-m-d',
+                                               numberOfMonths: 2,  //显示两个月
+                                               maxDate: 0 //从当前日期起可选
+                                           });
+                                           $.Show_Datepicker = function(day_num){
+                                               $("#begin_date_"+day_num).datepicker( "show" );
+                                           };
+
+                                    });
+
+
+                               </script>
+			</div>
+
+			<!--end 每天的游记-->
+                        

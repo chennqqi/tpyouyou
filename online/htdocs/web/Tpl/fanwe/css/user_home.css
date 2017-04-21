@@ -1,0 +1,84 @@
+.uc_h_header{
+    border-bottom: 1px solid #e8e8e8;
+}
+.uc_h_header .uc_h_bg1{
+    width: 1000px;
+    height: 355px;
+    background:url("../images/user_home_top1.gif") no-repeat;
+}
+.uc_h_header .uc_h_bg2{
+    width: 1000px;
+    height: 106px;
+    background:url("../images/user_home_top2.gif") no-repeat;
+    position: relative;
+}
+.uc_h_bg2 .uc_avatar{
+    width: 110px;
+    height: 110px;
+    top: -74px;
+    padding: 3px;
+    left: 25px;
+    position: absolute;
+    background: #fff;
+    border: 1px solid #dcdcdc;
+}
+.uc_h_bg2 .uc_avatar img{
+    width: 110px;
+    height: 110px;
+}
+
+.uc_h_bg2 .uc_name{
+    padding-left: 158px;
+    font-weight: bold;
+    font-size: 14px;
+    padding-top: 14px;
+}
+.uc_h_bg2 .uc_info{
+    padding-left: 40px;
+}
+.uc_h_bg2 .uc_info ul li{
+    list-style-type: disc;
+    list-style-position: inside;
+}
+.uc_h_bg2 .uc_action{
+    position: absolute;
+    right: 18px;
+    top: 35px;
+
+}
+.uc_h_bg2 .uc_action a:hover{
+    color: #666;
+}
+
+.uc_h_bg2 .uc_action .uc_act_item{
+    float: left;
+    width: 120px;
+    height: 53px;
+    margin-right: 2px;
+    background: url("../images/user_home_ac_btn.gif");
+}
+.uc_h_bg2 .uc_action .uc_act_share{
+    background-position: -127px 0;
+}
+.uc_h_bg2 .uc_action .uc_act_follow{
+    background-position: -127px -64px
+}
+.uc_h_bg2 .uc_action .uc_act_fans{
+    background-position: -127px -129px
+}
+.uc_h_bg2 .uc_action .uc_act_item.cur{
+    background-position-x: 0;
+}
+.uc_action .uc_act_item .act_con{
+    padding-left: 68px;
+    padding-top: 10px;
+}
+.act_con .act_title{
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+.act_con .act_v{
+    color: #ff6464;
+    font-weight: bold;
+}

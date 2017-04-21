@@ -1,0 +1,289 @@
+<?php
+	$this->_var['pagecss'][] = TMPL_REAL."/css/style.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/weebox.css";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.bgiframe.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.weebox.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.pngfix.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/lazyload.js";
+
+	$this->_var['pagejs'][] = TMPL_REAL."/js/script.js";
+	$this->_var['cpagejs'][] = TMPL_REAL."/js/script.js";
+	
+	$this->_var['pagejs'][] = TMPL_REAL."/js/uc_order.js";
+
+	$this->_var['pagecss'][] = TMPL_REAL."/css/user_common.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/uc_order.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/uc_tourlin_order.css";
+?>
+{include file="inc/header.html"}
+{include file="inc/ur_here.html"}
+<div class="wrap">
+	<div class="order_info_box">
+		<div class="order_box">
+			<h2>我的订单</h2>
+			<div class="routes_info">
+				<table cellspacing="0" cellpadding="0" class="order_table_1">
+					<tbody>
+						<tr>
+							<td>订单编号：<span class="fred">{$order.sn}</span></td>
+							<td>预订时间：{$order.create_time_format}</td>
+							<td>订单状态：{$order.order_status_format}</td>
+							<td>出发城市：{$order.out_city}</td>
+						</tr>
+						<tr>
+							<td>订单ID：<span class="fred">{$order.id}</span></td>
+							<td>出发时间：{$order.end_time}</td>
+							<td>付款状态：{$order.pay_status_format}</td>
+							<td>订单总价：{$order.total_price_format}</td>
+						</tr>
+						<tr>
+							<td>已付：{$order.pay_amount_format}</td>
+							<td>代金券支付：{$order.voucher_pay_format}</td>
+							<td>余额支付：{$order.account_pay_format}</td>
+							<td>在线支付：{$order.online_pay_format}</td>
+						</tr>
+					</tboty>
+				</table>
+				<div class="blank"></div>
+				<table cellspacing="0" cellpadding="0" class="order_table order_table_2">
+					<tbody>
+						<tr>
+							<th colspan ="4">商品名称：{$order.tourline_name}</th>
+						</tr>
+						<tr>
+							<td><strong>出游团费：</strong></td>
+							<td>
+								{$order.adult_count}成人*{$order.adult_price_format}<br />
+								{$order.child_count}儿童*{$order.child_price_format}
+							</td>
+							<td>{$order.t_total_price}</td>
+						</tr>
+						{if $order.is_insurance eq 1}
+						<tr>
+							<td>
+								<strong>保险费用：</strong>
+								{$order.insurance_name}
+							</td>
+							<td>{$order.insurance_price}</td>
+							<td>{$order.insurance_total}</td>
+						</tr>
+						{/if }
+						{if $order.visa_count gt 0}
+						<tr>
+							<td>
+								<strong>签证费用：</strong>
+							</td>
+							<td> {$order.visa_count}份  * {$order.visa_price}</td>
+							<td>{$order.visa_total}</td>
+						</tr>
+						{/if }
+						<tr>
+							<td>
+								<strong>出游费用：</strong>
+							</td>
+							<td> </td>
+							<td>{$order.tourline_total_price_format}</td>
+						</tr>
+						{if $order.yufu_hide eq 0}
+						<tr>
+							<td>
+								<strong>网上预付：</strong>
+							</td>
+							<td>
+								{$order.adult_count}成人*{$order.adult_sale_price_format}<br />
+								{$order.child_count}儿童*{$order.child_sale_price_format}
+							</td>
+							<td>{$order.total_price_format}</td>
+						</tr>
+						{/if }
+					</tbody>
+				</table>
+				{if $order.verify_code}
+				<div class="blank"></div>
+				<div class="blank"></div>
+				<p class="ral_imf">验证码<span></span> </p>
+				<table cellspacing="0" cellpadding="0" class="order_table order_table_4">
+					<tbody>
+						<tr>
+							<th>验证码</th>
+							<th>有效</th>
+							<th>验证过期时间 </th>
+							<th>
+								用户验证时间
+							</th>
+						</tr>
+						<tr>
+							<td>{$order.verify_code}</td>
+							<td>{if $order.is_verify_code_invalid eq 0}有效{else}无效{/if}</td>
+							<td>{$order.end_time}</td>
+							<td>{$order.verify_time_format}</td>
+						</tr>
+						
+					</tbody>
+				</table>
+				{/if}
+				<div class="blank"></div>
+				<div class="blank"></div>
+				<p class="ral_imf">联系人信息<span></span> </p>
+				<table cellspacing="0" cellpadding="0" class="order_table order_table_3">
+					<tbody>
+						<tr>
+							<td>联系人姓名：{$order.appoint_name}</td>
+							<td>
+								手机：{$order.appoint_mobile}
+							</td>
+							<td>邮箱(E-mail)：{$order.appoint_email}</td>
+						</tr>
+					</tbody>
+				</table>
+				{if $order_namelist}
+				<div class="blank"></div>
+				<div class="blank"></div>
+				<p class="ral_imf">游客信息<span>（请认真填写出游人信息）</span> </p>
+				<table cellspacing="0" cellpadding="0" class="order_table order_table_4">
+					<tbody>
+						<tr>
+							<th>游客姓名</th>
+							<th>证件类型</th>
+							<th>证件号</th>
+							<th>
+								手机号
+							</th>
+						</tr>
+						{foreach from="$order_namelist" item="namelist" }
+						<tr>
+							<td>{$namelist.name}</td>
+							<td>{$namelist.paper_type_val}</td>
+							<td>{$namelist.paper_sn}</td>
+							<td>{$namelist.mobile}</td>
+						</tr>
+						{/foreach}
+					</tbody>
+				</table>
+				{/if}
+				{if $order.refund_status gt 0}
+				<div class="blank"></div>
+				<div class="blank"></div>
+				<p class="ral_imf">退款</span></p>
+				<table cellspacing="0" cellpadding="0" class="order_table order_table_5">
+					<tbody>
+						<tr>
+							<th width="140">退款内容</th>
+							<th width="180">申请时间</th>
+							<th>退款原因</th>
+						</tr>
+						
+						<tr>
+							<td>
+								成人：{$order.refund_adult_count}<br />
+								儿童：{$order.refund_child_count}<br />
+								签证：{$order.refund_visa_count}
+							</td>
+							<td>
+								{$order.re_action_time_format}
+							</td>
+							<td>
+								{$order.refund_txt}
+							</td>
+						</tr>
+						
+						<tr>
+							<td >退款状态：{$order.refund_status_format}</td>
+							{if $order.refund_status eq 3}
+							<td colspan ="2" style="border-top:1px solid #E6E6E6;padding-top:8px;">
+							          拒退原因：
+								{$order.refuse_reason}
+							</td>
+							{/if}
+						</tr>
+					</tbody>
+				</table>
+				{/if}
+				{if $allow_refund}
+				<div class="blank"></div>
+				<div class="blank"></div>
+				<div id="refund_box_id" class="refund_box">
+					<p class="refund_title" >退款申请</p>
+					<form action="{url r="uc_order#tourline_refund"}" method="post" class="refund_form">
+						<div>
+							{if $order.adult_count >0}
+							退成人<select name="refund_adult_count" >
+									{foreach from="$adult_count_array" item="adult"}
+									<option value="{$adult.num}" {if $order.refund_adult_count eq $adult.num}selected=selected{/if}>{$adult.num}</option>
+									{/foreach}
+							     </select>
+							{/if}
+							{if $order.child_count >0}
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							退儿童<select name="refund_child_count" >
+									{foreach from="$child_count_array" item="child"}
+									<option value="{$child.num}" {if $order.refund_child_count eq $child.num}selected=selected{/if}>{$child.num}</option>
+									{/foreach}
+							     </select>
+							{/if}
+							{if $order.visa_count >0}
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							退签证<select name="refund_visa_count" >
+									{foreach from="$visa_count_array" item="visa"}
+									<option value="{$visa.num}">{$visa.num}</option>
+									{/foreach}
+							     </select>
+							{/if}
+						</div>
+						
+						<div class="refund_txt">
+							<p>退款原因：请在下面框中说明 退款原因 及 所退人员(成人/儿童)名称<p>
+							<textarea name="refund_txt" rows="8" cols="80" class="f-textarea">{$order.refund_txt}</textarea>
+						</div>
+						<div>
+							<input type="hidden"  name="order_id" value="{$order.id}">
+							<input type="button" class="formbutton" name="commit" value="好了，提交">
+						</div>
+						
+					</from>
+				</div>
+				{/if}
+				
+			</div>
+		</div>
+	</div>
+</div>
+<div class="blank15"></div>
+<script type="text/javascript">
+	$("input[name='commit']").click(function(){
+		var refund_adult_count=parseInt($("select[name='refund_adult_count']").val());
+		var refund_child_count=parseInt($("select[name='refund_child_count']").val());
+		var refund_visa_count=parseInt($("select[name='refund_visa_count']").val());
+		var refund_txt=$("textarea[name='refund_txt']").val();
+		
+		if(refund_txt =='')
+		{
+			$.showErr("请输入退款原因！");
+			$("textarea[name='refund_txt']").focus();
+		}
+		var query = new Object();
+		query.refund_adult_count=refund_adult_count;
+		query.refund_child_count=refund_child_count;
+		query.refund_visa_count=refund_visa_count;
+		query.refund_txt=refund_txt;
+		query.order_id=parseInt($("input[name='order_id']").val());
+		
+		$.ajax({
+			url:'{url r="uc_order#tourline_refund"}',
+			data:query,
+			type:"post",
+			dataType:"json",
+			success:function(ajaxobj){
+				if(ajaxobj.status==1){
+					 location.reload();
+				}
+				else{
+					$.showErr(ajaxobj.info);
+				}
+			}
+			
+		});
+	});
+	
+</script>
+{include file="inc/footer.html"}

@@ -1,0 +1,21 @@
+{if app_conf("GUANZHU_WEIBO_URL") neq ''}
+<div class="f_l nav_weibo mr_5"><a href="{function name="app_conf" v="GUANZHU_WEIBO_URL"}" target="_blank">关注微博</a></div>
+{/if}
+{if app_conf("GUANZHU_WEIXIN_IMAGE") neq ''}
+<div class="f_l nav_weixin mr_5" id="weixin_button" >
+	<a href="javascript:viod(0);">关注微信</a>
+	<div class="qr_code_img">
+		<ul>
+			<li class="qr_title">
+				用微信扫－扫
+			</li>
+			<li class="li_img">
+				<img src="{function name="app_conf" v="GUANZHU_WEIXIN_IMAGE"}">
+			</li>
+		</ul>
+		
+	</div>
+</div>
+{/if}
+ <!--
+<div class="f_l nav_site_map"><a href="#">网站导航</a><span class="icon_down"></span></div>-->

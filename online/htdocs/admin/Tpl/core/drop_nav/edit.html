@@ -1,0 +1,54 @@
+<script type="text/javascript">
+var LOAD_MODULE_URL = "{$loadmoduleurl}";
+</script>
+<script type="text/javascript" src="{$TMPL}/core/include/js/navurl.js"></script>
+<h2 class="contentTitle">{lang v="EDIT"}{lang v="DROP_NAV"}</h2>
+<form action="{$formaction}" method="post" class="pageForm required-validate" onsubmit="return validateCallback(this, navTabAjaxDone)">
+<div class="pageContent">
+<div class="pageFormContent" layoutH="97">		
+
+		<table class="formtable">			
+			<tr>
+				<td class="item_title">{lang v="NAV_NAME"}:</td>
+				<td class="item_input">
+					<input type="text" class="required textInput valid"   maxlength="20" name="name" value="{$vo.name}" />
+					<label class="tip"></label>
+				</td>
+			</tr>
+			<tr>
+				<td class="item_title">{lang v="NAV_URL"}:</td>
+				<td class="item_input">
+					<select name="u_module" class="combox">
+							<option value="">{lang v="U_DEFINE"}</option>
+							{foreach from=$navs item=nav key=key}
+								<option value="{$key}" {if $vo.u_module eq $key} selected="selected"{/if}>{$nav.name}</option>
+							{/foreach}
+					</select>
+					<label class="tip" id="u_act">				
+					</label>
+					<label class="tip"  id="u_config">				
+						<label class="tip"> {lang v="U_PARAM"}：</label> <input type="text" class="textInput" name="u_param"  value="{$vo.u_param}" />
+					</label>
+					
+					<label class="tip"  id="u_define">
+						<input type="text" class="textInput url" name="url" value="{$vo.url}"  />
+					</label>
+				</td>
+			</tr>	
+			<tr>
+				<td class="item_title">{lang v="SORT"}:</td>
+				<td class="item_input"><input type="text" class="textInput digits" name="sort" value="{$vo.sort}" /></td>
+			</tr>	
+			
+		</table>
+					
+	</div>
+	<div class="formBar">
+		<ul>
+			<input type="hidden" name="id" value="{$vo.id}" />
+			<li><div class="buttonActive"><div class="buttonContent"><button type="submit">{lang v="SAVE"}</button></div></div></li>
+			<li><div class="button"><div class="buttonContent"><button class="close" type="button">{lang v="CLOSE"}</button></div></div></li>
+		</ul>
+	</div>
+</div>
+</form>

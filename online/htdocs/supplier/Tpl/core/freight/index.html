@@ -1,0 +1,58 @@
+<script type="text/javascript">
+var LOAD_CITY_URL = "{$loadcityurl}";
+var PROVINCE_LIST = "<select name='province_id[]' class='province_id'>";
+{foreach from=$province_list item=province}
+PROVINCE_LIST+="<option value='{$province.id}'>{$province.py_first} {$province.name}</option>";
+{/foreach}
+PROVINCE_LIST+="</select>";
+</script>
+<script type="text/javascript" src="{$TMPL}/core/include/js/freight.js"></script>
+<h2 class="contentTitle">运费设置</h2>
+<form action="{$formaction}" method="post" class="pageForm required-validate" onsubmit="return validateCallback(this, navTabAjaxDone)">
+<div class="pageContent">
+<div class="pageFormContent" layoutH="97">		
+
+			<table class="formtable">			
+			
+			<tr>
+				<td class="item_title">开启默认运费设置: </td>
+				<td class="item_input">
+					<select name="is_default" class="combox"><option value="1" {if $default_freight}selected="selected"{/if}>是</option><option value="0" {if !$default_freight}selected="selected"{/if}>否</option></select>
+					<input type="text" class="textInput" maxlength="20" name="default_price" value="{$default_freight.price}" style="margin-right:10px;" /> 
+					<div style="margin-right:10px; height:22px; line-height:22px; display:inline-block; float:left;">元</div>
+					 
+					<div style="margin-left:10px;" class="buttonActive"><div class="buttonContent"><button type="button" id="add_freight">添加运费配置</button></div></div>
+				</td>
+			</tr>	
+			{foreach from=$freight_list item=freight}
+			<tr rel="{$freight.province_id}_{$freight.city_id}" >
+				<td class="item_title"></td>
+				<td class="item_input">
+					<select class="province_id" name="province_id[]">
+						{foreach from=$province_list item=province}
+						<option value="{$province.id}" {if $freight.province_id eq $province.id}selected="selected"{/if}>{$province.py_first} {$province.name}</option>
+						{/foreach}
+					</select>
+					<select class="city_id" name="city_id[]">
+						<option value="0">全省统一</option>
+						{foreach from=$city_list[$freight.province_id] item=city}
+						<option value="{$city.id}" {if $freight.city_id eq $city.id}selected="selected"{/if}>{$city.py_first} {$city.name}</option>
+						{/foreach}
+					</select>
+					
+					<input type="text" class="textInput" name="price[]" value="{$freight.price}"> <div style="margin-right:10px; margin-left:10px; height:22px; line-height:22px; display:inline-block; float:left;">元</div> <a href="javascript:void(0);" rel="{$freight.province_id}_{$freight.city_id}" class="button"><span>删除</span></a>
+				</td>
+			</tr>
+			{/foreach}	
+			
+			</table>
+					
+	</div>
+	<div class="formBar">
+		<ul>
+			<li><div class="buttonActive"><div class="buttonContent"><button type="submit">{lang v="SAVE"}</button></div></div></li>
+			<li><div class="button"><div class="buttonContent"><button class="close" type="button">{lang v="CLOSE"}</button></div></div></li>
+		</ul>
+	</div>
+</div>
+</form>

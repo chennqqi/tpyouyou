@@ -1,0 +1,28 @@
+@CHARSET "UTF-8";
+
+.main_box{
+    border:#ccc solid 1px;
+    margin:10px auto;
+    border-top:#03a2da 2px solid;
+}
+.main_box .main_box_top{
+    background:url(../images/user/box_top_bg.gif) repeat-x;
+    height:31px; line-height:31px; padding:0px 10px; 
+    font-weight: bold; font-size:14px;
+}
+
+.step_bar{ display:block; width:934px;  height:31px; margin:20px auto; background:url(../images/user/getpwd_step_bg.gif); line-height:31px; text-align:center; }
+.step_bar li{ display:inline-block; float:left; width:233px; font-size:14px;  }
+.step_bar li span{ font-weight:bold; display:inline-block; padding-right:10px;}
+.step1{ background-position: 0px 0px;}
+.step2{ background-position: 0px -31px;}
+.step3{ background-position: 0px -62px;}
+.step4{ background-position: 0px -93px;}
+
+.step1 .step1_color,.step2 .step2_color,.step3 .step3_color,.step4 .step4_color{ color:#fff;}
+
+.main_box_center{ width:525px; margin:0 auto;}
+.message_tip{ height:40px; margin:10px 0px;}
+.message_tip label{ display:inline-block; padding:20px; border:#f30 solid 1px; background:#fff1f1; font-size:14px; font-weight:bold;}
+
+.success_tip{ display:block; width:350px; height:20px;  margin:30px auto; padding:20px; border:#f30 solid 1px; background:#fff1f1; font-size:14px; font-weight:bold; }

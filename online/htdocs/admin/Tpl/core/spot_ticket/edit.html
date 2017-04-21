@@ -1,0 +1,500 @@
+<script type="text/javascript">
+$(document).ready(function(){
+		$($.pdialog.getCurrent()).find("select[name='is_appoint_time']").bind("change",function(){
+			if ($(this).val() == "1") {
+				$($.pdialog.getCurrent()).find("select[name='is_end_time']").val(0);
+				$($.pdialog.getCurrent()).find(".end_time_box").hide();
+				$($.pdialog.getCurrent()).find(".end_time_box_0").show();
+				$($.pdialog.getCurrent()).find(".end_time_box_1").hide();
+			}
+			else{
+				$($.pdialog.getCurrent()).find(".end_time_box").show();
+			}
+		});
+		$($.pdialog.getCurrent()).find("select[name='is_end_time']").bind("change",function(){
+			if($(this).val()=="0"){
+				$($.pdialog.getCurrent()).find("input[name='end_time_day']").val("0");
+				$($.pdialog.getCurrent()).find(".end_time_box_0").show();
+				$($.pdialog.getCurrent()).find(".end_time_box_1").hide();
+			}
+			else
+			{
+				$($.pdialog.getCurrent()).find("input[name='end_time']").val("");
+				$($.pdialog.getCurrent()).find(".end_time_box_0").hide();
+				$($.pdialog.getCurrent()).find(".end_time_box_1").show();
+			}
+		});
+		
+		$($.pdialog.getCurrent()).find("select[name='pay_type']").bind("change",function(){
+			if($(this).val()=="2"){
+				$($.pdialog.getCurrent()).find(".sale_price_box").show();
+			}
+			else{
+				$($.pdialog.getCurrent()).find(".sale_price_box").hide();
+			}
+		});
+		
+});
+</script>
+<form action="{$formaction}" method="post" class="pageForm required-validate" onsubmit="return validateCallback(this, SpotTicketCallBackEdit)">
+<div class="pageContent">
+	<div class="pageFormContent" layoutH="57">
+		<div class="tabs">
+			<div class="tabsHeader">
+				<div class="tabsHeaderContent">
+					<ul>					
+						<li class="selected"><a href="javascript:void(0)"><span>价格数量</span></a></li>
+						<li><a href="javascript:void(0)"><span>内容设置</span></a></li>
+						<li><a href="javascript:void(0)"><span>返利设置</span></a></li>
+						<li><a href="javascript:void(0)"><span>退改设置</span></a></li>
+						<li><a href="javascript:void(0)"><span>团购设置</span></a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="tabsContent cf" >
+				<div>
+					<table class="formtable">			
+						<tr>
+							<td class="item_title">{lang v="NAME"}:</td>
+							<td class="item_input">
+								<input type="text" class="required textInput valid"   minlength="3"  size="50" name="name" value="{$ticket.name}">
+								<label class="tip"></label>
+							</td>
+						</tr>
+						<tr>
+							<td class="item_title">短名称:</td>
+							<td class="item_input">
+								<input type="text" class="required textInput valid"   minlength="2"  size="50" name="short_name" value="{$ticket.short_name}">
+								<label class="tip"></label>
+							</td>
+						</tr>
+						<tr>
+							<td class="item_title">名称简介:</td>
+							<td class="item_input">
+								<input type="text" class="textInput valid"   minlength="3"  size="50" name="name_brief" value="{$ticket.name_brief}">
+								<label class="tip"></label>
+							</td>
+						</tr>
+						
+						<tr>
+							<td class="item_title">多张门票分次使用:</td>
+							<td class="item_input">
+								<select name="is_divide" class="combox">
+									<option value="0" {if $ticket.is_divide eq 0}selected="selected"{/if}>不允许</option>
+									<option value="1" {if $ticket.is_divide eq 1}selected="selected"{/if}>允许</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td class="item_title">预定方式:</td>
+							<td class="item_input">
+								<select name="pay_type" class="combox">
+									<option value="1" {if $ticket.pay_type eq 1}selected="selected"{/if}>全款在线支付</option>
+									<option value="2" {if $ticket.pay_type eq 2}selected="selected"{/if}>定金支付、到景点付全款</option>
+									<option value="3" {if $ticket.pay_type eq 3}selected="selected"{/if}>到景点支付</option>
+								</select>
+							</td>
+						</tr>
+						
+						<tr>
+							<td class="item_title">订单门票确认方式:</td>
+							<td class="item_input">
+								<select name="order_status" class="combox">
+									<option value="1" {if $ticket.order_status eq 1}selected="selected"{/if}>手动确认</option>
+									<option value="2" {if $ticket.order_status eq 2}selected="selected"{/if}>自动确认</option>
+								</select>
+							</td>
+						</tr>
+						
+						<tr>
+							<td class="item_title">{lang v="ORIGIN_PRICE"}:</td>
+							<td class="item_input">
+								<input type="text" class="textInput number"   maxlength="10" name="origin_price" value="{$ticket.origin_price}">
+								<label class="tip"></label>
+							</td>
+						</tr>
+						
+						<tr>
+							<td class="item_title">{lang v="CURRENT_PRICE"}:</td>
+							<td class="item_input">
+								<input type="text" class="textInput number"   maxlength="10" name="current_price" value="{$ticket.current_price}">
+								<label class="tip"></label>
+							</td>
+						</tr>
+						
+						<tr {if $ticket.pay_type neq 2}style="display:none"{/if} class="sale_price_box">
+							<td class="item_title">{lang v="SALE_PRICE"}:</td>
+							<td class="item_input">
+								<input type="text" class="textInput number"   maxlength="10" name="sale_price" value="{$ticket.sale_price}">
+								<label class="tip"></label>
+							</td>
+						</tr>
+						
+						<tr>
+							<td class="item_title">{lang v="SALE_VIRTUAL_TOTAL"}:</td>
+							<td class="item_input">
+								<input type="text" class="textInput digits"   maxlength="10" name="sale_virtual_total" value="{$ticket.sale_virtual_total}">
+								<label class="tip"></label>
+							</td>
+						</tr>
+						
+						<tr>
+							<td class="item_title">最小购买:</td>
+							<td class="item_input">
+								<input type="text" class="textInput digits"   maxlength="10" name="min_buy" value="{$ticket.min_buy}">
+								<label class="tip">0表示无限制</label>
+							</td>
+						</tr>
+						
+						<tr>
+							<td class="item_title">最大购买:</td>
+							<td class="item_input">
+								<input type="text" class="textInput digits"   maxlength="10" name="max_buy" value="0">
+								<label class="tip">0表示无限制</label>
+							</td>
+						</tr>
+						
+						<tr>
+							<td class="item_title">库存:</td>
+							<td class="item_input">
+								<input type="text" class="textInput digits"   maxlength="10" name="sale_max" value="{$ticket.sale_max}">
+								<label class="tip">0表示无限制</label>
+							</td>
+						</tr>
+						
+						
+						<tr>
+							<td class="item_title">{lang v="SORT"}:</td>
+							<td class="item_input">
+								<input type="text" class="textInput digits"   maxlength="10" name="sort" value="{$ticket.sort}">
+								<label class="tip"></label>
+							</td>
+						</tr>	
+					</table>
+				</div>
+				
+				<!--价格数量-->
+				<div>
+					<table class="formtable">
+						<tr>
+							<td class="item_title">是否需要预约:</td>
+							<td class="item_input">
+								<select name="is_appoint_time" class="combox">
+									<option value="0" {if $ticket.is_appoint_time eq 0}selected="selected"{/if}>否</option>
+									<option value="1" {if $ticket.is_appoint_time eq 1}selected="selected"{/if}>是</option>
+								</select>
+								<label class="tip">选 否 无法改签</label>
+							</td>
+						</tr>
+						
+						<tr class="end_time_box" {if $ticket.is_appoint_time eq 1}style="display:none"{/if}>
+							<td class="item_title">截止时间类型:</td>
+							<td class="item_input">
+								<select name="is_end_time" class="combox">
+									<option value="0" {if $ticket.is_end_time eq 0}selected="selected"{/if}>按固定日期</option>
+									<option value="1" {if $ticket.is_end_time eq 1}selected="selected"{/if}>按固定时限</option>
+								</select>
+							</td>
+						</tr>
+						
+						<tr class="end_time_box_0" {if $ticket.is_end_time eq 1}style="display:none"{/if}>
+							<td class="item_title">有效期截止日:</td>
+							<td class="item_input">
+								<input type="text" name="end_time" value="{$ticket.end_time}" class="date textInput readonly valid"   readonly="true">
+								<a class="inputDateButton" href="javascript:;">选择</a>
+								<label class="tip">留空表示无限期，(更新不影响已销售的门票)</label>
+							</td>
+						</tr>
+						
+						<tr class="end_time_box_1"  {if $ticket.is_end_time eq 0 || $ticket.is_end_time eq ''}style="display:none"{/if}>
+							<td class="item_title">过期时间天数:</td>
+							<td class="item_input">
+								<input type="text" class="textInput digits"   maxlength="10" name="end_time_day" value="{$ticket.end_time_day}">
+								<label class="tip">自预定日起的到过期的天数</label>
+							</td>
+						</tr>
+						
+						
+						<tr >
+							<td class="item_title">是否允许配送:</td>
+							<td class="item_input">
+								<select name="is_delivery" class="combox">
+									<option value="0" {if $ticket.is_delivery eq 0}selected="selected"{/if}>否</option>
+									<option value="1" {if $ticket.is_delivery eq 1}selected="selected"{/if}>是</option>
+								</select>
+							</td>
+						</tr>
+						
+						
+						
+						<tr >
+							<td class="item_title">证件号是否必填:</td>
+							<td class="item_input">
+								<select name="paper_must" class="combox">
+									<option value="0" {if $ticket.paper_must eq 0}selected="selected"{/if}>否</option>
+									<option value="1" {if $ticket.paper_must eq 1}selected="selected"{/if}>是</option>
+								</select>
+							</td>
+						</tr>
+						
+						<tr >
+							<td class="item_title">是否显示在API:</td>
+							<td class="item_input">
+								<select name="show_in_api" class="combox">
+									<option value="0" {if $ticket.show_in_api eq 0}selected="selected"{/if}>否</option>
+									<option value="1" {if $ticket.show_in_api eq 1}selected="selected"{/if}>是</option>
+								</select>
+							</td>
+						</tr>
+						
+						
+						<tr >
+							<td class="item_title">是否有效:</td>
+							<td class="item_input">
+								<select name="is_effect" class="combox">
+									<option value="1" {if $ticket.is_effect eq 1}selected="selected"{/if}>是</option>
+									<option value="0" {if $ticket.is_effect eq 0}selected="selected"{/if}>否</option>
+								</select>
+							</td>
+						</tr>
+						
+						<tr >
+							<td class="item_title">禁止销售:</td>
+							<td class="item_input">
+								<select name="is_history" class="combox">									
+									<option value="0"  {if $ticket.is_history eq 0}selected="selected"{/if}>否</option>
+									<option value="1"  {if $ticket.is_history eq 1}selected="selected"{/if}>是</option>
+								</select>
+							</td>
+						</tr>
+					
+					</table>
+				</div>
+				
+				
+				<!--返利-->
+				<div>
+					<table class="formtable">
+						<tr>
+							<td class="item_title">允许点评返还:</td>
+							<td class="item_input">
+								<select name="is_review_return" class="combox">
+									<option value="0" {if $ticket.is_review_return eq 0}selected="selected"{/if}>否</option>
+									<option value="1" {if $ticket.is_review_return eq 1}selected="selected"{/if}>是</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td class="item_title">返现金:</td>
+							<td class="item_input">
+								<input type="text" class="textInput number"   maxlength="10" name="return_money" value="{$ticket.return_money}">
+								<label class="tip">0为系统默认</label>
+							</td>
+						</tr>
+						
+						<tr>
+							<td class="item_title">返积分:</td>
+							<td class="item_input">
+								<input type="text" class="textInput digits"   maxlength="10" name="return_score" value="{$ticket.return_score}">
+								<label class="tip">0为系统默认</label>
+							</td>
+						</tr>
+						
+						<tr>
+							<td class="item_title">获得的经验值:</td>
+							<td class="item_input">
+								<input type="text" class="textInput digits"   maxlength="10" name="return_exp" value="{$ticket.return_exp}">
+								<label class="tip">0为系统默认</label>
+							</td>
+						</tr>
+						
+						<tr>
+							<td class="item_title">获得代金券:</td>
+							<td class="item_input">
+								<select name="voucher">
+									<option value="0">未选择</option>
+									{foreach from="$vouchers" item="item"}
+									<option value="{$item.id}" {if $ticket.voucher eq $item.id}selected="selected"{/if}>{$item.voucher_name}</option>
+									{/foreach}
+								</select>
+							</td>
+						</tr>
+						
+						
+						<tr class="review_return_box">
+							<td class="item_title">点评返还的现金:</td>
+							<td class="item_input">
+								<input type="text" class="textInput number"  maxlength="10" name="review_return_money" value="{$ticket.review_return_money}">
+								<label class="tip">0为系统默认</label>
+							</td>
+						</tr>
+						
+						<tr class="review_return_box">
+							<td class="item_title">点评返还的积分:</td>
+							<td class="item_input">
+								<input type="text" class="textInput digits"  maxlength="10" name="review_return_score" value="{$ticket.review_return_score}">
+								<label class="tip">0为系统默认</label>
+							</td>
+						</tr>
+						
+						<tr class="review_return_box">
+							<td class="item_title">点评返还经验:</td>
+							<td class="item_input">
+								<input type="text" class="textInput digits"  maxlength="10" name="review_return_exp" value="{$ticket.review_return_exp}">
+								<label class="tip">0为系统默认</label>
+							</td>
+						</tr>
+						
+						<tr>
+							<td class="item_title">点评获得代金券:</td>
+							<td class="item_input">
+								<select name="review_voucher">
+									<option value="0">未选择</option>
+									{foreach from="$vouchers" item="item"}
+									<option value="{$item.id}" {if $ticket.review_voucher eq $item.id}selected="selected"{/if}>{$item.voucher_name}</option>
+									{/foreach}
+								</select>
+							</td>
+						</tr>
+						
+						<tr>
+							<td class="item_title">允许邀请返利:</td>
+							<td class="item_input">
+								<select name="is_rebate" class="combox">
+									<option value="0" {if $ticket.is_rebate eq 0}selected="selected"{/if}>否</option>
+									<option value="1" {if $ticket.is_rebate eq 1}selected="selected"{/if}>是</option>
+								</select>
+							</td>
+						</tr>
+						
+						<tr>
+							<td class="item_title">允许购物返还:</td>
+							<td class="item_input">
+								<select name="is_buy_return" class="combox">
+									<option value="0" {if $ticket.is_buy_return eq 0}selected="selected"{/if}>否</option>
+									<option value="1" {if $ticket.is_buy_return eq 1}selected="selected"{/if}>是</option>
+								</select>
+							</td>
+						</tr>
+						
+					</table>
+				</div>
+				
+				<!--退改设置-->
+				<div>
+					<table class="formtable">
+						<tr>
+							<td class="item_title">支持退票改签:</td>
+							<td class="item_input">
+								<select name="is_refund" class="combox">
+									<option value="0" {if $ticket.is_refund eq 0}selected="selected"{/if}>否</option>
+									<option value="1" {if $ticket.is_refund eq 1}selected="selected"{/if}>是</option>
+								</select>
+								<label class="tip">只有预约单才允许改签</label>
+							</td>
+						</tr>
+						
+						
+						<tr class="refund_box">
+							<td class="item_title">退票改签说明:</td>
+							<td class="item_input">
+								<textarea name="refund_desc" cols="80" rows="4" class="textInput">{$ticket.refund_desc}</textarea>
+							</td>
+						</tr>
+						
+						<tr class="refund_box">
+							<td class="item_title">过期允许退款:</td>
+							<td class="item_input">
+								<select name="is_expire_refund" class="combox">
+									<option value="0" {if $ticket.is_expire_refund eq 0}selected="selected"{/if}>不可以</option>
+									<option value="1" {if $ticket.is_expire_refund eq 1}selected="selected"{/if}>可以</option>
+								</select>
+							</td>
+						</tr>
+					</table>
+				</div>
+				
+				<!--团购设置-->
+				<div>
+					<table class="formtable">	
+						<tr >
+							<td class="item_title">是否团购:</td>
+							<td class="item_input">
+								<select name="is_tuan" class="combox">
+									<option value="0" {if $ticket.is_tuan eq 0}selected="selected"{/if}>否</option>
+									<option value="1" {if $ticket.is_tuan eq 1}selected="selected"{/if}>是</option>
+								</select>
+								<label class="tip">选 是 下面设置才生效</label>
+							</td>
+						</tr>
+						
+						<tr >
+							<td class="item_title">团购分类:</td>
+							<td class="item_input">
+								<select name="tuan_cate" class="combox">
+									<option value="0">未选择</option>
+									{foreach from="$tuan_cates" item="cate"}
+									<option value="{$cate.id}" {if $ticket.tuan_cate eq $cate.id}selected="selected"{/if}>{$cate.name}</option>
+									{/foreach}
+								</select>
+							</td>
+						</tr>
+						
+						<tr class="tuan_box">
+							<td class="item_title">团购开始时间:</td>
+							<td class="item_input">
+								<input type="text" name="tuan_begin_time" value="{$ticket.tuan_begin_time}" class="date textInput readonly valid" datefmt="yyyy-MM-dd HH:mm:ss"  readonly="true">
+								<a class="inputDateButton" href="javascript:;">选择</a>
+							    <label class="tip">留空表示团购立即开始</label>
+							</td>
+						</tr>
+						
+						<tr class="tuan_box">
+							<td class="item_title">团购结束时间:</td>
+							<td class="item_input">
+								<input type="text" name="tuan_end_time" value="{$ticket.tuan_end_time}" class="date textInput readonly valid" datefmt="yyyy-MM-dd HH:mm:ss" readonly="true">
+								<a class="inputDateButton" href="javascript:;">选择</a>
+							    <label class="tip">留空表示团购永久生效</label>
+							</td>
+						</tr>
+						
+						<tr class="tuan_box">
+							<td class="item_title">成团数量:</td>
+							<td class="item_input">
+								<input type="text" class="textInput digits"   maxlength="10" name="tuan_success_count" value="{$ticket.tuan_success_count}">
+								<label class="tip"></label>
+							</td>
+						</tr>
+						
+						<tr class="tuan_box">
+							<td class="item_title">是否预告:</td>
+							<td class="item_input">
+								<select name="tuan_is_pre" class="combox">
+									<option value="0" {if $ticket.tuan_is_pre eq 0}selected="selected"{/if}>否</option>
+									<option value="1" {if $ticket.tuan_is_pre eq 1}selected="selected"{/if}>是</option>
+								</select>
+							</td>
+						</tr>
+						
+						
+					</table>
+				</div>
+				
+			</div>
+			
+			
+			<div class="tabsFooter">
+				<div class="tabsFooterContent"></div>
+			</div>
+		</div>
+		
+	</div>
+	<div class="formBar">
+		<ul>
+			<input type="hidden" name="id" value="{$ticket.id}" />
+			<li><div class="buttonActive"><div class="buttonContent"><button type="submit">{lang v="SAVE"}</button></div></div></li>
+			<li><div class="button"><div class="buttonContent"><button class="close" type="button">{lang v="CLOSE"}</button></div></div></li>
+		</ul>
+	</div>
+</div>
+</form>

@@ -1,0 +1,24 @@
+<?php
+	$this->_var['pagecss'][] = TMPL_REAL."/css/user_common.css";
+
+	$this->_var['pagecss'][] = TMPL_REAL."/css/style.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/weebox.css";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.bgiframe.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.weebox.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.pngfix.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/lazyload.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/script.js";
+	$this->_var['cpagejs'][] = TMPL_REAL."/js/script.js";
+?>
+{include file="inc/header.html"} 
+<div class="wrap uc_box">
+	<div class="uc_menu">
+		{include file="inc/uc_menu.html"}
+	</div>
+	<div class="uc_main">
+		{insert name="load_uc_common_header"}
+        {insert name="user_active" uid="$user.id"}
+	</div>
+</div>
+ <div class="blank15"></div>
+{include file="inc/footer.html"} 

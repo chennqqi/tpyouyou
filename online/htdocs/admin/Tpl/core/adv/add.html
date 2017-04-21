@@ -1,0 +1,116 @@
+<script type="text/javascript" src="{$TMPL}/core/include/js/adv.js"></script>
+<h2 class="contentTitle">{lang v="ADD"}{lang v="APP_ADV"}</h2>
+<form action="{$formaction}" method="post" class="pageForm required-validate" onsubmit="return validateCallback(this, navTabAjaxDone)">
+<div class="pageContent">
+<div class="pageFormContent" layoutH="97">		
+
+			<table class="formtable">			
+			<tr>
+				<td class="item_title">{lang v="ADV_NAME"}:</td>
+				<td class="item_input">
+					<input type="text" class="required textInput valid"   maxlength="200" name="name">
+					<label class="tip"></label>
+				</td>
+			</tr>
+			<tr>
+				<td class="item_title">广告位ID:</td>
+				<td class="item_input">
+					<input type="text" class="required textInput valid alphanumeric"   maxlength="200" name="adv_id">
+					<label class="tip"></label>
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="item_title">允许显示的{lang v="CITY"}:</td>
+				<td class="item_input">
+					<input name="tour_city.py"  lookupSend="tour_city_data" type="hidden"/>
+					<input size="80" name="tour_city.name" lookupSend="tour_city_data"  type="text"  readonly="true"  />
+					<a class="btnLook" href="{$searchcityurl}" lookupGroupSelect="tour_city">{lang v="SELECT_TOUR_CITY"}</a>
+					<label><input name="show_all_city" type="checkbox" value="1" />全国显示</label>
+				</td>
+			</tr>
+
+			<tr>
+				<td class="item_title">广告类型:</td>
+				<td class="item_input">
+					<select name="type" class="combox">
+						<option value="0">图片</option>
+						<option value="1">Flash媒体</option>
+						<option value="2">Flv视频</option>
+					</select>
+				</td>
+			</tr>
+			
+			<tr rel="type_0" class="type_row">
+				<td class="item_title">广告图片:</td>
+				<td class="item_input">
+					{function name="load_keadvimg" n="code_img" v=""}
+				</td>
+			</tr>
+			
+			<tr rel="type_1" class="type_row">
+				<td class="item_title">Flash媒体文件:</td>
+				<td class="item_input">
+					{function name="load_keflash" n="code_flash" v=""}
+				</td>
+			</tr>
+			
+			<tr rel="type_2" class="type_row">
+				<td class="item_title">Flv视频文件:</td>
+				<td class="item_input">
+					{function name="load_kevideo" n="code_video" v=""}
+				</td>
+			</tr>
+			
+			<tr rel="type_2" class="type_row">
+				<td class="item_title">自动播放:</td>
+				<td class="item_input">
+					<select name="auto_play" class="combox">
+						<option value="0">否</option>
+						<option value="1">是</option>
+					</select>
+				</td>
+			</tr>
+			
+			<tr rel="type_0"  class="type_row">
+				<td class="item_title">广告标题:</td>
+				<td class="item_input">
+					<input type="text" class="textInput valid"   maxlength="200" name="title">
+					<label class="tip"></label>
+				</td>
+			</tr>
+			
+			<tr rel="type_0"  class="type_row">
+				<td class="item_title">广告URL:</td>
+				<td class="item_input">
+					<input type="text" class="textInput valid url"   maxlength="200" name="url" value="">
+					<label class="tip"></label>
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="item_title">广告宽(像素):</td>
+				<td class="item_input">
+					<input type="text" class="textInput valid digits"   maxlength="200" name="width">
+					<label class="tip"></label>
+				</td>
+			</tr>
+					
+			<tr>
+				<td class="item_title">广告高(像素):</td>
+				<td class="item_input">
+					<input type="text" class="textInput valid digits"   maxlength="200" name="height">
+					<label class="tip"></label>
+				</td>
+			</tr>	
+			</table>
+					
+	</div>
+	<div class="formBar">
+		<ul>
+			<li><div class="buttonActive"><div class="buttonContent"><button type="submit">{lang v="SAVE"}</button></div></div></li>
+			<li><div class="button"><div class="buttonContent"><button class="close" type="button">{lang v="CLOSE"}</button></div></div></li>
+		</ul>
+	</div>
+</div>
+</form>

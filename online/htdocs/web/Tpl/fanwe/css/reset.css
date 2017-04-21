@@ -1,0 +1,45 @@
+﻿body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, p, blockquote, th, td {margin:0; padding:0}
+body, input, button, select, textarea, table {font:12px/1.6em Verdana,Helvetica,sans-serif,"Microsoft Yahei"; color:#333}
+fieldset, img, button, input {border:0 none}
+button {cursor:pointer; padding:0}
+input,textarea,select{font-family:inherit;font-size:inherit;font-weight:inherit; *font-size:100%; border:1px solid #ccc}
+input[type="radio"]{border:none;}
+li{list-style-type:none}
+.clrfix {zoom: 1}
+.clrfix:after {	clear: both;	display: block;	height: 0;	visibility: hidden;	content: ".";}
+em, i {font-style: normal}
+h1,h2,h3,h4,h5{font-family: "Microsoft Yahei","微软雅黑"; font-weight: 400; font-size: 14px}
+
+
+/* reset color */
+.c0{color:#000  !important}     a.c0:hover{text-decoration: underline}
+.c3{color:#333  !important}     a.c3:hover{text-decoration: underline}
+.c5{color:#555  !important}     a.c5:hover{text-decoration: underline}
+.c6{color:#666  !important}     a.c6:hover{text-decoration: underline}
+.c8{color:#888  !important}     a.c8:hover{text-decoration: underline}
+.c9{color:#999  !important}     a.c9:hover{text-decoration: underline}
+.cc{color:#ccc  !important}     a.cc:hover{text-decoration: underline}
+.ce{color:#eee  !important}     a.ce:hover{text-decoration: underline}
+.c08c{color:#08c !important}    a.c08c:hover{text-decoration: underline}
+.cf60{color:#f60 !important}    a.cf60:hover{text-decoration: underline}
+.cf93{color:#f93 !important}    a.cf93:hover{text-decoration: underline}
+.c86b71c{color:#86b71c !important}    a.c86b71c:hover{text-decoration: underline}
+
+.fb{font-weight:700 !important;}
+.f12{font-size: 12px !important;}
+.f14{font-size: 14px !important;}
+.f18{font-size: 18px !important;}
+
+.fl{float:left}
+.fr{float:right}
+.hidden{display:none}
+.block{display:block}
+.center{text-align:center}
+
+.wrap{width:960px; margin:0 auto}
+
+.mb20 {  margin-bottom:15px;}
+a {color: #555555;  outline: medium none;  text-decoration: none;}
+.price,.fyh {font-family: "Microsoft Yahei",Arial;}
+.price em {font-family: tahoma;font-weight: 400;}
+th, td, strong {  font-weight: 400;}

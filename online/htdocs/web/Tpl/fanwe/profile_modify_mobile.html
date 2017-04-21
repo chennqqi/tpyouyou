@@ -1,0 +1,67 @@
+<script type="text/javascript">
+	var action = '{url r="profile#get_modify_mobile_code"}';
+	$(document).ready(function(){
+		$(".get_mobile_code").live("click",function(){
+			var query = new Object();
+			query.verify_code = $("#modify_form").find("input[name='verify_code']").val();
+			query.mobile = $("#modify_form").find("input[name='mobile']").val();
+			$.ajax({ 
+	            url: action,
+	            data:query,
+	            dataType:"json",
+	            type:"POST",
+	            global:false,
+	            success: function(obj){
+	               if(obj.status)
+	               {
+				   	   IS_RUN_CRON = 1;
+					   refresh_verify($("#modify_form").find("img"));
+	                   $.showSuccess(obj.info);
+	               }
+	               else
+	               {
+	            	   $.showErr(obj.info,function(){
+	            		   if(obj.jump!="")
+	            		   {
+	            			 location.href = obj.jump;
+	            		   }
+	            	   });
+	               }
+	            }
+	        }); 
+		});
+	});
+</script>
+<form action="{url r="profile#save_mobile"}" id="modify_form" method="post">
+<table class="user_modify">
+<tr>
+	<td class="title">新手机号码</td>
+	<td class="content">
+		<input type="text" holder="输入手机号码" style="width:150px;" class="ipt" name="mobile" value="" />
+	</td>
+</tr>
+<tr>
+	<td class="title">验证码</td>
+	<td class="content">
+		<input type="text" holder="输入验证码" style="width:80px;" class="ipt" name="verify_code" value="" />
+		{insert name="verifyimg" vid="verify" w="48" h="22"}
+	</td>
+</tr>
+{if app_conf("SMS_ON") eq 1}
+<tr>
+	<td class="title">校验码</td>
+	<td class="content">
+		<input type="text" holder="输入校验码" style="width:80px; float:left;" class="ipt" name="verify" value="" />
+		<div class="get_mobile_code" style="float:left; margin-left:10px;">获取校验码</div>
+	</td>
+</tr>	
+{/if}
+<tr>
+	<td class="title"></td>
+	<td class="content">
+		<input type="submit" style="display:none;" />
+		<div class="long_btn" id="save_modify" style="float:left;">保存</div>
+	</td>
+</tr>
+</table>
+</form>

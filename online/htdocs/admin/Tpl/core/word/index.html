@@ -1,0 +1,103 @@
+<form id="pagerForm" method="post" action="#rel#">
+	<input type="hidden" name="pageNum" value="{$param.pageNum}" />
+	<input type="hidden" name="numPerPage" value="{$param.pageSize}" />
+	<input type="hidden" name="orderField" value="{$param.orderField}" />
+	<input type="hidden" name="orderDirection" value="{$param.orderDirection}" />
+</form>
+<div class="pageHeader">
+	<form rel="pagerForm" onsubmit="return navTabSearch(this);" action="{$formaction}" method="post">
+	<div class="searchBar">
+		<div class="pageFormContent cf" >
+			<div class="searchtableRow">
+				
+				<table>
+					<tr>
+						<td>
+						{lang v="WORD_TYPE"}：
+						</td>
+						<td>
+                                                    <select name='cid'>
+                                                        <option value=''>请选择敏感词分类</option>
+                                                        {foreach from=$word_type item=row}
+                                                        <option value='{$row.id}' {if $param.cid eq $row.id}selected="true"{/if}>{$row.name}</option>
+                                                        {/foreach}
+                                                    </select>
+						</td>
+                                               
+                                                 <td>
+						{lang v="WORD"}：
+						</td>
+						<td>
+						<input type="text" name="word" value="{$param.word}"/>
+						</td>
+						
+						<td>
+						<div class="buttonActive"><div class="buttonContent"><button type="submit">{lang v="SEARCH"}</button></div></div>
+						</td>
+					</tr>
+				</table>
+				
+			</div>
+
+			
+			
+			
+		</div>
+
+	</div>
+	</form>
+</div>
+<div class="pageContent">
+	<div class="panelBar">
+		<ul class="toolBar">
+                    <li><a title="{lang v="ADD"}{lang v="WORD_TYPE"}" rel="ask_type_addpage" target="navTab"  href="{$addurl}" class="add"><span>{lang v="ADD"}</span></a></li>
+			<li><a title="{lang v="CONFIRM_DELETE"}" target="selectedTodo" rel="id" postType="string" href="{$delurl}" class="delete"><span>{lang v="DEL"}</span></a></li>
+		</ul>
+	</div>
+	<table class="table" width="100%" layoutH="75">
+		<thead>
+                        <tr>
+				<th width="22"><input type="checkbox" group="id" class="checkboxCtrl"></th>
+				<th  width="50" orderField="id" {if $param.orderField eq 'id'} class="{$param.orderDirection}"{/if}>{lang v="ID"}</th>
+				<th>{lang v="WORD"}</th>
+                                <th>{lang v="REPLACEMENT"}</th>
+                                <th>{lang v="TYPE"}</th>
+                                <th>{lang v="WORD_TYPE"}</th>
+                                <th>{lang v="STATUS"}</th>
+				<th width="100">{lang v="TAG_LANG_OPERATE"}</th>
+			</tr>
+		</thead>
+		<tbody>
+		
+			{foreach from=$list item=item}
+			<tr  rel="{$item.id}">
+				<td><input name="id" value="{$item.id}" type="checkbox"></td>
+				<td>{$item.id}</td>
+                                <td>{$item.word}</td>
+                                <td>{$item.replacement}</td>
+				<td>{$item.type}</td>
+                                <td>{$item.word_type}</td>
+                                <td><a title="是/否首页显示" target="ajaxTodo" href="{$statusurl}&id={$item.id}" {if $item.status eq 1} class="btnSelect"{else}class="btnDel"{/if}>&nbsp{if $item.status eq 1}有效{else}无效{/if}</a></td>
+				<td>
+					<a title="{lang v="CONFIRM_DELETE"}" target="ajaxTodo" href="{$delurl}&id={$item.id}" class="btnDel">{lang v="DEL"}</a>
+				</td>
+			</tr>
+			{/foreach}
+		</tbody>
+	</table>
+	<div class="panelBar">
+		<div class="pages">
+			<span>{lang v="DISPLAY_PAGE_SIZE"}</span>
+			<select class="combox" name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value})">
+				<option value="<?php echo ADMIN_PAGE_SIZE1;?>" {if $param.pageSize eq ADMIN_PAGE_SIZE1}selected="selected"{/if} ><?php echo ADMIN_PAGE_SIZE1;?></option>
+				<option value="<?php echo ADMIN_PAGE_SIZE2;?>" {if $param.pageSize eq ADMIN_PAGE_SIZE2}selected="selected"{/if}><?php echo ADMIN_PAGE_SIZE2;?></option>
+				<option value="<?php echo ADMIN_PAGE_SIZE3;?>" {if $param.pageSize eq ADMIN_PAGE_SIZE3}selected="selected"{/if}><?php echo ADMIN_PAGE_SIZE3;?></option>
+				<option value="<?php echo ADMIN_PAGE_SIZE4;?>" {if $param.pageSize eq ADMIN_PAGE_SIZE4}selected="selected"{/if}><?php echo ADMIN_PAGE_SIZE4;?></option>
+			</select>
+			<span>&nbsp;&nbsp;{lang v="PAGE_TOTAL_COUNT" p="$totalCount"}</span>
+		</div>
+		
+		<div class="pagination" targetType="navTab" totalCount="{$totalCount}" numPerPage="{$param.pageSize}" pageNumShown="10" currentPage="{$param.pageNum}"></div>
+
+	</div>
+</div>

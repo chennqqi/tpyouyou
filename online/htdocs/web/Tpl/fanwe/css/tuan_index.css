@@ -1,0 +1,396 @@
+/* basic区 */
+ul,dl,dt,dd,p,li,ol,h1,h2,h3,h4,h5,h6,h7,span,img,a,hr,table,tr,th,td,input,select{
+margin:0px;
+padding:0px;
+}
+body{
+background:#fff;
+margin:0px;
+padding:0px;
+}
+/* 当前位置 */
+.nav_locate{
+width:1000px;
+height:40px;
+line-height:40px;
+margin:0 auto;
+font-size:12px;
+}
+.nav_locate a{
+font-size:13px;
+}
+img{
+border:none;
+}
+a{
+text-decoration:none;	
+}
+
+/* 主内容区 */
+.main{
+width:1000px;
+margin:0 auto;
+}
+.nav_locate{
+height:50px;
+line-height:50px;
+}
+.nav_locate em{
+color:#ff6600;
+}
+.nav_locate .lucky_bonus{
+width:auto;
+height:20px;
+line-height:20px;
+float:right;
+margin-left:6px;
+margin-top:14px;
+padding:0 10px;
+display:inline-block;
+font-size:12px;
+color:#939393;
+border:1px solid #d6d6d6;
+border-radius:5px;
+}
+
+
+/* 旅游内容选择 */
+.filter{
+width:999px;
+min-height:100px;
+
+margin:0 auto;
+border:1px solid #e8e8e8;
+border-top:2px solid #edb06e;
+overflow:hidden;
+padding-bottom:10px;
+}
+.classify{
+margin-bottom:5px;
+background:#fff7e0;
+}
+.classify .box_content dl{
+width:900px;
+line-height: 35px;
+
+}
+.box{
+position: relative;
+padding: 5px;
+overflow:hidden;
+}
+.box strong{
+font-size:14px;
+color: #535353;
+width: 60px;
+text-align: right;
+height: 32px;
+line-height: 32px;
+position: absolute;
+left: 15px;
+top:5px;
+font-weight: normal;
+
+}
+.box_content{
+position: relative;
+width: 100%;
+left:10px;
+clear: both;
+font-size: 12px;
+padding-left:85px;
+}
+.classify .box_content{
+width:903px;
+}
+.box_content dl{
+width: 800px;
+float: left;
+display: inline;
+line-height: 32px;
+overflow: hidden;
+font-size: 12px;
+}
+.box_content dl.city_list{
+max-height:96px;
+overflow:hidden;
+}
+.box_content dl.city_list_extend{
+max-height:auto;
+overflow:hidden;
+}
+.box_content dl dd{
+float: left;
+display: inline;
+width: 110px;
+height: 32px;
+overflow: hidden;
+line-height: 32px;
+}
+.box_content dl dd a{
+color:#666;
+font-size: 12px;
+height:12px;
+padding:5px;
+}
+.box_content dl dd a span{
+color:#aaa;
+}
+.box_content dl dd.cur a{
+background: #0092e0;
+color: white;
+border-radius: 3px;
+}
+.box_content dl dd.cur a span{
+color: white;
+}
+.more_choose{
+position: absolute;
+z-index: 5;
+width: 50px;
+height: 30px;
+line-height: 30px;
+padding-left: 10px;
+right: 100px;
+top: 0;
+cursor: pointer;
+background:url(../images/tuan/bg_select_more.png) no-repeat 36px center;
+color:#666;
+}
+/* 排序区 */
+.select_sort{
+width:1000px;
+height:40px;
+margin:0 auto;
+background:#f7f7f7;
+margin-top:12px;
+}
+.sort_left{
+display:inline;
+font-size:12px;
+color:#666;
+float:left;
+margin-top:5px;
+width:300px;
+*width:303px;
+height:28px;
+line-height:28px;
+margin-left:10px;
+border:1px solid #e7e7e7;
+color:#fff;
+}
+.sort_left a{
+color:#666;
+width:59px;
+height:28px;
+display:block;
+float:right;
+border-left:1px solid #e7e7e7;
+text-indent:11px;
+}
+.sort_left a.up_down{
+background:url(../images/tuan/up_down.gif) no-repeat 36px center;	
+}
+.sort_left a.up_on{
+color:#fff;
+background:#0092E0 url(../images/tuan/up_on.png) no-repeat 36px center;	
+}
+.sort_left a.down_on{
+color:#fff;
+background:#0092E0 url(../images/tuan/down_on.png) no-repeat 36px center;	
+}
+.sort_left a.down_arrows{
+background:url(../images/tuan/sell_num_down.gif) no-repeat 40px center;	
+}
+.sort_left a.down_arrowson{
+color:#fff;
+background:#0092E0 url(../images/tuan/sell_num_down_on.gif) no-repeat 40px center;	
+}
+
+.sort_left em{
+float:left;
+}
+.sort_page{ margin-right:10px}
+/* 主内容区 */
+
+.main{
+width:1020px;
+clear:both;
+display:block;
+padding-left:20px;
+margin:0 auto;
+margin-top:7px;
+}
+.main ul{
+width:1020px;
+overflow:hidden;
+}
+.main ul li{
+float:left;
+width:321px;
+height:394px;
+border:1px solid #e3e3e3;
+margin:5px 16px 14px 0;
+}
+.items{
+position:relative;
+}
+.item_title{
+height:45px;
+padding:0 7px;
+overflow:hidden;
+}
+.item_type{
+width:60px;
+height:54px;
+position:absolute;
+top:-4px;
+left:7px;
+
+overflow:hidden;
+}
+.item_type a{
+width:60px;
+height:54px;
+display:block;
+background:url(../images/tuan/ticket.png) no-repeat left center;
+}
+.item_type a.bg_1{
+background:url(../images/tuan/line.png) no-repeat left center;
+}
+.item_type a.bg_2{
+background:url(../images/tuan/ticket.png) no-repeat left center;
+}
+.item_type a.bg_3{
+background:url(../images/tuan/hotel.png) no-repeat left center;
+}
+.item_name{
+width:180px;
+margin-left:70px;
+float:left;
+line-height:45px;
+color:#f75254;
+font-size:14px;
+font-weight:bold;
+display:inline;
+}
+.item_name a{
+color:#f75254;
+}					
+.item_time{
+width:50px;
+line-height:45px;
+float:right;
+font-size:12px;
+color:#6d6d6d;
+text-align:right;
+}
+.item_pic{
+padding:0 0 0 7px;
+height:206px;overflow:hidden;
+}
+.item_pic img{
+vertical-align:bottom;
+width:307px;
+}
+.item_profile{
+font-size:14px;
+font-weight:bold;
+color:#4c4c4c;
+height:50px;
+line-height:25px;
+padding:7px 10px;
+}
+.item_price{
+padding:0 10px;
+height:30px;
+position:relative;
+}
+.item_price_num{
+width:200px;
+float:left;
+line-height:30px;
+position:relative;
+}
+.price_num1{
+color:#f52648;
+font-size:12px;
+position:relative;
+top:-2px;
+}
+.price_num2{
+color:#f52648;
+font-size:22px;
+font-weight:bold;
+}
+.price_num3{
+color:#999;
+font-size:12px;
+margin-left:5px;
+position:relative;
+top:-1px;
+}
+.item_order{
+float:right;
+width:94px;
+line-height:30px;
+font-size:13px;
+font-weight:bold;
+text-indent:25px;
+}
+.item_order a{
+height:30px;
+display:block;
+color:#fff;
+width:94px;
+background:url(../images/tuan/bg_item_order.png) no-repeat left center;
+}
+.item_bottom{
+height:14px;
+background:#fafafa;
+clear:both;
+font-size:12px;
+margin-top:11px;
+padding:12px 10px;
+color:#817f7f;
+overflow:hidden;
+}
+.order_memb{
+float:left;
+width:190px;
+}
+.order_memb a span{
+color:#ff6600;
+font-weight:bold;
+font-size:15px;
+margin:0 3px;
+line-height:15px;
+}
+.item_dates{
+width:100px;
+*width:110px;
+float:right;
+text-align:right;
+overflow:hidden;
+}
+.order_memb a,.item_dates a{
+color:#817f7f;
+font-size:13px;
+vertical-align:middle;
+}
+.order_memb img,.item_dates img{
+color:#817f7f;
+vertical-align:middle;
+}
+
+
+
+
+
+
+
+
+
+
+
+

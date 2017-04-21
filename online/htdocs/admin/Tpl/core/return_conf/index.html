@@ -1,0 +1,146 @@
+<script type="text/javascript">
+$(document).ready(function(){
+	$(navTab.getCurrentPanel()).find("select[name='BUY_RETURN_MONEY_TYPE']").bind("change",function(){
+		change_return_money();
+	});
+	change_return_money();
+	
+	$(navTab.getCurrentPanel()).find("select[name='BUY_RETURN_SCORE_TYPE']").bind("change",function(){
+		change_return_score();
+	});
+	change_return_score();
+	
+	$(navTab.getCurrentPanel()).find("select[name='BUY_RETURN_EXP_TYPE']").bind("change",function(){
+		change_return_exp();
+	});
+	change_return_exp();
+	
+	$(navTab.getCurrentPanel()).find("select[name='REBATE_TYPE']").bind("change",function(){
+		change_rebate();
+	});
+	change_rebate();
+	
+});
+function change_return_money()
+{
+	 var return_money_type = $(navTab.getCurrentPanel()).find("select[name='BUY_RETURN_MONEY_TYPE']").val();
+	 if(return_money_type==0)
+		 $(navTab.getCurrentPanel()).find("label[rel='return_money']").html("元");
+	 else
+		 $(navTab.getCurrentPanel()).find("label[rel='return_money']").html("％"); 
+}
+function change_return_score()
+{
+	 var return_score_type = $(navTab.getCurrentPanel()).find("select[name='BUY_RETURN_SCORE_TYPE']").val();
+	 if(return_score_type==0)
+		 $(navTab.getCurrentPanel()).find("label[rel='return_score']").html("");
+	 else
+		 $(navTab.getCurrentPanel()).find("label[rel='return_score']").html("％"); 
+}
+function change_return_exp()
+{
+	 var return_exp_type = $(navTab.getCurrentPanel()).find("select[name='BUY_RETURN_EXP_TYPE']").val();
+	 if(return_exp_type==0)
+		 $(navTab.getCurrentPanel()).find("label[rel='return_exp']").html("");
+	 else
+		 $(navTab.getCurrentPanel()).find("label[rel='return_exp']").html("％"); 
+}
+function change_rebate()
+{
+	 var rebate_type = $(navTab.getCurrentPanel()).find("select[name='REBATE_TYPE']").val();
+	 if(rebate_type==0)
+		 $(navTab.getCurrentPanel()).find("label[rel='rebate_money']").html("元");
+	 else
+		 $(navTab.getCurrentPanel()).find("label[rel='rebate_money']").html("％"); 
+}
+</script>
+<h2 class="contentTitle">返利设置</h2>
+<form action="{$formaction}" method="post" class="pageForm required-validate" onsubmit="return validateCallback(this, navTabAjaxDone)">
+<div class="pageContent">
+<div class="pageFormContent" layoutH="97">		
+
+			<table class="formtable">				
+			<tr>
+				<td class="item_title">购物返现类型:</td>
+				<td class="item_input">
+					<select name="BUY_RETURN_MONEY_TYPE" class="combox">
+						<option value="0" {if $return_conf.BUY_RETURN_MONEY_TYPE eq 0}selected="selected"{/if}>定额</option>
+						<option value="1" {if $return_conf.BUY_RETURN_MONEY_TYPE eq 1}selected="selected"{/if}>按销售价百分比</option>
+					</select>
+					<label class="tip"></label>
+				</td>
+			</tr>
+			<tr>
+				<td class="item_title">购物返现:</td>
+				<td class="item_input">
+					<input type="text" class="required textInput number"   maxlength="20" name="BUY_RETURN_MONEY" value="{$return_conf.BUY_RETURN_MONEY}">
+					<label class="tip" rel="return_money">元</label>
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="item_title">购物返积分类型:</td>
+				<td class="item_input">
+					<select name="BUY_RETURN_SCORE_TYPE" class="combox">
+						<option value="0" {if $return_conf.BUY_RETURN_SCORE_TYPE eq 0}selected="selected"{/if}>定额</option>
+						<option value="1" {if $return_conf.BUY_RETURN_SCORE_TYPE eq 1}selected="selected"{/if}>按销售价百分比</option>
+					</select>
+					<label class="tip" ></label>
+				</td>
+			</tr>
+			<tr>
+				<td class="item_title">购物返积分:</td>
+				<td class="item_input">
+					<input type="text" class="required textInput number"   maxlength="20" name="BUY_RETURN_SCORE" value="{$return_conf.BUY_RETURN_SCORE}">
+					<label class="tip" rel="return_score"></label>
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="item_title">购物获得经验类型:</td>
+				<td class="item_input">
+					<select name="BUY_RETURN_EXP_TYPE" class="combox">
+						<option value="0" {if $return_conf.BUY_RETURN_EXP_TYPE eq 0}selected="selected"{/if}>定额</option>
+						<option value="1" {if $return_conf.BUY_RETURN_EXP_TYPE eq 1}selected="selected"{/if}>按销售价百分比</option>
+					</select>
+					<label class="tip"></label>
+				</td>
+			</tr>
+			<tr>
+				<td class="item_title">购物获得经验:</td>
+				<td class="item_input">
+					<input type="text" class="required textInput number"   maxlength="20" name="BUY_RETURN_EXP" value="{$return_conf.BUY_RETURN_EXP}">
+					<label class="tip"  rel="return_exp"></label>
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="item_title">邀请返利类型:</td>
+				<td class="item_input">
+					<select name="REBATE_TYPE" class="combox">
+						<option value="0" {if $return_conf.REBATE_TYPE eq 0}selected="selected"{/if}>定额</option>
+						<option value="1" {if $return_conf.REBATE_TYPE eq 1}selected="selected"{/if}>按销售价百分比</option>
+					</select>
+					<label class="tip"></label>
+				</td>
+			</tr>
+			<tr>
+				<td class="item_title">邀请返利:</td>
+				<td class="item_input">
+					<input type="text" class="required textInput number"   maxlength="20" name="REBATE_MONEY" value="{$return_conf.REBATE_MONEY}">
+					<label class="tip" rel="rebate_money">元</label>
+				</td>
+			</tr>
+
+			
+			</table>
+					
+	</div>
+	<div class="formBar">
+		<ul>
+			<li><div class="buttonActive"><div class="buttonContent"><button type="submit">{lang v="SAVE"}</button></div></div></li>
+			<li><div class="button"><div class="buttonContent"><button class="close" type="button">{lang v="CLOSE"}</button></div></div></li>
+		</ul>
+	</div>
+</div>
+</form>

@@ -1,0 +1,263 @@
+<script type="text/javascript" src="{$TMPL}/core/include/js/tourline_rec_config.js"></script>
+
+<h2 class="contentTitle">{lang v="EDIT"}{lang v="APP_NAV"}</h2>
+
+<form action="{$formaction}" method="post" class="pageForm required-validate" onsubmit="return validateCallback(this, navTabAjaxDone)">
+
+<div class="pageContent">
+
+<div class="pageFormContent" layoutH="97">		
+
+
+
+			<table class="formtable">			
+
+			<tr>
+
+				<td class="item_title">{lang v="TOURLINE_REC_NAME"}:</td>
+
+				<td class="item_input">
+
+					<input type="text" class="required textInput valid"  value="{$vo.rec_name}" maxlength="20" name="rec_name">
+
+					<label class="tip"></label>
+
+				</td>
+
+			</tr>
+
+			<tr>
+
+				<td class="item_title">{lang v="TOURLINE_REC_PAGE"}:</td>
+
+				<td class="item_input">
+
+					<select name="rec_page">
+
+							<option value="0" {if $vo.rec_page eq 0} selected=selected {/if}>首页</option>
+
+							<option value="1" {if $vo.rec_page eq 1} selected=selected {/if}>国内游</option>
+
+							<option value="2" {if $vo.rec_page eq 2} selected=selected {/if}>出境游</option>
+
+							<option value="3" {if $vo.rec_page eq 3} selected=selected {/if}>周边游</option>
+
+							<option value="4" {if $vo.rec_page eq 4} selected=selected {/if}>跟团游</option>
+
+							<option value="5" {if $vo.rec_page eq 5} selected=selected {/if}>自助游</option>
+
+							<option value="6" {if $vo.rec_page eq 6} selected=selected {/if}>自驾游</option>
+
+					</select>
+
+				</td>
+
+			</tr>
+
+			<tr>
+
+				<td class="item_title">{lang v="TOURLINE_REC_TYPE"}:</td>
+
+				<td class="item_input"><!--1国内游 2出境游 3周边游 4跟团游 5自助游 6自驾游 (1-6只有首页设置可用) 7.大区域 8.小区域 9.标签-->
+
+					<select name="rec_type">
+
+							<option value="0" {if $vo.rec_type eq 0} selected=selected {/if} >请选择类型</option>
+
+							{if $vo.rec_page eq 0}
+
+								<option value="1" {if $vo.rec_type eq 1} selected=selected {/if} >境内旅游</option>
+
+								<option value="2" {if $vo.rec_type eq 2} selected=selected {/if} >境外旅游</option>
+
+								<option value="3" {if $vo.rec_type eq 3} selected=selected {/if} >周边旅游</option>
+
+								<option value="4" {if $vo.rec_type eq 4} selected=selected {/if} >目的地旅游</option>
+
+								<option value="5" {if $vo.rec_type eq 5} selected=selected {/if} >特惠纯玩</option>
+
+								<option value="6" {if $vo.rec_type eq 6} selected=selected {/if} >自驾游</option>
+
+								<option value="7" {if $vo.rec_type eq 7} selected=selected {/if} >大区域</option>
+
+								<option value="8" {if $vo.rec_type eq 8} selected=selected {/if} >小区域</option>
+
+								<option value="9" {if $vo.rec_type eq 9} selected=selected {/if} >标签</option>
+
+							{else}
+
+									<option value="7" {if $vo.rec_type eq 7} selected=selected {/if} >大区域</option>
+
+									<option value="8" {if $vo.rec_type eq 8} selected=selected {/if} >小区域</option>
+
+									<option value="9" {if $vo.rec_type eq 9} selected=selected {/if} >标签</option>
+
+							{/if}
+
+						
+
+					</select>
+
+				</td>
+
+			</tr>
+
+			
+
+			<tr id="rec_id_c" style="{if $vo.rec_type eq 7 || $vo.rec_type eq 8 || $vo.rec_type eq 9}display:table-row;{else}display:none{/if}">
+
+				<td class="item_title">{if  $vo.rec_type eq 7}推荐大区域{/if}{if  $vo.rec_type eq 8}推荐小区域{/if}{if  $vo.rec_type eq 9}推荐标签{/if}:</td>
+
+				<td class="item_input">
+
+					<input name="area_url" value="{$searchrecidareaurl}" type="hidden"/>
+
+					<input name="place_url"  value="{$searchrecidplaceurl}"  type="hidden"/>
+
+					<input name="tag_url"  value="{$searchrecidtagurl}"  type="hidden"/>
+
+					<input name="rec_id.id" value="{$rec_data.id}" type="hidden"/>
+
+					<input class="" size="20" name="rec_id.name" value="{$rec_data.name}" type="text"  readonly="true"  />
+
+					<a class="btnLook" href="{$searchrecidurl}" lookupGroupSelect="rec_id" mask="true" rel="dlg_rec_id">{lang v="SELECT_SUPPLIER"}</a>
+
+					<label class="tip"></label>
+
+				</td>
+
+			</tr>
+
+			<tr>
+
+				<td class="item_title">{lang v="TOURLINE_REC_COLOR"}:</td>
+
+				<td class="item_input">
+
+					<select name="rec_color" class="combox">
+
+						<option value="0" {if $vo.rec_color eq 0} selected=selected {/if}>淡蓝色</option>
+
+						<option value="1" {if $vo.rec_color eq 1} selected=selected {/if}>青色</option>
+
+						<option value="2" {if $vo.rec_color eq 2} selected=selected {/if}>粉色</option>
+
+						<option value="3" {if $vo.rec_color eq 3} selected=selected {/if}>绿色</option>
+
+						<option value="4" {if $vo.rec_color eq 4} selected=selected {/if}>橙色</option>
+
+					</select>
+
+				</td>
+
+			</tr>
+
+			<tr rel="type_0" class="type_row">
+
+				<td class="item_title">左边广告图片:</td>
+
+				<td class="item_input">
+
+					{function name="load_keadvimg" n="rec_adv1" v="$vo.rec_adv1"}
+
+				</td>
+
+			</tr>
+
+			<tr class="type_row">
+
+				<td class="item_title">左边广告URL:</td>
+
+				<td class="item_input">
+
+					<input type="text" class="textInput valid url"   maxlength="200" name="rec_adv1_url" value="{$vo.rec_adv1_url}">
+
+					<label class="tip"></label>
+
+				</td>
+
+			</tr>
+
+			<tr class="type_row">
+
+				<td class="item_title">底部广告图片:</td>
+
+				<td class="item_input">
+
+					{function name="load_keadvimg" n="rec_adv2" v="$vo.rec_adv2"}
+
+				</td>
+
+			</tr>
+
+			<tr class="type_row">
+
+				<td class="item_title">底部广告URL:</td>
+
+				<td class="item_input">
+
+					<input type="text" class="textInput valid url"   maxlength="200" name="rec_adv2_url" value="{$vo.rec_adv2_url}">
+
+					<label class="tip"></label>
+
+				</td>
+
+			</tr>
+
+                        <tr class="type_row">
+
+				<td class="item_title">底部长图广告图片:</td>
+
+				<td class="item_input">
+
+					{function name="load_keadvimg" n="rec_adv3" v="$vo.rec_adv3"}
+
+				</td>
+
+			</tr>
+
+			<tr class="type_row">
+
+				<td class="item_title">底部长图广告URL:</td>
+
+				<td class="item_input">
+
+					<input type="text" class="textInput valid url"   maxlength="200" name="rec_adv3_url" value="{$vo.rec_adv3_url}">
+
+					<label class="tip"></label>
+
+				</td>
+
+			</tr>
+
+			<tr>
+
+				<td class="item_title">{lang v="SORT"}:</td>
+
+				<td class="item_input"><input type="text" class="textInput digits" name="rec_sort" value="{$vo.rec_sort}" /></td>
+
+			</tr>	
+
+			</table>
+
+					
+
+	</div>
+
+	<div class="formBar">
+
+		<ul>
+
+			<input type="hidden" name="id" value="{$vo.id}" />
+
+			<li><div class="buttonActive"><div class="buttonContent"><button type="submit">{lang v="SAVE"}</button></div></div></li>
+
+			<li><div class="button"><div class="buttonContent"><button class="close" type="button">{lang v="CLOSE"}</button></div></div></li>
+
+		</ul>
+
+	</div>
+
+</div>
+
+</form>

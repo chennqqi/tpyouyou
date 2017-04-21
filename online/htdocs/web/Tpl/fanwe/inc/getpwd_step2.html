@@ -1,0 +1,84 @@
+{if $type eq 'mobile'}
+<form name="getpwd_form" action="{url r="user#getpwd_verifycode"}" method="post">
+	<div class="field">
+			<span class="field_title">帐号名</span>
+			<span class="field_title" style="text-align:left;">
+			{$user.user_name}
+			<input type="hidden" name="un" value="{$user.user_name}" />
+			</span>
+			<span class="field_tip"></span>
+	</div>
+	<div class="blank"></div>
+	<div class="field">
+			<span class="field_title">手机号</span>
+			<span class="field_title" style="text-align:left;">
+			{$user.mobile}
+			</span>
+			<span class="field_tip"></span>
+	</div>
+	<div class="blank"></div>
+	<div class="field">
+			<span class="field_title">收到的验证码</span>
+			<span class="field_content">
+			<input type="text"  class="ui-textbox"  holder="验证码" name="c" size="20" style="width:80px; float:left;">
+			</span>
+			<span class="field_tip"></span>
+	</div>
+	<div class="blank"></div>
+	
+	<div class="field">
+			<span class="field_title"></span>
+			<span class="field_content">
+			<a href="javascript:void(0);" class="long_btn" id="next_step" style="float:left;">下一步</a>
+			<a href="javascript:history.go(-1);" style="float:left; margin-left:10px; display:inline-block; height:31px; font-size:14px; line-height:31px;">重新发送</a>
+			<input type="hidden" name="ajax" value="1" />
+			<input type="hidden" name="t" value="{$type}" />
+			<input type="submit" style="display:none;" />
+				</span>
+				<span class="field_tip"></span>
+		</div>
+		<div class="blank"></div>
+
+	</form>
+{else}
+<div class="field">
+			<span class="field_title"></span>
+			<span class="field_title" style="text-align:left;width:350px;">
+			<div class="message_tip">
+			<label>邮件已发送至你的邮箱，请注意查收</label>
+			</div>
+			</span>
+			<span class="field_tip"></span>
+	</div>
+	<div class="blank"></div>
+	<div class="field">
+			<span class="field_title">帐号名</span>
+			<span class="field_title" style="text-align:left; ">
+			{$user.user_name}
+			</span>
+			<span class="field_tip"></span>
+	</div>
+	<div class="blank"></div>
+	{if $gocheck_url}
+	<div class="field">
+			<span class="field_title"></span>
+			<span class="field_content">
+					<a href="{$gocheck_url}" class="long_btn"  target="_blank"  style="float:left;">立即去邮件查收邮件</a>
+					<a href="javascript:history.go(-1);" style="float:left; margin-left:10px; display:inline-block; height:31px; font-size:14px; line-height:31px;">重新发送</a>
+			
+				</span>
+				<span class="field_tip"></span>
+		</div>
+		<div class="blank"></div>
+		{else}
+		<div class="field">
+			<span class="field_title"></span>
+			<span class="field_content">
+			<a href="javascript:history.go(-1);" style="float:left; margin-left:10px; display:inline-block; height:31px; font-size:14px; line-height:31px;">重新发送</a>
+			
+				</span>
+				<span class="field_tip"></span>
+		</div>
+		<div class="blank"></div>
+		{/if}
+{/if}

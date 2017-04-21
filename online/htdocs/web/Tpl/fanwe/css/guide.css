@@ -1,0 +1,226 @@
+/* 大图区 */
+.big_pic{
+    background:#3aafff;
+    height:300px;
+    overflow:hidden;
+}
+/* 推荐和游记统计区 */
+.recommend_issue{
+    width:1000px;
+    height:112px;
+    background:#eee;
+    margin:0 auto 13px;
+    position:relative;
+}
+.recommend{
+    width:207px;
+    height:361px;
+    border:2px solid #bcbcbc;
+    position:absolute;
+    top:-283px;
+    background:#fff;
+    padding:13px 0 18px;
+    font-family:Microsoft YaHei;
+    color:#365975;
+}
+.recommend span{
+    font-size:13px;
+    padding:0 12px;
+    font-weight:bold;
+    display:block;
+}
+.recommend ul{
+    margin:15px 0 12px;
+
+    overflow:hidden;
+    white-space: nowrap;
+}
+.recommend ul li{
+    float:left;
+    padding:0 12px;
+    display:block;
+    height:18px;
+    line-height:18px;
+    margin-bottom:14px;
+    border-right:1px solid #ececec;
+}
+ul.date_num li{
+    padding:0 10px;
+}
+.recommend ul li a{
+    color:#365975;
+    float:left;
+}
+.recommend ul li.noborder{
+    border:none;
+}
+
+.issue{
+    width:789px;
+    height:112px;
+    float:right;
+    background:url(../images/guide/bg_issue_notes.png) no-repeat left center;
+}
+.public_notes{
+    width:149px;
+    height:40px;
+    background:#ddd;
+    margin:35px 0 0 365px;
+    float:left;
+    display:inline;
+}
+.notes_total{
+    width:240px;
+    height:112px;
+    float:right;
+}
+.notes_num,.notes_bourn{
+    height:36px;
+    line-height:36px;
+    text-indent:43px;
+    font-size:13px;
+    font-family:Microsoft YaHei;
+}
+.notes_num span,.notes_bourn span{
+    font-size:24px;
+    color:#ff6600;
+}
+.notes_num{
+    background:url(../images/guide/bg_notes_num.png) no-repeat left center;
+    margin-top:15px;
+}
+.notes_bourn{
+    background:url(../images/guide/bg_notes_bourn.png) no-repeat left center;
+    margin-top:12px;
+}
+/* 主内容区 */
+.main{
+    width:1010px;
+    overflow:hidden;
+    padding-left:10px;
+}
+.col_container{
+    width:242px;
+    float:left;
+    font-size:12px;
+    margin-right:10px;
+    overflow:hidden;
+}
+.col_container .item{
+    margin-bottom:14px;
+    border:1px solid #eee;
+    overflow:hidden;
+    padding:10px 9px 0 10px;
+    width:221px;
+    border-radius:5px;
+}
+.praise_ico{
+    display:block;
+    position:absolute;
+    width:28px;
+    height:31px;
+    background:url(../images/guide/jing.png) no-repeat left center;
+}
+.notes_title{
+    overflow:hidden;
+}
+.notes_title a{
+    display:block;
+    overflow:hidden;
+}
+.notes_title a img{
+    display:block;
+    overflow:hidden;
+    width:221px;
+}
+.notes_title a{
+    display:block;
+    overflow:hidden;
+}
+.notes_title a.title_content{
+    font-size: 14px;
+    line-height: 18px;
+    padding:10px 5px 0 3px;
+    width: 211px;
+    display: inline-block;
+    color:#007fd8;
+    font-family:Microsoft YaHei;
+}
+.notes_count{
+    height:19px;
+    line-height:19px;
+    padding:12px 5px 12px 0;
+    border-bottom:1px dotted #eee;
+}
+.notes_count span{
+    height:19px;
+    line-height:19px;
+}
+.praise{
+    float:left;
+    padding-left:45px;
+    color:#007fd8;
+    background:url(../images/guide/bg_praise.png) no-repeat left center;
+}
+.reply_count{
+    float:right;
+    padding-left:20px;
+    background:url(../images/guide/bg_reply_num.png) no-repeat left center;
+}
+.view_count{
+    float:right;
+    padding-left:20px;
+    margin-right:10px;
+    background:url(../images/guide/bg_view_num.png) no-repeat left center;
+}
+.notes_info{
+    width:181px;
+    padding:10px 0 15px 40px;
+    overflow:hidden;
+    position:relative;
+
+}
+.notes_info span{
+    color:#666;
+}
+.notes_info div{
+    line-height:18px;
+    margin-top:5px;
+}
+.notes_info div a.notes_info_content{
+    color:#9a9a9a;
+}
+.notes_info img{
+    position:absolute;
+    width:32px;
+    height:32px;
+    border:1px solid #eee;
+    left:0px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

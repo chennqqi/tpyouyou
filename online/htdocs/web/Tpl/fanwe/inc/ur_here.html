@@ -1,0 +1,13 @@
+<div class="blank15"></div>
+<div class="ur_here wrap">
+	<a href="{$APP_ROOT}/">首页</a>
+	{foreach from="$ur_here" item="ur"}
+	&nbsp;>&nbsp;
+	{if $ur.url}
+	<a href="{$ur.url}">{$ur.name}</a>
+	{else}
+	{$ur.name}
+	{/if}
+	{/foreach}
+</div>
+<div class="blank"></div>

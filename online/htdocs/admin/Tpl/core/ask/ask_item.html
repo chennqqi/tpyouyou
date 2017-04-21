@@ -1,0 +1,39 @@
+<script type="text/javascript" src="{$TMPL}/core/include/js/ask.js"></script>
+<form action="{$formaction}" method="post" class="pageForm required-validate" onsubmit="return validateCallback(this, AskReplyCallBack)">
+<div class="pageContent">
+<div class="pageFormContent" layoutH="97">		
+
+			<table class="formtable">					
+			<tr>					
+				<td class="item_title">标题：</td>
+				<td class="item_input">
+					<span style="float:left;">{$ask_item.title}</span>
+				</td>					
+			</tr>
+			<tr>					
+				<td class="item_title">内容：</td>
+				<td class="item_input">
+                                    <span style="float:left;line-height:18px">{$ask_item.content}</span>
+					
+				</td>					
+			</tr>
+			<tr>					
+				<td class="item_title">回复：</td>
+				<td class="item_input">
+					<textarea class="textInput" name="reply_content" rows=2 cols=80 >{$ask_item.reply_content}</textarea>
+				</td>					
+			</tr>
+			
+			</table>
+					
+	</div>
+	<div class="formBar">
+		<ul>
+			<input type="hidden" value="{$ask_item.id}" name="id" />
+                        <input type="hidden" value="1" name="ajax" />
+			<li><div class="buttonActive"><div class="buttonContent"><button type="submit">{lang v="SAVE"}</button></div></div></li>
+			<li><div class="button"><div class="buttonContent"><button class="close" type="button">{lang v="CLOSE"}</button></div></div></li>
+		</ul>
+	</div>
+</div>
+</form>

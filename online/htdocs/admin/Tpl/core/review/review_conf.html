@@ -1,0 +1,52 @@
+<h2 class="contentTitle">{lang v="REVIEW_CONF"}</h2>
+<form action="{$formaction}" method="post" class="pageForm required-validate" onsubmit="return validateCallback(this, navTabAjaxDone)">
+<div class="pageContent">
+<div class="pageFormContent" layoutH="97">		
+
+			<table class="formtable">				
+			<tr>
+				<td class="item_title">{lang v="REVIEW_MONEY"}:</td>
+				<td class="item_input">
+					<input type="text" class="required textInput valid"   maxlength="150" name="REVIEW_MONEY"  value="{if $review_conf.REVIEW_MONEY gt 0}{$review_conf.REVIEW_MONEY}{else}0{/if}">
+					<label class="tip"></label>
+				</td>
+			</tr>
+                        <tr>
+				<td class="item_title">{lang v="REVIEW_VOUCHER"}:</td>
+				<td class="item_input">
+                                   
+                                        <select name="REVIEW_VOUCHER">
+                                                <option value="0">未选择</option>
+                                                {foreach from="$vouchers" item="item"}
+                                                <option value="{$item.id}" {if $review_conf.REVIEW_VOUCHER eq $item.id}selected="selected"{/if}>{$item.voucher_name}</option>
+                                                {/foreach}
+                                        </select>
+					
+					<label class="tip"></label>
+				</td>
+			</tr>
+			<tr>
+				<td class="item_title">{lang v="REVIEW_SCORE"}:</td>
+				<td class="item_input">
+					<input type="text" class="required textInput valid digits"   maxlength="150" name="REVIEW_SCORE" value="{if $review_conf.REVIEW_SCORE gt 0}{$review_conf.REVIEW_SCORE}{else}0{/if}">
+					<label class="tip"></label>
+				</td>
+			</tr>
+                        <tr>
+				<td class="item_title">{lang v="REVIEW_EXP"}:</td>
+				<td class="item_input">
+					<input type="text" class="required textInput valid digits"   maxlength="150" name="REVIEW_EXP" value="{if $review_conf.REVIEW_EXP gt 0}{$review_conf.REVIEW_EXP}{else}0{/if}">
+					<label class="tip"></label>
+				</td>
+			</tr>
+			</table>
+					
+	</div>
+	<div class="formBar">
+		<ul>
+			<li><div class="buttonActive"><div class="buttonContent"><button type="submit">{lang v="SAVE"}</button></div></div></li>
+			<li><div class="button"><div class="buttonContent"><button class="close" type="button">{lang v="CLOSE"}</button></div></div></li>
+		</ul>
+	</div>
+</div>
+</form>

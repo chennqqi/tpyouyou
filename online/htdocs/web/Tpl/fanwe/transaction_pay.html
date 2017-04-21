@@ -1,0 +1,68 @@
+<?php
+	$this->_var['pagecss'][] = TMPL_REAL."/css/style.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/weebox.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/transaction.css";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.bgiframe.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.weebox.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.pngfix.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/lazyload.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/script.js";
+	$this->_var['cpagejs'][] = TMPL_REAL."/js/script.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/transaction_pay.js";
+	$this->_var['cpagejs'][] = TMPL_REAL."/js/transaction_pay.js";
+?>
+{include file="inc/header_order.html"}
+<div class="blank15"></div>
+<div class="wrap">
+	<form action="{url r="transaction#dopay"}" method="post" class="pay_form" target="_blank">
+	<input type="hidden" name="ot" value="{$order_type}" />
+	<input type="hidden" name="sn" value="{$order_sn}" />
+	<div class="order_display">
+		{$order_display}
+	</div>
+	<div class="blank15"></div>
+	<div class="blank15"></div>
+	<div class="blank15"></div>
+	<div class="blank15"></div>
+	<div class="payment_tabs">
+		<ul>
+			{if $payment_list.bank_payment}
+			<li class="current" rel="bank">网银支付</li>
+			{/if}
+			{if $payment_list.common_payment}
+			<li rel="common" class="{if empty($payment_list.bank_payment)}current{/if}">支付平台</li>
+			{/if}
+		</ul>
+		<div class="payment_box clearfix">
+			{if $payment_list.bank_payment}
+			<div class="box_item current" rel="bank">
+			{foreach from=$payment_list.bank_payment.bank_list item=bank_item}
+			<div class="pay_item" rel="{$bank_item.bank_type}">
+			<input type="radio" name="payment_class"  value="{$payment_list.bank_payment.class_name}" />
+			<img src="{$bank_item.logo}" alt="{$bank_item.name}" />
+			</div>
+			{/foreach}
+			<div class="blank1"></div>
+			<input type="hidden" name="bank_type" />
+			<a href="#" class="submit_form long_btn">确认支付</a>
+			<div class="blank1"></div>
+			</div>
+			{/if}
+			{if $payment_list.common_payment}
+			<div class="box_item {if empty($payment_list.bank_payment)}current{/if}" rel="common">
+				{foreach from=$payment_list.common_payment item=pay_item}
+				<div class="pay_item">
+				<input type="radio" name="payment_class" value="{$pay_item.class_name}" />
+				<img src="{$pay_item.logo}" alt="{$pay_item.name}" />
+				</div>
+				{/foreach}
+				<div class="blank1"></div>
+				<a href="#" class="submit_form long_btn">确认支付</a>
+				<div class="blank1"></div>
+			</div>
+			{/if}
+		</div>
+	</div><!--end payment_tabs-->
+	</form>
+</div>
+{include file="inc/footer_order.html"}

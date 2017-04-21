@@ -1,0 +1,13 @@
+{if $rand_spot}
+<div class="side_randspot">
+	<div class="dt">猜你喜欢</div>
+	<div class="dx">
+		{foreach from="$rand_spot" item="rspot"}
+			<div class="thumb"><a href="{$rspot.url}" title="{$rspot.name}"><img src="{function name="get_spec_image" v=$rspot.image w=160 h=90 g=1}" /></a></div>
+			<div class="t"><a href="{$rspot.url}" title="{$rspot.name}">{$rspot.name}</a></div>
+			<div class="price">&yen;{function name="format_price_to_display" v="$rspot.ticket_price"}</a></div>
+		{/foreach}
+	</div>
+</div>
+<div class="blank15"></div>
+{/if}

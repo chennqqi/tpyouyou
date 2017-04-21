@@ -1,0 +1,111 @@
+<script type="text/javascript">
+	function check_fee(id)
+	{
+		 $.ajax({ 
+			url: "{$checkfeeurl}&id="+id, 
+			dataType: "json",
+			success: function(obj){
+				if(obj.statusCode==200)
+				alertMsg.correct(obj.message);
+				else
+				alertMsg.error(obj.message);
+			}
+		});
+	}
+</script>
+<h2 class="contentTitle">{lang v="EDIT"}{lang v="SMS"}</h2>
+<form action="{$formaction}" method="post" class="pageForm required-validate" onsubmit="return validateCallback(this, navTabAjaxDone)">
+<div class="pageContent">
+<div class="pageFormContent" layoutH="97">		
+
+			<table class="formtable">					
+			<tr>					
+				<td class="item_title">{lang v="SMS_NAME"}：</td>
+				<td class="item_input">
+					<span style="float:left;">{$data.name}</span>
+					<input type="hidden" value="{$data.name}" name="name" />
+					{if $data.is_effect eq 1}
+						<div class="buttonActive"><div class="buttonContent"><button type="button" onclick="check_fee({$data.id});" >查询余额</button></div></div>
+					{/if}
+				</td>					
+			</tr>
+			<tr>					
+				<td class="item_title">{lang v="CLASS_NAME"}：</td>
+				<td class="item_input">
+					{$data.class_name}
+					<input type="hidden" value="{$data.class_name}" name="class_name" />
+				</td>					
+			</tr>
+			<tr>					
+				<td class="item_title">{lang v="SMS_ACCOUNT"}：</td>
+				<td class="item_input">
+					<input type="text" class="textInput valid"  maxlength="200" name="user_name" value="{$vo.user_name}">
+					<label class="tip"></label>
+				</td>					
+			</tr>
+			
+			<tr>					
+				<td class="item_title">{lang v="SMS_PASSWORD"}：</td>
+				<td class="item_input">
+					<input type="password" class="textInput valid"  maxlength="200" name="password" value="{$vo.password}">
+					<label class="tip"></label>
+				</td>					
+			</tr>
+			
+			<tr>
+				<td class="item_title">{lang v="DESCRIPTION"}:</td>
+				<td class="item_input">
+					<textarea class="textInput" name="description" rows=2 cols=80 >{$vo.description}</textarea>
+				</td>
+			</tr>
+			
+			
+
+			{if $data.config}
+				<tr>
+					<td class="item_title">{lang v="CONFIG_INFO"}:</td>
+					<td class="item_input">
+						<table style="border:none;">
+						{foreach from=$data.config key=config_name  item=config}
+						<tr>
+						<td style="border:none;">
+							<span class="cfg_title">{$config.SHOW_TITLE}:</span>
+						</td>
+						<td style="border:none;">
+							<span class="cfg_content">
+							
+							{if $config.INPUT_TYPE eq 0}
+							<input type="text" class="textInput" name="config[{$config_name}]"  value="{$config.VALUE}" />
+							{elseif $config.INPUT_TYPE eq 2}
+							<input type="password" class="textInput" name="config[{$config_name}]" value="{$config.VALUE}" />
+							{else}
+							<select name="config[{$config_name}]" class="combox"  >
+								{foreach from=$config.VALUES item=val}
+									<option value="{$val.VALUE}"  {if $config.VALUE eq $val.VALUE}selected="selected"{/if}>  {$val.SHOW_TITLE} </option>
+								{/foreach}
+							</select>
+							{/if}
+							</span>
+						</td>
+						</tr>
+						{/foreach}
+						</table>
+					</td>
+				</tr>
+			{/if}
+			
+		
+			
+			</table>
+					
+	</div>
+	<div class="formBar">
+		<ul>
+			<input type="hidden" value="{$vo.id}" name="id" />
+			<input type="hidden" value="{$vo.server_url}" name="server_url" />
+			<li><div class="buttonActive"><div class="buttonContent"><button type="submit">{lang v="SAVE"}</button></div></div></li>
+			<li><div class="button"><div class="buttonContent"><button class="close" type="button">{lang v="CLOSE"}</button></div></div></li>
+		</ul>
+	</div>
+</div>
+</form>

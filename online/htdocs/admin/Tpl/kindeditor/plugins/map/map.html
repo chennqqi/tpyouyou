@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+	<head>
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+	<style>
+		html { height: 100% }
+		body { height: 100%; margin: 0; padding: 0; background-color: #FFF }
+		#map_canvas { height: 100% }
+	</style>
+	<!--<script src="http://maps.googleapis.com/maps/api/js?sensor=false&language=zh_CN"></script>-->
+	<script src="http://ditu.google.cn/maps/api/js?sensor=false&language=zh_CN"></script>
+	<script>
+		var map, geocoder,zoom;
+		function initialize() {
+			var xpoint = parent.document.getElementById("kindeditor_plugin_map_xpoint").value;
+			var ypoint = parent.document.getElementById("kindeditor_plugin_map_ypoint").value;
+			if(xpoint=="")
+				xpoint = 39.90403;
+			if(ypoint=="")
+				ypoint = 116.40752599999996;
+			zoom = 13;
+			var latlng = new google.maps.LatLng(xpoint,ypoint);
+			options = {
+				zoom: zoom,
+				center: latlng,
+				disableDefaultUI: true,
+				panControl: true,
+				zoomControl: true,
+				mapTypeControl: true,
+				scaleControl: true,
+				streetViewControl: false,
+				overviewMapControl: true,
+				mapTypeId: google.maps.MapTypeId.ROADMAP
+			};
+			map = new google.maps.Map(document.getElementById("map_canvas"), options);
+			geocoder = new google.maps.Geocoder();
+			geocoder.geocode({latLng: latlng}, function(results, status) {
+				if (status == google.maps.GeocoderStatus.OK) {
+					map.setZoom(zoom);
+					map.setCenter(results[0].geometry.location);
+					marker = new google.maps.Marker({
+						map: map,
+						position: results[0].geometry.location
+					});
+					
+					reoverly(marker);
+					
+					if (results[3]) {
+						parent.document.getElementById("kindeditor_plugin_map_address").value = results[3].formatted_address;
+					}
+				}
+			});
+			
+			
+
+		}
+		function search(address) {
+			if (!map) return;
+			zoom =  map.getZoom();
+			map = new google.maps.Map(document.getElementById("map_canvas"), options);
+			geocoder.geocode({address : address}, function(results, status) {
+				if (status == google.maps.GeocoderStatus.OK) {
+					map.setZoom(zoom);
+					map.setCenter(results[0].geometry.location);
+					marker = new google.maps.Marker({
+						map: map,
+						position: results[0].geometry.location
+					});
+					
+					reoverly(marker);
+					
+				} else {
+					alert("地址错误");
+				}
+			});
+		}
+		
+		function new_map(marker,x,y){
+			map = new google.maps.Map(document.getElementById("map_canvas"), options);
+	    	var nlatlng = new google.maps.LatLng(x,y);
+			map.setZoom(zoom);
+	    	map.setCenter(nlatlng);
+		    marker = new google.maps.Marker({
+				map: map,
+				position: nlatlng
+			});
+		    reoverly(marker);
+	    }
+		
+		function reoverly(marker){
+			marker.setDraggable(true);
+			google.maps.event.addListener(marker,"dragend", function(e){
+				zoom =  map.getZoom();
+				new_map(marker,e.latLng.lat(),e.latLng.lng());
+			});
+		}
+	</script>
+	</head>
+	<body onload="initialize();">
+		<div id="map_canvas" style="width:100%; height:100%"></div>
+	</body>
+</html>

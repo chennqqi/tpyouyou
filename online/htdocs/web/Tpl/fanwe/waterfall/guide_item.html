@@ -1,0 +1,20 @@
+{foreach from=$list item=row}
+<div class="item">
+    <div class="notes_title">
+        {if $row.image}<a href="{url r="guide#show" v="id=$row.id"}" class="title_pic"><img src="{function name="get_spec_image" v=$row.image w=221}" />	</a>{/if}
+        <a href="{url r="guide#show" v="id=$row.id"}" class="title_content">{$row.title}</a>
+    </div>
+    <div class="notes_count">
+        <!--点赞功能占未开放
+        <span class="praise">{$row.recommend_count}</span>
+        -->
+        <span class="reply_count">{$row.comment_count}</span>
+        <span class="view_count">{$row.browse_count}</span>
+    </div>
+    <div class="notes_info">
+        <a href="{url r="user#home" p="uid=$row.user_id"}"><img src="{$row.avatar}"></a>
+        <span><a href="{url r="user#home" v="uid=$row.user_id"}">{$row.nickname}</a></span>
+        <div><a href="{url r="guide#show" v="id=$row.id"}" class="notes_info_content">{function name="msubstr" v=$row.content b=0 e=35}</a></div>
+    </div>
+</div>
+{/foreach}

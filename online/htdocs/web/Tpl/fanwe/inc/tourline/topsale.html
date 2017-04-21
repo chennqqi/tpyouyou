@@ -1,0 +1,16 @@
+{if $topsale_list}
+<div class="blank"></div>
+<div class="saletop_list">
+	<div class="hd">
+		销量排行榜
+	</div>
+	<ul>
+		{foreach from="$topsale_list" item="sale" name="sales"}
+		<li>
+			<div class="tit"><em class="em_{$smarty.foreach.sales.iteration}">{$smarty.foreach.sales.iteration}</em><a href="{$sale.url}">{function name="msubstr" v="$sale.name" a=0 b=8}</a></div>
+			<div class="current_price f_l"><em>&yen;{$sale.price}</em>起</div>
+		</li>
+		{/foreach}
+	</ul>
+</div>
+{/if}

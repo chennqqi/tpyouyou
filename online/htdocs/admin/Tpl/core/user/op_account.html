@@ -1,0 +1,67 @@
+<script type="text/javascript">
+function opdone(json){
+	DWZ.ajaxDone(json);
+	if (json.statusCode == DWZ.statusCode.ok){
+		navTab.reload("{$accounturl}", {navTabId: "user_account_page"});
+		$.pdialog.closeCurrent();
+	}
+}
+
+</script>
+<form action="{$formaction}" method="post" class="pageForm required-validate" onsubmit="return validateCallback(this, opdone)">
+<div class="pageContent">
+<div class="pageFormContent" layoutH="60">		
+
+			<table class="formtable">				
+			<tr>
+				<td class="item_title">
+					{if $type eq 'money'}
+					当前余额
+					{elseif $type eq 'score'}
+					当前积分
+					{else}
+					当前经验
+					{/if}
+				</td>
+				<td class="item_input">
+					{if $type eq 'money'}
+					{$user.money}
+					{elseif $type eq 'score'}
+					{$user.score}
+					{else}
+					{$user.exp}
+					{/if}
+				</td>
+			</tr>
+			
+			
+			<tr>
+				<td class="item_title">操作：</td>
+				<td class="item_input">
+					<input type="text" class="required textInput valid"   maxlength="150" name="op_value">
+					<label class="tip">正数表示增加，负数表示减少</label>
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="item_title">备注：</td>
+				<td class="item_input">
+					<textarea class="textInput required" name="op_log" style="width:300px; height:100px;"></textarea>
+				</td>
+			</tr>
+			
+			
+
+			</table>
+					
+	</div>
+	<div class="formBar">
+		<ul>
+			<input type="hidden" name="type" value="{$type}" />
+			<input type="hidden" name="id" value="{$user.id}" />
+			<li><div class="buttonActive"><div class="buttonContent"><button type="submit">确定</button></div></div></li>
+			<li><div class="button"><div class="buttonContent"><button class="close" type="button">{lang v="CLOSE"}</button></div></div></li>
+		</ul>
+	</div>
+</div>
+</form>

@@ -1,0 +1,108 @@
+<script type="text/javascript" src="{$TMPL}/core/include/js/shop_cate.js"></script>
+<h2 class="contentTitle">{lang v="EDIT"}{lang v="NAME"}</h2>
+<form action="{$formaction}" method="post" class="pageForm required-validate" onsubmit="return validateCallback(this, navTabAjaxDone)">
+<div class="pageContent">
+<div class="pageFormContent" layoutH="97">		
+
+			<table class="formtable">			
+			<tr>
+				<td class="item_title">{lang v="NAME"}:</td>
+				<td class="item_input">
+					<input type="text" class="required textInput valid"    minlength="2" maxlength="20" name="name" value="{$vo.name}">
+					<label class="tip"></label>
+				</td>
+			</tr>
+			<tr>
+				<td class="item_title">当季热门:</td>
+				<td class="item_input">
+					<select name="is_hot" class="combox">
+						<option value="0" {if $vo.is_hot eq 0}selected="selected"{/if}>否</option>
+						<option value="1" {if $vo.is_hot eq 1}selected="selected"{/if}>是</option>
+					</select>
+					<label class="tip"></label>
+				</td>
+			</tr>
+			<tr>
+				<td class="item_title">是否推荐:</td>
+				<td class="item_input">
+					<select name="is_recommend" class="combox">
+						<option value="0" {if $vo.is_recommend eq 0}selected="selected"{/if}>否</option>
+						<option value="1" {if $vo.is_recommend eq 1}selected="selected"{/if}>是</option>
+					</select>
+					<label class="tip"></label>
+				</td>
+			</tr>
+			<tr>
+				<td class="item_title">首页显示:</td>
+				<td class="item_input">
+					<select name="is_index" class="combox">
+						<option value="0" {if $vo.is_index eq 0}selected="selected"{/if}>否</option>
+						<option value="1" {if $vo.is_index eq 1}selected="selected"{/if}>是</option>
+					</select>
+					<label class="tip"></label>
+				</td>
+			</tr>
+			<tr class="area1" style="{if $vo.is_index eq 0}display:none{/if}">
+				<td class="item_title">国内热门大区域推荐:</td>
+				<td class="item_input">
+					<input value="{$vo.area1_py}" name="tour_area1.py"  lookupSend="tour_area1_data" type="hidden"/>
+					<input value="{$vo.area1_name}" class="" size="80" name="tour_area1.name" lookupSend="tour_area1_data"  type="text"  readonly="true"  />
+					<a class="btnLook" href="{$areatype1}" lookupGroupSelect="tour_area1">{lang v="SELECT_TOUR_AREA"}</a>
+				</td>
+			</tr>
+			<tr class="area2" style="{if $vo.is_index eq 0}display:none{/if}">
+				<td class="item_title">境外热门大区域推荐:</td>
+				<td class="item_input">
+					<input value="{$vo.area2_py}" name="tour_area2.py" lookupSend="tour_area2_data" type="hidden"/>
+					<input value="{$vo.area2_name}" class="" size="80" name="tour_area2.name" lookupSend="tour_area2_data"  type="text"  readonly="true"  />
+					<a class="btnLook" href="{$areatype2}" lookupGroupSelect="tour_area2">{lang v="SELECT_TOUR_AREA"}</a>
+				</td>
+			</tr>
+			<tr>
+				<td class="item_title">广告图一:</td>
+				<td class="item_input">
+					{function name="load_keadvimg" n="index_adv1" v="$vo.index_adv1"}
+					<br><label class="tip">推荐到首页时的广告位图片</label>
+				</td>
+			</tr>
+			<tr>
+				<td class="item_title">广告图一连接:</td>
+				<td class="item_input">
+					<input type="text" class="textInput valid url" name="index_adv1_url" value="{$vo.index_adv1_url}">
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="item_title">广告图二:</td>
+				<td class="item_input">
+					{function name="load_keadvimg" n="index_adv2" v="$vo.index_adv2"}
+					<br><label class="tip">推荐到首页的广告位2图片 下方</label>
+				</td>
+			</tr>
+			<tr>
+				<td class="item_title">广告图二连接:</td>
+				<td class="item_input">
+					<input type="text" class="textInput valid url" name="index_adv2_url" value="{$vo.index_adv2_url}">
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="item_title">{lang v="SORT"}:</td>
+				<td class="item_input">
+					<input type="text" class="textInput digits"   maxlength="10" name="sort" value="{$vo.sort}">
+					<label class="tip"></label>
+				</td>
+			</tr>
+				
+			</table>
+					
+	</div>
+	<div class="formBar">
+		<ul>
+			<input type="hidden" name="id" value="{$vo.id}" />
+			<li><div class="buttonActive"><div class="buttonContent"><button type="submit">{lang v="SAVE"}</button></div></div></li>
+			<li><div class="button"><div class="buttonContent"><button class="close" type="button">{lang v="CLOSE"}</button></div></div></li>
+		</ul>
+	</div>
+</div>
+</form>

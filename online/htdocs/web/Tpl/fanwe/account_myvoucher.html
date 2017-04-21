@@ -1,0 +1,80 @@
+<?php
+
+	$this->_var['pagecss'][] = TMPL_REAL."/css/style.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/weebox.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/account_voucher.css";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.bgiframe.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.weebox.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.pngfix.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/lazyload.js";
+
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.ui.core.js";	
+    $this->_var['pagejs'][] = TMPL_REAL."/js/jquery.ui.datepicker.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/load_datepicker.js";
+	$this->_var['cpagejs'][] = TMPL_REAL."/js/load_datepicker.js";
+
+	$this->_var['pagejs'][] = TMPL_REAL."/js/script.js";
+	$this->_var['cpagejs'][] = TMPL_REAL."/js/script.js";
+
+	
+
+	$this->_var['pagecss'][] = TMPL_REAL."/css/user_common.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/jquery-ui.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/datepicker.css";
+
+	$this->_var['pagejs'][] = TMPL_REAL."/js/account_voucher.js";
+	$this->_var['cpagejs'][] = TMPL_REAL."/js/account_voucher.js";
+	
+?>
+{include file="inc/header.html"} 
+<div class="wrap uc_box">
+	<div class="uc_menu">
+		{include file="inc/uc_menu.html"}
+	</div>
+	<div class="uc_main">
+		{insert name="load_uc_common_header"}
+		
+		<ul class="uc_tabs clearfix">
+			<li><a href="{url r="account#voucher"}">代金券领取</a></li>
+			<li class="current"><a href="javascript:void(0);">我的代金券</a></li>
+			<li><a href="{url r="account#voucher_log"}">代金券账单</a></li>
+		</ul>
+
+		<div class="blank15"></div>
+		<ul class="uc_li">			
+		<li {if $use eq -1}class="current"{/if}><a href="{url r="account#myvoucher"}">全部</a></li>
+		<li {if $use eq 0}class="current"{/if}><a href="{url r="account#myvoucher" p="use=2"}">未使用</a></li>
+		<li {if $use eq 1}class="current"{/if}><a href="{url r="account#myvoucher" p="use=1"}">已使用</a></li>
+		</ul>
+		<div class="blank15"></div>
+		{if $list}
+		<table class="uc_table">
+		<tr>
+			<th>代金券</th>			
+			<th width="50">面额</th>
+			<th width="120">领取时间</th>
+			<th width="120">有效期</th>
+			<th width="120">使用时间</th>
+		</tr>
+		{foreach from=$list item=row}
+		<tr>
+			<td>{$row.voucher_name}</td>			
+			<td style="text-align:center;">&yen;&nbsp;{$row.money}</td>
+			<td style="text-align:center;">{$row.create_time}</td>
+			<td style="text-align:center;">{$row.end_time}</td>
+			<td style="text-align:center;">{$row.use_time}</td>
+		</tr>
+		{/foreach}
+		</table>
+		<div class="blank15"></div>
+		<div class="uc_pager">{$pages}</div>
+		{else}
+		<div class="empty_box">
+			没有相关的数据
+		</div>
+		{/if}
+
+	</div>
+</div>
+ <div class="blank15"></div>
+{include file="inc/footer.html"} 

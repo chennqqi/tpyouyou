@@ -1,0 +1,95 @@
+<link rel="stylesheet" href="{$TMPL}/css/waterfall_user_active.css">
+
+<div class="blank15"></div>
+<div class="waterfall_main">
+    <!--固定4列瀑布流-->
+    <div class="col_container"></div>
+    <div class="col_container"></div>
+    <div class="col_container"></div>
+    <div class="col_container last_col_container"></div>
+    <!--分页盒子-->
+    <div class="blank15"></div>
+    <div class="pager_box" style="text-align: center;"></div>
+    <div class="blank15"></div>
+    <div class="param_box" >
+        
+    </div>
+    <input type="hidden" class="view_guide_ajax_url" value="{$view_guide_ajax_url}"/>
+</div>
+<div id="guide_waterfull_hide_box" class="waterfall_cache_data hide"></div>
+<script>
+    //方法区
+    $(function(){
+        //全局变量
+        var is_show_page = false;
+        var insert_param = "{$insert_param}";//瀑布流参数
+        //分页毁掉函数
+        AJAX_PAGE_FUN = page_init_waterfull_data;
+        
+        AJAX_URL = "";
+        //无参数请求地址
+        DEFAULT_AJAX_URL = "";
+        //初始化方法
+        $(window).load(function() {
+            //初始化参数
+            DEFAULT_AJAX_URL = $(".view_guide_ajax_url").val();
+            AJAX_URL = DEFAULT_AJAX_URL;
+            //载入瀑布流数据
+            init_waterfull_data();
+        });
+        
+        
+        
+        //分页调用使用
+        function page_init_waterfull_data(){
+            //重置部分数据
+            $(".col_container").html('');
+            init_waterfull_data();
+        }
+        //载入瀑布流数据
+        function init_waterfull_data(){
+        
+            var ajax_url = AJAX_URL;
+            var query = new Object();
+            query.insert_param = insert_param;
+            $.ajax(
+                    {
+                            type: "POST",
+                            url: ajax_url,
+                            data: query,
+                            dataType:"JSON",
+                            success: function(result){
+                                $("#guide_waterfull_hide_box").html(result.html);
+                                waterfull();
+                                 $("#J_nbox_999 .pager_box").html(result.pager);
+                                 $(".pages").show();
+                                 $("#J_nbox_999 .pager_box .pages").init_page($("#guide_waterfull_hide_box"),query,waterfull);
+                            }
+                    }
+            );
+        }
+        
+        //瀑布流布局
+        function waterfull(){
+            $(".col_container").html('');
+            var boxs = $("#guide_waterfull_hide_box .item");
+            //$("#guide_waterfull_hide_box").html("");
+            //alert(boxs.length);
+            boxs.each(function(index,value){
+               // alert(index);
+                $(".col_container").eq(getMinCol()).append(value);
+            });
+        }
+        //获取最低的列
+        function getMinCol(){
+            var hArr =[];
+            $(".col_container").each(function(index,value){
+                hArr[index] = $(value).outerHeight();
+            });
+            var minH = Math.min.apply(null,hArr);
+            var minHIndex = $.inArray(minH,hArr);
+            return minHIndex;
+        }
+
+    });
+</script>

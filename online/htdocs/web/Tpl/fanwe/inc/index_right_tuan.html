@@ -1,0 +1,83 @@
+{if $index_tuan.id gt 0}
+<script type="text/javascript">
+var systime = <?php echo NOW_TIME ?>;
+var endtime = {$index_tuan.end_time};
+var begintime = {$index_tuan.begin_time};
+var left_time_act = null;
+var html="";
+function left_time_clock(){
+	clearTimeout(left_time_act);
+	var left_time = endtime - systime;
+	var time_status=0;
+	
+	if(begintime >systime)
+	{
+		left_time=begintime-systime;
+		time_status=1;
+		$(".time_tips .time_name").html("距开始还有：");
+	}
+	if (left_time > 0) {
+		var day = parseInt(left_time / (3600 * 24));		
+		var hour = parseInt(left_time % (3600 * 24) / 3600);
+		var min = parseInt((left_time % 3600) / 60);
+		var send = parseInt(left_time % 60);		
+		
+		if(time_status ==1)
+		{
+			html="距开始还有：";
+		}
+		else{
+			html="剩余时间：";
+		}
+		
+		if(day >0)
+		{
+			html += "<span class='day'>"+day+"</span>天";
+		}
+		html += "<span class='hh'>"+hour+"</span>小时";
+		html += "<span class='mm'>"+min+"</span>分";
+		html += "<span class='ss'>"+send+"</span>秒";
+		
+		$(".time_tips").html(html);
+		
+		systime ++;
+		left_time_act = setTimeout(left_time_clock,1000);
+	}
+	else{
+		$(".time_tips").html("团购抢购中");
+	}
+}
+$(function() {
+    left_time_clock();
+});
+</script>
+
+<div class="right_new_box">
+		<div class="new_box_tit">
+			<h3>最新特卖</h3>
+			<div class="more">
+				<a target="_blank" href="{url r="tuan"}">更多&gt;</a>
+			</div>
+		</div>
+		<div class="blank5"></div>
+		<div class="now_box_inner">
+			<div class="box_inner_pic">
+				<a target="_blank" href="{$index_tuan.url}"><img src="{function name="get_spec_image" v=$index_tuan.image w=240 h=160 g=1}" style="display: inline;"></a>
+			</div>
+			<div class="m_name">
+				<a target="_blank" href="{$index_tuan.url}">
+				{$index_tuan.name}</a>
+			</div>
+			<div class="m_price">
+				<span class="p_price">¥<em>{$index_tuan.current_price}</em></span>
+				<s class="o_price">市场价¥{$index_tuan.origin_price}</s>
+			</div>
+
+			<p class="cb_label clearfix">
+				<span class="cb_people f_l">已售 <em class="count_people">{$index_tuan.sale_total}</em></span>
+				<span class="time_tips f_r">剩余时间： <span class="hh">0</span>小时<span class="mm">0</span>分<span class="ss">0</span>秒</span>
+			</p>
+		</div>
+</div>
+<!--end 最新特卖-->
+{/if}

@@ -1,0 +1,41 @@
+<?php
+	$this->_var['pagecss'][] = TMPL_REAL."/css/style.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/weebox.css";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.bgiframe.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.weebox.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.pngfix.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/lazyload.js";
+
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.ui.core.js";	
+    $this->_var['pagejs'][] = TMPL_REAL."/js/jquery.ui.datepicker.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/load_datepicker.js";
+	$this->_var['cpagejs'][] = TMPL_REAL."/js/load_datepicker.js";
+
+	$this->_var['pagejs'][] = TMPL_REAL."/js/script.js";
+	$this->_var['cpagejs'][] = TMPL_REAL."/js/script.js";
+	
+	$this->_var['pagejs'][] = TMPL_REAL."/js/uc_order.js";
+
+	$this->_var['pagecss'][] = TMPL_REAL."/css/user_common.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/uc_order.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/jquery-ui.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/datepicker.css";
+	
+?>
+{include file="inc/header.html"} 
+<div class="wrap uc_box">
+	<div class="uc_menu">
+		{include file="inc/uc_menu.html"}
+	</div>
+	<div class="uc_main">
+		{insert name="load_uc_common_header"}
+		<ul class="uc_tabs clearfix">
+			<li {if $current eq 'tourline_order'}class="current"{/if}><a href="{if $current eq 'tourline_order'}javascript:void(0);{else}{url x="uc_order#tourline_order"}{/if}">线路订单</a></li>
+			<li {if $current eq 'ticket_order' || $current eq 'ticket_order_refund'}class="current"{/if}><a href="{if $current eq 'ticket_order'}javascript:void(0);{else}{url x="uc_order#ticket_order"}{/if}">门票订单</a></li>
+			
+		</ul>
+		{include file="$inc_file"}
+	</div>
+</div>
+ <div class="blank15"></div>
+{include file="inc/footer.html"} 

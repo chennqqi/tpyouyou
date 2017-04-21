@@ -1,0 +1,62 @@
+<?php
+	$this->_var['pagecss'][] = TMPL_REAL."/css/user_common.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/profile_consignee.css";
+
+	$this->_var['pagecss'][] = TMPL_REAL."/css/style.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/weebox.css";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.bgiframe.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.weebox.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.pngfix.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/lazyload.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/script.js";
+	$this->_var['cpagejs'][] = TMPL_REAL."/js/script.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/profile_consignee.js";
+?>
+{include file="inc/header.html"} 
+<script type="text/javascript">
+	var SET_DEFAULT_URL = '{url x="profile#set_consignee_default"}';
+	var EDIT_CONSIGNEE_URL = '{url x="profile#edit_consignee"}';
+	var DEL_CONSIGNEE_URL = '{url x="profile#del_consignee"}';
+	var DO_CONSIGNEE_URL = '{url x="profile#do_consignee"}';
+</script>
+<script type="text/javascript" src="./public/region_city.js"></script>
+<div class="wrap uc_box">
+	<div class="uc_menu">
+		{include file="inc/uc_menu.html"}
+	</div>
+	<div class="uc_main">
+		{insert name="load_uc_common_header"}
+		<div class="consignee-box clearfix" id="J_consigneeBX">
+			{include file="inc/do_consignee.html"}
+		</div>
+		<div class="blank15"></div>
+		<table width="100%" cellpadding="0" cellspacing="0" class="consignee_list" id="consignee_list">
+			<thead>
+				<tr>
+					<th width="80">收货人</th>
+					<th width="120">所在地区</th>
+					<th>街道地址</th>
+					<th>邮编</th>
+					<th width="80">电话/手机</th>
+					<th width="80">&nbsp;</th>
+					<th width="80">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				{foreach from="$consignee_list" item="consignee"}
+				<tr {if $consignee.is_default eq 1}class="def"{/if}>
+					<td align="center">{$consignee.delivery_name}</td>
+					<td>{$consignee.province_name} {$consignee.city_name}</td>
+					<td>{$consignee.address}</td>
+					<td align="center">{$consignee.zip}</td>
+					<td align="center">{$consignee.delivery_mobile}</td>
+					<td align="center" dataid="{$consignee.id}" class="J_setDefaultBX">{if $consignee.is_default eq 1}<span style="color:blue">默认地址</span>{else}<a href="javascript:void(0);" class="j_set_default" dataid="{$consignee.id}">设为默认</a>{/if}</td>
+					<td align="center"><a href="javascript:void(0);" class="j_edit_consignee" dataid="{$consignee.id}">修改</a> | <a href="javascript:void(0);" class="j_del_consignee" dataid="{$consignee.id}">删除</a></td>
+				</tr>
+				{/foreach}
+			</tbody>
+		</table>
+	</div>
+</div>
+ <div class="blank15"></div>
+{include file="inc/footer.html"} 

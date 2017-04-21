@@ -1,0 +1,175 @@
+<?php
+
+$this->_var['pagecss'][] = TMPL_REAL."/css/user_regist.css";
+
+$this->_var['pagecss'][] = TMPL_REAL."/css/user_common.css";
+
+$this->_var['pagejs'][] = TMPL_REAL."/js/user_regist.js";
+
+
+
+?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta name="Generator" />
+
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title>{if $page_title neq ''}{$page_title} - {/if}{$site_name} - {$site_title}</title>
+
+<meta name="keywords" content="{$site_keyword}" />
+
+<meta name="description" content="{$site_description}" />
+
+<script type="text/jscript" src="{$TMPL}/js/jquery.min.js"></script>
+
+<?php
+
+$this->_var['pagecss'][] = TMPL_REAL."/css/style.css";
+
+$this->_var['pagecss'][] = TMPL_REAL."/css/weebox.css";
+
+$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.bgiframe.js";
+
+$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.weebox.js";
+
+$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.pngfix.js";
+
+$this->_var['pagejs'][] = TMPL_REAL."/js/lazyload.js";
+
+$this->_var['pagejs'][] = TMPL_REAL."/js/script.js";
+
+$this->_var['cpagejs'][] = TMPL_REAL."/js/script.js";
+
+if(app_conf("APP_MSG_SENDER_OPEN")==1)
+
+{
+
+$this->_var['pagejs'][] = TMPL_REAL."/js/msg_sender.js";
+
+$this->_var['cpagejs'][] = TMPL_REAL."/js/msg_sender.js";
+
+}
+
+?>
+
+
+
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$pagecss"}" />
+
+<script type="text/javascript">
+
+var APP_ROOT = '{$APP_ROOT}';
+
+var LOADER_IMG = '{$TMPL}/images/lazy_loading.gif';
+
+var ERROR_IMG = '{$TMPL}/images/image_err.gif';
+
+var send_span = {function name="app_conf" v="SEND_SPAN"}000;
+
+{if app_conf("APP_MSG_SENDER_OPEN") eq 1 and $CRON_COUNT gt 0}
+
+var IS_RUN_CRON = 1;
+
+{else}
+
+var IS_RUN_CRON = 0;
+
+{/if}
+
+var DEAL_MSG_URL = '{url r="cron#deal_msg_list"}';
+
+var LOAD_REG_FORM_URL = '{url r="user#load_regform"}';
+
+var CHECK_FIELD_URL = '{url r="user#checkfield"}';
+
+</script>
+
+{include file="inc/define_js_url.html"}
+
+<script type="text/javascript" src="{$APP_ROOT}/public/runtime/<?php echo  APP_NAME;?>/lang.js"></script>
+
+<script type="text/javascript" src="{function name="parse_script" v="$pagejs" c="$cpagejs"}"></script>
+
+
+
+</head>
+
+<body>	
+
+<div class="top_nav">
+
+			<div class="wrap">
+
+				<div class="f_l">
+
+	                                       
+
+				</div>
+
+                 <div class="f_r">
+
+					{include file="inc/top_nav_right.html"}
+
+				</div>
+
+			</div>
+
+		</div>
+
+<div class="wrap">
+
+				<a class="link" href="{$APP_ROOT}/">
+
+                        <?php
+
+                                $this->_var['logo_image'] = app_conf("SITE_LOGO");
+
+                        ?>
+
+                        {function name="load_page_png" v=$logo_image}
+
+                </a>
+
+</div>
+
+<div class="blank"></div>
+
+<!-- 注册主区域 -->
+
+<div class="regist_box wrap">
+
+
+
+	<div class="regist_main">
+
+		<div class="regist_left">
+
+			{include file="inc/email_regform.html"}
+
+		</div>
+
+		<div class="regist_banner">
+
+			<div class="regist_right_adv">
+
+				<adv adv_id="regist_right_adv" />
+
+			</div>
+
+		</div>
+
+	</div>
+
+</div>
+
+<!-- 注册主区域 -->
+
+{include file="inc/footer.html"}

@@ -1,0 +1,196 @@
+<script type="text/javascript">
+var LOAD_CITY_URL = "{$loadcityurl}";
+</script>
+<script type="text/javascript" src="{$TMPL}/core/include/js/province_city_link.js"></script>
+<h2 class="contentTitle">{lang v="EDIT"}会员</h2>
+<form action="{$formaction}" method="post" class="pageForm required-validate" onsubmit="return validateCallback(this, navTabAjaxDone)">
+<div class="pageContent">
+<div class="pageFormContent" layoutH="97">		
+
+			<table class="formtable">				
+			<tr>
+				<td class="item_title">会员名:</td>
+				<td class="item_input">
+					<input type="text" class="required textInput valid"   maxlength="150" name="user_name" value="{$vo.user_name}">
+					<label class="tip"></label>
+				</td>
+			</tr>
+			
+			
+			<tr>
+				<td class="item_title">密码:</td>
+				<td class="item_input">
+					<input type="password" class="textInput valid"   maxlength="150" name="user_pwd">
+					<label class="tip"></label>
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="item_title">确认密码:</td>
+				<td class="item_input">
+					<input type="password" class="textInput valid"   maxlength="150" name="cfm_user_pwd">
+					<label class="tip"></label>
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="item_title">电子邮箱:</td>
+				<td class="item_input">
+					<input type="text" class="textInput valid email"   maxlength="255" name="email" value="{$vo.email}">
+					<label class="tip"></label>
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="item_title">手机号:</td>
+				<td class="item_input">
+					<input type="text" class="textInput valid digits"   maxlength="255" name="mobile" value="{$vo.mobile}">
+					<label class="tip"></label>
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="item_title">是否通过验证:</td>
+				<td class="item_input">
+					<select name="is_verify" class="combox">
+						<option value="1" {if $vo.is_verify eq 1}selected="selected"{/if}>是</option>
+						<option value="0" {if $vo.is_verify eq 0}selected="selected"{/if}>否</option>						
+					</select>
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="item_title">状态:</td>
+				<td class="item_input">
+					<select name="is_effect" class="combox">
+						<option value="1" {if $vo.is_effect eq 1}selected="selected"{/if}>启用</option>
+						<option value="0" {if $vo.is_effect eq 0}selected="selected"{/if}>禁用</option>						
+					</select>
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="item_title">自动注册:</td>
+				<td class="item_input">
+					<select name="is_temp" class="combox">						
+						<option value="0" {if $vo.is_temp eq 0}selected="selected"{/if}>否</option>		
+						<option value="1" {if $vo.is_temp eq 1}selected="selected"{/if}>是</option>				
+					</select>
+					<label class="tip">自动注册为是时，允许用户更改一次用户名</label>
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="item_title">所属会员组:</td>
+				<td class="item_input">
+					<select name="group_id" class="combox">						
+						<option value="0">未选择</option>		
+						{foreach from=$group_list item=group}
+						<option value="{$group.id}" {if $vo.group_id eq $group.id}selected="selected"{/if}>{$group.name}</option>
+						{/foreach}			
+					</select>
+					<label class="tip"></label>
+				</td>
+			</tr>
+			
+			<tr>
+				<th class="item_title" colspan="2" style="font-weight:bold;">会员相关资料</th>
+			</tr>
+			<tr>
+				<td class="item_title">真实姓名:</td>
+				<td class="item_input">
+					<input type="text" class="textInput valid"   maxlength="250" name="truename" value="{$vo.truename}">
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="item_title">性别:</td>
+				<td class="item_input">
+					<select name="sex" class="combox">				
+						<option value="-1" {if $vo.sex eq -1}selected="selected"{/if}>未知</option>			
+						<option value="0" {if $vo.sex eq 0}selected="selected"{/if}>女</option>		
+						<option value="1" {if $vo.sex eq 1}selected="selected"{/if}>男</option>				
+					</select>
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="item_title">生日:</td>
+				<td class="item_input">
+					<input type="text" class="textInput valid date readonly" readonly="true"   maxlength="250" name="birthday" value="{$vo.birthday}">
+					<a href="javascript:;" class="inputDateButton">选择</a>
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="item_title">证件类型:</td>
+				<td class="item_input">
+					<select name="paper_type" class="combox">		
+						<option value="1" {if $vo.paper_type eq 1}selected="selected"{/if}>身份证</option>		
+						<option value="2" {if $vo.paper_type eq 2}selected="selected"{/if}>护照</option>		
+						<option value="3" {if $vo.paper_type eq 3}selected="selected"{/if}>军官证</option>			
+						<option value="4" {if $vo.paper_type eq 4}selected="selected"{/if}>港澳通行证</option>	
+						<option value="5" {if $vo.paper_type eq 5}selected="selected"{/if}>台胞证</option>			
+						<option value="6" {if $vo.paper_type eq 6}selected="selected"{/if}>其他</option>			
+					</select>
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="item_title">证件编号:</td>
+				<td class="item_input">
+					<input type="text" class="textInput valid"   maxlength="250" name="paper_sn" size="80" value="{$vo.paper_sn}" />
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="item_title">所在地区:</td>
+				<td class="item_input">
+					<label class="tip">省份：</label><label class="tip"><select name="province_id" class="combox">		
+							<option value="0">未选择</option>
+							{foreach from=$province_list item=province}
+							<option value="{$province.id}" {if $vo.province_id eq $province.id}selected="selected"{/if}>{$province.py_first} {$province.name}</option>
+							{/foreach}
+					</select></label>
+					<label class="tip">城市：</label><label class="tip" id="city_list"><select name="city_id" class="combox">		
+							<option value="0">未选择</option>
+							{foreach from=$city_list item=city}
+							<option value="{$city.id}" {if $vo.city_id eq $city.id}selected="selected"{/if}>{$city.py_first} {$city.name}</option>
+							{/foreach}
+					</select></label>
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="item_title">地址:</td>
+				<td class="item_input">
+					<input type="text" class="textInput valid"   maxlength="250" name="address" value="{$vo.address}">
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="item_title">邮编:</td>
+				<td class="item_input">
+					<input type="text" class="textInput valid"   maxlength="250" name="zip_code" value="{$vo.zip_code}">
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="item_title">头像:</td>
+				<td class="item_input">
+					{function name="load_keimg" p1="avatar" p2=$vo.avatar}
+				</td>
+			</tr>
+
+			</table>
+					
+	</div>
+	<div class="formBar">
+		<ul>
+			<input type="hidden" name="id" value="{$vo.id}" />
+			<li><div class="buttonActive"><div class="buttonContent"><button type="submit">{lang v="SAVE"}</button></div></div></li>
+			<li><div class="button"><div class="buttonContent"><button class="close" type="button">{lang v="CLOSE"}</button></div></div></li>
+		</ul>
+	</div>
+</div>
+</form>

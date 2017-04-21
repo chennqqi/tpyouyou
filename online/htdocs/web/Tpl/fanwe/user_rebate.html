@@ -1,0 +1,72 @@
+<?php
+
+	$this->_var['pagecss'][] = TMPL_REAL."/css/style.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/weebox.css";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.bgiframe.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.weebox.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.pngfix.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/lazyload.js";
+
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.ui.core.js";	
+    $this->_var['pagejs'][] = TMPL_REAL."/js/jquery.ui.datepicker.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/load_datepicker.js";
+	$this->_var['cpagejs'][] = TMPL_REAL."/js/load_datepicker.js";
+
+	$this->_var['pagejs'][] = TMPL_REAL."/js/script.js";
+	$this->_var['cpagejs'][] = TMPL_REAL."/js/script.js";
+
+	
+
+	$this->_var['pagecss'][] = TMPL_REAL."/css/user_common.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/user_index.css";	
+	$this->_var['pagecss'][] = TMPL_REAL."/css/jquery-ui.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/datepicker.css";
+	
+?>
+{include file="inc/header.html"} 
+<div class="wrap uc_box">
+	<div class="uc_menu">
+		{include file="inc/uc_menu.html"}
+	</div>
+	<div class="uc_main">
+		
+		{insert name="load_uc_common_header"}
+		<div class="box_top">会员返利记录</div>
+		<div class="box_main" style="padding:10px;">
+		<div class="blank15"></div>	
+		<div class="search_row">
+		<form action="{url r="user#rebate"}" method="get" class="getform">
+		<input type="text" name="begin_time" value="{$begin_time}" class="uc_ipt uc_datepicker" /> <label>-</label> <input type="text" value="{$end_time}" name="end_time" class="uc_ipt uc_datepicker" /> <input type="submit" value="搜索" />
+		</form>
+		</div>   
+		<div class="blank15"></div>
+		{if $list}
+		<table class="uc_table">
+		<tr>
+			<th>返利金额</th>
+			<th width="150">被邀请人</th>
+			<th width="150">返利时间</th>
+			<th width="150">发放时间</th>
+		</tr>
+		{foreach from=$list item=row}
+		<tr>
+			<td style="text-align:center;">&yen;&nbsp;{$row.money}</td>
+			<td style="text-align:center;">{$row.nickname}</td>
+			<td style="text-align:center;">{$row.create_time}</td>
+			<td style="text-align:center;">{$row.pay_time}</td>
+		</tr>
+		{/foreach}
+		</table>
+		<div class="blank15"></div>
+		<div class="uc_pager">{$pages}</div>
+		{else}
+		<div class="empty_box">
+			没有相关的数据
+		</div>
+		{/if}
+		
+		</div>
+	</div>
+</div>
+ <div class="blank15"></div>
+{include file="inc/footer.html"} 

@@ -1,0 +1,90 @@
+<div class="all_dest_lists channel_color{$rec_result.color}">
+	<div class="clearfix d_top">
+		<h3 class="f_l dest_name">{$rec_result.name}</h3>
+		<div class="f_l place">
+			{foreach from=$rec_result.top_nav item=nav key=key}
+			{if $key < 12}
+				<a href="{$nav.url}">{$nav.name}</a>		
+			{/if}
+			{/foreach}
+		</div>
+		{if $rec_result.top_nav_more.b_cate}
+		<div class="f_r all_button" >
+			<a class="button_a" href="javascript:void(0);">全部目的地</a>
+			<div class="all_oh_des_left clearfix">
+				{foreach from=$rec_result.top_nav_more.b_cate item=b_cate key=key}
+				<dl >
+					<dt><a href="{$b_cate.url}">{$b_cate.name}</a></dt>
+					<dd>
+						{foreach from=$b_cate.s_cate item=s_cate}
+							<a href="{$s_cate.url}">{$s_cate.name}</a>
+						{/foreach}
+					</dd>
+				</dl>
+				{/foreach}
+			</div>
+		</div>
+		{else}
+		<div class="f_r">
+			<a href="{$rec_result.more_url}">更多</a>
+		</div>
+		{/if}
+	</div>
+	<div class="clearfix dest_main">
+		<div class="f_l dest_l">
+			<ul class="clearfix">
+				{foreach from=$rec_result.left_nav item=l_item key=key}
+					{if $key < 8}
+					<li><a href="{$l_item.url}">{$l_item.name}</a></li>
+					{/if}
+				{/foreach}
+			</ul>
+			<div class="blank"></div>
+			<div class="dest_adv">
+				{if $rec_result.adv1}
+				<div style="padding:0px 10px">
+				<a href="{$rec_result.adv1_url}">
+					<img src="{$rec_result.adv1}" width="190" height="60" /> 
+				</a>
+				</div>
+				{/if}
+			</div>
+		</div>
+		<div class="f_r dest_r">
+			<div class="big_pro clearfix">
+				<ul class="clearfix">
+					{foreach from=$rec_result.image_tour item=b_tour key=key}
+					<li>
+						<div class="d_img">
+							<a href="{$b_tour.url}" title="{$b_tour.name}"><img src="{function name="get_spec_image" v=$b_tour.image b=185 h=130 g=1}" ></a>
+						</div>
+							<a class="bp_name" href="{$b_tour.url}" title="{$b_tour.name}">{function name=msubstr v=$b_tour.name a=0 b=27}</a>
+                    	<div class="bp_botom clearfix">
+                    		<span class="price">￥<strong>{$b_tour.price}</strong>起</span>
+							
+                    	</div>
+					</li>
+					{/foreach}
+				</ul>
+			</div>
+			<div class="blank13"></div>
+			<div class="sub_prds">
+				<ul class="clearfix" >
+					{foreach from=$rec_result.text_tour item=m_tour key=key}
+					<li>
+						<em>▪</em>
+						<a href="{$m_tour.url}" title="{$m_tour.name}">{function name=msubstr v=$m_tour.name a=0 b=29}</a>
+						<span class="f_yh" {if ($key+1)%2 eq 0}style="padding-right:10px;"{/if}>￥{$m_tour.price} 起</span>
+					</li>
+					{/foreach}
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="blank10"></div>
+	{if $rec_result.adv2}
+	<a href="{$rec_result.adv2_url}">
+		<img src="{$rec_result.adv2}" /> 
+	</a>
+	{/if}
+</div>

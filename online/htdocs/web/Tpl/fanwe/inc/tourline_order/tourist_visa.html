@@ -1,0 +1,37 @@
+<div id="visa_part" class="order_box ">
+	<div class="blank15"></div>
+    <h2>签证信息</h2>
+	<div class="routes_info">
+			<table cellspacing="0" cellpadding="0" class="visa_table" id="visa_table">
+            <tbody>
+                <tr>
+                    <th width="100" align="right">签证名称：</th>
+                    <td  align="left">{$tourline_info.visa_name}</td>
+                </tr>
+               <tr>
+                    <th align="right">签证单价：</th>
+                    <td  align="left">{function name="format_price" v="$tourline_info.visa_price"} </td>
+                </tr>
+				 <tr>
+                    <th align="right">签证说明：</th>
+                    <td  align="left">{$tourline_info.visa_brief}</td>
+                </tr>
+			   
+               <tr>
+                    <th align="right">购买签证数：</th>
+                    <td align="left">
+                    	<input type="hidden" name="visa_total_price" value="" price="{$tourline_info.visa_price}">
+						<select name="number_visa">
+							<option value="0">0</option>
+							{foreach from="$youke_all_array" item="visa_num"}
+								<option value="{$visa_num.num}">{$visa_num.num}</option>
+							{/foreach}
+						</select>
+					</td>
+                </tr>
+              
+            </tbody>
+       </table>
+	</div>
+</div>
+<div class="blank15"></div>

@@ -1,0 +1,83 @@
+@CHARSET "UTF-8";
+
+.payment_tabs{ position: relative; }
+.payment_tabs ul{ height:32px; display:block; top:-32px; z-index:10; position: absolute;}
+.payment_tabs ul li{ font-weight:bold; cursor:pointer; border:#dfe6f6 solid 2px; border-bottom:#bbcbef solid 2px; color:#0075bb; display:block; width:120px; height:30px; float:left; line-height:30px; text-align:center; margin-right:5px; }
+.payment_tabs ul li.current{  border:#bbcbef solid 2px;  border-bottom:#fff solid 2px; color:#000; }
+.payment_tabs .payment_box{ border:#bbcbef solid 2px; overflow:hidden; width:1000px; }
+.payment_tabs .payment_box .box_item{ display:none; padding:27px 0px 27px 27px; }
+.payment_tabs .payment_box .current{ display:inline-block;}
+
+.pay_item{ float:left; display:inline-block; width:210px; height:40px;  border:#ccc solid 2px;  margin:0px 27px 27px 0px; cursor:pointer;}
+.pay_item input,.pay_item img{ float:left; display:inline-block;}
+.pay_item input{ margin-top:13px; margin-left:10px; _margin-left:10px; _margin-top:10px; }
+.pay_item img{ width:180px; height:40px; }
+
+.payment_box .box_item .current{  border:#0263a0 solid 2px; }
+
+.order_display{ background:#f4f6fd; border-top:#006daf 2px solid; display:inline-block; width:1000px;}
+
+.qes_span{ color:#f30; font-size:16px; font-weight:bolder; display:block; text-align:center; line-height:30px;}
+
+.paid_funcbtn{ text-align:center; width:100%; }
+a.paid,a.paid:hover{ background:#006daf; text-decoration:none; width:50px; height:30px; float:left; border-radius:3px; text-align:center; line-height:30px; color:#fff;  margin:10px; padding:0px 20px; display:inline-block;}
+a.repaid,a.repaid:hover{ background:#006daf; text-decoration:none; width:50px; height:30px; float:right; border-radius:3px; text-align:center; line-height:30px; color:#fff; margin:10px; padding:0px 20px; display:inline-block; }
+
+/* 线路 订单成功提交页 、付款成功页面*/
+.t_nav {
+	background:#fff;
+}
+.t_nav ul li{
+	font-size:14px;
+	font-weight:bolder;
+	width:332px;
+	margin-right:2px;
+	line-height:28px;
+	text-align:center;
+	background:#eaeaea;
+	color:#5b5b5b;
+}
+.t_nav ul li.li_width{
+	width:248px;
+}
+.t_nav ul li.li_width_last{
+	width:250px;
+}
+.t_nav ul li.cur{
+	background:#018bd4;
+	color:#fff;
+}
+.s_cont{
+	padding:20px  0px 20px 250px;
+	border:1px solid #eaeaea;
+}
+.s_cont .o_success{
+	font-weight:bolder;
+	font-size:15px;
+	line-height:30px;
+}
+.s_cont .o_sn{
+	font-weight:bolder;
+	font-size:14px;
+	line-height:30px;
+}
+.f60{
+	color:#f60;
+	font-weight:bolder;
+}
+.s_cont .a_but{
+	width: 112px;
+	height: 33px;
+	color: white;
+	font-size: 16px;
+	font-family: "Microsoft YaHei","微软雅黑";
+	cursor: pointer;
+	border: none;
+	background: #018BD4;
+	display:block;
+	text-align:center;
+	line-height:33px;
+	text-decoration:none;
+	border-radius:4px;
+}
+/*end  线路 订单成功提交页 、付款成功页面*/

@@ -1,0 +1,66 @@
+<div >
+	<form action="{url x="uc_order#do_appoint"}" method="post">
+		<div class="blank"></div>
+		{if $order.is_divide eq 0 || $order.is_delivery eq 1}<!--团体票 实体票-->
+		共有门票：{$order.sale_count}张
+		<div class="blank"></div>
+		{else}<!--电子票-->
+			<table class="uc_table uc_ordertable" style="text-align:center;">
+			<tbody>
+				<tr>
+					<th width="120">选择要改签的票</th>	
+					<th>验证码</th>
+					<th>状态</th>
+				</tr>
+				<tr>
+				</tr>
+				{foreach from="$tickets" item="item" key=key}
+				{if $item.op_status_1 eq 1}
+				<tr>
+					<td ><input type="checkbox" name="tid[]" value="{$item.id}" /></td>
+					<td>
+						{$item.verify_code}
+					</td>
+					
+					<td >
+						{if $item.item_status_type_0 neq ''}
+						{$item.item_status_type_0}
+						{/if}
+						{if $item.item_status_type_1 neq ''}
+						{$item.item_status_type_1}
+						{/if}
+						{if $item.item_status_type_2 neq ''}
+						{$item.item_status_type_2}
+						{/if}
+						{if $item.item_status_type_3 neq ''}
+						{$item.item_status_type_3}
+						{/if}
+					</td>
+				</tr>
+				{/if}
+				{/foreach}
+			</tbody>
+		</table>
+		<div class="blank"></div>
+		{/if}
+		改签时间：<input type="text" class="uc_ipt uc_datepicker" name="re_appoint_time" value="" holder="请选择改签时间" />
+		<div class="blank"></div>
+		
+		<input type="hidden" name="id" value="{$id}" />
+		<input type="button" value="确定" id="J_do_refund" class="formbutton"/>
+		<input type="button" value="取消" id="J_cancel_refund" class="resetbutton" />
+		<input type="hidden" id="refund_do_txt"class="" />
+	</form>
+</div>
+<script type="text/javascript">
+	$("#refund_do_txt").focus(function(){
+		init_holder();
+		var mindate = "{$mindate}";
+		{if $maxdate}
+		var maxdate= "{$maxdate}";
+		$("input.uc_datepicker").datepicker({showAnim:'fadeIn',minDate:mindate,maxDate:maxdate});
+		{else}
+		$("input.uc_datepicker").datepicker({showAnim:'fadeIn',minDate:mindate});
+		{/if}
+	});
+</script>

@@ -1,0 +1,116 @@
+<script type="text/javascript">
+	function send_demo()
+	{		
+		$.ajax({ 
+				url: "{$senddemourl}&test_mail="+$.trim($("input[name='test_email']").val()), 
+				dataType: "json",
+				success: function(obj){
+					if(obj.statusCode==200)
+					{
+						alertMsg.correct(obj.message);
+					}
+					else
+						alertMsg.error(obj.message);
+				}
+		});
+	}
+	$(document).ready(function(){
+		$("button[name='test_mail_btn']").bind("click",function(){			
+			var mail = $.trim($("input[name='test_email']").val());	
+			if(mail!='')
+			send_demo();
+		});
+	});
+</script>
+<form id="pagerForm" method="post" action="#rel#">
+	<input type="hidden" name="pageNum" value="{$param.pageNum}" />
+	<input type="hidden" name="numPerPage" value="{$param.pageSize}" />
+	<input type="hidden" name="orderField" value="{$param.orderField}" />
+	<input type="hidden" name="orderDirection" value="{$param.orderDirection}" />
+</form>
+<form rel="pagerForm" onsubmit="return navTabSearch(this);" action="{$formaction}" method="post"></form>
+<div class="pageHeader">
+	
+	<div class="searchBar">
+		<div class="pageFormContent cf" >
+			<div class="searchtableRow">
+				
+				<table>
+					<tr>
+						<td>
+						{lang v="TEST_EMAIL"}：
+						</td>
+						<td>
+						<input type="text" name="test_email" value=""/>
+						</td>
+						<td>
+						<div class="buttonActive"><div class="buttonContent"><button type="button" name="test_mail_btn">{lang v="TEST"}</button></div></div>
+						</td>
+					</tr>
+				</table>
+				
+			</div>		
+			
+		</div>
+
+	</div>
+
+</div>
+
+<div class="pageContent">
+	<div class="panelBar">
+		<ul class="toolBar">
+			<li><a title="{lang v="ADD"}{lang v="MAILSERVER"}" rel="mailserver_addpage" target="navTab"  href="{$addurl}" class="add"><span>{lang v="ADD"}</span></a></li>
+			<li><a title="{lang v="CONFIRM_DELETE"}" target="selectedTodo" rel="id" postType="string" href="{$delurl}" class="delete"><span>{lang v="DEL"}</span></a></li>
+		</ul>
+	</div>
+	<table class="table" width="100%" layoutH="142">
+		<thead>
+		<tr>
+				<th width="22"><input type="checkbox" group="id" class="checkboxCtrl"></th>
+				<th  width="50" orderField="id" {if $param.orderField eq 'id'} class="{$param.orderDirection}"{/if}>{lang v="ID"}</th>
+				<th width="250">{lang v="SMTP_SERVER"}</th>
+				<th>{lang v="SMTP_NAME"}</th>
+				<th width="80" orderField="use_limit" {if $param.orderField eq 'use_limit'} class="{$param.orderDirection}"{/if}>{lang v="USE_LIMIT"}</th>
+				<th width="80" orderField="total_use" {if $param.orderField eq 'total_use'} class="{$param.orderDirection}"{/if}>{lang v="TOTAL_USE"}</th>
+				<th width="80" orderField="is_reset" {if $param.orderField eq 'is_reset'} class="{$param.orderDirection}"{/if}>{lang v="IS_RESET"}</th>
+				<th width="80" orderField="is_effect" {if $param.orderField eq 'is_effect'} class="{$param.orderDirection}"{/if}>{lang v="IS_EFFECT"}</th>
+				<th width="150">{lang v="TAG_LANG_OPERATE"}</th>
+			</tr>
+		</thead>
+		<tbody>
+		
+			{foreach from=$list item=item}
+			<tr  rel="{$item.id}">
+				<td><input name="id" value="{$item.id}" type="checkbox"></td>
+				<td>{$item.id}</td>
+				<td>{$item.smtp_server}</td>
+				<td>{$item.smtp_name}</td>
+				<td>{$item.use_limit}</td>
+				<td>{$item.total_use}</td>
+				<td>{$item.is_reset_show}</td>
+				<td><a href="{$seteffecturl}&id={$item.id}&is_effect={$item.is_effect}" target="ajaxTodo" class="{if $item.is_effect eq 1}btnSelect{else}btnDel{/if}">{$item.is_effect_show}</a></td>
+				<td>
+					<a title="{lang v="CONFIRM_DELETE"}" target="ajaxTodo" href="{$delurl}&id={$item.id}" class="btnDel">{lang v="DEL"}</a>
+					<a title="{lang v="EDIT"}{lang v="MAILSERVER"}{$item.smtp_name}" rel="mailserver_editpage_{$item.id}" target="navTab" href="{$editurl}&id={$item.id}"  class="btnEdit">{lang v="EDIT"}</a>
+				</td>
+			</tr>
+			{/foreach}
+		</tbody>
+	</table>
+	<div class="panelBar">
+		<div class="pages">
+			<span>{lang v="DISPLAY_PAGE_SIZE"}</span>
+			<select class="combox" name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value})">
+				<option value="<?php echo ADMIN_PAGE_SIZE1;?>" {if $param.pageSize eq ADMIN_PAGE_SIZE1}selected="selected"{/if} ><?php echo ADMIN_PAGE_SIZE1;?></option>
+				<option value="<?php echo ADMIN_PAGE_SIZE2;?>" {if $param.pageSize eq ADMIN_PAGE_SIZE2}selected="selected"{/if}><?php echo ADMIN_PAGE_SIZE2;?></option>
+				<option value="<?php echo ADMIN_PAGE_SIZE3;?>" {if $param.pageSize eq ADMIN_PAGE_SIZE3}selected="selected"{/if}><?php echo ADMIN_PAGE_SIZE3;?></option>
+				<option value="<?php echo ADMIN_PAGE_SIZE4;?>" {if $param.pageSize eq ADMIN_PAGE_SIZE4}selected="selected"{/if}><?php echo ADMIN_PAGE_SIZE4;?></option>
+			</select>
+			<span>&nbsp;&nbsp;{lang v="PAGE_TOTAL_COUNT" p="$totalCount"}</span>
+		</div>
+		
+		<div class="pagination" targetType="navTab" totalCount="{$totalCount}" numPerPage="{$param.pageSize}" pageNumShown="10" currentPage="{$param.pageNum}"></div>
+
+	</div>
+</div>

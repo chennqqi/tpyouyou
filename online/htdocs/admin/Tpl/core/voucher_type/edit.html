@@ -1,0 +1,91 @@
+<script type="text/javascript">
+var LOAD_USER_LEVEL_URL = "{$loaduserlevel}&deliver_rel_id={$vo.deliver_rel_id}";
+var LOAD_USER_GROUP_URL = "{$loadusergroup}&deliver_rel_id={$vo.deliver_rel_id}";
+</script>
+<script type="text/javascript" src="{$TMPL}/core/include/js/voucher.js"></script>
+<h2 class="contentTitle">{lang v="EDIT"}{lang v="VOUCHER"}</h2>
+<form action="{$formaction}" method="post" class="pageForm required-validate" onsubmit="return validateCallback(this, navTabAjaxDone)">
+<div class="pageContent">
+<div class="pageFormContent" layoutH="97">		
+
+			<table class="formtable">				
+			<tr>
+				<td class="item_title">{lang v="NAME"}:</td>
+				<td class="item_input">
+					<input type="text" class="required textInput valid"   maxlength="20" name="voucher_name" value="{$vo.voucher_name}">
+					<label class="tip"></label>
+				</td>
+			</tr>
+
+			<tr>
+				<td class="item_title">{lang v="SORT"}:</td>
+				<td class="item_input"><input type="text" class="textInput digits" name="sort" value="{$vo.sort}" /></td>
+			</tr>	
+			
+			<tr>
+				<td class="item_title">{lang v="VOUCHER_MONEY"}:</td>
+				<td class="item_input"><input type="text" class="required textInput number" name="money" value="{$vo.money}" /></td>
+			</tr>	
+			
+			
+			
+			<tr>
+				<td class="item_title">{lang v="DELIVER_TYPE"}:</td>
+				<td class="item_input">
+					<select name="deliver_type" class="combox">
+						<option value="1" {if $vo.deliver_type eq 1}selected="selected"{/if}>{lang v="DELIVER_TYPE_1"}</option>
+						<option value="2" {if $vo.deliver_type eq 2}selected="selected"{/if}>{lang v="DELIVER_TYPE_2"}</option>
+						<option value="3" {if $vo.deliver_type eq 3}selected="selected"{/if}>{lang v="DELIVER_TYPE_3"}</option>
+					</select>
+				</td>
+			</tr>	
+			
+			<tr id="deliver_limit">
+				<td class="item_title">{lang v="DELIVER_LIMIT"}:</td>
+				<td class="item_input"><input type="text" class="textInput digits" name="deliver_limit" value="{$vo.deliver_limit}" /></td>
+			</tr>	
+			
+			<tr id="rel_id">
+				<td class="item_title" id="rel_id_title"></td>
+				<td class="item_input" id="rel_id_box">
+				
+				</td>
+			</tr>	
+			
+			<tr id="deliver_end_time">
+				<td class="item_title">{lang v="DELIVER_END_TIME"}:</td>
+				<td class="item_input">
+					<input class="date textInput readonly valid" type="text"  readonly="true" name="deliver_end_time" value="{$vo.deliver_end_time}">
+					<a class="inputDateButton" href="javascript:;">选择</a>
+					<label class="tip">留空表示不限制领取时间</label>
+				</td>
+			</tr>	
+			
+			<tr>
+				<td class="item_title">{lang v="VOUCHER_END_TIME"}:</td>
+				<td class="item_input">
+					<input class="date textInput readonly valid" type="text"  readonly="true" name="voucher_end_time" value="{$vo.voucher_end_time}">
+					<a class="inputDateButton" href="javascript:;">选择</a>
+					<label class="tip">留空表示不限制过期时间</label>
+				</td>
+			</tr>	
+			
+			<tr>
+				<td class="item_title">{lang v="IS_EFFECT"}:</td>
+				<td class="item_input">
+					<lable>{lang v="IS_EFFECT_1"}<input type="radio" name="is_effect" value="1"  {if $vo.is_effect eq 1}checked="checked"{/if} /></lable>
+					<lable>{lang v="IS_EFFECT_0"}<input type="radio" name="is_effect" value="0"  {if $vo.is_effect eq 0}checked="checked"{/if}/></lable>
+				</td>
+			</tr>
+			</table>
+					
+	</div>
+	<div class="formBar">
+		<ul>
+			<input type="hidden" name="id" value="{$vo.id}" />
+			<li><div class="buttonActive"><div class="buttonContent"><button type="submit">{lang v="SAVE"}</button></div></div></li>
+			<li><div class="button"><div class="buttonContent"><button class="close" type="button">{lang v="CLOSE"}</button></div></div></li>
+		</ul>
+	</div>
+</div>
+</form>

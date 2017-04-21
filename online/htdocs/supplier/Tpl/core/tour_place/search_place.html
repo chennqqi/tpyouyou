@@ -1,0 +1,106 @@
+<script type="text/javascript">
+var selected_data = {$selected_data_str};
+$(document).ready(function(){
+	 var pk = "{$pk}";                 
+	//初始化已选项
+	$.each($($.pdialog.getCurrent()).find("input[name='"+pk+"']"), function(i, n){
+		var relid = $(n).attr("rel");	 
+		if(selected_data[pk].indexOf(relid+",")>=0||selected_data[pk].indexOf(","+relid)>=0||selected_data[pk]==relid)
+		{
+			$(n).attr("checked",true);
+		}
+		else
+		{
+			$(n).attr("checked",false);
+		}
+	});	
+});
+</script>
+<form id="pagerForm" method="post" action="#rel#">
+	<input type="hidden" name="pageNum" value="{$param.pageNum}" />
+	<input type="hidden" name="numPerPage" value="{$param.pageSize}" />
+	<input type="hidden" name="orderField" value="{$param.orderField}" />
+	<input type="hidden" name="orderDirection" value="{$param.orderDirection}" />
+</form>
+<div class="pageHeader">
+	<form rel="pagerForm" onsubmit="return dwzSearch(this, 'dialog');" action="{$formaction}" method="post">
+	<div class="searchBar">
+		
+			<div class="searchtableRow">
+				
+				<table>
+					<tr>
+						<td>
+						{lang v="KEYWORD"}：
+						</td>
+						<td>
+						<input type="text" name="name" value="{$param.name}"/>
+						{foreach from=$fields item=field}
+						{foreach from=$selected_data key=key item=item}
+						{if $key eq $field}
+						<input type="hidden" name="selected_{$field}" value="{$item}" />
+						{/if}
+						{/foreach}
+						{/foreach}
+						</td>
+						
+						
+						<td>
+						<div class="buttonActive"><div class="buttonContent"><button type="submit">{lang v="SEARCH"}</button></div></div>
+						</td>
+						<td>
+						<div class="button"><div class="buttonContent"><button type="button" multLookupSelected="id" >确认选择</button></div></div>
+						</td>
+						<td>
+						<div class="button"><div class="buttonContent"><button type="button" onclick='clear_select("{$pk}",{$fields_str});'>清空所选</button></div></div>
+						</td>
+					</tr>
+				</table>
+				
+			</div>
+
+	</div>
+	</form>
+</div>
+
+<div class="pageContent">	
+	<table class="table" width="100%" layoutH="95">
+		<thead>
+		<tr>
+				<th width="22"><input type="checkbox" onclick='check_all(this,"{$pk}",{$fields_str});'></th>
+				<th  width="50">{lang v="ID"}</th>
+				<th>{lang v="NAME"}</th>
+				<th width="100">{lang v="PY"}</th>
+				<th width="80">{lang v="IS_EFFECT"}</th>
+
+			</tr>
+		</thead>
+		<tbody>
+		
+			{foreach from=$list item=item}
+			<tr  rel="{$item.id}">
+				<td><input name="py" onclick='reload_selected_data("{$pk}",{$fields_str});' rel={$item.py}  value="{py:'{$item.py}', name:'{$item.name}'}"  type="checkbox"></td>
+				<td>{$item.id}</td>
+				<td>{$item.name}</td>
+				<td>{$item.py}</td>
+				<td>{$item.is_effect_show}</td>
+			</tr>
+			{/foreach}
+		</tbody>
+	</table>
+	<div class="panelBar">
+		<div class="pages">
+			<span>{lang v="DISPLAY_PAGE_SIZE"}</span>
+			<select class="combox" name="numPerPage"  onchange="dialogPageBreak({numPerPage:this.value})">
+				<option value="<?php echo ADMIN_PAGE_SIZE1;?>" {if $param.pageSize eq ADMIN_PAGE_SIZE1}selected="selected"{/if} ><?php echo ADMIN_PAGE_SIZE1;?></option>
+				<option value="<?php echo ADMIN_PAGE_SIZE2;?>" {if $param.pageSize eq ADMIN_PAGE_SIZE2}selected="selected"{/if}><?php echo ADMIN_PAGE_SIZE2;?></option>
+				<option value="<?php echo ADMIN_PAGE_SIZE3;?>" {if $param.pageSize eq ADMIN_PAGE_SIZE3}selected="selected"{/if}><?php echo ADMIN_PAGE_SIZE3;?></option>
+				<option value="<?php echo ADMIN_PAGE_SIZE4;?>" {if $param.pageSize eq ADMIN_PAGE_SIZE4}selected="selected"{/if}><?php echo ADMIN_PAGE_SIZE4;?></option>
+			</select>
+			<span>&nbsp;&nbsp;{lang v="PAGE_TOTAL_COUNT" p="$totalCount"}</span>
+		</div>
+		
+		<div class="pagination" targetType="dialog" totalCount="{$totalCount}" numPerPage="{$param.pageSize}" pageNumShown="5" currentPage="{$param.pageNum}"></div>
+
+	</div>
+</div>

@@ -1,0 +1,103 @@
+{foreach from="$spot_cate_list" item="cate" name="cates"}
+<div class="tour_box {$cate.class_name}">
+		<!--start 标题菜单部分-->
+		<div class="tour_tit clearfix">
+			<div class="left_part">
+				<h2>{$cate.name}</h2>
+			</div>
+			<div class="center_part">
+				<div class="center_part_nav">
+					<ul class="clearfix">
+						{foreach from="$cate.tags" item="tag" name="tags"}
+						{if $smarty.foreach.tags.index lt 10}
+						<li>
+							<a href="{url x="spot#cat" p="tag=$tag"}">{$tag}</a>
+						</li>
+						{/if}
+						{/foreach}
+					</ul>
+				</div>
+			</div>
+			<div class="right_part">
+				<div class="more"><a rel="nofollow" href="{url x="spot#cat" p="cate=$cate.id"}" target="_blank" >更多&gt;</a></div>
+			</div>
+		</div>
+		<!--end 标题菜单部分-->
+		<!--start 内容部分-->
+		<div class="tour_con clearfix">
+			<div class="left_part_2">
+				<div class="left_part_2_item">
+					<dl>
+						<dt><h3>国内热门景点目的地</h3></dt>
+						{foreach from="$cate.in_site_list" item="ins" key=key}
+						{if $key lt 15}
+						<dd><a class="rb_10" href="{url x="spot#cat" p="area=$ins.py"}">{$ins.name}</a></dd>
+						{/if}
+						{/foreach}
+					</dl>
+					 <div class="blank15"></div>
+					 <div class="blank15"></div>
+					<dl>
+						<dt><h3>境外热门景点目的地</h3></dt>
+						{foreach from="$cate.out_site_list" item="outs" key=key}
+						{if $key lt 15}
+						<dd><a class="rb_10" href="{url x="spot#cat" p="area=$outs.py"}">{$outs.name}</a></dd>
+						{/if}
+						{/foreach}
+					</dl>
+					
+				</div>
+				<div class="left_adv_1">
+					{if $cate.index_adv1 neq ''}
+					<div class="blank"></div>											
+					<a href="{$cate.index_adv1_url}"><img src="{$cate.index_adv1}" /></a>
+					{/if}									
+				</div>
+			</div>
+			<div class="main_part">
+				<div class="main_part_item" style="">
+					<ul class="main_part_pro clearfix">
+						{foreach from="$cate.spots_list" item="spot" name="spots"}
+						{if $smarty.foreach.spots.index lt 6}
+						<li>
+							<div class="main_part_pic">
+								<a href="{$spot.url}" target="_blank" >
+									<img src="{function name="get_spec_image" v=$spot.image w=210 h=140 g=1}" style="display: inline;">
+								</a>
+							</div>
+							<div class="main_part_bg"></div>
+							<div class="main_part_des">
+								<div class="m_name">
+									<a rel="nofollow" href="{$spot.url}" title="{$spot.name}" target="_blank" >{function name="msubstr" v="$spot.name" a=0 b=12}</a>
+								</div>
+								<div class="m_price">
+									<span class="p_price">
+										¥
+										<em>{function name="format_price_to_display" v=$spot.ticket_price}</em>
+										<i>起</i>
+									</span>
+									{if $spot.review_return_money gt 0}
+									<div class="p_fanli">
+										<span class="fanli_icon"></span>
+										<span class="fanli_price">{function name="format_price_to_display" v=$spot.review_return_money}</span>
+									</div>
+									{/if}
+								</div>
+							</div>
+						</li>
+						{/if}
+						{/foreach}
+					</ul>
+				</div>
+			</div>
+		</div>
+		<!--end 内容部分-->
+		<div class="clearfix">
+			{if $cate.index_adv2 neq ''}
+			<div class="blank"></div>						
+			<a href="{$cate.index_adv2_url}"><img src="{$cate.index_adv2}" /></a>
+			{/if}								
+		</div>
+</div>
+<div class="blank15"></div>
+{/foreach}	

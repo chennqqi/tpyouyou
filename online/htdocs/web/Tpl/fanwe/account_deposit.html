@@ -1,0 +1,121 @@
+<?php
+
+	$this->_var['pagecss'][] = TMPL_REAL."/css/style.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/weebox.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/account_incharge.css";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.bgiframe.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.weebox.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.pngfix.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/lazyload.js";
+
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.ui.core.js";	
+    $this->_var['pagejs'][] = TMPL_REAL."/js/jquery.ui.datepicker.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/load_datepicker.js";
+	$this->_var['cpagejs'][] = TMPL_REAL."/js/load_datepicker.js";
+
+	$this->_var['pagejs'][] = TMPL_REAL."/js/script.js";
+	$this->_var['cpagejs'][] = TMPL_REAL."/js/script.js";
+
+	
+
+	$this->_var['pagecss'][] = TMPL_REAL."/css/user_common.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/jquery-ui.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/datepicker.css";
+
+	$this->_var['pagejs'][] = TMPL_REAL."/js/account_deposit.js";
+	$this->_var['cpagejs'][] = TMPL_REAL."/js/account_deposit.js";
+	
+?>
+{include file="inc/header.html"} 
+<div class="wrap uc_box">
+	<div class="uc_menu">
+		{include file="inc/uc_menu.html"}
+	</div>
+	<div class="uc_main">
+		{insert name="load_uc_common_header"}
+		<ul class="uc_tabs clearfix">
+			<li><a href="{url r="account#money"}">充值记录</a></li>
+			{if app_conf("USER_ALLOW_DEPOSIT") eq 1}
+			<li class="current"><a href="javascript:void(0);">提现记录</a></li>
+			{/if}
+			<li><a href="{url r="account#money_log"}">现金账单</a></li>
+		</ul>
+		<div class="blank15"></div>
+		
+		<div class="search_row">
+		<form action="{url r="account#deposit"}" method="get" class="getform">
+		<input type="text" name="begin_time" value="{$begin_time}" class="uc_ipt uc_datepicker" /> <label>-</label> <input type="text" value="{$end_time}" name="end_time" class="uc_ipt uc_datepicker" /> <input type="submit" value="搜索" />
+		</form>
+		</div>   
+		<div class="blank15"></div>
+		{if $list}
+		<table class="uc_table">
+		<tr>
+			<th width="100">提现金额</th>			
+			<th width="100">实付金额</th>
+			<th>收款人</th>
+			<th width="150">支付时间</th>
+			<th width="200">操作</th>
+		</tr>
+		{foreach from=$list item=row}
+		<tr>
+			<td style="text-align:center;">&yen;&nbsp;{$row.money}</td>			
+			<td style="text-align:center;">&yen;&nbsp;{$row.pay_money}</td>
+			<td>{$row.deposit_name}</td>
+			<td style="text-align:center;">{$row.pay_time}</td>
+			<td style="text-align:center;"><a href="javascript:void(0);" class="view_deposit gopay" rel="{$row.id}">查看详情</a> {if $row.is_paid eq 0}<a href="{url r="account#del_deposit" p="id=$row.id"}" class="del_deposit gopay">删除</a>{/if}</td>			
+		</tr>
+		<tr class="more_tr" rel="more_{$row.id}">
+			<td colspan="5" style="padding:0px;">
+				<div class="more_td">
+				开户行：{$row.deposit_bank}
+				<br />
+				收款帐号：{$row.deposit_account}
+				<br />
+				收款人：{$row.deposit_name}
+				<br />
+				提现申请时间：{$row.create_time}
+				{if $row.is_paid eq 1}
+				<br />
+				管理员留言：{$row.pay_memo}
+				{/if}
+				</div>
+			</td>
+		</tr>
+		{/foreach}
+		</table>
+		<div class="blank15"></div>
+		<div class="uc_pager">{$pages}</div>
+		{else}
+		<div class="empty_box">
+			没有相关的数据
+		</div>
+		{/if}
+		<div class="blank15"></div>
+		<div class="incharge_form">
+				<form action="{url r="account#do_deposit"}" method="get"  id="deposit_form" >
+				<div class="incharge_title">请填写提现信息</div>
+				<div class="incharge_main">
+					<div class="deposit_info">
+					<span>开户行名称:</span> <input type="text" name="deposit_bank" />
+					<div class="blank"></div>
+					<span>开户行帐号:</span> <input type="text" name="deposit_account" />
+					<div class="blank"></div>
+					<span>收款人:</span> <input type="text" name="deposit_name" />
+					<div class="blank"></div>
+					<span>会员密码:</span> <input type="password" name="user_pwd" />
+					</div>
+					<div class="money_ipt_box">
+					<a href="javascript:void(0);" class="minus_v">-</a><input type="text" class="money_v" name="money" value="100" maxlength="8" max="{$user.money_format}" /><a href="javascript:void(0);" class="add_v">+</a>
+					</div>
+					<div class="blank"></div>
+					<input type="submit" style="display:none;" />
+					<a href="javascript:void(0);" class="do_incharge">确认提现</a>
+					<div class="blank"></div>
+				</div>
+				</form>
+		</div>
+	</div>
+</div>
+ <div class="blank15"></div>
+{include file="inc/footer.html"} 

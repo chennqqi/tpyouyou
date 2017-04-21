@@ -1,0 +1,160 @@
+
+
+<?php
+$this->_var['pagecss'] = array();
+$this->_var['pagejs'] = array();
+$this->_var['pagecss'][] = TMPL_REAL."/css/style.css";
+$this->_var['pagecss'][] = TMPL_REAL."/css/weebox.css";
+$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.bgiframe.js";
+$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.weebox.js";
+$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.pngfix.js";
+$this->_var['pagejs'][] = TMPL_REAL."/js/lazyload.js";
+$this->_var['pagejs'][] = TMPL_REAL."/js/script.js";
+$this->_var['cpagejs'][] = TMPL_REAL."/js/script.js";
+$this->_var['pagecss'][] = TMPL_REAL."/css/tuan_index.css";
+$this->_var['pagejs'][] = TMPL_REAL."/js/tuan_index.js";
+?>
+
+
+
+{include file="inc/header.html"}
+
+
+<div class="nav_locate">
+ 
+	  <a href="{url x="tuan#advance"}" class="lucky_bonus">团购预告</a>
+	  <a href="{url x="tuan#history"}" class="lucky_bonus">往期团购</a>	  
+	  <a href="#">首页</a> &gt <a href="{url r="tuan"}">旅游团购（共<em>{$total_count}</em>条可卖团品）</a>  
+</div>
+
+{if $tuan_index eq 1}
+<div class="filter">
+	<div class="box classify clear">
+		<strong>团购分类</strong>
+		<div class="box_content clear">
+			<dl>
+				{foreach from=$filter_nav_data.tuan_cate item=item}
+				<dd {if $item.current eq 1}class="cur"{/if}><a href="{$item.url}">{$item.name}<span>({$item.count})</span></a></dd>
+				{/foreach}
+				
+			</dl>		
+		</div>		
+	</div>   
+	
+	<!--<div class="box clear">
+		<strong>目的地</strong>
+		<div class="box_content clear">
+			<dl class="city_list">
+				{foreach from=$filter_nav_data.area_list_in item=item}
+				<dd {if $item.current eq 1}class="cur"{/if}><a href="{$item.url}">{$item.name}<span>({$item.count})</span></a></dd>
+				{/foreach}
+				
+			</dl>
+			<div class="more_choose">更多</div>
+		</div>
+		
+	</div>
+	
+	<div class="box clear">
+		<strong>&nbsp;</strong>
+		<div class="box_content clear">
+			<dl class="city_list">
+				{foreach from=$filter_nav_data.area_list_out item=item}
+				<dd {if $item.current eq 1}class="cur"{/if}><a href="{$item.url}">{$item.name}<span>({$item.count})</span></a></dd>
+				{/foreach}
+			</dl>
+			<div class="more_choose">更多</div>
+		</div>		
+	</div>
+	
+	{if $filter_nav_data.place}
+	<div class="box clear">
+		<strong>目的区域</strong>
+		<div class="box_content clear">
+			<dl class="city_list">
+				{foreach from=$filter_nav_data.place item=item}
+				<dd {if $item.current eq 1}class="cur"{/if}><a href="{$item.url}">{$item.name}<span>({$item.count})</span></a></dd>
+				{/foreach}
+			</dl>
+			<div class="more_choose">更多</div>
+		</div>
+		
+	</div>
+	{/if}
+	
+</div>
+-->
+<div class="select_sort">
+	<div class="sort_left">								
+				<a href="{$sort.s1}" class="down_arrows{$current.s1}">折扣</a>
+				<a href="{$sort.s2}" class="down_arrows{$current.s2}">销量</a>
+				<a href="{$sort.s3}" class="down_arrows{$current.s3}">最新</a>
+				<a href="{if $price_up_on eq 2}{$sort.s5}{else}{$sort.s4}{/if}" class="{if $price_up_on eq 1}up_on{elseif $price_up_on eq 2}down_on{else}up_down{/if}">价格</a>
+				<a href="{$sort.s6}" class="down_arrows{$current.s6}">默认</a>
+	</div>
+	<div class="sort_page">
+		{$right_page}
+	</div>
+</div>
+{/if}
+
+<div class="main">
+	{if $is_empty eq 1}
+	该分类暂无数据
+	{elseif $is_empty eq 2}
+	搜索不到匹配产品
+	{else}
+	<ul>
+		{foreach from=$list item=item}		
+		<li>
+			<div class="items">
+				<div class="item_title">
+					<div class="item_type">
+						<a class="{$item.type}" href="{$item.url}" target="_blank"></a>
+				    </div>
+					<div class="item_name">
+						<a href="{$item.url}" target="_blank">{$item.name}</a>
+				    </div>
+					<div class="item_time">
+						
+				    </div>
+				</div>
+				<div class="item_pic">
+					<a href="{$item.url}" target="_blank"><img src="{function name="get_spec_image" v=$item.image w=307 h=206 g=1}" />	</a>
+				</div>
+				<div class="item_profile">
+					<a href="{$item.url}" target="_blank">{$item.brief}</a>
+				</div>
+				<div class="item_price">
+					<div class="item_price_num">
+						<span class="price_num1">￥</span><span class="price_num2">{$item.sale_price}</span>
+						<del class="price_num3">￥{$item.origin_price}</del>
+				    </div>
+					<div class="item_order">
+						<a href="{$item.url}" target="_blank">点击查看</a>						
+				    </div>					
+				</div>
+				
+				<div class="item_bottom">
+					<div class="order_memb">
+					<img src="{$TMPL}/images/tuan/order_member.png">
+						<a>已有<span>{$item.sale_total}</span>人购买</a>
+						
+				    </div>
+					<div class="item_dates">
+						<img src="{$TMPL}/images/tuan/item_dates.png">
+						<a>{$item.remain_time}</a>						
+				    </div>
+						
+				</div>
+			</div>
+		</li>
+		{/foreach}
+		
+	</ul>
+	{/if}
+</div>
+<div class="page">		  
+		 {$page}
+</div>
+{include file="inc/footer.html"} 

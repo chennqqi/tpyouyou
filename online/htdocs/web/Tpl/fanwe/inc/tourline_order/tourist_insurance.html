@@ -1,0 +1,30 @@
+<div id="insurance_part" class="order_box ">
+	<div class="blank15"></div>
+    <h2>保险方案</h2>
+	<div class="routes_info"> 
+		<table cellspacing="0" cellpadding="0" class="table_box" id="insurance_table">
+            <tbody>
+                <tr>
+                    <th width="30%" align="left">保险名称</th>
+                    <th width="50%" align="center">说明 </th>
+					<th width="20%" align="center">
+						价格 
+						<input type="hidden" id="insurance_total" value="">
+					</th>
+                </tr>
+				{foreach from="$insurance_list" item="insurance"}
+                 <tr class="J_travInsuranceList citem">
+                   <td class="first">
+                       <input type="checkbox" value="{$insurance.id}" name="insurance_ids[]" autocomplete="off">
+                       	{$insurance.name}
+                   </td>
+                   <td align="center" >{$insurance.name}</td>
+				   <td align="center" >{function name="format_price" v="$insurance.price"}</td>
+                 </tr>
+			    {/foreach}
+			 
+            </tbody>
+       </table>
+	</div>
+</div>
+<div class="blank15"></div>

@@ -1,0 +1,29 @@
+{foreach from=$user_list item=user_item name="u_list"}
+{if $user_item}
+<div class='user_panel_item {if $smarty.foreach.u_list.iteration %4 eq 0} m_r0 {/if}'>
+    <div class="u_info">
+        <img  uid="{$user_item.id}" src="{function name="get_spec_image" v="$user_item.avatar" w=60 h=60}" class="GUID avatar"/>
+        <div class="info">
+            <p><a class="uname" href="/u/2">{$user_item.nickname}</a></p>
+
+            <p>会员等级: {$user_item.level_name}</p>
+            
+        </div>
+        
+        <!--<div class="blank3"></div><div class="intro"><span>真懒啊，连自我介绍都不写。</span></div>-->
+    </div>
+    {if $user_item.is_follow eq 1}
+    <div class="u_toolbar"><span class="fl icrad_add">已关注</span>
+        <a class="follow_del" href="javascript:;" onclick="$.User_Follow({$user_item.id},this,'UserTipFollowHandler');">取消</a>
+        <div class="blank3"></div>
+    </div>
+    {else}
+    <div class="u_toolbar">
+        <div class="blank3"></div>
+        &nbsp;<a class="follow_button" onclick="$.User_Follow({$user_item.id},this,'UserTipFollowHandler');" href="javascript:;" _hover-ignore="1" _orighref="javascript:;" _tkworked="true">+加关注</a>
+        <div class="blank3"></div>
+    </div>
+    {/if}
+</div>
+{/if}
+{/foreach}

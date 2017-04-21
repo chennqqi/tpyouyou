@@ -1,0 +1,191 @@
+<style type="text/css">
+	ul.rightTools {float:right; display:block;}
+	ul.rightTools li{float:left; display:block; margin-left:5px}
+	table.userinfo td{ padding:10px 5px;}
+</style>
+<div class="pageContent" style="padding:5px" layoutH="18">
+	
+	<div class="formBar">
+		<ul>
+			<li>
+				<a href="{$editurl}" title="{lang v="EDIT"}会员{$user.user_name}" class="buttonActive" target="navTab" rel="user_editpage_{$user.id}"><span>修改用户资料</span></a>
+			</li>
+		</ul>
+		</div>
+	<div class="tabs">
+		<div class="tabsHeader">
+			<div class="tabsHeaderContent">
+				<ul>
+					<li><a href="javascript:;"><span>会员当前帐户</span></a></li>
+					<li><a href="{$userlogurl}" target="ajax" rel="logpage" callback="emptyOther"><span>会员帐户日志</span></a></li>
+					<li><a href="{$usertourlineorderurl}" target="ajax" rel="tourlineorderpage" callback="emptyOther"><span>线路订单</span></a></li>
+					<li><a href="{$userticketorderurl}" target="ajax" rel="ticketorderpage" callback="emptyOther"><span>门票订单</span></a></li>
+					<li><a href="{$userguideurl}" target="ajax" rel="guidepage" callback="emptyOther"><span>会员游记</span></a></li>
+					<li><a href="{$userreviewurl}" target="ajax" rel="reviewpage" callback="emptyOther"><span>会员点评</span></a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="tabsContent">
+			
+			<div>
+								<table class="formtable userinfo">				
+								<tr>
+									<td class="item_title">会员名:</td>
+									<td class="item_input">
+										{$user.user_name}
+									</td>
+								</tr>
+								<tr>
+									<td class="item_title">会员真实姓名:</td>
+									<td class="item_input">
+										{if $user.truename}{$user.truename}{else}无{/if}
+									</td>
+								</tr>
+								<tr>
+									<td class="item_title">会员手机号:</td>
+									<td class="item_input">
+										{if $user.mobile}{$user.mobile}{else}无{/if}
+									</td>
+								</tr>
+								<tr>
+									<td class="item_title">会员邮箱:</td>
+									<td class="item_input">
+										{if $user.email}{$user.email}{else}无{/if}
+									</td>
+								</tr>
+								<tr>
+									<td class="item_title">帐户余额:</td>
+									<td class="item_input">									
+										<label style="float:left; margin-right:15px;">{$user.money}</label>
+										<a title="会员余额修改" rel="op_page" target="dialog" height="270" width=700  href="{$opmoneyurl}"  class="btnEdit"  style="float:left;">余额修改</a>
+									</td>
+								</tr>
+								<tr>
+									<td class="item_title">帐户积分:</td>
+									<td class="item_input">
+										<label style="float:left; margin-right:15px;">{$user.score}</label>
+										<a title="会员积分修改" rel="op_page" target="dialog" height="270" width=700  href="{$opscoreurl}"  class="btnEdit"  style="float:left;">积分修改</a>
+									</td>
+								</tr>
+								<tr>
+									<td class="item_title">帐户经验:</td>
+									<td class="item_input">
+										<label style="float:left; margin-right:15px;">{$user.exp}</label>
+										<a title="会员经验修改" rel="op_page" target="dialog" height="270" width=700  href="{$opexpurl}"  class="btnEdit"  style="float:left;">经验修改</a>
+									</td>
+								</tr>
+								<tr>
+									<td class="item_title">帐户代金券:</td>
+									<td class="item_input">
+										<label style="float:left; margin-right:15px;">{$user.voucher_total}</label>
+										<a title="{$user.user_name}代金券详情" rel="voucher_url_{$user.id}" target="navTab"  href="{$voucher_url}"  class="btnEdit"  style="float:left;">代金券详情</a>
+									</td>
+								</tr>
+								<tr>
+									<td class="item_title">会员等级:</td>
+									<td class="item_input">
+										{if $user.level_name}{$user.level_name}{else}无{/if}
+									</td>
+								</tr>
+								<tr>
+									<td class="item_title">会员组:</td>
+									<td class="item_input">
+										{if $user.group_name}{$user.group_name}{else}无{/if}
+									</td>
+								</tr>
+								
+								<tr>
+									<td class="item_title">推荐人:</td>
+									<td class="item_input">
+										{$user.pid_user}
+									</td>
+								</tr>
+								
+								<tr>
+									<td class="item_title">性别:</td>
+									<td class="item_input">
+										{if $user.sex eq -1}未知{elseif $user.sex eq 1}男{else}女{/if}
+									</td>
+								</tr>
+								
+								<tr>
+									<td class="item_title">生日:</td>
+									<td class="item_input">
+										{if $user.birthday eq 0}未设置{else}{$user.birthday}{/if}
+									</td>
+								</tr>
+								
+								<tr>
+									<td class="item_title">证件类型:</td>
+									<td class="item_input">
+										{if $user.paper_type eq 1}
+										身份证
+										{elseif $user.paper_type eq 2}
+										护照
+										{elseif $user.paper_type eq 3}
+										军官证
+										{elseif $user.paper_type eq 4}
+										港澳通行证
+										{elseif $user.paper_type eq 5}
+										台胞证
+										{else}
+										其他
+										{/if}
+									</td>
+								</tr>
+								
+								<tr>
+									<td class="item_title">证件编号:</td>
+									<td class="item_input">
+										{if $user.paper_sn eq ''}未设置{else}{$user.paper_sn}{/if}
+									</td>
+								</tr>
+								
+								<tr>
+									<td class="item_title">所在地区:</td>
+									<td class="item_input">
+										{if $user.province}{$user.province}{else}未知{/if}省 {if $user.city}{$user.city}{else}未知{/if}市
+									</td>
+								</tr>
+								
+								<tr>
+									<td class="item_title">地址:</td>
+									<td class="item_input">
+										{if $user.address}{$user.address}{else}未填写{/if}
+									</td>
+								</tr>
+								
+								<tr>
+									<td class="item_title">邮编:</td>
+									<td class="item_input">
+										{if $user.zip_code}{$user.zip_code}{else}未填写{/if}
+									</td>
+								</tr>
+								
+								<tr>
+									<td class="item_title">来源:</td>
+									<td class="item_input">
+										{if $user.source eq 'admin'}管理员添加{elseif $user.source eq 'native'}直接访问{else}{$user.source}{/if}
+									</td>
+								</tr>
+								
+								</table>
+			</div>
+			<div id="logpage"></div>
+			<div id="tourlineorderpage"></div>
+			<div id="ticketorderpage"></div>
+			<div id="guidepage"></div>
+			<div id="reviewpage"></div>
+		</div>
+		<div class="tabsFooter">
+			<div class="tabsFooterContent"></div>
+		</div>
+		
+		
+	</div>
+	
+</div>
+
+
+	
+

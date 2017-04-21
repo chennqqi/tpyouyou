@@ -1,0 +1,338 @@
+<script type="text/javascript">
+
+var UPDATE_SUCCESS = '{lang v="UPDATE_SUCCESS"}';
+
+var UPDATE_FAILED = '{lang v="UPDATE_FAILED"}';
+
+function setsort(dom,id)
+
+{
+
+	var html = "<input type='text' value='"+$.trim($(dom).html())+"' class='textInput' style='width:40px;' onblur='blursort(this,"+id+");' />";	
+
+	var parent = $(dom).parent();
+
+	$(parent).html(html);
+
+	var ipt = $(parent).find("input");	
+
+	$(ipt).focus();
+
+	$(ipt).select();		
+
+}
+
+function blursort(dom,id)
+
+{
+
+	var newsort = $.trim($(dom).val());
+
+	$.ajax({
+
+		type:  'POST',
+
+		url:"{$setsorturl}&id="+id+"&sort="+newsort,
+
+		dataType:"json",
+
+		cache: false,
+
+		success: function(obj){
+
+			var html = "<a href='javascript:void(0);' onclick='setsort(this,"+id+");'>"+obj.message+"</a>";	
+
+			$(dom).parent().html(html);	
+
+			if(obj.statusCode==200)
+
+			{
+
+				alertMsg.correct(UPDATE_SUCCESS);
+
+			}
+
+			else
+
+			{
+
+				alertMsg.correct(UPDATE_FAILED);
+
+			}
+
+		}
+
+	});
+
+	
+
+}
+
+$(document).ready(function(){
+
+	$(navTab.getCurrentPanel()).find("#del_supplier").click(function(){
+
+
+
+		$(navTab.getCurrentPanel()).find("#t_supplier_id").val("");
+
+		$(navTab.getCurrentPanel()).find("#t_supplier_name").val("");
+
+	});
+
+	$(navTab.getCurrentPanel()).find("#del_start_city").click(function(){
+
+		$(navTab.getCurrentPanel()).find("#t_city_id").val("");
+
+		$(navTab.getCurrentPanel()).find("#t_city_name").val("");
+
+	});
+
+});
+
+</script>
+
+<form id="pagerForm" method="post" action="#rel#">
+
+	<input type="hidden" name="pageNum" value="{$param.pageNum}" />
+
+	<input type="hidden" name="numPerPage" value="{$param.pageSize}" />
+
+	<input type="hidden" name="orderField" value="{$param.orderField}" />
+
+	<input type="hidden" name="orderDirection" value="{$param.orderDirection}" />
+
+</form>
+
+<div class="pageHeader" style="overflow:auto; height:50px;">
+
+	<form rel="pagerForm" onsubmit="return navTabSearch(this);" action="{$formaction}" method="post">
+
+	<div class="searchBar">
+
+		<div class="pageFormContent cf" >
+
+			<div class="searchtableRow" >
+
+	
+
+				<table>
+
+					<tr>
+
+						<td>
+
+						{lang v="TOURLINE_NAME"}：
+
+						</td>
+
+						<td>
+
+						<input type="text" name="name" value="{$param.name}"/>
+
+						</td>
+
+						
+
+						<td >{lang v="SUPPIER"}:</td>
+
+						<td >
+
+							<a href="javascript:void(0);" id="del_supplier" class="btnDel">删除</a>
+
+							<input name="supplier.id" id="t_supplier_id" type="hidden" value="{$param.supplier_id}" />
+
+							<input class="" size="20" id="t_supplier_name" name="supplier.user_name" type="text"  readonly="true"  value="{$param.supplier_user_name}" />
+
+							<a class="btnLook" href="{$searchsupplierurl}" lookupGroupSelect="supplier" mask="true" rel="dlg_supplier">{lang v="SELECT_SUPPLIER"}</a>
+
+							<label class="tip"></label>
+
+						</td>
+
+						
+
+						<td class="">出发{lang v="CITY"}:</td>
+
+						<td class="">
+
+							<a href="javascript:void(0);" id="del_start_city" class="btnDel">删除</a>
+
+							<input name="start_city.city_id" id="t_city_id" type="hidden" value="{$param.start_city_city_id}" />
+
+							<input class="" size="20" name="start_city.name" id="t_city_name" type="text"  readonly="true" value="{$param.start_city_name}" />
+
+							<a class="btnLook" href="{$searchstartcityurl}" lookupGroupSelect="start_city" mask="true" rel="dlg_start_city">{lang v="SELECT_TOUR_CITY"}</a>
+
+							<label class="tip"></label>
+
+						</td>
+
+
+
+						
+
+						<td>
+
+						<div class="buttonActive"><div class="buttonContent"><button type="submit">{lang v="SEARCH"}</button></div></div>
+
+						</td>
+
+					</tr>
+
+				</table>
+
+				
+
+			</div>
+
+
+
+			
+
+			
+
+			
+
+		</div>
+
+
+
+	</div>
+
+	</form>
+
+</div>
+
+
+
+<div class="pageContent">
+
+	<div class="panelBar">
+
+		<ul class="toolBar">
+
+			<li><a title="{lang v="ADD"}{lang v="TOURLINE"}" target="navTab" rel="tourline_addpage" href="{$addurl}" class="add"><span>{lang v="ADD"}</span></a></li>
+
+			<li><a title="{lang v="CONFIRM_DELETE"}" target="selectedTodo" rel="id" postType="string" href="{$delurl}" class="delete"><span>{lang v="DEL"}</span></a></li>
+
+		</ul>
+
+	</div>
+
+	<table class="table" width="100%" layoutH="140">
+
+		<thead>
+
+			<tr>
+
+				<th width="22"><input type="checkbox" group="id" class="checkboxCtrl"></th>
+
+				<th  width="50" orderField="id" {if $param.orderField eq 'id'} class="{$param.orderDirection}"{/if}>{lang v="ID"}</th>
+
+				<th width="450">{lang v="TOURLINE"}</th>
+
+				<th width="150">{lang v="TOURLINE_COMPANY"}</th>
+
+				<th width="100">出发城市</th>
+
+			
+
+				<th width="100">总销量</th>
+
+								<th width="80" orderField="is_effect" {if $param.orderField eq 'is_effect'} class="{$param.orderDirection}"{/if}>{lang v="IS_EFFECT"}</th>
+
+
+
+				<th width="100"  orderField="sort" {if $param.orderField eq 'sort'} class="{$param.orderDirection}"{/if}>{lang v="SORT"}</th>
+
+				<th width="200">{lang v="TAG_LANG_OPERATE"}</th>
+
+			</tr>
+
+		</thead>
+
+		<tbody>
+
+		
+
+			{foreach from=$list item=item}
+
+			<tr  rel="{$item.id}">
+
+				<td><input name="id" value="{$item.id}" type="checkbox"></td>
+
+				<td>{$item.id}</td>
+
+				<td>{$item.name}</td>
+
+				<td>{$item.supplier_company}</td>
+
+				<td>{$item.city_name}</td>
+
+				
+
+				<td>{$item.sale_total}</td>
+
+				<td><a href="{$seteffecturl}&id={$item.id}&is_effect={$item.is_effect}" target="ajaxTodo" class="{if $item.is_effect eq 1}btnSelect{else}btnDel{/if}">{$item.is_effect_show}</a></td>
+
+				<td><a href="javascript:void(0);" onclick="setsort(this,{$item.id});">{$item.sort}</a></td>
+
+				<td >
+
+					<a title="{lang v="CONFIRM_DELETE"}" target="ajaxTodo" href="{$delurl}&id={$item.id}" class="btnDel">{lang v="DEL"}</a>
+
+					<a title="{lang v="EDIT"}{lang v="tourline"}{$item.name}" rel="tourline_editpage_{$item.id}" target="navTab" href="{$editurl}&id={$item.id}"  class="btnEdit">{lang v="EDIT"}</a>
+
+					<a title="预览" href="{$item.preview_url}" class="btnLook" target="_blank">预览</a>
+
+					<a title="验证码管理{$item.name}" rel="tourline_editpage_{$item.id}" target="navTab" href="{$verifycodelisturl}&tourline_id={$item.id}"  class="btnView">团购券管理</a>
+
+				
+
+					<a title="统计详情" rel="op_page" target="dialog" height="300" width=500  href="{$statisticsurl}&id={$item.id}"  class="btnInfo"  style="float:left;">统计</a>
+
+				
+
+				</td>
+
+			</tr>
+
+			{/foreach}
+
+		</tbody>
+
+	</table>
+
+	<div class="panelBar">
+
+		<div class="pages">
+
+			<span>{lang v="DISPLAY_PAGE_SIZE"}</span>
+
+			<select class="combox" name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value})">
+
+				<option value="<?php echo ADMIN_PAGE_SIZE1;?>" {if $param.pageSize eq ADMIN_PAGE_SIZE1}selected="selected"{/if} ><?php echo ADMIN_PAGE_SIZE1;?></option>
+
+				<option value="<?php echo ADMIN_PAGE_SIZE2;?>" {if $param.pageSize eq ADMIN_PAGE_SIZE2}selected="selected"{/if}><?php echo ADMIN_PAGE_SIZE2;?></option>
+
+				<option value="<?php echo ADMIN_PAGE_SIZE3;?>" {if $param.pageSize eq ADMIN_PAGE_SIZE3}selected="selected"{/if}><?php echo ADMIN_PAGE_SIZE3;?></option>
+
+				<option value="<?php echo ADMIN_PAGE_SIZE4;?>" {if $param.pageSize eq ADMIN_PAGE_SIZE4}selected="selected"{/if}><?php echo ADMIN_PAGE_SIZE4;?></option>
+
+			</select>
+
+			<span>&nbsp;&nbsp;{lang v="PAGE_TOTAL_COUNT" p="$totalCount"}</span>
+
+		</div>
+
+		
+
+		<div class="pagination" targetType="navTab" totalCount="{$totalCount}" numPerPage="{$param.pageSize}" pageNumShown="10" currentPage="{$param.pageNum}"></div>
+
+
+
+	</div>
+
+</div>
+

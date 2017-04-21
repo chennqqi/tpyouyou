@@ -1,0 +1,13 @@
+{if $list}
+<div class="comment">
+        <h5>旅游用户最新点评</h5>
+        {foreach from=$list item=row name="row"}
+            <div {if $smarty.foreach.row.last}style="border:none;padding-bottom:0px;"{/if}>
+                    <span class="comment_article"><a href="{$row.url}" target="_blank">{$row.review_rel_name}</a></span>
+                    <span class="comment_content"><a href="{$row.url}" target="_blank">{function name="msubstr" v=$row.review_content b=0 e=25}</a></span>
+                    <span class="comment_info">{$row.nickname} {$row.create_time}点评</span>
+            </div>
+        {/foreach}
+      
+</div>
+{/if}

@@ -1,0 +1,126 @@
+<?php
+
+$this->_var['pagecss'][] = TMPL_REAL."/css/style.css";
+$this->_var['pagecss'][] = TMPL_REAL."/css/weebox.css";
+$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.bgiframe.js";
+$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.weebox.js";
+$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.pngfix.js";
+$this->_var['pagejs'][] = TMPL_REAL."/js/lazyload.js";
+$this->_var['pagejs'][] = TMPL_REAL."/js/review.js";
+
+$this->_var['pagejs'][] = TMPL_REAL."/js/script.js";
+$this->_var['cpagejs'][] = TMPL_REAL."/js/script.js";
+
+
+
+$this->_var['pagecss'][] = TMPL_REAL."/css/user_common.css";
+$this->_var['pagecss'][] = TMPL_REAL."/css/uc_review_list.css";
+?>
+{include file="inc/header.html"} 
+<div class="wrap uc_box">
+    <div class="uc_menu">
+        {include file="inc/uc_menu.html"}
+    </div>
+    <div class="uc_main">
+    	{insert name="load_uc_common_header"}
+        <div class="incharge_title">我的点评</div>
+        <div class="blank15"></div>
+        <div class="review_box_main">
+            <ul class="comment_lists">
+                {foreach from=$list item=row}
+                <li class="comment_li">
+                    <dl class="clearfix">
+                        <dt>
+                        {$row.avatar}
+                        <p class="trav_name">{$row.nickname}</p>
+                        </dt>
+                        <dd>
+                            <div class="clists_main_cont" >
+                                <p class="clists_stars clearfix">
+                                    <span class="point_start_bar" title="很好">
+                                        <i style="width:{$row.point_satify}%;"></i>
+                                    </span>
+                                </p>
+                                {if $row.group_point}
+                                <p class="clists_words clearfix">
+                                    {foreach from=$row.group_point item=point_item}
+                                    <span>{$point_item.name}<em>{if $point_item.point eq 1}不满意{elseif $point_item.point gt 1 && $point_item.point lt 3}一般{elseif $point_item.point gt 3}满意{/if}</em></span>
+                                    {/foreach}
+                                </p>
+                                {/if}
+                                <p class="comment_detail">{$row.review_content}</p>
+
+                                <div class="pic_lists clearfix">
+                                    <div class="sp_content">
+                                        <ul class="slidy_pic clearfix">
+                                            {if $row.imgs}
+                                            {foreach from=$row.imgs item=img_item}
+                                            <li class="cur">
+                                                <a class="show_big_btn" href="javascript:void(0)" onclick="$.showBig(this)" is_big="0" big_data="{function name="get_spec_image" v=$img_item w=400 }" title="放大">
+                                                   <img src="{function name="get_spec_image" v=$img_item w=60 h=60 g=1}"  alt=""></a>     
+                                            </li>
+                                            {/foreach}
+                                            {/if}
+                                        </ul>
+                                    </div>
+                                    <div class='blank10'></div>
+                                    <div class='pic_big'>
+                                        <img src=''/>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="comment_prec myorder_prec_box">
+                                <div class="comment_prec_box">
+                                    <p class="cp_tt">点评赠送</p>
+                                    <!--现金-->
+                                    {if $row.money gt 0 }
+                                    <p class=""><span>现&nbsp;&nbsp;&nbsp;金</span> ¥{$row.money}</p>
+                                    {/if}
+                                    <!--积分-->
+                                    {if $row.score gt 0}
+                                    <p class=""><span>积&nbsp;&nbsp;&nbsp;分</span> {$row.score}</p>
+                                    {/if}
+                                    <!--代金券-->
+                                    {if $row.voucher_count gt 0}
+                                    <p class=""><span>代金券</span> ¥{$row.voucher_count}</p>
+                                    {/if}
+                                    <p class="btom_sawtooth"></p>
+                                </div>
+                            </div>
+                            {if $row.is_verify eq 0}
+                            <div class="review_del_btn">
+                                <a href="javascript:void(0);" rel="{url r="review#ajax_del_review" p="id=$row.id"}" onclick="$.Del_review(this)">删除</a>
+                            </div>
+                            {/if}
+                            <div class="review_status">
+                                <p><span>{if $row.is_verify eq 1}【已审核】{else}【待审核】{/if}</span></p>
+                            </div>
+                            <dl class="clearfix comment_from">
+                                <dt>
+                                <a href="javascript:void(0)" >{$row.review_time}</a>
+                                </dt>
+
+                            </dl>
+                        </dd>
+                    </dl>
+
+                    {if $row.review_reply}
+                    <div class='blank10'></div>
+                    <div class="admin_reply">
+                        <label>管理员回复：</label><span>{$row.review_reply}</span>
+                    </div>
+                    <div class='blank10'></div>
+                    {/if}
+                </li>
+                {/foreach}
+            </ul>
+
+        </div>
+        <div class="blank15"></div>
+        <div class="uc_pager">{$pages}</div>
+        <div class="blank15"></div>
+    </div>
+    <div class="blank15"></div>
+    {include file="inc/footer.html"} 

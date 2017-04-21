@@ -1,0 +1,89 @@
+@CHARSET "UTF-8";
+.hide{display: none;}
+
+/*自动高对齐*/
+.clearfix:after{
+content:"."; display:block; height:0; clear:both;
+visibility:hidden;
+}
+*html .clearfix{
+ height:1%;
+}
+*+html .clearfix{
+ height:1%;
+}
+.cf {
+    zoom: 1
+}
+/*全局链接样式*/
+a{ color:#666; text-decoration:none; }
+a:hover{ color:#6aafe2; text-decoration:underline; }
+
+/*英文强制换行*/
+.word{word-break:break-all;}
+
+/*页面留白*/
+.blank{height:10px; line-height:10px; clear:both; visibility:hidden;}
+
+.searchtableRow{ float:left;}
+.searchtableRow td{ padding:5px;}
+.searchsubmitRow{float:right;}
+.searchsubmitRow td{ padding:5px;}
+
+.pd10{ padding:10px;}
+
+
+
+/* 数据表 */
+
+.formtable{ width:100%; border-top:#ccc solid 1px; border-left:#ccc solid 1px; background:#fff; border-collapse:collapse;}
+.formtable th{ height:25px; text-align:center; background:#edf3f7; line-height:25px;  border-right:#ccc solid 1px; border-bottom:#ccc solid 1px;}
+.formtable td{ padding:5px; border-right:#ccc solid 1px; border-bottom:#ccc solid 1px;}
+.formtable td.topTd, .formtable td.bottomTd{background:url(../images/bgline.gif) repeat-x 0px 0px; padding:0px;  height:5px; font-size:0px; line-height:0px;}
+
+
+table.formtable{ width:100%; border-top:#ccc solid 1px; font-size:14px; border-left:#ccc solid 1px; background:#fff;}
+table.formtable th{ height:25px; text-align:center; background:#edf3f7; line-height:25px;  border-right:#ccc solid 1px; border-bottom:#ccc solid 1px;}
+table.formtable td{ padding:5px; border-right:#ccc solid 1px; border-bottom:#ccc solid 1px;}
+table.formtable .topTd, table.form .bottomTd{ background:url(../images/bgline.gif) repeat-x; height:5px; font-size:0px; padding:0px;}
+
+table.access_list td{ padding:8px; border:none; border-bottom:dotted 1px #ccc;}
+table.access_list td label{ display:inline-block; padding:0px 10px;}
+table.access_list td.access_left{ border-right:dotted 1px #ccc; text-align:right;}
+
+
+table.formtable .ke-container { border:1px solid #ccc; padding:0px;}
+table.formtable .ke-content { border:0px; padding:0px;}
+table.formtable .ke-container td,.ke-container th{ padding:0px; border:0px; }
+table.formtable .ke-bottom{ border:0px; padding:0px;}
+table.formtable .ke-bottom td,table.form .ke-bottom th{ border:0px; padding:0px;}
+
+table.formtable span.error{ display:inline-block; position:inherit; }
+label.tip{ display:block; width:auto;}
+
+
+.item_title{ text-align:right; width:130px; color:#000; background:#e2e8eb;}
+.item_input{ text-align:left;}
+
+.none_border table.ke-container { border:0px solid #ccc; padding:0px; background:#fff;}
+.none_border table.ke-content { border:0px; padding:0px;}
+.none_border table.ke-container td,.ke-container th{ padding:0px; border:0px; }
+.none_border table.ke-bottom{ border:0px; padding:0px;}
+.none_border table.ke-bottom td,table.form .ke-bottom th{ border:0px; padding:0px;}
+.none_border table{ border:0px;}
+
+.cfg_title{ float:left; display:inline-block; padding:3px;}
+.cfg_content{ float:left; display:inline-block; padding:3px;}
+
+
+.tag_box label{ display:inline-block; float:left; background:#ecf5ff; border:#accdf4 solid 1px; padding:4px; margin:5px;}
+.tag_box label.is_recommend{ border:#ff9c00 solid 1px; background:#fff5e4;}
+.tag_box label input{ vertical-align: middle; }
+.tag_box label span{ vertical-align: middle; display: inline-block;}
+
+.index_info{ width:100%; border-top:#ccc solid 1px; border-left:#ccc solid 1px; background:#fff; border-collapse:collapse;}
+.index_info th{ height:25px; text-align:center; background:#edf3f7; line-height:25px;  border-right:#ccc solid 1px; border-bottom:#ccc solid 1px;}
+.index_info td{ padding:5px; border-right:#ccc solid 1px; border-bottom:#ccc solid 1px;}
+.index_info td.topTd, .formtable td.bottomTd{background:url(../images/bgline.gif) repeat-x 0px 0px; padding:0px;  height:5px; font-size:0px; line-height:0px;}
+
+.index_info .item_title{ width:250px; padding:15px;}

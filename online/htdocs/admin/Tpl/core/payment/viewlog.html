@@ -1,0 +1,119 @@
+<script>
+function reloadDialog()
+{	
+	$.pdialog.reload("{$formaction}", {data: $($.pdialog.getCurrent()).find("#pagerForm").serializeArray()});
+}
+</script>
+<form id="pagerForm" method="post" action="#rel#">
+	<input type="hidden" name="pageNum" value="{$param.pageNum}" />
+	<input type="hidden" name="numPerPage" value="{$param.pageSize}" />
+	<input type="hidden" name="orderField" value="{$param.orderField}" />
+	<input type="hidden" name="orderDirection" value="{$param.orderDirection}" />
+	<input type="hidden" name="type_id" value="{$param.type_id}"/>
+</form>
+<form rel="pagerForm" onsubmit="return dwzSearch(this, 'dialog');"  action="{$formaction}" method="post">
+	<div class="pageHeader">
+	
+
+
+			<div class="searchtableRow">				
+				<table>
+					<tr>
+						<td>
+						系统单号
+						</td>
+						<td>
+						<input type="text" name="notice_sn" value="{$param.notice_sn}"/>
+						</td>
+						<td>
+						外部单号
+						</td>
+						<td>
+						<input type="text" name="outer_notice_sn" value="{$param.outer_notice_sn}"/>
+						</td>						
+						<td>
+						是否已支付
+						</td>
+						<td>
+						<select name="is_paid" class="combox">
+							<option value="-1" {if $param.is_paid eq -1}selected="selected"{/if}>全部</option>
+							<option value="0" {if $param.is_paid eq 0}selected="selected"{/if}>否</option>
+							<option value="1" {if $param.is_paid eq 1}selected="selected"{/if}>是</option>
+						</select>
+						</td>
+						<td>
+						<div class="buttonActive"><div class="buttonContent"><button type="submit">{lang v="SEARCH"}</button></div></div>
+						</td>
+						<td>总计：</td>
+						<td>{$totalAmount}</td>
+					</tr>
+				</table>
+				
+			</div>		
+			
+
+
+
+
+</div>
+</form>
+
+<div class="pageContent">
+	<div class="panelBar">
+		<ul class="toolBar">
+		<li><a title="{lang v="CONFIRM_DELETE"}"  callback="reloadDialog"  target="selectedTodo" targetType="dialog" rel="id" postType="string" href="{$delurl}" class="delete"><span>{lang v="DEL"}</span></a></li>
+		</ul>
+	</div>
+	<table class="table" width="100%" layoutH="145">
+		<thead>
+		<tr>
+				<th width="22"><input type="checkbox" group="id" class="checkboxCtrl"></th>
+				<th>支付单号</th>
+				<th width="150" >创建时间</th>
+				<th width="150" >支付时间</th>
+				<th width="100" >订单类型</th>
+				<th width="150" >订单编号</th>
+				<th width="100" >下单用户</th>
+				<th width="100" >应付金额</th>
+				<th>外部单号</th>
+				<th width="50">{lang v="TAG_LANG_OPERATE"}</th>
+			</tr>
+		</thead>
+		<tbody>
+		
+			{foreach from=$list item=item}
+			<tr  rel="{$item.id}">
+				<td><input name="id" value="{$item.id}" type="checkbox"></td>
+				<td>{$item.notice_sn}</td>
+				<td>{$item.create_time}</td>
+				<td>{$item.pay_time}</td>
+				<td>{$item.order_type}</td>
+				<td>{$item.order_sn}</td>
+				<td>{$item.user_name}</td>
+				<td>{$item.money}</td>
+				<td>{$item.outer_notice_sn}</td>
+				<td>				
+						
+					<a title="{lang v="CONFIRM_DELETE"}" target="ajaxTodo"  callback="reloadDialog"  href="{$delurl}&id={$item.id}" class="btnDel">{lang v="DEL"}</a>
+
+				</td>
+			</tr>
+			{/foreach}
+		</tbody>
+	</table>
+	<div class="panelBar">
+		<div class="pages">
+			<span>{lang v="DISPLAY_PAGE_SIZE"}</span>
+			<select class="combox" name="numPerPage"  onchange="dialogPageBreak({numPerPage:this.value})">
+				<option value="<?php echo ADMIN_PAGE_SIZE1;?>" {if $param.pageSize eq ADMIN_PAGE_SIZE1}selected="selected"{/if} ><?php echo ADMIN_PAGE_SIZE1;?></option>
+				<option value="<?php echo ADMIN_PAGE_SIZE2;?>" {if $param.pageSize eq ADMIN_PAGE_SIZE2}selected="selected"{/if}><?php echo ADMIN_PAGE_SIZE2;?></option>
+				<option value="<?php echo ADMIN_PAGE_SIZE3;?>" {if $param.pageSize eq ADMIN_PAGE_SIZE3}selected="selected"{/if}><?php echo ADMIN_PAGE_SIZE3;?></option>
+				<option value="<?php echo ADMIN_PAGE_SIZE4;?>" {if $param.pageSize eq ADMIN_PAGE_SIZE4}selected="selected"{/if}><?php echo ADMIN_PAGE_SIZE4;?></option>
+			</select>
+			<span>&nbsp;&nbsp;{lang v="PAGE_TOTAL_COUNT" p="$totalCount"}</span>
+		</div>
+		
+		<div class="pagination" targetType="dialog" totalCount="{$totalCount}" numPerPage="{$param.pageSize}" pageNumShown="5" currentPage="{$param.pageNum}"></div>
+
+	</div>
+</div>

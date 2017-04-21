@@ -1,0 +1,49 @@
+<div class="uc_h_header">
+         <div class="h_head_box">
+             <div class="uc_h_bg1"></div>
+             <div class="uc_h_bg2">
+                 <div class="uc_avatar"><img src="{function name="get_spec_image" v=$user_info.avatar w=110 h=110}"/></div>
+                 <div class="uc_name">{$user_info.nickname}</div>
+                 <div class="blank15"></div>
+                 <div class="blank10"></div>
+                 <div class="uc_info">
+                     <ul>
+                         {if $province_name}
+                         <li>{$province_name} {$city_name}</li>
+                         {/if}
+                         <div class="blank5"></div>
+                         {if $user_info.birthday neq '0000-00-00'}
+                            <li>{$user_info.birthday}</li>
+                         {/if}
+                     </ul>
+                 </div>
+                 <div class="uc_action">
+                     <a href="{url r="user#home" p="home_nav=share&uid=$uid"}">
+                     <div class="uc_act_item uc_act_share {if $home_nav eq '' || $home_nav eq 'share'}cur{/if}">
+                         <div class="act_con">
+                             <p class="act_title">分享</p>
+                             <p class="act_v">{$user_info.active_count}</p>
+                         </div>
+                     </div>
+                     </a>
+                     
+                     <a href="{url r="user#home" p="home_nav=follow&uid=$uid"}">
+                     <div class="uc_act_item uc_act_follow {if $home_nav eq 'follow'}cur{/if}">
+                         <div class="act_con">
+                             <p class="act_title">关注</p>
+                             <p class="act_v">{$user_info.follow_count}</p>
+                         </div>
+                     </div>
+                     </a>
+                     <a href="{url r="user#home" p="home_nav=fans&uid=$uid"}">
+                     <div class="uc_act_item uc_act_fans  {if $home_nav eq 'fans'}cur{/if}">
+                         <div class="act_con">
+                             <p class="act_title">粉丝</p>
+                             <p class="act_v">{$user_info.fans_count}</p>
+                         </div>
+                     </div>
+                     </a>
+                 </div>
+             </div>
+         </div>
+     </div>

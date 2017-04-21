@@ -1,0 +1,10 @@
+@CHARSET "UTF-8";
+.user_modify{ width:100%;}
+.user_modify td{ padding:10px; font-size:14px;}
+.user_modify td.title{ width:100px;}
+.user_modify td .ipt{ width:250px; height:20px; padding:5px; line-height:20px; font-size:14px; border:#ccc solid 1px;}
+.user_modify td select{ font-size:14px; padding:5px;}
+#save_profile,#save_modify{ cursor:pointer;}
+a.modify{ color:red;}
+
+.get_mobile_code{ height:24px; width:63px; background:url(../images/btn_ok.gif) no-repeat; font-size:12px; line-height:24px; color:#fff; text-align:center; cursor:pointer; }

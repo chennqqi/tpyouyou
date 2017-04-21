@@ -1,0 +1,38 @@
+<?php
+	$this->_var['pagecss'][] = TMPL_REAL."/css/style.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/weebox.css";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.bgiframe.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.weebox.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.pngfix.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/lazyload.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/script.js";
+	$this->_var['cpagejs'][] = TMPL_REAL."/js/script.js";
+
+	$this->_var['pagejs'][] = TMPL_REAL."/js/tourline.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.wookmark.js";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/tourline.css";
+?>
+{include file="inc/header.html"} 
+
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$pagecss"}" />
+<script type="text/javascript" src="{function name="parse_script" v="$pagejs"}"></script>
+<div class="blank15"></div>
+<div class="wrap">
+	<div style="width:1000px;">
+		<adv adv_id="domestic_adv" />
+	</div>
+	<!-- 线路-->
+	{foreach from=$recommend_tourline_layer item=html}
+	{$html}
+	<div class="blank15"></div>
+	{/foreach}
+	<!--end线路-->
+	
+         <!--游记功略 国内游-->
+       {insert name="guide_pin" p="tour_range-1"}
+	
+	<!--end游记功略-->
+
+</div>
+<div class="blank20"></div>
+{include file="inc/footer.html"}

@@ -1,0 +1,95 @@
+<?php
+$this->_var['pagecss'][] = TMPL_REAL."/css/user_getpwd.css";
+$this->_var['pagecss'][] = TMPL_REAL."/css/user_common.css";
+$this->_var['pagejs'][] = TMPL_REAL."/js/user_getpwd.js";
+
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="Generator" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{if $page_title neq ''}{$page_title} - {/if}{$site_name} - {$site_title}</title>
+<meta name="keywords" content="{$site_keyword}" />
+<meta name="description" content="{$site_description}" />
+<script type="text/jscript" src="{$TMPL}/js/jquery.min.js"></script>
+<?php
+$this->_var['pagecss'][] = TMPL_REAL."/css/style.css";
+$this->_var['pagecss'][] = TMPL_REAL."/css/weebox.css";
+$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.bgiframe.js";
+$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.weebox.js";
+$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.pngfix.js";
+$this->_var['pagejs'][] = TMPL_REAL."/js/lazyload.js";
+$this->_var['pagejs'][] = TMPL_REAL."/js/script.js";
+$this->_var['cpagejs'][] = TMPL_REAL."/js/script.js";
+if(app_conf("APP_MSG_SENDER_OPEN")==1)
+{
+$this->_var['pagejs'][] = TMPL_REAL."/js/msg_sender.js";
+$this->_var['cpagejs'][] = TMPL_REAL."/js/msg_sender.js";
+}
+?>
+
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$pagecss"}" />
+<script type="text/javascript">
+var APP_ROOT = '{$APP_ROOT}';
+var LOADER_IMG = '{$TMPL}/images/lazy_loading.gif';
+var ERROR_IMG = '{$TMPL}/images/image_err.gif';
+var send_span = {function name="app_conf" v="SEND_SPAN"}000;
+{if app_conf("APP_MSG_SENDER_OPEN") eq 1 and $CRON_COUNT gt 0}
+var IS_RUN_CRON = 1;
+{else}
+var IS_RUN_CRON = 0;
+{/if}
+var DEAL_MSG_URL = '{url r="cron#deal_msg_list"}';
+var LOAD_REG_FORM_URL = '{url r="user#load_regform"}';
+var CHECK_FIELD_URL = '{url r="user#checkfield"}';
+</script>
+{include file="inc/define_js_url.html"}
+<script type="text/javascript" src="{$APP_ROOT}/public/runtime/<?php echo  APP_NAME;?>/lang.js"></script>
+<script type="text/javascript" src="{function name="parse_script" v="$pagejs" c="$cpagejs"}"></script>
+
+</head>
+<body>	
+<div class="top_nav">
+			<div class="wrap">
+				<div class="f_l">
+	                                       
+				</div>
+                 <div class="f_r">
+					{include file="inc/top_nav_right.html"}
+				</div>
+			</div>
+		</div>
+<div class="wrap">
+				<a class="link" href="{$APP_ROOT}/">
+                        <?php
+                                $this->_var['logo_image'] = app_conf("SITE_LOGO");
+                        ?>
+                        {function name="load_page_png" v=$logo_image}
+                </a>
+</div>
+<div class="blank"></div>
+<div class="main_box wrap">
+	<div class="main_box_top">找回登录密码</div>
+	
+	<ul class="step_bar step{$step_count}">
+		<li class="step1_color"><span>1</span>确认帐号</li>
+		<li class="step2_color"><span>2</span>验证身份</li>
+		<li class="step3_color"><span>3</span>设置新密码</li>
+		<li class="step4_color"><span>4</span>完成</li>
+	</ul>
+	<div class="main_box_center">
+	{if $step_count eq 1}
+	{include file="inc/getpwd_step1.html"}
+	{elseif $step_count eq 2}
+	{include file="inc/getpwd_step2.html"}
+	{elseif $step_count eq 3}
+	{include file="inc/getpwd_step3.html"}
+	{else}
+	{include file="inc/getpwd_step4.html"}
+	{/if}	
+	</div>
+</div>
+
+{include file="inc/footer.html"}

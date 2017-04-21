@@ -1,0 +1,104 @@
+<?php
+
+	$this->_var['pagecss'][] = TMPL_REAL."/css/style.css";
+        $this->_var['pagecss'][] = TMPL_REAL."/css/uc_duide_list.css";
+        
+        $this->_var['pagejs'][] = TMPL_REAL."/js/lazyload.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.bgiframe.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.weebox.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.pngfix.js";
+        $this->_var['pagejs'][] = TMPL_REAL."/js/guide.js";
+
+	$this->_var['pagejs'][] = TMPL_REAL."/js/script.js";
+	$this->_var['cpagejs'][] = TMPL_REAL."/js/script.js";
+
+	
+
+	$this->_var['pagecss'][] = TMPL_REAL."/css/user_common.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/user_index.css";	
+	$this->_var['pagecss'][] = TMPL_REAL."/css/jquery-ui.css";
+
+
+	$this->_var['pagejs'][] = TMPL_REAL."/js/account_incharge.js";
+	$this->_var['cpagejs'][] = TMPL_REAL."/js/account_incharge.js";
+	
+?>
+{include file="inc/header.html"}
+<script>
+    var AJAX_DEL_GUIDE_URL = "{$ajax_del_guide_url}";
+</script>
+<div class="wrap uc_box">
+	<div class="uc_menu">
+		{include file="inc/uc_menu.html"}
+	</div>
+	<div class="uc_main">
+		{insert name="load_uc_common_header"}
+            <div class="guide_nav">
+                <div class="guide_tab">
+                    <ul class="uc_tabs clearfix">
+			<li {if $is_public eq '1'}class="current"{/if}><a href="{if $is_public eq '1'}javascript:void(0);{else}{url x="guide#uc_guide_list" p="is_public=1"}{/if}">未审核游记</a></li>
+			<li {if $is_public eq '2'}class="current"{/if}><a href="{if $is_public eq '2'}javascript:void(0);{else}{url x="guide#uc_guide_list" p="is_public=2"}{/if}">已审核游记</a></li>
+                    </ul>
+                </div>
+                <div class="send_guide_btn"><a href="{url r="guide#writethread"}">发表游记</a></div>
+            </div>
+            <div class="blank10"></div>
+            <div class="guide_table_box">
+                <div class="table_box_item">
+                    <table cellpadding="0" cellspacing="0" border="0" class="datatable datatbl_0" style="display: table;">
+                        <tbody><tr>
+                            <th width="100">发表日期</th>
+                            <th width="290">标题</th>
+                            <th width="170">相关目的地</th>
+                            <th width="70">浏览数</th>
+                            <th width="70">评论数</th>
+                            <th width="90">操作</th>
+                        </tr>
+                        </tbody>
+                        <tbody id="self_thread">
+                        {foreach from=$list item=item}
+                        <tr> 
+                                <td>{function name="to_date" v1=$item.create_time v2="Y-m-d"}</td>
+                                
+                                <td>
+                                {if $item.is_public lt 2}
+                                    <a href="{url r="guide#uc_guide_item" p="id=$item.id&type=user"}" class="note_name" title="{$item.title}">{if $item.title eq ''}==还没有标题哦=={else}{$item.title}{/if}</a>
+                                {elseif $item.is_public eq 2}
+                                    <a href="{url r="guide#show" p="id=$item.id"}" class="note_name" title="{$item.title}">{$item.title}</a>
+                                {/if}
+                                    </td>
+                                <td>
+                                    <a href="#" class="destination">{function name=msubstr v=$item.area_match_row a=0 b=15}</a>
+                                </td>
+                                <td>{$item.browse_count}</td>
+                                <td>{$item.comment_count}</td>
+                                <td>
+                                    {if $item.is_public eq 1}
+                                    审核中
+                                    {elseif $item.is_public eq 2}
+                                    审核通过
+                                        {if $is_again eq 1}
+                                        &nbsp;<a href="{url r="guide#again_writethread" p="id=$item.id"}" class="edit">编辑</a>
+                                        {/if}
+                                    {else}
+                                    <a href="{url r="guide#writethread" p="id=$item.id"}" class="edit">编辑</a>
+                                    <a href="javascript:void(0);" onclick="$.Del_guide({$item.id},'user')">删除</a>
+                                    {/if}
+                                </td>
+                            </tr>
+                            {/foreach}
+                        </tbody>
+                            <tbody>
+                                <tr>
+                                    <td colspan="6" class="page_ctrl">
+                                        <div class="uc_pager">{$pages}</div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+	</div>
+</div>
+ <div class="blank15"></div>
+{include file="inc/footer.html"} 

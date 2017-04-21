@@ -1,0 +1,27 @@
+@CHARSET "UTF-8";
+.help_cate{ width:225px; border:#0093e1 solid 1px; border-bottom:none;  float:left;}
+.help_main{ width:740px; border:#0093e1 solid 1px; float:right; padding:10px;}
+
+.help_cate li,.help_cate .cate_title{ display:block; height:40px; border-bottom:#0093e1 solid 1px; line-height:40px; }
+.help_cate .cate_title{ background:#d3ebf9; color:#333; font-size:14px; text-indent:10px;}
+.help_cate li a{ display:block; height:40px; line-height:40px; background:url(../images/help_arrow.gif) no-repeat 10px -4px; text-indent:25px; }
+.help_cate li a:hover{ background:url(../images/help_arrow.gif) no-repeat 10px -43px #d3ebf9;  color:#0470b1; text-decoration:none;}
+.help_cate li.current a{ background:url(../images/help_arrow.gif) no-repeat 10px -83px #0093e1; color:#fff; }
+
+.help_main .current_cate_title{ height:30px; border-bottom:#b8dff6 solid 1px; line-height:30px; font-size:15px; font-family:"微软雅黑"; }
+
+.help_main .help_row{ border-bottom:#b8dff6 solid 1px;  font-family:"微软雅黑";}
+.help_main .help_row .title_row{ height:40px;  }
+
+
+.help_main .help_row .title_row .open,.help_main .help_row .title_row .close,.help_main .help_row .title_row .iter,.help_main .help_row .title_row a{ display:block; float:left;}
+
+.help_main .help_row .title_row .close{ background:url(../images/help_arrow.gif) no-repeat 0px -218px; width:20px; height:40px; cursor:pointer; }
+.help_main .help_row .title_row .open{ background:url(../images/help_arrow.gif) no-repeat 0px -164px; width:20px; height:40px; cursor:pointer; }
+
+.help_main .help_row .title_row .iter{ height:40px; width:20px; text-align:center; line-height:40px; font-style:normal; color:#0093e1;}
+.help_main .help_row .title_row a{ height:40px; line-height:40px;}
+.help_main .help_row .title_row a:hover{ text-decoration:none;}
+
+.help_main .help_row .help_content{ background:#edf8ff; border:#b8dff6 1px solid; padding:10px; margin:0px 0px 10px 0px; position:relative;}
+.help_main .help_row .help_content .arrow{ background:url(../images/help_arrow.gif) no-repeat -1px -138px; height:5px; position:absolute; left:50px; top:-5px; width:9px; font-size:0px; line-height:0px; }

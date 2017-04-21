@@ -1,0 +1,198 @@
+<?php
+	$this->_var['pagecss'][] = TMPL_REAL."/css/style.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/weebox.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/spot.css";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.pngfix.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/lazyload.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/script.js";
+	$this->_var['cpagejs'][] = TMPL_REAL."/js/script.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/spot.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/spot_index_adv.js";
+?>
+{include file="inc/header.html"} 
+<script type="text/javascript">
+	var province_tag_spots_url = "{url x="spot#tagspots"}";
+</script>
+<div class="blank13"></div>
+<div class="wrap clearfix">
+	<div class="w210 f_l">
+		<div class="index_spot_cate">
+			<ul id="J_idx_spot_cate">
+				{foreach from=$spot_cate_list item=cate}
+				<li>
+					<a href="{$cate.url}" class="li">
+						{$cate.name}
+						{if $cate.is_hot}
+						<span class="is_hot"></span>
+						{/if}
+					</a>
+					<div class="sub_mc">
+                        <div class="wel_spots">
+                            <dl class="">
+                                <dt>最受欢迎的{$cate.name}景点</dt>
+                                <dd>
+                                	{foreach from=$cate.spots item=spot name="mspot"}
+                                   <a href="{$spot.url}" target="_blank">{$spot.name}</a>
+								   {if !$smarty.foreach.mspot.last}
+								   |
+								   {/if}
+								   {/foreach}                                                                                             </dd>
+                            </dl>
+                        </div>
+
+                        <div class="city_lists">
+                            <p>{$cate.name}区域</p>
+                            <div class="clearfix">
+                            	{foreach from="$cate.areas" item="area" name="areas"}
+                                <dl class="clearfix {if $smarty.foreach.areas.iteration mod 2 neq 0}marg_r70{/if}">
+                                    <dt><a href="javascript:void(0)">{$area.name}</a></dt>
+                                    <dd>
+                                    	{foreach from="$area.places" item="place" name="places"}
+                                       <em><a href="{$place.url}" target="_blank">{$place.name}</a><span>({$place.count})</span></em>
+									   {if !$smarty.foreach.places.last}|{/if}
+									   {/foreach}
+									</dd>
+                                </dl>
+                                {/foreach}
+                            </div>
+                        </div>
+					</div>
+				</li>
+				{/foreach}
+			</ul>
+		</div>
+		
+		{include file="inc/spot/topsale.html"}
+	</div>
+	<div class="w780 f_r">
+		<div class="clearfix spot_index_adv" id="spot_index_adv">
+			<ul class="adv">
+				<li rel="1"><adv adv_id="spotindex1"></li>
+				<li rel="2"><adv adv_id="spotindex2"></li>
+				<li rel="3"><adv adv_id="spotindex3"></li>
+				<li rel="4"><adv adv_id="spotindex4"></li>
+				<li rel="5"><adv adv_id="spotindex5"></li>
+			</ul>
+			<ul class="ctl">
+				<li rel="1" class="cur">1</li>
+				<li rel="2">2</li>
+				<li rel="3">3</li>
+				<li rel="4">4</li>
+				<li rel="5">5</li>
+			</ul>
+		</div>
+		<div class="spot_tips clearfix">
+			<div class="item">
+				<h3>自由组合</h3>
+				<div class="desc">同一景点门票、自家打包线路随您心意</div>
+			</div>
+			<div class="item item_1">
+				<h3>点评奖励</h3>
+				<div class="desc">预订门票后点评酒店可获奖金，金额高于太累网站</div>
+			</div>
+			<div class="item item_2">
+				<h3>最优折扣</h3>
+				<div class="desc">全网最低价<br>一张酒店门票也打折</div>
+			</div>
+			<div class="item item_3 ">
+				<h3>现金账户</h3>
+				<div class="desc">点评奖金累积在现金账户可提现，可支付任意产品</div>
+			</div>
+		</div>
+		
+		<div class="blank"></div>
+		<div class="spot_provinces" id="J_spots_box">
+			<div class="provinces clearfix">
+				<div class="select_provice f_l" py="{$spot_province.py}">
+					<div class="md_a">
+						<div class="md_b">全部</div>
+					</div>
+				</div>
+				<div class="provice_list f_l">
+					  <ul class="province_city province_city_1">
+					  	{foreach from="$spot_tags" item="tag" name="tags"}
+						{if $smarty.foreach.tags.index lt 3}
+                        <li>
+                            <span class="tit" rel="{$tag.name}">{$tag.name}：</span>
+							{foreach from="$tag.areas" item="area" key=key name="areas"}
+							{if $smarty.foreach.areas.index lt 5}
+                        	<span class="pro" py="{$key}">{$area}</span>
+							{/if}
+							{/foreach}
+                    	</li>
+						{/if}
+						{/foreach}
+					</ul>
+					
+					<ul class="province_city province_city_2">
+					  	{foreach from="$spot_tags" item="tag" name="tags"}
+						{if $smarty.foreach.tags.index gt 2 && $smarty.foreach.tags.index lt 6}
+                        <li>
+                            <span class="tit" rel="{$tag.name}">{$tag.name}：</span>
+							{foreach from="$tag.areas" item="area" key=key name="areas"}
+							{if $smarty.foreach.areas.index lt 5}
+                        	<span class="pro" py="{$key}">{$area}</span>
+							{/if}
+							{/foreach}
+                    	</li>
+						{/if}
+						{/foreach}
+					</ul>
+					
+				</div>
+				
+			</div>
+			
+			<div class="blank5"></div>
+				
+			<div class="spots ">
+				{$tags_spots_html}
+			</div>
+		</div>
+		<div class="blank"></div>
+		<div class="hot_spots">
+			<div class="hd-tit">
+				热搜景点门票
+			</div>
+			<div class="spots_list">
+				{foreach from="$hot_spots" item="item" name="hot_sp"}
+				<div class="item" {if $smarty.foreach.hot_sp.iteration mod 4 eq 0}style="margin-right:0"{/if}>
+					<div class="thumb"><a href="{$item.url}"><img src="{function name="get_spec_image" v=$item.image w=184 h=128 g=1}" /></a></div>
+					<div class="tit"><a href="{$item.url}">{$item.name}</a></div>
+					<div class="price">
+						<div class="current_price f_l"><em>&yen;</em>{function name="format_price_to_display" v="$item.ticket_price"}</div>
+						{if $item.tickets.0.save_pirce gt 0}<div class="save_price  f_l">{function name="format_price_to_display" v="$item.tickets.0.save_pirce"}</div>{/if}
+					</div>
+				</div>
+				{/foreach}
+			</div>
+		</div>
+		<div class="blank"></div>
+		<div class="recommend_cate_spots clearfix">
+			<div class="hd-tit">
+				主题推荐
+			</div>
+			{foreach from="$rec_spots" item="cate" name="recsp"}
+			<div class="spots_list" style="{if $smarty.foreach.recsp.iteration mod 2 eq 0}margin-right:0;{/if}{if $smarty.foreach.recsp.iteration <= 2}border-top:0{/if}">
+				<div class="hd">
+					<h3 class="f_l h3_{$smarty.foreach.recsp.iteration}">{$cate.name}</h3>
+					<a href="{$cate.url}" class="f_r">更多 ></a>
+				</div>
+				<ul>
+					{foreach from="$cate.list" item="spot"}
+					<li>
+						<div class="tit">
+							<a href="{$spot.url}">{$spot.name}</a>
+						</div>
+						{if $spot.tickets.0.save_pirce gt 0}<div class="save_price  f_l">{function name="format_price_to_display" v="$spot.tickets.0.save_pirce"}</div>{/if}
+						<div class="current_price f_l"><em>&yen;{function name="format_price_to_display" v="$spot.ticket_price"}</em>起</div>
+					</li>
+					{/foreach}
+				</ul>
+			</div>
+			{/foreach}
+		</div>
+	</div>
+</div>
+<div class="blank20"></div>
+{include file="inc/footer.html"}

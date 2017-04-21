@@ -1,0 +1,55 @@
+<?php
+
+	$this->_var['pagecss'][] = TMPL_REAL."/css/style.css";
+
+	$this->_var['pagecss'][] = TMPL_REAL."/css/weebox.css";
+
+	$this->_var['pagecss'][] = TMPL_REAL."/css/news.css";
+
+	$this->_var['pagecss'][] = TMPL_REAL."/css/comment.css";
+
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.bgiframe.js";
+
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.weebox.js";
+
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.pngfix.js";
+
+	$this->_var['pagejs'][] = TMPL_REAL."/js/lazyload.js";
+
+	$this->_var['pagejs'][] = TMPL_REAL."/js/script.js";
+
+	$this->_var['cpagejs'][] = TMPL_REAL."/js/script.js";
+
+	$this->_var['pagejs'][] = TMPL_REAL."/js/ajax_pages.js";
+
+	$this->_var['cpagejs'][] = TMPL_REAL."/js/ajax_pages.js";
+
+?>
+
+<title>酒店预订-悠游旅游网 </title>
+
+{include file="inc/header.html"}
+
+        <div style="text-align: center;">
+
+               <iframe src="http://www.ly.com/WebInterface/searchlistForOther.aspx?cityname={$cityname}&checkindate={$checkindate}&checkoutdate={$checkoutdate}&width=1000&refid=71653961&show=1" width="1000" frameborder="0" scrolling="no" id="tongcheng"></iframe>
+
+        <script src="http://js.40017.cn/cn/new_ui/airplane/cooperation/tc_mes.0.0.1.js"></script>
+
+        <script type="text/javascript">
+
+            var messenger = Messenger.initInParent(document.getElementById('tongcheng'));
+
+            messenger.onmessage = function (data) {
+
+                document.getElementById('tongcheng').style.height = data + "px";
+
+            };
+
+            // 备注：”tongcheng”为嵌套的iframe的id名
+
+        </script>
+
+        </div>
+
+{include file="inc/footer.html"}    

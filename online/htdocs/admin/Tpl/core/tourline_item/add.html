@@ -1,0 +1,152 @@
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("select[name='is_forever']").change(function(){
+			if($(this).val() ==1)
+			{
+				$("#start_time_one").find("input[name='end_time']").attr("disabled","true");
+				$("#start_time_one").hide();
+				$("#start_time_forever").show();
+			}
+			else
+			{
+				$("#start_time_one").show();
+				$("#start_time_one").find("input[name='end_time']").attr("disabled","false");
+				$("#start_time_forever").hide();
+			}
+		});
+	});
+</script>
+<form action="{$formaction}" method="post" class="pageForm required-validate" onsubmit="return validateCallback(this, SpotTitemCallBack)">
+<div class="pageContent">
+	<div class="pageFormContent" layoutH="57">
+					<table class="formtable">			
+						<tr>
+							<td class="item_title">出发时间:</td>
+							<td class="item_input">
+								<span id="start_time_one">
+									<span style="float:left;">开始：</span>
+									<span style="float:left;">
+										<input type="text" name="start_time" value="" class=" date textInput readonly valid" mindate="{$NOW_DATE}" datefmt="yyyy-MM-dd"  readonly="true">
+										<a class="inputDateButton" href="javascript:;">选择</a>
+									</span>
+									<span style="float:left;margin-left:10px;">结束(批量增加所用)：</span>
+									<span style="float:left;">
+										<input type="text" name="end_time" value="" class="date textInput readonly valid" mindate="{$TOMORROW_DATE}" datefmt="yyyy-MM-dd"  readonly="true">
+										<a class="inputDateButton" href="javascript:;">选择</a>
+									</span>
+								</span>
+								<span id="start_time_forever" style="display:none">
+									永久有效
+								</span>
+							</td>
+						</tr>
+						<tr>
+							<td class="item_title">永久有效:</td>
+							<td class="item_input">
+								<select name="is_forever" class="combox">
+									<option value="0" selected=selected >否</option>
+									<option value="1"  >是</option>
+								</select>
+								<label class="tip">{lang v="IS_FOREVER_NOTICE"}</label>
+							</td>
+						</tr>
+						<tr>
+							<td class="item_title">只限成人购买:</td>
+							<td class="item_input">
+								<select name="is_adult_buy" class="combox">
+									<option value="0" selected=selected >否</option>
+									<option value="1"  >是</option>
+								</select>
+								<label class="tip">{lang v="IS_FOREVER_NOTICE"}</label>
+							</td>
+						</tr>
+						<tr>
+							<td class="item_title">成人价:</td>
+							<td class="item_input">
+								<input type="text" class="textInput number"   maxlength="10" name="adult_price" value="0.00">
+								<label class="tip"></label>
+							</td>
+						</tr>
+						
+						<tr>
+							<td class="item_title">成人预付价:</td>
+							<td class="item_input">
+								<input type="text" class="textInput number"   maxlength="10" name="adult_sale_price" value="0.00">
+								<label class="tip">{lang v="TOURLINE_ADULT_NOTICE"}</label>
+							</td>
+						</tr>
+						
+						<tr>
+							<td class="item_title">儿童价:</td>
+							<td class="item_input">
+								<input type="text" class="textInput number"   maxlength="10" name="child_price" value="0.00">
+								<label class="tip"></label>
+							</td>
+						</tr>
+						
+						<tr>
+							<td class="item_title">儿童预付价:</td>
+							<td class="item_input">
+								<input type="text" class="textInput number"   maxlength="10" name="child_sale_price" value="0.00">
+								<label class="tip">{lang v="TOURLINE_CHILD_NOTICE"}</label>
+							</td>
+						</tr>
+						
+						<tr>
+							<td class="item_title">库存:</td>
+							<td class="item_input">
+								<input type="text" class="textInput number"   maxlength="10" name="adult_limit" value="0">
+								<label class="tip"></label>
+							</td>
+						</tr>
+						
+						<tr>
+							<td class="item_title">成人最小购买:</td>
+							<td class="item_input">
+								<input type="text" class="textInput digits"   maxlength="10" name="adult_buy_min" value="0">
+								<label class="tip"></label>
+							</td>
+						</tr>
+						<tr>
+							<td class="item_title">成人最大购买:</td>
+							<td class="item_input">
+								<input type="text" class="textInput digits"   maxlength="10" name="adult_buy_max" value="0">
+								<label class="tip"></label>
+							</td>
+						</tr>
+
+						<tr>
+							<td class="item_title">儿童最小购买:</td>
+							<td class="item_input">
+								<input type="text" class="textInput digits"   maxlength="10" name="child_buy_min" value="0">
+								<label class="tip"></label>
+							</td>
+						</tr>
+						
+						<tr>
+							<td class="item_title">儿童最大购买:</td>
+							<td class="item_input">
+								<input type="text" class="textInput digits"   maxlength="10" name="child_buy_max" value="0">
+								<label class="tip"></label>
+							</td>
+						</tr>
+						<tr>
+							<td class="item_title">发团的介绍:</td>
+							<td class="item_input">
+								<textarea name="brief" cols="80" rows="4" class="textInput"></textarea>
+								<label class="tip"></label>
+							</td>
+						</tr>
+					</table>
+			
+	</div>
+	<div class="formBar">
+		<ul>
+			<input type="hidden" name="is_supplier_submit" value="{$is_supplier_submit}">
+			<input type="hidden" name="tourline_id" value="{$tourline_id}">
+			<li><div class="buttonActive"><div class="buttonContent"><button type="submit">{lang v="SAVE"}</button></div></div></li>
+			<li><div class="button"><div class="buttonContent"><button class="close" type="button">{lang v="CLOSE"}</button></div></div></li>
+		</ul>
+	</div>
+</div>
+</form>

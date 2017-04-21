@@ -1,0 +1,118 @@
+<?php
+$this->_var['pagecss'][] = TMPL_REAL."/css/style.css";
+$this->_var['pagecss'][] = TMPL_REAL."/css/weebox.css";
+$this->_var['pagecss'][] = TMPL_REAL."/css/guide_show.css";
+$this->_var['pagecss'][] = TMPL_REAL."/css/comment.css";
+
+$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.bgiframe.js";
+$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.weebox.js";
+$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.pngfix.js";
+$this->_var['pagejs'][] = TMPL_REAL."/js/lazyload.js";
+$this->_var['pagejs'][] = TMPL_REAL."/js/script.js";
+$this->_var['pagejs'][] = TMPL_REAL."/js/guide_show.js";
+
+$this->_var['pagejs'][] = TMPL_REAL."/js/ajax_pages.js";
+$this->_var['cpagejs'][] = TMPL_REAL."/js/script.js";
+
+?>
+{include file="inc/header.html"}
+<div class="nav_locate">
+	 
+	  <a href="/">首页</a> &gt <a href="{url r="guide#index"}">游记</a> &gt <a href="javascript:void(0);">{$guide_item.title}</a>  
+</div>
+
+
+
+<div class="notes_head">
+	<div class="notes_head_inner">
+		<h2>{$guide_item.title}</h2>
+		<a href="{url r="guide#writethread"}" class="public"><img src="{$TMPL}/images/guideimg/public_notes2.png"></a>
+		<div class="notes_info">
+			<span class="portrait"><a href="{url r="user#home" p="uid=$user.id"}"><img src="{function name="get_spec_image" v=$user.avatar w=52 h=52 g=1}" width=52 height=52   ></a></span>
+			<span class="member_name"><a href="{url r="user#home" p="uid=$user.id"}">{$guide_item.nickname}</a>创建于{function name="to_date" v1="$guide_item.create_time" v2="Y-m-d"}</span>
+			<span class="start_time">{$guide_item.start_date}出发</span>
+			<span class="from_to">从{$guide_item.start_end_address}</span>
+			<span class="sustain_time">{$guide_item.tour_days}天</span>
+			<span class="reply_view_num">回复 <em clas="comment_count_num">{$guide_item.comment_count}</em> | 浏览 {$guide_item.browse_count}</span>
+		</div>
+		<div class="seal">
+			<img src="{$TMPL}/images/guideimg/seal1.png">
+			<img src="{$TMPL}/images/guideimg/seal2.png">
+			<img src="{$TMPL}/images/guideimg/seal3.png">
+		</div>
+    </div>	
+</div>
+
+<div class="main">
+	<div class="notes_main">
+            <div class="nav">
+            <ul id="J_navbar" class="nav_ul">
+			<li class="current"><a href="javascript:void(0);" rel="0">游记详情</a></li>
+			<li><a href="javascript:void(0);" rel="1">只看点评</a></li>
+		</ul>
+                </div>
+		<div class="notes_content" id="J_nbox_0">
+                        <div class="day_box">
+                            {foreach from=$route_data item=route_item}
+                            <div class="day_item">
+                                <div class="room-title">
+                                    <p>第<em>{$route_item.day_num}</em>天</p>
+                                    <p class="date">{$route_item.route_time}</p>
+                                    <p class="cities">
+                                        {foreach from=$route_item.spot_list item=spot_item name=spot_item}
+                                            <span></span>&nbsp;&nbsp;<a href="javascript:;" rel="nofollow">{$spot_item.area_name}</a>
+                                             {if $smarty.foreach.spot_item.last}{else}&nbsp;&nbsp;&gt;{/if}
+                                        {/foreach}												
+                                    </p>
+                                </div>
+
+                                <div class="day_content">
+                                    <div class="route_title">{$route_item.title}</div>
+                                    {foreach from=$route_item.spot_list item=spot_item }
+                                    <div class="day_spot">
+                                        <div class="room-city">
+                                            <p class="city-name" data-destination="{$spot_item.area_name}"><span></span>&nbsp;<a href="javascript:;" rel="nofollow">{$spot_item.area_name}</a></p>
+                                        </div>
+                                        <div class="spot_gallery_list">
+                                            <ul>
+                                                {foreach from=$spot_item.gallery_list item=gallery_item}
+                                                <li class="pic_item">
+                                                    <a href="{$gallery_item.width}"><img src="{if $gallery_item.width gt 776}{function name="get_spec_image" v=$gallery_item.image w=776}{else}{$gallery_item.image}{/if}"/></a>
+                                                </li>
+                                                {/foreach}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                   {/foreach}
+                                    <div class="day_desc">{$route_item.content}</div>
+                                </div>
+                            </div>
+                            {/foreach}
+                        </div>
+		</div>
+            <div  id="J_nbox_1" class="comment_box">
+                {$comment_html}
+            </div>
+		
+    </div>
+	
+	<div class="notes_banner">
+            <!-- 点赞功能未开放
+		<div class="notes_praise_num">
+				<a href="#"><img src="{$TMPL}/images/guideimg/notes_detai_praise.png"></a>
+				<span>已有356人点赞</span>
+		</div>
+            -->
+		<div class="notes_comment_num">
+		        <a href="#"><img src="{$TMPL}/images/guideimg/notes_detai_comment.png"></a>
+                        <span>已有<em class="comment_count_num">{$guide_item.comment_count}</em>人评论</span>
+		</div>
+		<div class="adver1">
+                    <adv adv_id="guide_show_right1" />
+		</div>
+		<div class="adver2">
+			<adv adv_id="guide_show_right2" />
+		</div>
+    </div>
+</div>
+{include file="inc/footer.html"}

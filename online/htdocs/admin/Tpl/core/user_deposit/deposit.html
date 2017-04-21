@@ -1,0 +1,58 @@
+<script type="text/javascript">
+function depositdone(json){
+	DWZ.ajaxDone(json);
+	if (json.statusCode == DWZ.statusCode.ok){
+		navTab.reload("{$depositurl}", {navTabId: "user_deposit_index"});
+		$.pdialog.closeCurrent();
+	}
+}
+
+</script>
+<form action="{$formaction}" method="post" class="pageForm required-validate" onsubmit="return validateCallback(this, depositdone)">
+<div class="pageContent">
+<div class="pageFormContent" layoutH=55">		
+
+			<table class="formtable">		
+			<tr>
+				<td class="item_title">提现银行:</td>
+				<td class="item_input">
+					{$deposit.deposit_bank}
+				</td>
+			</tr>
+			<tr>
+				<td class="item_title">提现帐号:</td>
+				<td class="item_input">
+					{$deposit.deposit_account}
+				</td>
+			</tr>
+			<tr>
+				<td class="item_title">收款人:</td>
+				<td class="item_input">
+					{$deposit.deposit_name}
+				</td>
+			</tr>	
+			<tr>
+				<td class="item_title">确认提现金额:</td>
+				<td class="item_input">
+					<input type="text" class="required textInput valid" maxlength="150" name="pay_money" value="{$deposit.money}">
+				</td>
+			</tr>		
+			<tr>
+				<td class="item_title">备注:</td>
+				<td class="item_input">
+					<textarea class="textInput required" name="pay_memo" rows="5" cols="40"></textarea>
+					<label class="tip"></label>
+				</td>
+			</tr>
+			</table>
+					
+	</div>
+	<div class="formBar">
+		<ul>
+			<input type="hidden" name="id" value="{$deposit.id}" />
+			<li><div class="buttonActive"><div class="buttonContent"><button type="submit">{lang v="SAVE"}</button></div></div></li>
+			<li><div class="button"><div class="buttonContent"><button class="close" type="button">{lang v="CLOSE"}</button></div></div></li>
+		</ul>
+	</div>
+</div>
+</form>

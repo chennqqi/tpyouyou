@@ -1,0 +1,126 @@
+select {
+vertical-align: middle;
+font-size: 12px;
+padding: 1px;
+font-family: Arial;
+}
+.dialog_city {
+padding: 3px 5px;
+border: 1px solid #ddd;
+width: 110px;
+}
+.pl15{ padding-left:15px}
+.f60{ color:#f60}
+.error_notice {
+	display: inline-block;
+	height: 25px;
+	line-height: 25px;
+	background: url(../images/spot.gif) no-repeat 0 -584px;
+	padding-left: 30px;
+	margin-left: 10px;
+}
+.error_notice i {
+	font-style: normal;
+	display: inline-block;
+	line-height: 26px;
+	background: url(../images/spot.gif) no-repeat right -609px;
+	padding-right: 10px;
+	font-size: 13px;
+}
+.ticket_order{
+	
+}
+.ticket_order .pname{font-size: 1.17em; line-height:26px; color:#0D72A8; font-weight:bolder;padding-top:10px; padding-bottom:5px}
+.ticket_order .item{ margin-top:15px; padding: 10px 40px; background:url(../images/ticket_order_bg.jpg) 0 0; position:relative;}
+.ticket_order .item .remove_item{ background:url(../images/spot.gif) no-repeat -59px -516px; padding-left:16px; display:none; position:absolute; right:10px}
+.ticket_order .tips{background:#FFFFFF; border-top:1px solid #FEE2CD; padding:10px 18px;}
+.ticket_order .tips .t{font-weight:bolder;}
+.ticket_order .tips .bx{ padding:0 10px; padding-top:3px;}
+.ticket_order .tips .bx li{ float:left;width:45%; list-style-image:url(../images/list_t.gif); line-height:22px}
+
+.ticket_order .trav_date{ padding: 18px 0}
+.ticket_order .trav_date .date-t{ line-height:28px}
+.ticket_order .trav_date label{ position:relative;_position: static; cursor:pointer;}
+.ticket_order .trav_date input.date{ cursor:pointer; height:26px; width:145px; padding:0 5px; line-height:26px; background:#fff; border:1px solid #d8d8d8}
+.ticket_order .trav_date label .date_icon{background:url(../images/date_icon.gif) no-repeat 0 0; display:block; position:absolute; right:8px; top:7px; height:15px; width:20px;}
+.ticket_order .date-box{width:220px;}
+.ticket_order .select-number{ padding-left:35px;width:200px;}
+.ticket_order .select-number .number-t{line-height:28px}
+.ticket_order .select-number .trav_num{padding:0; float:left; width:40px; text-align:center;line-height:26px;height:26px; background:#fff; border:1px solid #d8d8d8}
+.ticket_order .select-number .change_num .min,
+.ticket_order .select-number .change_num .plus
+{ background:url(../images/spot.gif) no-repeat 0 -548px;  width:26px; height:26px; float:left;border:1px solid #d8d8d8; border-right:0}
+.ticket_order .select-number .change_num .plus{ background-position:-26px -548px;border-right:1px solid #d8d8d8; border-left:0}
+.ticket_order .select-number .change_num .min.actived{ background-position: 0 -521px;cursor:pointer; }
+.ticket_order .select-number .change_num .plus.actived{ background-position: -26px -521px;cursor:pointer; }
+.delivery-box .dt{ width:60px}
+.delivery-box .bx{ width:575px}
+.delivery-box .delivery_list{margin-bottom: 15px;}
+.delivery-box .delivery_list input{ margin:0; padding:0; position:relative; top:2px; _position: static;}
+.delivery-box .delivery_list label{ cursor:pointer;}
+.delivery-box .delivery_list label span{ color:#A0A0A0; }
+
+.order_info_box{ border:1px solid #E2E2E2; padding:15px}
+.order_info_box .order_box h2{ background:#E5FAFF; line-height:32px; height:32px; font-size:14px; font-weight:bolder; color:#117FBA; padding:0 12px}
+.order_info_box  .routes_info  { padding-top:15px;}
+.order_info_box  .input_table{ width:100%}
+.order_info_box  .input_table td{ padding:2px 0px; line-height:26px;}
+.order_info_box  .input_table .txt_input{ float:left; border:1px solid #BCBCBC; height:24px; line-height:24px; padding:0 5px; }
+.order_info_box  .area_input{ float:left; border:1px solid #BCBCBC;  line-height:24px; padding:0 5px; }
+.order_info_box  .input_table .cred{ color:#FE0000;}
+.order_info_box .promotion_table{ width:100%}
+.order_info_box .promotion_table th{background:#f4f4f4; padding:0px 15px;line-height:28px; border-top:1px solid #e6e6e6}
+.order_info_box .promotion_table td{padding:5px 15px; }
+.order_info_box .promotion_table .citem td{line-height:24px; border-bottom:1px dotted #ccc}
+.order_info_box .promotion_table input{ position:relative; top:3px}
+.order_info_box .promotion_table a{ color:#117FBA}
+.order_info_box .promotion_table #lvYouQuanTip td{ border:1px solid #ddd}
+
+.order_info_box #account_part input{ position:relative; top:3px}
+
+.fd_cont{ line-height:26px;}
+.fd_cont .fd_history{ padding-left:1px; line-height:22px}
+.fd_cont .fd_history dd{ cursor:pointer; float:left; border:3px dotted #ddd; padding:5px 10px; margin-right:10px; margin-bottom:10px; width:216px}
+.fd_cont .fd_history dd.cur{ background:#fdfdfd; position:relative; border:3px solid #f60; cursor:default;}
+.fd_cont .fd_history dd.cur .selected{ background:url(../images/spot.gif) no-repeat 0 -640px; width:16px; height:16px; position:absolute; right:0; top:0}
+.fd_cont .fd_history dd.cur .selected{ display:block;}
+.fd_cont .fill_detail dt{ float:left;width: 120px;text-align: right; padding-right:8px;}
+.fd_cont .fill_detail dt .em{color:#FE0000;}
+.fd_cont .fill_detail dd{ float:left;width: 520px;padding:3px 0px;}
+.fd_cont .fill_detail .txt_input{ float:left; border:1px solid #BCBCBC; height:24px; line-height:24px; padding:0 5px; width:220px}
+
+.next_step_s2{ padding-top:20px; text-align:center;}
+.ready_rule{ padding-top:20px;}
+.ready_rule .rr_check{ text-align:center; font-weight:bolder; font-size:14px}
+.ready_rule .rule_name a.t{color:#0099FD; text-decoration:underline;margin-right: 20px;}
+.ready_rule .rule_name a.t:hover{ color:#f60}
+.ready_rule .rule_desc .desc_box{
+	margin: 0 0 25px 0px;
+	border: 1px solid #d8d8d8;
+	padding: 10px;
+	overflow-y: scroll;
+	height: 360px;
+	position: relative;}
+
+
+#summaryInfo {
+	width:190px;
+	padding: 10px;
+	border: 1px solid #E2E2E2;
+	border-radius: 3px;
+	background: #fff;
+	overflow: hidden;
+}
+
+.fixed{ position:fixed; _position:absolute;top:0}
+#summaryInfo .hd{background:url(../images/spot.gif) no-repeat 0 -669px; padding-left:22px; color:#f60; font-weight:bolder; border-bottom:1px solid #ccc; height:32px; line-height:32px}
+#summaryInfo .bx{ padding-bottom:10px; border-bottom:1px solid #ddd}
+#summaryInfo .item{ padding-top:6px; }
+#summaryInfo .item .pn{ margin-top:5px;}
+#summaryInfo .item .pn .org{ color:#f60}
+#summaryInfo .item .pn .price{ color:#f60}
+#summaryInfo .act_btn{ padding-top:10px; text-align:center;}
+#summaryInfo .totl_money{ border-top:1px solid #ccc; margin-top:10px; padding-top:10px; font-weight:bolder; font-size:14px;}
+#summaryInfo .totl_money #totalPayNet{ color:#f60}
+#summaryInfo .it_money{ padding-top:10px;}
+#summaryInfo .it_money #totalPickNet,#summaryInfo .it_money #totalvoucherNet,#summaryInfo .it_money #totalaccountNet{ color:#f60}

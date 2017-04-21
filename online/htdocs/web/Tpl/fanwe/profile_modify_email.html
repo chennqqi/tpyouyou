@@ -1,0 +1,24 @@
+<form action="{url r="profile#save_email"}" id="modify_form" method="post">
+<table class="user_modify">
+<tr>
+	<td class="title">新邮箱地址</td>
+	<td class="content">
+		<input type="text" holder="输入新邮箱" style="width:150px;" class="ipt" name="email" value="" />
+	</td>
+</tr>
+<tr>
+	<td class="title">验证码</td>
+	<td class="content">
+		<input type="text" holder="输入验证码" style="width:80px;" class="ipt" name="verify_code" value="" />
+		{insert name="verifyimg" vid="verify" w="48" h="22"}
+	</td>
+</tr>	
+<tr>
+	<td class="title"></td>
+	<td class="content">
+		<input type="submit" style="display:none;" />
+		<div class="long_btn" id="save_modify" style="float:left;">保存</div>
+	</td>
+</tr>	
+</table>
+</form>

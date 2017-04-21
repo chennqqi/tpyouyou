@@ -1,0 +1,43 @@
+{foreach from=$drop_nav item=drop}
+	<!--左侧浮动菜单对象-->
+        <div class="item fore">
+            <div {if $drop.pop_nav}class="left_title"{/if}>
+                <div class="top_h3">
+                    <a class="zb" href="{$drop.url}" {if !$drop.sub_nav}style="line-height:45px;"{/if}>{$drop.name}</a>
+					{if $drop.sub_nav}
+                    <p class="eg">
+                    	{foreach from=$drop.sub_nav item=sub_nav}
+                        <a href="{$sub_nav.url}">{$sub_nav.name}</a>
+                        {/foreach}
+                    </p>
+					{/if}
+                    <s>
+                    </s>
+                </div>
+                <span class="border_hide_span"></span>
+            </div>
+			{if $drop.pop_nav}
+            <!--start 右侧浮动菜单-->
+            <div class="i-mc fast-item-onepic" style="">
+               <div class="clearfix panel-content">
+                    {foreach from=$drop.pop_nav item=pop_nav}
+					<div class="pop_group">
+						<div class="pop_subject">
+							<a href="{$pop_nav.url}">{$pop_nav.name}</a>
+						</div>
+						<div class="pop_s_cate">
+							{foreach from=$pop_nav.s_cate item=scate}
+							<a href="{$scate.url}">{$scate.name}</a>
+							{/foreach}
+						</div>
+						
+					</div>
+					{/foreach}
+                  
+                </div>
+            </div>
+            <!--end 右侧浮动菜单-->
+			{/if}
+        </div>
+        <!--end 左侧浮动菜单对象-->
+{/foreach}

@@ -1,0 +1,104 @@
+{foreach from=$data_list item=item}
+<!--start 每天的游记-->
+<div class="guide_day_item" data_route_id="{$item.route_id}">
+                <div class="blank20"></div>
+                <div class="t_day">
+                        <div class="day_num">
+                            第 <span>{$item.day_num}</span> 天
+                        </div>
+                        <div class="day_date">
+                                <input class="begin_date route_time route_time_{$item.route_id}" id="begin_date_{$item.day_num}" data_route="{$item.route_id}" type="text" readonly="true" value="{$item.day_date}" title="" ></div>
+                        <div>
+                            <a class="t_edit" title="修改行程日期" href="javascript:void(0);" onclick="$.Show_Datepicker({$item.day_num})"></a>
+
+                            <a class="t_delete" title="删除行程" href="javascript:void(0);"></a>
+                        </div>
+                </div>
+
+                <div class="t_day_box">
+                        <div class="write_box">
+
+                                        <div class="input_item">
+                                            <input class="input_limit input_data" data_type="route_title" date_route="{$item.route_id}" hide_data="{$item.title}" maxlength="30" max_data="30" type="text" holder="输入当日标题" value="{$item.title}" /><span >还可以输入<i class="limit_num">30</i>字</span>
+                                        </div>
+
+                                        <!--POI列表-->
+                                        <div class="poi_box ui-sortable poi_box_route_{$item.route_id}" data_route_id="{$item.route_id}">
+                                            {if $item.route_time neq "0000-00-00"}
+                                                {if $item.spot}
+                                                    {foreach from=$item.spot item=spot_item name=spot_poi}
+                                                        <div class="poi_dot default_poi poi_dot_spot_{$spot_item.spot_id} poi_dot_route_{$spot_item.route_id} {if $smarty.foreach.spot_poi.iteration eq 1}on{/if}" data_route_id="{$spot_item.route_id}"  data_spot_id="{$spot_item.spot_id}">
+                                                                                    <p class="spot_area_name">{$spot_item.area_name}</p>
+                                                                                    <p class="spot_action">
+                                                                                            <a class="edit_spot" href="javascript:void(0);" data_route_id="{$spot_item.route_id}"  data_spot_id="{$spot_item.spot_id}"></a>
+                                                                                            <a class="del_spot" href="javascript:void(0);" data_route_id="{$spot_item.route_id}" data_spot_id="{$spot_item.spot_id}"></a>
+                                                                                    </p>
+                                                                                    <p class="spot_gallery_num"><span>{$spot_item.pic_count}</span>张</p>
+                                                                                    <div class="arr_r">········</div>
+
+                                                        </div>
+                                                    {/foreach}
+                                                {/if}
+                                            {/if}
+                                            <div class="poi_dot add_poi" data_route_id="{$item.route_id}"></div>
+                                        </div>
+                                        <!--POI列表 end-->
+
+                                        <!--图片列表-->
+
+                                        <div class="photo_content_box_route_{$item.route_id} clearfix">
+                                            {if $item.route_time neq "0000-00-00"}
+                                                    {foreach from=$item.spot item=spot_item name=spot_pic_content}
+                                                        <div class="photo_content photo_content_route_{$spot_item.route_id} photo_content_spot_{$spot_item.spot_id} clearfix ui-sortable {if $smarty.foreach.spot_pic_content.iteration eq 1}on{/if}" data_route_id="{$spot_item.route_id}" >
+                                                                {foreach from=$spot_item.gallery item=gallery_item}
+                                                                    <div class="photo_item f_l">
+                                                                        <div class="img_box"><img src="{$gallery_item.image}"  data="{$gallery_item.image}"/></div>
+                                                                        <div class="img_action">
+                                                                            <a href="javascript:void(0)" class="del_img"  data_route_id="{$gallery_item.route_id}" data_spot_id="{$gallery_item.spot_id}" data_gallery_id="{$gallery_item.gallery_id}">删除</a>
+                                                                        </div>
+                                                                    </div>
+                                                                {/foreach}
+                                                                <!--行程内没有照片时，允许添加照片-->
+                                                                <div class="photo_null f_l" style="">
+                                                                    {if $spot_item.pic_count gt 0}
+                                                                        <a href="javascript:void(0);" onclick=" $.Add_Pic({$spot_item.route_id},{$spot_item.spot_id})" class="add_img_a_btn">添加照片</a>
+                                                                    {else}
+                                                                        <i></i>
+                                                                        <span>这一天没有照片，请<a href="javascript:void(0);" onclick=" $.Add_Pic({$spot_item.route_id},{$spot_item.spot_id})">添加照片</a></span>
+                                                                    {/if}
+                                                                </div>
+                                                        </div>
+                                                    {/foreach}
+                                          {/if}
+                                        </div>
+
+                                        <!--图片列表 end-->
+                                        <div class="blank10"></div>
+                                        <div class="write_box">
+                                                <div class="textarea_item">
+                                                    <textarea  class="input_limit input_data" data_type="route_content" date_route="{$item.route_id}" hide_data="{$item.content}"   maxlength="1000"  placeholder="记录旅途的点点滴滴">{$item.content}</textarea>
+                                                    <span >还可以输入<i class="limit_num">1000</i>字</span>
+                                                </div>
+                                        </div>
+                        </div>
+                </div>
+                <div class="blank20"></div>
+                <div class="blank20"></div>
+                <script>
+                    $(function(){
+
+                          $( "#begin_date_{$item.day_num}" ).datepicker({
+                               format:'Y-m-d',
+                               numberOfMonths: 2,  //显示两个月
+                               maxDate: 0 //从当前日期起可选
+                           });
+                           $.Show_Datepicker = function(day_num){
+                               $("#begin_date_"+day_num).datepicker( "show" );
+                           };
+
+                    });
+               </script>
+</div>
+
+<!--end 每天的游记-->
+{/foreach}

@@ -1,0 +1,39 @@
+
+<div class="pageContent">
+
+		<div class="pageFormContent" layoutH="56">
+
+		<p>
+			<span>{lang v="LOG_ADMIN"}</span>
+			<span>{$log_info.log_admin}</span>
+			
+			<span>{lang v="LOG_STATUS"}</span>
+			<span>{$log_info.log_status}</span>
+		</p>
+
+		<p>
+			<span>{lang v="LOG_TIME"}</span>
+			<span>{function name="to_date" v=$log_info.log_time}</span>
+			<span>{lang v="LOG_IP"}</span>
+			<span>{$log_info.log_ip}</span>
+		</p>
+		
+		<p>
+			<span>{lang v="MODULE"}</span>
+			<span>{$log_info.module}</span>
+			<span>{lang v="ACTION"}</span>
+			<span>{$log_info.action}</span>
+		</p>
+		
+
+
+		<p>
+			<span>{lang v="LOG_INFO"}</span>		
+		</p>
+		<div class="divider"></div>
+		<div style="line-height:22px;" class="word">
+		{$log_info.log_info}
+		</div>
+
+		</div>
+</div>

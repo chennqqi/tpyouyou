@@ -1,0 +1,100 @@
+<script type="text/javascript">
+var UPDATE_SUCCESS = '{lang v="UPDATE_SUCCESS"}';
+var UPDATE_FAILED = '{lang v="UPDATE_FAILED"}';
+function setsort(dom,id)
+{
+	var html = "<input type='text' value='"+$.trim($(dom).html())+"' class='textInput' style='width:40px;' onblur='blursort(this,"+id+");' />";	
+	var parent = $(dom).parent();
+	$(parent).html(html);
+	var ipt = $(parent).find("input");	
+	$(ipt).focus();
+	$(ipt).select();		
+}
+function blursort(dom,id)
+{
+	var newsort = $.trim($(dom).val());
+	$.ajax({
+		type:  'POST',
+		url:"{$setsorturl}&id="+id+"&sort="+newsort,
+		dataType:"json",
+		cache: false,
+		success: function(obj){
+			var html = "<a href='javascript:void(0);' onclick='setsort(this,"+id+");'>"+obj.message+"</a>";	
+			$(dom).parent().html(html);	
+			if(obj.statusCode==200)
+			{
+				alertMsg.correct(UPDATE_SUCCESS);
+			}
+			else
+			{
+				alertMsg.correct(UPDATE_FAILED);
+			}
+		}
+	});
+	
+}
+</script>
+<form id="pagerForm" method="post" action="#rel#">
+	<input type="hidden" name="pageNum" value="{$param.pageNum}" />
+	<input type="hidden" name="numPerPage" value="{$param.pageSize}" />
+	<input type="hidden" name="orderField" value="{$param.orderField}" />
+	<input type="hidden" name="orderDirection" value="{$param.orderDirection}" />
+</form>
+<form rel="pagerForm" onsubmit="return navTabSearch(this);" action="{$formaction}" method="post">
+</form>
+
+<div class="pageContent">
+	<div class="panelBar">
+		<ul class="toolBar">
+			<li><a title="{lang v="ADD"}{lang v="APP_NAV"}" target="navTab" rel="nav_addpage"  href="{$addurl}" class="add"><span>{lang v="ADD"}</span></a></li>
+			<li><a title="{lang v="CONFIRM_DELETE"}" target="selectedTodo" rel="id" postType="string" href="{$delurl}" class="delete"><span>{lang v="DEL"}</span></a></li>
+		</ul>
+	</div>
+	<table class="table" width="100%" layoutH="75">
+		<thead>
+		<tr>
+				<th width="22"><input type="checkbox" group="id" class="checkboxCtrl"></th>
+				<th  width="50" orderField="id" {if $param.orderField eq 'id'} class="{$param.orderDirection}"{/if}>{lang v="ID"}</th>
+				<th>{lang v="NAV_NAME"}</th>
+				<th width="80" orderField="tag" {if $param.orderField eq 'tag'} class="{$param.orderDirection}"{/if}>{lang v="NAV_TAG"}</th>
+				<th width="80" orderField="is_effect" {if $param.orderField eq 'is_effect'} class="{$param.orderDirection}"{/if}>{lang v="IS_EFFECT"}</th>
+				<th width="80" orderField="sort" {if $param.orderField eq 'sort'} class="{$param.orderDirection}"{/if}>{lang v="SORT"}</th>
+				<th width="80" orderField="blank" {if $param.orderField eq 'blank'} class="{$param.orderDirection}"{/if}>{lang v="NAV_BLANK"}</th>
+				<th width="100">{lang v="TAG_LANG_OPERATE"}</th>
+			</tr>
+		</thead>
+		<tbody>
+		
+			{foreach from=$list item=item}
+			<tr  rel="{$item.id}">
+				<td><input name="id" value="{$item.id}" type="checkbox"></td>
+				<td>{$item.id}</td>
+				<td>{$item.name}</td>
+				<td>{$item.tag}</td>
+				<td><a href="{$seteffecturl}&id={$item.id}&is_effect={$item.is_effect}" target="ajaxTodo" class="{if $item.is_effect eq 1}btnSelect{else}btnDel{/if}">{$item.is_effect_show}</a></td>
+				<td><a href="javascript:void(0);" onclick="setsort(this,{$item.id});">{$item.sort}</a></td>
+				<td>{$item.blank}</td>
+				<td>
+					<a title="{lang v="CONFIRM_DELETE"}" target="ajaxTodo" href="{$delurl}&id={$item.id}" class="btnDel">{lang v="DEL"}</a>
+					<a title="{lang v="EDIT"}{lang v="APP_NAV"}{$item.name}" target="navTab" rel="nav_editpage_{$item.id}" href="{$editurl}&id={$item.id}"  class="btnEdit">{lang v="EDIT"}</a>
+				</td>
+			</tr>
+			{/foreach}
+		</tbody>
+	</table>
+	<div class="panelBar">
+		<div class="pages">
+			<span>{lang v="DISPLAY_PAGE_SIZE"}</span>
+			<select class="combox" name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value})">
+				<option value="<?php echo ADMIN_PAGE_SIZE1;?>" {if $param.pageSize eq ADMIN_PAGE_SIZE1}selected="selected"{/if} ><?php echo ADMIN_PAGE_SIZE1;?></option>
+				<option value="<?php echo ADMIN_PAGE_SIZE2;?>" {if $param.pageSize eq ADMIN_PAGE_SIZE2}selected="selected"{/if}><?php echo ADMIN_PAGE_SIZE2;?></option>
+				<option value="<?php echo ADMIN_PAGE_SIZE3;?>" {if $param.pageSize eq ADMIN_PAGE_SIZE3}selected="selected"{/if}><?php echo ADMIN_PAGE_SIZE3;?></option>
+				<option value="<?php echo ADMIN_PAGE_SIZE4;?>" {if $param.pageSize eq ADMIN_PAGE_SIZE4}selected="selected"{/if}><?php echo ADMIN_PAGE_SIZE4;?></option>
+			</select>
+			<span>&nbsp;&nbsp;{lang v="PAGE_TOTAL_COUNT" p="$totalCount"}</span>
+		</div>
+		
+		<div class="pagination" targetType="navTab" totalCount="{$totalCount}" numPerPage="{$param.pageSize}" pageNumShown="10" currentPage="{$param.pageNum}"></div>
+
+	</div>
+</div>

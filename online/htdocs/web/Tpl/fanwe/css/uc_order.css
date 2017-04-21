@@ -1,0 +1,35 @@
+.uc_ordertable { font-size:12px}
+.uc_ordertable a{ color:#0088d2}
+.pro_inf{padding-bottom:5px}
+.pro_inf .thumb{height:30px; overflow:hidden;}
+.pro_inf .tit{ padding-left:65px; }
+.uc_ordertable .op{ line-height:180%}
+.uc_ordertable .op a{display:block;}
+.uc_ordertable .op a.toPay { display:block; background:#14B2F5; height:28px; line-height:28px; color:#fff}
+
+.pl10{ padding-left:10px}
+.fred{ color:#f60}
+.blank10{ height:10px; overflow:hidden; clear:both;  visibility:visible;}
+.blank20{ height:20px; overflow:hidden; clear:both;  visibility:visible;}
+
+.order_info_box{ border:1px solid #E2E2E2; padding:15px}
+.order_info_box .order_box h2{ background:#E5FAFF; line-height:32px; height:32px; font-size:14px; font-weight:bolder; color:#117FBA; padding:0 12px}
+.order_info_box  .routes_info  { padding-top:15px;}
+
+.ticketing {
+	border: 1px solid #fdcc7c;
+	padding: 20px;
+	background-color: #fffcf3;
+}
+.ticketing h3 {
+font-weight: 700;
+font-size: 14px;
+margin-bottom: 10px;
+}
+.ticketing p {
+color: #666;
+line-height: 24px;
+}
+
+.formbutton{color:#fff; background:#4482BB;border:none; border-radius:3px; padding:0 15px; border-bottom:1px solid #302F2D; height:28px; line-height:28px}
+.resetbutton{color:#333; background:#ddd;border:none; border-radius:3px; padding:0 15px; border-bottom:1px solid #302F2D; height:28px; line-height:28px}

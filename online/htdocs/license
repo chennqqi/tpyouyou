@@ -1,0 +1,108 @@
+<?php 
+	
+/*下面为域名限制
+$f4a5d7cddeearr=array("localhost","127.0.0.1",".haoid.cn");
+$f4a5d7cddeehost=$_SERVER["HTTP_HOST"];
+$f4a5d7cddeehost=explode(":",$f4a5d7cddeehost);
+$f4a5d7cddeehost=$f4a5d7cddeehost[0];
+$f4a5d7cddeebln=false;
+foreach($f4a5d7cddeearr as $f4a5d7cddeeval)
+{
+	if(substr($f4a5d7cddeeval,0,2)==="*.")
+	{
+		if(preg_match("/".preg_quote(substr($f4a5d7cddeeval,2))."$/",$f4a5d7cddeehost)>0)
+		{
+			$f4a5d7cddeebln=true;
+			break;
+		}
+	}
+}
+if(!$f4a5d7cddeebln&&!in_array($f4a5d7cddeehost,$f4a5d7cddeearr))
+{
+	echo "domain not authorized";exit;
+}
+域名限制结束
+*/
+
+//引入数据库的系统配置及定义配置函数
+update_sys_config();
+$sys_config = require APP_ROOT_PATH.'system/config.php';
+function app_conf($name)
+{
+	return stripslashes($GLOBALS['sys_config'][$name]);
+}
+//end 引入数据库的系统配置及定义配置函数
+
+//引入时区配置及定义时间函数
+if(function_exists('date_default_timezone_set'))
+{
+	date_default_timezone_set(app_conf('DEFAULT_TIMEZONE'));
+}
+//end 引入时区配置及定义时间函数
+
+
+if(IS_DEBUG)
+error_reporting(E_ALL^E_NOTICE^E_WARNING);
+else
+error_reporting(0);
+
+//定义$_SERVER['REQUEST_URI']兼容性
+if (!isset($_SERVER['REQUEST_URI']))
+{
+		if (isset($_SERVER['argv']))
+		{
+			$uri = $_SERVER['PHP_SELF'] .'?'. $_SERVER['argv'][0];
+		}
+		else
+		{
+			$uri = $_SERVER['PHP_SELF'] .'?'. $_SERVER['QUERY_STRING'];
+		}
+		$_SERVER['REQUEST_URI'] = $uri;
+}
+filter_request($_GET);  //还原$_GET数据，去除魔法标签加上的转义
+filter_request($_POST); //还原$_POST数据，去除魔法标签加上的转义
+
+//关于安装的检测
+if(!file_exists(APP_ROOT_PATH."public/install.lock"))
+{
+	app_redirect(APP_ROOT."/install/index.php");
+}
+
+
+
+require APP_ROOT_PATH.'system/utils/es_cookie.php';
+require APP_ROOT_PATH.'system/utils/es_session.php';
+//es_session::start(); 默认不开启session, 在必要的时候开启
+
+
+
+//创建项目目录
+if(!file_exists(APP_ROOT_PATH.'public/runtime/'.APP_NAME.'/'))
+	mkdir(APP_ROOT_PATH.'public/runtime/'.APP_NAME.'/',0777);
+
+//定义DB
+require APP_ROOT_PATH.'system/db/db.php';
+define('DB_PREFIX', app_conf('DB_PREFIX')); 
+if(!file_exists(APP_ROOT_PATH.'public/runtime/db_caches/'))
+	mkdir(APP_ROOT_PATH.'public/runtime/db_caches/',0777);
+$pconnect = false;
+$db = new mysql_db(app_conf('DB_HOST').":".app_conf('DB_PORT'), app_conf('DB_USER'),app_conf('DB_PWD'),app_conf('DB_NAME'),'utf8',$pconnect);
+//end 定义DB
+
+//定义缓存
+require_once APP_ROOT_PATH.'system/cache/Cache.php';
+$cache = CacheService::getInstance();
+require_once APP_ROOT_PATH."system/cache/CacheFileService.php";
+$fcache = new CacheFileService();  //专用于保存静态数据的缓存实例
+$fcache->set_dir(APP_ROOT_PATH."public/runtime/autocache/");
+//定义缓存
+
+$IMG_APP_ROOT = APP_ROOT; //模板引擎中替换图片路径
+
+//end 定义模板引擎
+filter_request($_REQUEST); //还原$_REQUEST数据，去除魔法标签加上的转义
+
+$domain_cfg_file = APP_ROOT_PATH."public/domain_config.php";
+if(file_exists($domain_cfg_file))$domain_cfg = require $domain_cfg_file;
+require_once APP_ROOT_PATH."system/utils/logger.php"; 
+?>

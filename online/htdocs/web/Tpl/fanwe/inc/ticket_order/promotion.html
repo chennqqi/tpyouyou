@@ -1,0 +1,52 @@
+<div id="promotion_part" class="order_box ">
+	<div class="blank15"></div>
+    <h2>优惠方案</h2>
+	<div class="routes_info">
+		<table cellspacing="0" cellpadding="0" class="promotion_table" id="bx_table">
+            <tbody>
+                <tr>
+                    <th align="left">优惠活动</th>
+                    <th width="15%" align="center">可用金额 </th>
+                </tr>
+                <tr id="travCouponArea" class="citem">
+                   <td class="first">
+                       <input type="checkbox" id="travCouponAreaBox"  autocomplete="off">
+                       <a id="lvyouquan" href="javascript:void(0)" >
+                       		代金券
+							<span>▼</span>
+					   </a>
+                       
+                   </td>
+                   <td align="center" id="haveTravelValue" value="0">¥0</td>
+               </tr>
+			   {foreach from="$voucher_list" item="voucher"}
+			   <tr class="citem hide J_travCouponList">
+                   <td class="first">
+                   		<input type="checkbox" name="voucher[]" value="{$voucher.id}"  autocomplete="off" />
+                      {$voucher.voucher_name}
+                   </td>
+                   <td align="center" id="haveTravelValue" value="{function name="format_price_to_display" v="$voucher.money"}">
+                   	¥{function name="format_price_to_display" v="$voucher.money"}
+                   </td>
+               </tr>
+			   {/foreach}
+               <tr>
+               		<td colspan="2">
+               			<span class="err_structure hide" id="travCouponError">
+                        	<span class="error_notice">
+                           	 	<i></i>
+                        	</span>
+                     	</span>
+                     </td>
+               </tr>
+               <tr id="lvYouQuanTip" class="take_bx hide">
+                   <td colspan="2">
+                       <p> 代金劵等同于现金使用，直接抵扣订单金额</p>
+                      <!-- <a href="#" target="_blank">什么是代金劵?</a>-->
+                   </td>
+               </tr>
+            </tbody>
+       </table>
+	</div>
+</div>
+<div class="blank15"></div>

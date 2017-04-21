@@ -1,0 +1,105 @@
+.waterfall_main{
+    width:1000px;
+    overflow:hidden;
+}
+.col_container{
+    width:245.5px;
+    float:left;
+    font-size:12px;
+    margin-right:6px;
+    overflow:hidden;
+}
+.last_col_container{
+    margin-right:0;
+}
+.col_container .item{
+    margin-bottom: 6px;
+    border: 1px solid #eee;
+    overflow: hidden;
+    padding: 10px 10px 0 10px;
+    width: 223px;
+    border-radius: 5px;
+}
+.praise_ico{
+    display:block;
+    position:absolute;
+    width:28px;
+    height:31px;
+    background:url(../images/guide/jing.png) no-repeat left center;
+}
+.notes_title{
+    overflow:hidden;
+}
+.notes_title a{
+    display:block;
+    overflow:hidden;
+}
+.notes_title a img{
+    display:block;
+    overflow:hidden;
+    width:223px;
+}
+.notes_title a{
+    display:block;
+    overflow:hidden;
+}
+.notes_title a.title_content{
+    font-size: 14px;
+    line-height: 18px;
+    padding:10px 5px 0 3px;
+    width: 211px;
+    display: inline-block;
+    color:#007fd8;
+    font-family:Microsoft YaHei;
+}
+.notes_count{
+    height:19px;
+    line-height:19px;
+    padding:12px 5px 12px 0;
+    border-bottom:1px dotted #eee;
+}
+.notes_count span{
+    height:19px;
+    line-height:19px;
+}
+.praise{
+    float:left;
+    padding-left:45px;
+    color:#007fd8;
+    background:url(../images/guide/bg_praise.png) no-repeat left center;
+}
+.reply_count{
+    float:right;
+    padding-left:20px;
+    background:url(../images/guide/bg_reply_num.png) no-repeat left center;
+}
+.view_count{
+    float:right;
+    padding-left:20px;
+    margin-right:10px;
+    background:url(../images/guide/bg_view_num.png) no-repeat left center;
+}
+.notes_info{
+    width:181px;
+    padding:10px 0 15px 40px;
+    overflow:hidden;
+    position:relative;
+
+}
+.notes_info span{
+    color:#666;
+}
+.notes_info div{
+    line-height:18px;
+    margin-top:5px;
+}
+.notes_info div a.notes_info_content{
+    color:#9a9a9a;
+}
+.notes_info img{
+    position:absolute;
+    width:32px;
+    height:32px;
+    border:1px solid #eee;
+    left:0px;
+}

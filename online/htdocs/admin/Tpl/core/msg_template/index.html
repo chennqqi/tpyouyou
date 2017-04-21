@@ -1,0 +1,110 @@
+<script type="text/javascript">
+$(document).ready(function(){
+	$(navTab.getCurrentPanel()).find("select[name='name']").bind("change",function(){
+		initTemplate();		
+	});
+	initTemplate();
+});
+function initTemplate()
+{
+	var template_name = $(navTab.getCurrentPanel()).find("select[name='name']").val();
+	var query = new Object();
+	query.name = template_name;
+	$.ajax({ 
+        url: "{$load_template_url}",
+        data:query,
+        type:"POST",
+        dataType: "json",
+        global:false,
+        success: function(obj){
+        	if(obj.statusCode==200)
+        	{
+        		var template = obj.template;
+        		if(template.type==1)
+              	{
+              		//邮件
+              		$(navTab.getCurrentPanel()).find("#is_html_row").show();          		
+              	}
+              	else
+              	{
+              		$(navTab.getCurrentPanel()).find("#is_html_row").hide();          		
+              	}        		
+        		
+        		var selectbox = $('<select name="is_html" class="combox">'+
+				'<option value="0"> 否</option>'+
+				'<option value="1"> 是</option>'+
+				'</select>');	
+				$("#is_html_box",navTab.getCurrentPanel()).html("");
+				$("#is_html_box",navTab.getCurrentPanel()).append(selectbox);
+				$(selectbox).val(template.is_html);
+				$(selectbox).combox();
+
+        		
+              	$(navTab.getCurrentPanel()).find("#content").val(template.content);
+              	$(navTab.getCurrentPanel()).find("#var_desc").html(template.var_desc);
+              	
+              	
+				
+        	}
+        	else
+        	{
+        		alertMsg.error(obj.message);	
+        	}
+          	
+        }
+    }); 
+	
+}
+</script>
+<h2 class="contentTitle">消息模板设置</h2>
+<form action="{$formaction}" method="post" class="pageForm required-validate" onsubmit="return validateCallback(this, navTabAjaxDone)">
+<div class="pageContent">
+<div class="pageFormContent" layoutH="97">		
+
+			<table class="formtable">				
+			<tr>
+				<td class="item_title">选择模板:</td>
+				<td class="item_input">
+					<select name="name" class="combox">
+						{foreach from=$templates item=tmpl}
+						<option value="{$tmpl.name}">{$tmpl.show_name}</option>
+						{/foreach}
+					</select>
+					<label class="tip"></label>
+				</td>
+			</tr>
+			
+			<tr id="is_html_row">
+				<td class="item_title">是否为超文本邮件:</td>
+				<td class="item_input" id="is_html_box">
+					
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="item_title">模板内容:</td>
+				<td class="item_input">
+					<textarea rows="5" cols="50" class="textInput"  name="content"  id="content"></textarea>
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="item_title">变量说明:</td>
+				<td class="item_input" id="var_desc">
+					
+				</td>
+			</tr>
+			
+
+			
+			</table>
+					
+	</div>
+	<div class="formBar">
+		<ul>
+			<li><div class="buttonActive"><div class="buttonContent"><button type="submit">{lang v="SAVE"}</button></div></div></li>
+			<li><div class="button"><div class="buttonContent"><button class="close" type="button">{lang v="CLOSE"}</button></div></div></li>
+		</ul>
+	</div>
+</div>
+</form>

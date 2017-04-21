@@ -1,0 +1,369 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta name="Generator" />
+
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title>{if $page_title neq ''}{$page_title} - {/if}{$site_name}</title>
+
+<meta name="keywords" content="{$site_keyword}" />
+
+<meta name="description" content="{$site_description}" />
+
+<script type="text/javascript" src="{$TMPL}/js/jquery.js"></script>
+
+<?php
+
+if(app_conf("APP_MSG_SENDER_OPEN")==1)
+
+{
+
+$this->_var['pagejs'][] = TMPL_REAL."/js/msg_sender.js";
+
+$this->_var['cpagejs'][] = TMPL_REAL."/js/msg_sender.js";
+
+}
+
+?>
+
+<script type="text/javascript">
+
+var APP_ROOT = '{$APP_ROOT}';
+
+var SITE_URL = '{$SITE_URL}';
+
+var LOADER_IMG = '{$TMPL}/images/lazy_loading.gif';
+
+var ERROR_IMG = '{$TMPL}/images/image_err.gif';
+
+var send_span = {function name="app_conf" v="SEND_SPAN"}000;
+
+{if app_conf("APP_MSG_SENDER_OPEN") eq 1 and $CRON_COUNT gt 0}
+
+var IS_RUN_CRON = 1;
+
+{else}
+
+var IS_RUN_CRON = 0;
+
+{/if}
+
+var DEAL_MSG_URL = '{url r="cron#deal_msg_list"}';
+
+var MAP_URL = '{url r="map"}';
+
+</script>
+
+
+
+{include file="inc/define_js_url.html"}
+
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$pagecss"}" />
+
+<script type="text/javascript" src="{$APP_ROOT}/public/runtime/<?php echo  APP_NAME;?>/lang.js"></script>
+
+<script type="text/javascript" src="{function name="parse_script" v="$pagejs" c="$cpagejs"}"></script>
+
+{insert name="load_daily_login"}
+
+</head>
+
+<body>
+
+	<div class="header">
+
+         <div class="top_nav">
+
+			<div class="wrap">
+
+				<div class="f_l" id="header_user_tip">
+
+					{insert name="user_tip"}			                                       
+
+				</div>
+
+                 <div class="f_r">
+
+					{include file="inc/top_nav_right.html"}
+
+				</div>
+
+			</div>
+
+		</div>
+
+		<div class="wrap logo_row">  
+
+			<div class="logo f_l">
+
+                <a class="link" href="{$APP_ROOT}/">
+
+                        <?php
+
+                                $this->_var['logo_image'] = app_conf("SITE_LOGO");
+
+                        ?>
+
+                        {function name="load_page_png" v=$logo_image}
+
+                </a>
+
+			</div>
+
+            <!--城市-->
+
+            <div class="f_l head_start_city">
+
+	         	<a href="javascript:void(0);" class="switch_city">{insert name="current_city_name"}</a>
+
+                <br />
+
+                <div class="switch_city_icon"></div>
+
+				<div class="show_city">
+
+					<dl>
+
+						<dt>热门城市</dt>
+
+						<dd>
+
+							{foreach from=$dh_hot_city_list item=hot_city}
+
+						   <a href="{$hot_city.url}" rel="nofollow" title="{$hot_city.name}">{$hot_city.name}</a>
+
+						   {/foreach}
+
+						</dd>
+
+					</dl>
+
+					<div id="con">
+
+						<ul id="tags">
+
+							{foreach from=$dh_city_list key=key item=city_group}
+
+							<li {if $key eq "ABCDEFG"}class="selectTag"{/if}><a onclick="selectTag('tagContent{$key}',this)" href="javascript:void(0)">{$key}</a></li>
+
+							{/foreach}
+
+						</ul>
+
+					  	<div id="tagContent">
+
+							
+
+							{foreach from=$dh_city_list key=group_key item=city_group}
+
+							<div class="tagContent {if $group_key eq "ABCDEFG"}selectTag{/if}" id="tagContent{$group_key}">
+
+								
+
+								{foreach from=$city_group key=pyfirst item=city_zu}
+
+								<div class="line">
+
+									<div class="line_left">{$pyfirst}</div>
+
+									<div class="line_right">
+
+										{foreach from=$city_zu item=city_item}
+
+										<a href="{$city_item.url}" rel="nofollow" title="{$city_item.name}">{$city_item.name}</a>
+
+										{/foreach}
+
+									</div>
+
+								</div>
+
+								{/foreach}
+
+								
+
+							</div>
+
+							{/foreach}
+
+								
+
+						</div>
+
+					</div>
+
+				</div>
+
+			</div>
+
+            <!--end 城市-->
+
+                        
+
+            <!--头部广告-->
+
+            <div class="f_l" style="width:205px;height:107px;overflow: hidden;">
+
+                <adv adv_id="head_adv" />
+
+            </div>
+
+            <!--end 头部广告-->
+
+                        
+
+            <!--头部搜索-->			
+
+            <form id="header_search_box" class="f_r" action="{url r="jump"}" method="post">
+
+            	<div class="search_box f_r">					
+
+					<div class="search_input f_l">
+
+						<div class="change_type_box">
+
+							<span class="search_type_select" id="select_search_type">
+
+							{if $search_type eq 1}跟团游{/if}	
+
+							{if $search_type eq 2}自助游{/if}	
+
+							{if $search_type eq 3}自驾游{/if}	
+
+							{if $search_type eq 4}国内游{/if}	
+
+							{if $search_type eq 5}出境游{/if}	
+
+							{if $search_type eq 6}周边游{/if}	
+
+							{if $search_type eq 7}门票{/if}	
+
+							{if $search_type eq 8}团购{/if}	
+
+							{if $search_type eq 9}游记{/if}	
+
+							{if !$search_type}跟团游{/if}				
+
+							</span>
+
+							<div class="tn_search_bar" >
+
+								<div class="type_s" rel="1">跟团游</div>
+
+								<div class="type_s" rel="2">自助游</div>
+
+								<div class="type_s" rel="3">自驾游</div>
+
+								<div class="type_s" rel="4">国内游</div>
+
+								<div class="type_s" rel="5">出境游</div>
+
+								<div class="type_s" rel="6">周边游</div>
+
+								<div class="type_s" rel="7">门票</div>
+
+								<div class="type_s" rel="8">团购</div>
+
+								<div class="type_s" rel="9">游记</div>
+
+							</div>					
+
+						</div>
+
+						<input type="text" class="search_txt f_l" name="keyword" value="{if $search_type gt 0}{$keyword}{/if}" id="header_kw" holder="请输入您要搜索的关键词"  />
+
+						<input type="submit" class="search_btn f_r" id="search_btn" value="搜 索" />
+
+					</div>
+
+					<div class="blank1"></div>
+
+					<div class="keyword_box f_r">
+
+						{if app_conf("KEFU_TEL") neq ''}
+
+					<span style="font-size:16px; line-height:32px; font-family:'微软雅黑'; color:#0088d2; font-weight:bolder; text-align:right;"> 客服电话：{function name="app_conf" v="KEFU_TEL"}</span>
+
+						{/if}
+
+					</div>
+
+				</div>		
+
+				<input type="hidden" name="search_type" id="search_type" value="{if $search_type gt 0}{$search_type}{else}1{/if}" />		
+
+			</form>
+
+			<!--end 头部搜索-->
+
+            <div class="blank"></div>		
+
+		</div>
+
+		<!--end wrap-->
+
+		<!--start main_nav-->
+
+		<div class="main_bar">
+
+		    <div class="nav_wrap">
+
+		        <!--全部旅游产品目的地-->
+
+		        <div class="categorys" {if $MODULE_NAME neq 'index'}id="J_categorys"{/if}>
+
+		            <div class="allsort">
+
+		                <div class="mt">
+
+		                    <div>
+
+		                        <a href="#">全部旅游产品目的地</a>
+
+		                    </div>
+
+		                </div>
+
+		                <div id="J_ALLSORT" class="mc">
+
+		                    {insert name="drop_nav"}
+
+		                </div>
+
+		            </div>
+
+		            <!--end 全部旅游产品目的地-->
+
+		        </div>
+
+		        <ul class="main_nav" style="{if $ACTION_NAME eq 'index' and $MODULE_NAME eq 'index' }width:990px;{else}width:790px;{/if}">
+
+		            {foreach from=$nav_list item=nav_item}
+
+		            <li {if $nav_item.current  eq 1}class="current"{/if}>
+
+		            	{if $nav_item.tag gt 0}<span class="nav_tag_{$nav_item.tag}"></span>{/if}
+
+		                <a href="{$nav_item.url}" target="{if $nav_item.blank eq 1}_blank{/if}">{$nav_item.name}</a>
+
+		            </li>
+
+		            {/foreach}
+
+		        </ul>
+
+
+
+		    </div>
+
+		</div>	
+
+		<!--end main_nav-->
+
+	</div>

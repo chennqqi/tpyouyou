@@ -1,0 +1,1384 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+
+    <head>
+
+    <title>酒店预订,机票预订,酒店团购,旅游度假</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    
+
+    <script src="/web/Tpl/fanwe/js/tc_mes.0.0.1.js"></script>
+
+    <style type="text/css">
+
+body, ul, li, ol, dl, dt, dd, blockquote, input, p {
+
+	padding: 0;
+
+	margin: 0;
+
+}
+
+ul, ol, li {
+
+	list-style-type: none;
+
+}
+
+h1, h2, h3, h4, h5, h6 {
+
+	font-size: 100%;
+
+	font-weight: normal;
+
+	padding: 0;
+
+	margin: 0;
+
+}
+
+em, q, blockquote {
+
+	font-style: normal;
+
+}
+
+a {
+
+	text-decoration: none;
+
+}
+
+a img {
+
+	border-width: 0;
+
+}
+
+input, textarea {
+
+	outline: none;
+
+}
+
+body {
+
+	font-family: "微软雅黑", arial, SimSun, georgia, verdana, helvetica, sans-serif;
+
+	font-size: 14px;
+
+	padding-bottom: 30px;
+
+}
+
+.nav {
+
+	margin: 0 auto;
+
+	text-align: center;
+
+	height: 85px;
+
+	width: 1000px;
+
+}
+
+.nav .top {
+
+	width: 1000px;
+
+	height: 80px;
+
+	padding-top: 5px;
+
+}
+
+.nav .top .logo {
+
+	width: 243px;
+
+	height: 70px;
+
+	background: url(/web/Tpl/fanwe/images/logo.png) no-repeat;
+
+	float: left;
+
+}
+
+.nav .top .banner {
+
+	height: 80px;
+
+	float: right;
+
+}
+
+.main {
+
+	width: 1000px;
+
+	border: 0px solid #ccc;
+
+	margin: 0 auto;
+
+}
+
+.main .index_mid_left {
+
+	width: 270px;
+
+}
+
+
+
+
+
+#wrap {
+
+	width: 1000px;
+
+	margin: 0 auto;
+
+	border: 1px solid #ccc;
+
+	border-bottom-width: 0;
+
+}
+
+.exchange {
+
+	position: absolute;
+
+	top: 25px;
+
+	right: 414px;
+
+}
+
+.exchange a {
+
+	display: block;
+
+	background: url(/web/Tpl/fanwe/images/inputbac.png) no-repeat 0 -100px;
+
+	width: 30px;
+
+	height: 53px;
+
+}
+
+.exchange a:hover {
+
+	display: block;
+
+	background: url(/web/Tpl/fanwe/images/inputbac.png) no-repeat 0 -160px;
+
+	width: 30px;
+
+	height: 53px;
+
+}
+
+/*地区弹出层*/
+
+#cityWrap {
+
+	top: 500px;
+
+	width: 440px;
+
+	border: 1px solid #aaa;
+
+	position: absolute;
+
+	background: #fff;
+
+	text-align: center;
+
+	font-size: 12px;
+
+	display: none;
+
+	padding-bottom: 5px;
+
+	z-index: 3;
+
+}
+
+#cityWrap .title {
+
+	text-align: left;
+
+	position: relative;
+
+	border-bottom: 1px dashed #aaa;
+
+	overflow: hidden;
+
+	line-height: 30px;
+
+	padding: 0 10px;
+
+	height:30px;
+
+}
+
+#cityWrap .title span {
+
+	position: absolute;
+
+	width: 14px;
+
+	height: 14px;
+
+	background: url(/web/Tpl/fanwe/images/closecity.gif);
+
+	top: 8px;
+
+	right: 8px;
+
+	cursor: pointer;
+
+}
+
+.le-tabs {
+
+	border-bottom: 1px solid #aaa;
+
+	margin-top: 8px;
+
+	line-height: 20px;
+
+	padding-left: 8px;
+
+	overflow: hidden;
+
+	height:21px;
+
+}
+
+#cityWrap .le-tabs li {
+
+	width: auto;
+
+	float: left;
+
+	margin: 0 8px 0 0;
+
+	display: inline;
+
+	padding: 0 10px;
+
+	border:1px solid #aaa;
+
+	border-bottom:none;
+
+	cursor: pointer;
+
+	background:#eee;
+
+}
+
+#cityWrap .city-panel {
+
+	display: none;
+
+}
+
+#cityWrap .le-tabs li.active {
+
+	background: #fff;
+
+	color: #33a;
+
+}
+
+.city-cont{
+
+	clear:both;
+
+}
+
+.c-item {
+
+	display: none;
+
+	clear:both;
+
+}
+
+.c-item.hot {
+
+	display: block;
+
+}
+
+.city-cont li{
+
+	float: left;
+
+	width: 70px;
+
+	line-height: 20px;
+
+}
+
+.international .gclearfix li {
+
+	float: left;
+
+	width: 85px;
+
+	line-height: 20px;
+
+}
+
+.gclearfix li a {
+
+	display: block;
+
+	cursor: pointer;
+
+}
+
+.gclearfix li a:hover {
+
+	text-decoration: underline;
+
+}
+
+/*表单*/
+
+#banner {
+
+	padding: 20px;
+
+	overflow: hidden;
+
+	padding-bottom: 0;
+
+}
+
+#banner form {
+
+	float: left;
+
+	position: relative;
+
+}
+
+#banner .formEleWrap {
+
+	float: left;
+
+	overflow:hidden;
+
+}
+
+.countryDetail .item {
+
+	clear:both;
+
+	height: 53px;
+
+	overflow: hidden;
+
+	padding-left: 25px;
+
+	margin-bottom: 15px;
+
+}
+
+.countryDetail .item label {
+
+	line-height: 36px;
+
+	float: left;
+
+	width: 70px;
+
+	display: inline;
+
+}
+
+.countryDetail .item input {
+
+	font-size: 14px;
+
+	float: left;
+
+	width: 178px;
+
+	border: 1px solid #ccc;
+
+	line-height: 30px;
+
+	height: 30px;
+
+	padding: 2px 0 2px 5px;
+
+	background: url(/web/Tpl/fanwe/images/inputbac.png) 158px 6px no-repeat;
+
+	display: inline;
+
+}
+
+.countryDetail .time input {
+
+	width: 214px;
+
+	background: url(/web/Tpl/fanwe/images/inputbac.png) 194px -44px no-repeat;
+
+}
+
+.countryDetail .disabled {
+
+	color: #aaa;
+
+}
+
+
+
+.countryDetail .radio label, .countryDetail .radio input {
+
+	margin-right: 5px;
+
+	width: auto;
+
+	float: none;
+
+	border: none;
+
+	vertical-align: middle;
+
+}
+
+.countryDetail .radio label {
+
+	margin-right: 15px;
+
+}
+
+.countryDetail p {
+
+	text-align: right;
+
+	font-size: 12px;
+
+	padding-right: 22px;
+
+}
+
+.countryDetail .submit input {
+
+	width: 102px;
+
+	height: 31px;
+
+	padding: 0;
+
+	background: #fb0;
+
+	background: -webkit-linear-gradient(270deg, #fecb15, #feac00);
+
+	background: -moz-linear-gradient(270deg, #fecb15, #feac00);
+
+	background: -ms-linear-gradient(270deg, #fecb15, #feac00);
+
+	background: -o-linear-gradient(270deg, #fecb15, #feac00);
+
+	-webkit-border-radius: 3px;
+
+	-moz-border-radius: 3px;
+
+	border-radius: 3px;
+
+	color: #fff;
+
+	font-size: 23px;
+
+	float: left;
+
+	border: 0;
+
+}
+
+#company {
+
+	font-size: 20px;
+
+	line-height: 40px;
+
+	overflow: hidden;
+
+	background: url(/web/Tpl/fanwe/images/t01db7304fa510e106a.png) repeat-x;
+
+	overflow: hidden;
+
+	border: 1px solid #dfdfdf;
+
+	margin-top: -10px;
+
+	clear:both;
+
+}
+
+#company li {
+
+	float: left;
+
+}
+
+#company li a {
+
+	color: #000;
+
+	padding: 0 20px;
+
+	display: block;
+
+}
+
+#company li a:hover {
+
+	background: url(/web/Tpl/fanwe/images/t01f97c5fae9efc0e8b.png) repeat-x;
+
+}
+
+#company li img {
+
+	vertical-align: middle;
+
+	margin-right: 5px;
+
+	filter: grayscale(100%);
+
+	-moz-filter: grayscale(100%);
+
+	-ms-filter: grayscale(100%);
+
+	-o-filter: grayscale(100%);
+
+	filter: gray;
+
+	-webkit-filter: grayscale(100%);
+
+}
+
+#company li a:hover img {
+
+	filter: grayscale(0%);
+
+	-moz-filter: grayscale(0);
+
+	-ms-filter: grayscale(0);
+
+	-o-filter: grayscale(0);
+
+	
+
+	-webkit-filter: grayscale(0%);
+
+}
+
+#company li.active img {
+
+	filter: grayscale(0%);
+
+	-moz-filter: grayscale(0);
+
+	-ms-filter: grayscale(0);
+
+	-o-filter: grayscale(0);
+
+	-webkit-filter: grayscale(0%);
+
+        margin-left: 10px;
+
+}
+
+#company li.active {
+
+	background: url(/web/Tpl/fanwe/imagest01f97c5fae9efc0e8b.png) repeat-x;
+
+}
+
+</style>
+
+    <link rel="stylesheet" href="/web/Tpl/fanwe/css/jquery-ui.css" />
+
+    <script src="/web/Tpl/fanwe/js/jquery-1.9.1.js"></script>
+
+    <script src="/web/Tpl/fanwe/js/jquery-ui.js"></script>
+
+    </head>
+
+
+
+    <body>
+
+   
+
+    <!--内容-->
+
+    <div id="wrap">
+
+      <div id="banner"> 
+
+        <!--选择区域表单-->
+
+        <div class="chooseCountry">
+
+          <div class="countryDetail">
+
+            <form action="search.php" method="get">
+
+              <div class="formEleWrap">
+
+                <div class="item radio">
+
+                  <input type="radio" name="type" id="type1"  checked='checked' value="1" />
+
+                  <label for="type1">单程</label>
+
+                  <br />
+
+                </div>
+
+                <div class="item radio">
+
+                  <input type="radio" name="type" id="type2"    value="2" />
+
+                  <label for="type2">双程</label>
+
+                </div>
+
+              </div>
+
+              <div class="formEleWrap">
+
+                <div class="item">
+
+                  <label for="from1">出发城市</label>
+
+                  <input id="from1" name="t" class="city" type="text"  value="北京"/>
+
+                </div>
+
+                <div class="item">
+
+                  <label for="to1">到达城市</label>
+
+                  <input id="to1" class="city" name="q" type="text"  value="上海"/>
+
+                </div>
+
+              </div>
+
+              <div class="formEleWrap">
+
+                <div class="item time">
+
+                  <label for="goTime1">出发时间</label>
+
+                  <input id="goTime1" name="date" class="go" type="text" value="2015-04-22" />
+
+                </div>
+
+                <div class="item time">
+
+                  <label for="returnTime1">返回时间</label>
+
+                  <input id="returnTime1" name="rtdate" class="return" type="text"  value="" />
+
+                </div>
+
+              </div>
+
+              <div class="formEleWrap">
+
+                <div class="item submit">
+
+                	<input name="pcode" type="hidden" value="tongcheng">
+
+                  <input type="submit" value="查询" />
+
+                  <br />
+
+                </div>
+
+              </div>
+
+              <div class="exchange"> <a hidefocus="true" href="#"></a> </div>
+
+            </form>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <ul id="company">
+
+        <li class="tongcheng active"><img src="/web/Tpl/fanwe/images/lechengly.png" />悠游旅游  4008881583</li>
+
+       
+
+      </ul>
+
+      <div class="main">
+
+         <iframe src="http://www.ly.com/flight/flightunioncommonsearch.aspx?refid=71653961&t={$t}&q={$q}&type={$type}&date={$date}&Rtdate={$rtdate}&width=1000&sider=0&show=0" width="1000" frameborder="0" scrolling="no" id="tongcheng"></iframe>
+
+        <script src="http://js.40017.cn/cn/new_ui/airplane/cooperation/tc_mes.0.0.1.js"></script>
+
+        <script type="text/javascript">
+
+            var messenger = Messenger.initInParent(document.getElementById('tongcheng'));
+
+            messenger.onmessage = function (data) {
+
+                document.getElementById('tongcheng').style.height = data + "px";
+
+            };
+
+            // 备注：”tongcheng”为嵌套的iframe的id名
+
+        </script>
+
+      </div>
+
+    </div>
+
+
+
+    <!--地区选择框-->
+
+    <div id="cityWrap">
+
+      <div class="title">
+
+        <h5>热门城市(可直接输入城市或者城市拼音)</h5>
+
+        <span class="close"></span></div>
+
+      <div class="citiesbox-bd">
+
+        <div data-panel="default" class="city-panel default" style="clear: both">
+
+          <ul class="le-tabs gclearfix">
+
+            <li tag="hot" class="active cityIndex">热门</li>
+
+            <li tag="A-G" class="cityIndex">A-G</li>
+
+            <li tag="H-L" class="cityIndex">H-L</li>
+
+            <li tag="M-T" class="cityIndex">M-T</li>
+
+            <li tag="W-Z" class="cityIndex">W-Z</li>
+
+          </ul>
+
+          <div class="city-cont">
+
+            <div class="c-item hot">
+
+              <ul class="gclearfix">
+
+                <li><a hidefocus="true">北京</a></li>
+
+                <li><a hidefocus="true">上海</a></li>
+
+                <li><a hidefocus="true">广州</a></li>
+
+                <li><a hidefocus="true">深圳</a></li>
+
+                <li><a hidefocus="true">成都</a></li>
+
+                <li><a hidefocus="true">重庆</a></li>
+
+                <li><a hidefocus="true">西安</a></li>
+
+                <li><a hidefocus="true">杭州</a></li>
+
+                <li><a hidefocus="true">武汉</a></li>
+
+                <li><a hidefocus="true">南京</a></li>
+
+                <li><a hidefocus="true">沈阳</a></li>
+
+                <li><a hidefocus="true">天津</a></li>
+
+                <li><a hidefocus="true">大连</a></li>
+
+                <li><a hidefocus="true">青岛</a></li>
+
+                <li><a hidefocus="true">长沙</a></li>
+
+                <li><a hidefocus="true">昆明</a></li>
+
+                <li><a hidefocus="true">长春</a></li>
+
+                <li><a hidefocus="true">郑州</a></li>
+
+                <li><a hidefocus="true">海口</a></li>
+
+                <li><a hidefocus="true">合肥</a></li>
+
+                <li><a hidefocus="true">济南</a></li>
+
+                <li><a hidefocus="true">福州</a></li>
+
+                <li><a hidefocus="true">哈尔滨</a></li>
+
+                <li><a hidefocus="true">乌鲁木齐</a></li>
+
+              </ul>
+
+            </div>
+
+            <div class="c-item A-G">
+
+              <ul class="gclearfix">
+
+                <li><a hidefocus="true">阿克苏</a></li>
+
+                <li><a hidefocus="true">阿勒泰</a></li>
+
+                <li><a hidefocus="true">安康</a></li>
+
+                <li><a hidefocus="true">安庆</a></li>
+
+                <li><a hidefocus="true">鞍山</a></li>
+
+                <li><a hidefocus="true">百色</a></li>
+
+                <li><a hidefocus="true">保山</a></li>
+
+                <li><a hidefocus="true">包头</a></li>
+
+                <li><a hidefocus="true">北海</a></li>
+
+                <li><a hidefocus="true">北京</a></li>
+
+                <li><a hidefocus="true">长春</a></li>
+
+                <li><a hidefocus="true">常德</a></li>
+
+                <li><a hidefocus="true">昌都</a></li>
+
+                <li><a hidefocus="true">长沙</a></li>
+
+                <li><a hidefocus="true">长治</a></li>
+
+                <li><a hidefocus="true">常州</a></li>
+
+                <li><a hidefocus="true">朝阳</a></li>
+
+                <li><a hidefocus="true">成都</a></li>
+
+                <li><a hidefocus="true">赤峰</a></li>
+
+                <li><a hidefocus="true">重庆</a></li>
+
+                <li><a hidefocus="true">长白山</a></li>
+
+                <li><a hidefocus="true">大连</a></li>
+
+                <li><a hidefocus="true">大理</a></li>
+
+                <li><a hidefocus="true">丹东</a></li>
+
+                <li><a hidefocus="true">大同</a></li>
+
+                <li><a hidefocus="true">达县</a></li>
+
+                <li><a hidefocus="true">迪庆</a></li>
+
+                <li><a hidefocus="true">东营</a></li>
+
+                <li><a hidefocus="true">敦煌</a></li>
+
+                <li><a hidefocus="true">大庆</a></li>
+
+                <li><a hidefocus="true">德宏</a></li>
+
+                <li><a hidefocus="true">鄂尔多斯</a></li>
+
+                <li><a hidefocus="true">恩施</a></li>
+
+                <li><a hidefocus="true">二连浩特</a></li>
+
+                <li><a hidefocus="true">佛山</a></li>
+
+                <li><a hidefocus="true">福州</a></li>
+
+                <li><a hidefocus="true">阜阳</a></li>
+
+                <li><a hidefocus="true">赣州</a></li>
+
+                <li><a hidefocus="true">格尔木</a></li>
+
+                <li><a hidefocus="true">广元</a></li>
+
+                <li><a hidefocus="true">广州</a></li>
+
+                <li><a hidefocus="true">桂林</a></li>
+
+                <li><a hidefocus="true">贵阳</a></li>
+
+                <li><a hidefocus="true">固原</a></li>
+
+              </ul>
+
+            </div>
+
+            <div class="c-item H-L">
+
+              <ul class="gclearfix">
+
+                <li><a hidefocus="true">海口</a></li>
+
+                <li><a hidefocus="true">海拉尔</a></li>
+
+                <li><a hidefocus="true">哈密</a></li>
+
+                <li><a hidefocus="true">邯郸</a></li>
+
+                <li><a hidefocus="true">杭州</a></li>
+
+                <li><a hidefocus="true">汉中</a></li>
+
+                <li><a hidefocus="true">哈尔滨</a></li>
+
+                <li><a hidefocus="true">合肥</a></li>
+
+                <li><a hidefocus="true">黑河</a></li>
+
+                <li><a hidefocus="true">和田</a></li>
+
+                <li><a hidefocus="true">呼和浩特</a></li>
+
+                <li><a hidefocus="true">黄山</a></li>
+
+                <li><a hidefocus="true">黄岩</a></li>
+
+                <li><a hidefocus="true">怀化</a></li>
+
+                <li><a hidefocus="true">黄龙</a></li>
+
+                <li><a hidefocus="true">佳木斯</a></li>
+
+                <li><a hidefocus="true">嘉峪关</a></li>
+
+                <li><a hidefocus="true">济南</a></li>
+
+                <li><a hidefocus="true">景德镇</a></li>
+
+                <li><a hidefocus="true">井冈山</a></li>
+
+                <li><a hidefocus="true">济宁</a></li>
+
+                <li><a hidefocus="true">锦州</a></li>
+
+                <li><a hidefocus="true">九江</a></li>
+
+                <li><a hidefocus="true">九寨沟</a></li>
+
+                <li><a hidefocus="true">鸡西</a></li>
+
+                <li><a hidefocus="true">晋江</a></li>
+
+                <li><a hidefocus="true">景洪</a></li>
+
+                <li><a hidefocus="true">喀纳斯</a></li>
+
+                <li><a hidefocus="true">克拉玛依</a></li>
+
+                <li><a hidefocus="true">喀什</a></li>
+
+                <li><a hidefocus="true">库尔勒</a></li>
+
+                <li><a hidefocus="true">库车</a></li>
+
+                <li><a hidefocus="true">昆明</a></li>
+
+                <li><a hidefocus="true">康定</a></li>
+
+                <li><a hidefocus="true">兰州</a></li>
+
+                <li><a hidefocus="true">拉萨</a></li>
+
+                <li><a hidefocus="true">连云港</a></li>
+
+                <li><a hidefocus="true">丽江</a></li>
+
+                <li><a hidefocus="true">临沧</a></li>
+
+                <li><a hidefocus="true">临沂</a></li>
+
+                <li><a hidefocus="true">林芝</a></li>
+
+                <li><a hidefocus="true">黎平</a></li>
+
+                <li><a hidefocus="true">柳州</a></li>
+
+                <li><a hidefocus="true">洛阳</a></li>
+
+                <li><a hidefocus="true">庐山</a></li>
+
+                <li><a hidefocus="true">泸州</a></li>
+
+                <li><a hidefocus="true">连城</a></li>
+
+                <li><a hidefocus="true">荔波</a></li>
+
+                <li><a hidefocus="true">龙岩</a></li>
+
+              </ul>
+
+            </div>
+
+            <div class="c-item M-T">
+
+              <ul class="gclearfix">
+
+                <li><a hidefocus="true">芒市</a></li>
+
+                <li><a hidefocus="true">满洲里</a></li>
+
+                <li><a hidefocus="true">梅县</a></li>
+
+                <li><a hidefocus="true">绵阳</a></li>
+
+                <li><a hidefocus="true">牡丹江</a></li>
+
+                <li><a hidefocus="true">漠河</a></li>
+
+                <li><a hidefocus="true">南昌</a></li>
+
+                <li><a hidefocus="true">南充</a></li>
+
+                <li><a hidefocus="true">南京</a></li>
+
+                <li><a hidefocus="true">南宁</a></li>
+
+                <li><a hidefocus="true">南通</a></li>
+
+                <li><a hidefocus="true">南阳</a></li>
+
+                <li><a hidefocus="true">宁波</a></li>
+
+                <li><a hidefocus="true">那拉提</a></li>
+
+                <li><a hidefocus="true">攀枝花</a></li>
+
+                <li><a hidefocus="true">且末</a></li>
+
+                <li><a hidefocus="true">青岛</a></li>
+
+                <li><a hidefocus="true">庆阳</a></li>
+
+                <li><a hidefocus="true">秦皇岛</a></li>
+
+                <li><a hidefocus="true">齐齐哈尔</a></li>
+
+                <li><a hidefocus="true">泉州</a></li>
+
+                <li><a hidefocus="true">衢州</a></li>
+
+                <li><a hidefocus="true">三亚</a></li>
+
+                <li><a hidefocus="true">上海</a></li>
+
+                <li><a hidefocus="true">汕头</a></li>
+
+                <li><a hidefocus="true">沈阳</a></li>
+
+                <li><a hidefocus="true">深圳</a></li>
+
+                <li><a hidefocus="true">石家庄</a></li>
+
+                <li><a hidefocus="true">思茅</a></li>
+
+                <li><a hidefocus="true">唐山</a></li>
+
+                <li><a hidefocus="true">塔城</a></li>
+
+                <li><a hidefocus="true">太原</a></li>
+
+                <li><a hidefocus="true">天津</a></li>
+
+                <li><a hidefocus="true">通辽</a></li>
+
+                <li><a hidefocus="true">铜仁</a></li>
+
+                <li><a hidefocus="true">腾冲</a></li>
+
+                <li><a hidefocus="true">天水</a></li>
+
+                <li><a hidefocus="true">台州</a></li>
+
+              </ul>
+
+            </div>
+
+            <div class="c-item W-Z">
+
+              <ul class="gclearfix">
+
+                <li><a hidefocus="true">乌兰浩特</a></li>
+
+                <li><a hidefocus="true">乌鲁木齐</a></li>
+
+                <li><a hidefocus="true">万州</a></li>
+
+                <li><a hidefocus="true">潍坊</a></li>
+
+                <li><a hidefocus="true">威海</a></li>
+
+                <li><a hidefocus="true">文山</a></li>
+
+                <li><a hidefocus="true">温州</a></li>
+
+                <li><a hidefocus="true">乌海</a></li>
+
+                <li><a hidefocus="true">武汉</a></li>
+
+                <li><a hidefocus="true">芜湖</a></li>
+
+                <li><a hidefocus="true">无锡</a></li>
+
+                <li><a hidefocus="true">武夷山</a></li>
+
+                <li><a hidefocus="true">梧州</a></li>
+
+                <li><a hidefocus="true">厦门</a></li>
+
+                <li><a hidefocus="true">襄樊</a></li>
+
+                <li><a hidefocus="true">西安</a></li>
+
+                <li><a hidefocus="true">西昌</a></li>
+
+                <li><a hidefocus="true">锡林浩特</a></li>
+
+                <li><a hidefocus="true">西宁</a></li>
+
+                <li><a hidefocus="true">西双版纳</a></li>
+
+                <li><a hidefocus="true">徐州</a></li>
+
+                <li><a hidefocus="true">兴义</a></li>
+
+                <li><a hidefocus="true">香格里拉</a></li>
+
+                <li><a hidefocus="true">延安</a></li>
+
+                <li><a hidefocus="true">盐城</a></li>
+
+                <li><a hidefocus="true">延吉</a></li>
+
+                <li><a hidefocus="true">烟台</a></li>
+
+                <li><a hidefocus="true">宜宾</a></li>
+
+                <li><a hidefocus="true">宜昌</a></li>
+
+                <li><a hidefocus="true">银川</a></li>
+
+                <li><a hidefocus="true">伊宁</a></li>
+
+                <li><a hidefocus="true">义乌</a></li>
+
+                <li><a hidefocus="true">永州</a></li>
+
+                <li><a hidefocus="true">榆林</a></li>
+
+                <li><a hidefocus="true">运城</a></li>
+
+                <li><a hidefocus="true">伊春</a></li>
+
+                <li><a hidefocus="true">玉树</a></li>
+
+                <li><a hidefocus="true">张家界</a></li>
+
+                <li><a hidefocus="true">湛江</a></li>
+
+                <li><a hidefocus="true">昭通</a></li>
+
+                <li><a hidefocus="true">郑州</a></li>
+
+                <li><a hidefocus="true">舟山</a></li>
+
+                <li><a hidefocus="true">珠海</a></li>
+
+                <li><a hidefocus="true">中卫</a></li>
+
+                <li><a hidefocus="true">芷江</a></li>
+
+              </ul>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <script type="text/javascript" src="/web/Tpl/fanwe/js/base.js"></script> 
+
+    <script type="text/javascript" src="/web/Tpl/fanwe/js/a.js"></script> 
+
+    <script type="text/javascript">
+
+        window.onload=function(){
+
+        	//给公司加高亮
+
+        function highLight(ele,tagName) {
+
+            var _this = this;
+
+            this.all = ele.getElementsByTagName("li");
+
+            for (var i = 0, length = this.all.length; i < length; i++) {
+
+                this.all[i].onclick = function () {
+
+                    _this.clickFn(this);
+
+                }
+
+            }
+
+        }
+
+        highLight.prototype.clickFn = function (ele) {
+
+            for (var i = 0, length = this.all.length; i < length; i++) {
+
+                Global.removeClass(this.all[i], "active");
+
+            }
+
+            Global.addClass(ele, "active");
+
+        }
+
+        new highLight(document.getElementById("company"), "li");
+
+        //交换出发城市和到达城市
+
+        new exchange(document.getElementById("from1"), document.getElementById("to1"), Global.getByClass(document.getElementById("banner"), "exchange")[0]);
+
+        //显示特定城市
+
+        var allCityPanel = Global.getByClass(document.getElementById("cityWrap"), "city-panel");
+
+        new showSpecialCity(document.getElementById("from1"), 0,allCityPanel);
+
+        new showSpecialCity(document.getElementById("to1"), 0, allCityPanel);
+
+        //弹出城市选择框
+
+		new layer(document.getElementById("from1"), document.getElementById("cityWrap"));
+
+		new layer(document.getElementById("to1"), document.getElementById("cityWrap"));
+
+
+
+
+
+        $(function () {
+
+            $(".go").datepicker({
+
+                numberOfMonths: 2,
+
+                showButtonPanel: false,
+
+                maxDate: "+7m", minDate: "+0d",
+
+                dateFormat: "yy-mm-dd",
+
+                showMonthAfterYear: true
+
+            });
+
+            $(".return").datepicker({
+
+                numberOfMonths: 2,
+
+                showButtonPanel: false,
+
+                maxDate: "+7m", minDate: "+0d",
+
+                dateFormat: "yy-mm-dd",
+
+                showMonthAfterYear: true
+
+            });
+
+        });
+
+
+
+        //选择单双程
+
+        for (var i = 0; i < Global.getByClass(document, "countryDetail").length; i++) {
+
+            new chooseWay(Global.getByClass(document, "countryDetail")[i]);
+
+        }
+
+        var cityPannel = Global.getByClass(document.getElementById("cityWrap"), "city-panel")
+
+        for (var i = 0; i < cityPannel.length ; i++) {
+
+            new tab(cityPannel[i], "cityIndex", cityPannel[i], "c-item")
+
+        }
+
+        if(document.getElementById("type1").checked){
+
+            document.getElementById("returnTime1").disabled="disabled";
+
+        }
+
+
+
+        function setValue(ele,val){
+
+          if(ele.value==""){
+
+            ele.value=val;
+
+          }
+
+        }
+
+        document.forms[0].onsubmit=function(){
+
+          setValue(document.getElementById("from1"),"北京");
+
+          setValue(document.getElementById("to1"),"上海");
+
+        }
+
+        }
+
+    </script>
+
+ </body>
+
+</html>     
+

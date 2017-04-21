@@ -1,0 +1,145 @@
+<link rel="stylesheet" href="{$TMPL}/css/waterfall_user_home_active.css">
+<script src="{$TMPL}/js/ajax_pages.js"></script>
+<div class="waterfall_main">
+    <!--固定4列瀑布流-->
+    <div class="col_container"></div>
+    <div class="col_container"></div>
+    <div class="col_container"></div>
+    <div class="col_container last_col_container"></div>
+    <!--分页盒子-->
+    <div class="blank15"></div>
+    <div class="pager_box" style="text-align: center;"></div>
+    <div class="blank15"></div>
+    <div class="param_box" >
+        
+    </div>
+    <input type="hidden" class="default_ajax_url" value="{$default_ajax_url}"/>
+</div>
+<div id="waterfull_hide_box" class="waterfall_cache_data hide"></div>
+<script>
+    //方法区
+    $(function(){
+        //全局变量
+        var USER_ACTIVE_PAGE_LOAD_GOUNT = {$USER_ACTIVE_PAGE_LOAD_GOUNT}; //每页滚动载入的次数
+        var GUIDE_PAGE_ITEM_COUNT = '{$GUIDE_PAGE_ITEM_COUNT}';
+        var TOTAL_COUNT = '{$total_count}';
+        var LOAD_INDEX = 1; //当前的加载页数
+
+        var is_waterfull = true;
+        var is_show_page = false;
+        //分页毁掉函数
+        AJAX_PAGE_FUN = page_init_waterfull_data;
+        
+        AJAX_URL = "";
+        //无参数请求地址
+        DEFAULT_AJAX_URL = "";
+        //初始化方法
+        $(window).load(function() {
+            //初始化参数
+            DEFAULT_AJAX_URL = $(".default_ajax_url").val();
+            AJAX_URL = DEFAULT_AJAX_URL;
+            //载入瀑布流数据
+            init_waterfull_data();
+            window.onscroll=function(){
+                if(checkscrollside()){
+                    //判断是否要显示分页条
+                    LOAD_INDEX++;
+   
+                    init_waterfull_data();
+                    waterfull();  
+                }
+            };
+        });
+        
+        
+        
+        //分页调用使用
+        function page_init_waterfull_data(){
+            //重置部分数据
+            LOAD_INDEX = 1;
+            $(".col_container").html('');
+            init_waterfull_data();
+        }
+        //载入瀑布流数据
+        function init_waterfull_data(){
+            is_waterfull = false;
+            var ajax_url = AJAX_URL;
+            var query = new Object();
+            query.load_index = LOAD_INDEX;
+            $.ajax(
+                    {
+                            type: "POST",
+                            url: ajax_url,
+                            data: query,
+                            dataType:"JSON",
+                            success: function(result){
+                                TOTAL_COUNT = result.total_count;
+                                $("#waterfull_hide_box").append(result.html);
+                                waterfull();
+                                $(".pager_box").html(result.pager);
+								$(".pager_box").find(".pages").hide();
+								showpage();
+                            }
+                    }
+            );
+        }
+        
+        //瀑布流布局
+        function waterfull(){
+            var $boxs = $("#waterfull_hide_box>div");
+            $("#waterfull_hide_box").html("");
+            
+            $boxs.each(function(index,value){
+                $(".col_container").eq(getMinCol()).append(value);
+            });
+            is_waterfull = true;
+        }
+        //获取最低的列
+        function getMinCol(){
+            var hArr =[];
+            $(".col_container").each(function(index,value){
+                hArr[index] = $(value).outerHeight();
+            });
+            var minH = Math.min.apply(null,hArr);
+            var minHIndex = $.inArray(minH,hArr);
+            return minHIndex;
+        }
+        //检查是否要滚动加载
+        function checkscrollside(){
+            if(is_waterfull && LOAD_INDEX<USER_ACTIVE_PAGE_LOAD_GOUNT && (LOAD_INDEX*USER_ACTIVE_PAGE_LOAD_GOUNT<TOTAL_COUNT)){
+                if($(".col_container").find(".item").length<4){
+                    return true;
+                }else{
+                    
+                    var colH = $(".col_container").eq(getMinCol()).find(".item").last().offset().top;
+                    var itemH = $(".col_container").eq(getMinCol()).find(".item").last().outerHeight();
+                    var scrollH = colH-itemH/2;
+                    var scrollTop = $(window).scrollTop();
+
+                    return (scrollH < scrollTop) ? true : false;
+                }
+                
+            }else{
+                return false;
+            }
+            
+        }
+        //判断是否到底显示分页
+        function showpage(){
+            if(LOAD_INDEX==USER_ACTIVE_PAGE_LOAD_GOUNT){
+                is_show_page = true;
+                $(".pages").show();
+            }
+        }
+        //带参数的载入瀑布流数据
+        $.param_waterfull=function(obj){
+            var data_type = $(obj).attr("data_type");
+            var data_value = $(obj).attr("data_value");
+            LOAD_INDEX = 1;
+          
+            AJAX_URL = DEFAULT_AJAX_URL;
+            $(".col_container").html('');
+            init_waterfull_data();
+        }
+    });
+</script>

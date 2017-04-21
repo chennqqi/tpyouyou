@@ -1,0 +1,88 @@
+<script type="text/javascript">
+var selected_data = {$selected_data_str};
+$(document).ready(function(){
+	 var pk = "{$pk}";                 
+	//初始化已选项
+	$.each($($.pdialog.getCurrent()).find("input[name='"+pk+"']"), function(i, n){
+		var relid = $(n).attr("rel");	 
+		if(selected_data[pk].indexOf(relid+",")>=0||selected_data[pk].indexOf(","+relid)>=0||selected_data[pk]==relid)
+		{
+			$(n).attr("checked",true);
+		}
+		else
+		{
+			$(n).attr("checked",false);
+		}
+	});	
+});
+</script>
+<form id="pagerForm" method="post" action="#rel#">
+	<input type="hidden" name="pageNum" value="{$param.pageNum}" />
+	<input type="hidden" name="numPerPage" value="{$param.pageSize}" />
+	<input type="hidden" name="orderField" value="{$param.orderField}" />
+	<input type="hidden" name="orderDirection" value="{$param.orderDirection}" />
+</form>
+<div class="pageHeader">
+	<form rel="pagerForm" onsubmit="return dwzSearch(this, 'dialog');" action="{$formaction}" method="post">
+	<div class="searchBar">
+		
+			<div class="searchtableRow">
+				
+				<table>
+					<tr>
+						<td>
+						{lang v="KEYWORD"}：
+						</td>
+						<td>
+						<input type="text" name="name" value="{$param.name}"/>
+						{foreach from=$fields item=field}
+						{foreach from=$selected_data key=key item=item}
+						{if $key eq $field}
+						<input type="hidden" name="selected_{$field}" value="{$item}" />
+						{/if}
+						{/foreach}
+						{/foreach}
+						</td>
+						
+						
+						<td>
+						<div class="buttonActive"><div class="buttonContent"><button type="submit">{lang v="SEARCH"}</button></div></div>
+						</td>
+						<td>
+						<div class="button"><div class="buttonContent"><button type="button" multLookupSelected="id" >确认选择</button></div></div>
+						</td>						
+						<td>
+						<div class="button"><div class="buttonContent"><button type="button" onclick='clear_select("{$pk}",{$fields_str});'>清空所选</button></div></div>
+						</td>
+					</tr>
+				</table>
+				
+			</div>
+
+	</div>
+	</form>
+</div>
+
+<div class="pageContent">	
+	<div class="tag_box" layoutH="95">
+			{foreach from=$list item=item}
+			
+				<label {if $item.is_recommend eq 1}class="is_recommend"{/if}>
+				<input name="tag_name" onclick='reload_selected_data("{$pk}",{$fields_str});' rel={$item.name}  value="{tag_name:'{$item.name}'}"  type="checkbox">
+				<span>{$item.name}</span>
+				</label>
+				
+				
+				
+
+			{/foreach}
+	</div>
+	<div class="panelBar">
+		<div class="pages">
+			<span>&nbsp;&nbsp;{lang v="PAGE_TOTAL_COUNT" p="$totalCount"}</span>
+		</div>
+		
+		<div class="pagination" targetType="dialog" totalCount="{$totalCount}" numPerPage="{$param.pageSize}" pageNumShown="5" currentPage="{$param.pageNum}"></div>
+
+	</div>
+</div>

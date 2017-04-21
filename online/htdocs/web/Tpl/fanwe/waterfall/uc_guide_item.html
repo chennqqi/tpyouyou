@@ -1,0 +1,114 @@
+<?php
+$this->_var['pagecss'][] = TMPL_REAL."/css/style.css";
+$this->_var['pagecss'][] = TMPL_REAL."/css/weebox.css";
+$this->_var['pagecss'][] = TMPL_REAL."/css/uc_guide_item.css";
+
+$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.bgiframe.js";
+$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.weebox.js";
+$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.pngfix.js";
+$this->_var['pagejs'][] = TMPL_REAL."/js/lazyload.js";
+$this->_var['pagejs'][] = TMPL_REAL."/js/script.js";
+$this->_var['pagejs'][] = TMPL_REAL."/js/guide.js";
+$this->_var['cpagejs'][] = TMPL_REAL."/js/script.js";
+
+?>
+{if $check_type eq "user"}
+{include file="inc/header.html"}
+{else}
+{include file="inc/header_admin.html"}
+{/if}
+<script>
+    var AJAX_DEL_GUIDE_URL = "{$ajax_del_guide_url}";
+</script>
+<div class="blank20"></div>
+<div class="wrap">
+    <div class="guide_content">
+        <div class="left_box">
+            <div class="spot_box">
+                <div class="spot_box_title">
+                    相关景点
+                </div>
+                <div class="spot_box_content">
+                    <div class="spot_items">
+                        {foreach from=$spot_list item=item}
+                            <a href="#">{$item.area_name}</a>
+                        {/foreach}
+                    </div>
+                    <div class="blank20"></div>
+                </div>
+            </div>
+        </div>
+        <div class="right_box">
+            <div class="center-head">
+                <div class="context clearfix">
+                    <div class="author-left"><a href="javascript:;" class="about-auther"><img src="{function name="get_spec_image" v=$user.avatar w=75 h=74 g=1}" width="75" height="74"></a></div>
+                    <div class="author-right">
+                        <b>{$guide_item.title}</b>
+                        <p><em id="author_name">{$guide_item.nickname}</em>&nbsp;<span>发表于：</span>{function name="to_date" v1=$guide_item.create_time v2="Y-m-d"}&nbsp;&nbsp;|&nbsp;&nbsp;更新于：{function name="to_date" v1=$guide_item.update_time v2="Y-m-d"}&nbsp;&nbsp;|&nbsp;&nbsp;浏览数：{$guide_item.browse_count}</p>
+                        <ul class="label"> 		
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="readers">
+                    <!-- 预留功能
+                        <a rel="nofollow" href="javascript:;" class="link_like click_like " title="赞一个" data-likeid="1356436" data-likecategory="0"><span class="like"></span>&nbsp;喜欢 <em id="likeCount">0</em></a>
+                        <a rel="nofollow" href="javascript:;" class="link_share" data-share-title="游记分享 浮点数" data-share-url="" data-sharecategory="0" data-shareid="1356436" data-share-pic="http://m.tuniucdn.com/filebroker/cdn/snc/32/5d/325d3af956d93e2c8aff733e6fe62735_w800_h0_c0_t0.jpg">
+                            <span class="share"></span>&nbsp;分享 <em id="shareCount">0</em>
+                        </a>
+                    <a rel="nofollow" href="javascript:CommentPosition();"><span class="comment"></span>&nbsp;评论</a>
+                    -->
+                    {if $guide_item.is_public eq 0}
+                    <a rel="nofollow" href="{url r="guide#writethread" p="id=$guide_item.id"}"><span class="edit"></span>&nbsp;编辑</a>
+                    {/if}
+                    <a rel="nofollow" href="javascript:;" onclick="$.Del_guide({$guide_item.id},'{$check_type}')"><span class="delete"></span>&nbsp;删除</a>
+                </div>
+            </div>
+            <div class="day_box">
+                {foreach from=$route_data item=route_item}
+                <div class="day_item">
+                    <div class="room-title">
+                        <p>第<em>{$route_item.day_num}</em>天</p>
+                        <p class="date">{$route_item.route_time}</p>
+                        <p class="cities">
+                            {foreach from=$route_item.spot_list item=spot_item name=spot_item}
+                                <span></span>&nbsp;&nbsp;<a href="javascript:;" rel="nofollow">{$spot_item.area_name}</a>
+                                 {if $smarty.foreach.spot_item.last}{else}&nbsp;&nbsp;&gt;{/if}
+                            {/foreach}												
+                        </p>
+                    </div>
+
+                    <div class="day_content">
+                        <div class="route_title">{$route_item.title}</div>
+                        {foreach from=$route_item.spot_list item=spot_item }
+                        <div class="day_spot">
+                            <div class="room-city">
+                                <p class="city-name" data-destination="{$spot_item.area_name}"><span></span>&nbsp;<a href="javascript:;" rel="nofollow">{$spot_item.area_name}</a></p>
+                            </div>
+                            {if $spot_item.gallery_list}
+                            <div class="spot_gallery_list">
+                                <ul>
+                                    {foreach from=$spot_item.gallery_list item=gallery_item}
+                                    <li class="pic_item">
+                                        <a href="{$gallery_item.image}" target="_blank"><img src="{if $gallery_item.width gt 810}{function name="get_spec_image" v=$gallery_item.image w=810}{else}{$gallery_item.image}{/if}"/></a>
+                                    </li>
+                                    {/foreach}
+                                </ul>
+                            </div>
+                            {/if}
+                        </div>
+                       {/foreach}
+                        <div class="day_desc">{$route_item.content}</div>
+                    </div>
+                </div>
+                {/foreach}
+            </div>
+        </div>
+        <div class="blank20"></div>
+    </div>
+</div>
+{if $check_type eq "user"}
+{include file="inc/footer.html"}
+{else}
+</body>
+{/if}

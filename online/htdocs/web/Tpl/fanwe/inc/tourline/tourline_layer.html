@@ -1,0 +1,74 @@
+<div class="all_dest_lists {$tourline_layer.color}">
+	<div class="clearfix d_top">
+		<h3 class="f_l dest_name">{$tourline_layer.title}</h3>
+		<div class="f_l place">
+			{foreach from=$tourline_layer.top_recommend_list item=t_item key=key}
+				<a href="{$t_item.url}">{$t_item.name}</a>		
+			{/foreach}
+		</div>
+		<div class="f_r all_button" >
+			<a class="button_a" href="javascript:void(0);">全部目的地</a>
+			<div class="all_oh_des_left clearfix">
+				{foreach from=$tourline_layer.all_recommend item=a_item key=key}
+				<dl >
+					<dt><a href="{$a_item.url}">{$a_item.name}</a></dt>
+					<dd>
+						{foreach from=$a_item.all_item item=al_item}
+							<a href="{$al_item.url}">{$al_item.name}</a>
+						{/foreach}
+					</dd>
+				</dl>
+				{/foreach}
+			</div>
+		</div>
+	</div>
+	<div class="clearfix dest_main">
+		<div class="f_l dest_l">
+			<ul class="clearfix">
+				{foreach from=$tourline_layer.left_recommend_list item=l_item key=key}
+					<li><a href="{$l_item.url}">{$l_item.name}</a></li>
+				{/foreach}
+			</ul>
+			<div class="blank"></div>
+			<div class="dest_adv">
+				<adv adv_id="首页右侧广告位6" />
+			</div>
+		</div>
+		<div class="f_r dest_r">
+			<div class="big_pro clearfix">
+				<ul class="clearfix">
+					{foreach from=$tourline_layer.big_tourline_list item=b_tour key=key}
+					<li>
+						<div class="d_img">
+							<a href="{$b_tour.url}"><img src="{$b_tour.image}" ></a>
+						</div>
+							<a class="bp_name" href="{$b_tour.url}">{function name=msubstr v=$b_tour.name a=0 b=27}</a>
+                    	<div class="bp_botom clearfix">
+                    		<span class="price">￥<strong>{$b_tour.price}</strong>起</span>
+							{if $b_tour.is_review_return eq 1 && $b_tour.review_return_money gt 0}
+							<span class="dpj">
+								<span class="dpj_title">点评奖金</span>
+								<span class="dpj_val">{$b_tour.review_return_money}</span>
+							</span>
+							{/if}
+                    	</div>
+					</li>
+					{/foreach}
+				</ul>
+			</div>
+			<div class="blank13"></div>
+			<div class="sub_prds">
+				<ul class="clearfix" >
+					{foreach from=$tourline_layer.small_tourline_list item=m_tour key=key}
+					<li>
+						<em>▪</em>
+						<a href="{$tour.url}">{function name=msubstr v=$m_tour.name a=0 b=29}</a>
+						<span class="f_yh" {if ($key+1)%2 eq 0}style="padding-right:10px;"{/if}>￥{$m_tour.price} 起</span>
+					</li>
+					{/foreach}
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="blank10"></div>
+</div>

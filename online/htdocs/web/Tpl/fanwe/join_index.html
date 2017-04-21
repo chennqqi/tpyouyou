@@ -1,0 +1,236 @@
+<?php
+	$this->_var['pagecss'][] = TMPL_REAL."/css/style.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/weebox.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/join.css";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.form.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/lazyload.js";
+	
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.bgiframe.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.weebox.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.pngfix.js";
+	
+	$this->_var['pagejs'][] = TMPL_REAL."/js/script.js";
+	$this->_var['cpagejs'][] = TMPL_REAL."/js/script.js";
+	
+	
+	
+	$this->_var['pagejs'][] = TMPL_REAL."/js/join.js";
+	$this->_var['cpagejs'][] = TMPL_REAL."/js/join.js";
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="Generator" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>商家入驻 - {function name="app_conf" v="SYSTEM_NAME"}</title>
+<meta name="keywords" content="{function name="app_conf" v="SYSTEM_NAME"}" />
+<meta name="description" content="{function name="app_conf" v="SYSTEM_NAME"}" />
+<script type="text/jscript" src="{$TMPL}/js/jquery.js"></script>
+
+<script type="text/javascript">
+var APP_ROOT = '{$APP_ROOT}';
+var LOADER_IMG = '{$TMPL}/images/lazy_loading.gif';
+var ERROR_IMG = '{$TMPL}/images/image_err.gif';
+</script>
+
+
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$pagecss"}" />
+<script type="text/javascript" src="{function name="parse_script" v="$pagejs" c="$cpagejs"}"></script>
+
+<body>
+	
+<div class="wrap_join">
+<div class="page_header">
+	<a class="link" href="{$APP_ROOT}/">
+                        <?php
+                                $this->_var['logo_image'] = app_conf("SITE_SUPPLIER_LOGO");
+                        ?>
+                        {function name="load_page_png" v=$logo_image}
+                </a>
+</div>
+
+<div class="menu_box">
+	<ul>
+		<li rel="1"><span></span>账户资料</li>
+		<li rel="2"><span></span>联系人信息</li>
+		<li rel="3"><span></span>公司信息</li>
+		<li rel="4"><span></span>资质信息</li>
+	</ul>
+</div>
+
+<form name="join_form" action="{$formaction}" method="post" enctype="multipart/form-data">
+<div class="form_box">
+	<div class="form_sector" rel="1">
+		
+		<div class="sector_head">
+			<span>账户资料</span>
+		</div>
+		
+		<table>
+			<tr>
+				<td>
+					<div class="title"><span class="must">*</span>用户名：</div>
+					<div class="content"><input type="text" name="user_name" class="ui-textbox" holder="请输入您的用户名，用于登录商家平台" /></div>
+				</td>
+				
+			</tr>
+			<tr>
+				<td>
+					<div class="title"><span class="must">*</span>用户密码：</div>
+					<div class="content"><input type="password" name="user_pwd" class="ui-textbox" holder="请输入您的登录密码" /></div>
+					<div class="title"><span class="must">*</span>确认密码：</div>
+					<div class="content"><input type="password" name="cfm_user_pwd" class="ui-textbox" holder="请再次输入您的登录密码" /></div>
+				</td>
+	
+			</tr>
+		</table>
+		
+	</div><!--end sector-->
+	
+	<div class="form_sector" rel="2">
+		
+		<div class="sector_head">
+			<span>联系人信息</span>
+		</div>
+		
+		<table>
+			<tr>
+				<td>
+					<div class="title"><span class="must">*</span>联系人：</div>
+					<div class="content"><input type="text" name="contact_name" class="ui-textbox" holder="请输入联系人的姓名" /></div>
+					<div class="title">性别：</div>
+					<div class="content">
+						<select name="contact_sex">
+							<option value="-1">未知</option>
+							<option value="0">女</option>
+							<option value="1">男</option>
+						</select>
+					</div>
+				</td>
+				
+			</tr>
+			<tr>
+				<td>
+					<div class="title"><span class="must">*</span>联系电话：</div>
+					<div class="content"><input type="text" name="contact_tel" class="ui-textbox" holder="请输入您的座机号码，如 0591-88888888" /></div>
+					<div class="title">传真号：</div>
+					<div class="content"><input type="text" name="contact_fax" class="ui-textbox" holder="请输入您的传真号码，如 0591-88888888" /></div>
+					
+				</td>
+	
+			</tr>
+			<tr>
+				<td>
+					<div class="title">联系QQ：</div>
+					<div class="content"><input type="text" name="contact_qq" class="ui-textbox" holder="请输入您的QQ号码" /></div>
+
+				</td>
+	
+			</tr>
+			<tr>
+				<td>
+					
+					<div class="title"><span class="must">*</span>联系人手机号：</div>
+					<div class="content"><input type="text" name="contact_mobile" class="ui-textbox" holder="请输入您的手机号，如 13999999999" /></div>
+					<div class="title"><span class="must">*</span>Email：</div>
+					<div class="content"><input type="text" name="contact_email" class="ui-textbox" holder="请输入您邮箱号码" /></div>
+				</td>
+	
+			</tr>
+		</table>
+		
+	</div><!--end sector-->
+	
+	<div class="form_sector" rel="3">
+		
+		<div class="sector_head">
+			<span>公司信息</span>
+		</div>
+		
+		<table>
+			<tr>
+				<td>
+					<div class="title"><span class="must">*</span>公司名称：</div>
+					<div class="content"><input type="text" name="company_name" class="ui-textbox" holder="请输入您的公司全称" /></div>
+					<div class="title"><span class="must">*</span>公司地址：</div>
+					<div class="content"><input type="text" name="company_address" class="ui-textbox" holder="请输入您的详细地址" /></div>
+				</td>
+				
+			</tr>
+			<tr>
+				<td>
+					<div class="title">邮编：</div>
+					<div class="content"><input type="text" name="company_zip" class="ui-textbox" holder="请输入您所在地的邮政编码" /></div>
+			
+				</td>
+	
+			</tr>
+		</table>
+		
+	</div><!--end sector-->
+	
+	<div class="form_sector" rel="4">
+		
+		<div class="sector_head">
+			<span>资质信息</span>
+		</div>
+		
+		<table>
+			<tr>
+				<td>
+					<div class="title">公司规模：</div>
+					<div class="content">
+						<select name="company_person">
+							<option value="1">10人以下</option>
+							<option value="2">10-50人</option>
+							<option value="3">50-100人</option>
+							<option value="4">100人以上</option>
+						</select>
+					</div>
+					<div class="title">注册资金：</div>
+					<div class="content">
+						<input type="text" name="company_regist" class="ui-textbox" style="width:50px; font-size:14px;" value="10" /> 万元
+					</div>
+				</td>
+		
+				
+			</tr>
+			<tr>
+				<td>
+					<div class="title">审核材料：</div>
+					<div class="content" style="width:500px;">
+						<input type="text" style="float:left;" name="company_description_show" id="company_description_show" readonly="readonly" class="ui-textbox" />
+						<span class="upload_btn">							
+							上传审核材料
+						</span>
+						<input id="company_description" type="file" name="company_description" />
+						
+					</div>
+			
+				</td>
+	
+			</tr>
+		</table>
+		
+	</div><!--end sector-->
+	
+	
+	<div class="form_btn">
+		<input type="submit" id="submit_btn" />
+		<input type="reset" id="reset_btn" />
+		<span class="btn" id="submit_show_btn">提交申请</span>
+		<span class="reset_btn" id="reset_show_btn">重置表单</span>
+	</div>
+		
+</div>
+</form>
+
+</div><!--end wrap-->
+	
+<div class="ajax_loading">	
+	<div class="tip">正在处理中，请稍候......</div>
+	<div class="bg"></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{if $rand_tourline}
+<div class="blank"></div>
+<div class="side_rand">
+	<div class="dt">猜你喜欢</div>
+	<div class="dx">
+		{foreach from="$rand_tourline" item="rtour"}
+			<div class="thumb"><a href="{$rtour.url}" title="{$rtour.name}"><img src="{function name="get_spec_image" v=$rtour.image w=160 h=90 g=1}" /></a></div>
+			<div class="t"><a href="{$rtour.url}" title="{$rtour.name}">{function name="msubstr" value="$rtour.name" a=0 b=22}</a></div>
+			<div class="price">&yen;{$rtour.price}</a></div>
+		{/foreach}
+	</div>
+</div>
+<div class="blank15"></div>
+{/if}

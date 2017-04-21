@@ -1,0 +1,55 @@
+.gopay,.gopay:hover{ 
+  background: url("../images/user/btn_bg.gif");
+  color: #fff;
+  display: inline-block;
+  line-height: 29px;
+  text-align: center;
+  text-decoration: none;
+  width: 64px;
+}
+
+.incharge_form .incharge_title{
+  border-left: 1px solid #F1F1F1;
+  border-radius: 4px 4px 0 0;
+  border-right: 1px solid #F1F1F1;
+  border-top: 1px solid #F1F1F1;
+  color: #404040;
+  cursor: pointer;
+  display: block;
+  font-size: 12px;
+  height: 30px;
+  line-height: 30px;
+  margin: 0;
+  text-align: center;
+  text-decoration: none;
+  
+  
+    background: none repeat scroll 0 0 #FFFFFF;
+  border-top: 2px solid #008fdb;
+  color: #404040;
+  font-size: 12px;
+  font-weight: 700;
+  height: 30px;
+  line-height: 30px;
+  border-bottom:#eaeaea solid 1px;
+  
+}
+
+.incharge_main{ border:#eaeaea solid 1px; border-top:none;}
+
+.money_ipt_box{ padding:30px 10px 10px 50px; width:200px; margin:0 auto;}
+
+.money_ipt_box .minus_v,.money_ipt_box .minus_v:hover{ float:left; display:inline-block; text-decoration:none; font-family:Verdana; font-size:16px; font-weight:bold; width:30px; height:30px; line-height:30px;  border:#eaeaea solid 1px; text-align:center; }
+.money_ipt_box .add_v,.money_ipt_box .add_v:hover{ float:left;display:inline-block; text-decoration:none; font-family:Verdana; font-size:16px; font-weight:bold; width:30px; height:30px; line-height:30px;  border:#eaeaea solid 1px; text-align:center; }
+.money_ipt_box .minus_v:hover,.money_ipt_box .add_v:hover{border:#000 solid 1px;}
+.money_ipt_box .money_v{ border-left:none; border-right:none; float:left;display:inline-block; text-decoration:none; font-family:Verdana; font-size:12px;  padding:5px;  width:80px; height:20px; line-height:20px;  border:#eaeaea solid 1px; text-align:center;}
+
+.do_incharge,.do_incharge:hover{ margin:15px auto; text-decoration:none; background:url(../images/user/regist_ico.gif) no-repeat 0px -330px; display:block; width:206px; height:33px; font-size:14px; line-height: 33px; color:#fff; font-weight:bold; text-align:center; }
+
+.deposit_info{ width:350px; padding:15px; height:115px; overflow:hidden;  margin:0 auto;}
+.deposit_info span, .deposit_info input{ float:left;  display:inline-block;}
+.deposit_info span{ width:80px; }
+.deposit_info input{ width:220px; height:22px; border:#ccc solid 1px;}
+
+.more_tr{  }
+.more_td{ padding:10px; display:none;}

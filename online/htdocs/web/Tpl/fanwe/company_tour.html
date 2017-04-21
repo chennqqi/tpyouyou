@@ -1,0 +1,148 @@
+<?php
+$this->_var['pagecss'] = array();
+$this->_var['pagejs'] = array();
+$this->_var['pagecss'][] = TMPL_REAL."/css/style.css";
+$this->_var['pagecss'][] = TMPL_REAL."/css/weebox.css";
+$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.bgiframe.js";
+$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.weebox.js";
+$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.pngfix.js";
+$this->_var['pagejs'][] = TMPL_REAL."/js/lazyload.js";
+$this->_var['pagejs'][] = TMPL_REAL."/js/script.js";
+$this->_var['cpagejs'][] = TMPL_REAL."/js/script.js";
+$this->_var['pagecss'][] = TMPL_REAL."/css/company_tour.css";
+$this->_var['pagejs'][] = TMPL_REAL."/js/company_tour.js";
+?>
+{include file="inc/header.html"}
+<div class="nav_locate">	 
+	<a href="#">首页</a> &gt <a>公司旅游</a>  
+</div>
+<div class="up_main">
+	<div class="ad_pic f_l">
+		<a><img src="{$TMPL}/images/tuan/ad_pic.png"></a>
+    </div>
+	<div class="ad_info f_r">
+		<h3 class="ad_info1">专业化便捷定制</h3>
+		<div>在线轻松预订，专属客服24小时快速反应，量身打造个性化方案</div>
+		<h3 class="ad_info2">的价格跨域运营</h3>
+		<div>直属公司覆盖全国，统一采购集中操作，确保低价。</div>
+		<h3 class="ad_info3">高品质出游保障</h3>
+		<div>严格的供应商准入、监控与淘汰机制，出游中、出游后多项质量保障工具。</div>
+		<h3 class="ad_info4">延续性消费增值</h3>
+		<div>出游后点评、写游记送券，多次消费多重返利。</div>
+	</div>
+	<div class="process f_l">
+	</div>	
+</div>
+
+
+<div class="main">
+<form method="post" action="{url x="company_tour#sub"}">
+	<h2>公司出游计划表</h2>
+	<h3>出游信息</h3>
+	<div class="tra_info">
+		<dl>
+			<dt class="f_l"><span class="red">*</span>出发城市：</dt>
+			<dd class="start_city_dd"><input type="text" name="start_city">
+				<div class="show_city">
+	
+					<div id="con">
+						<ul id="tags">
+							{foreach from=$dh_city_list key=key item=city_group}
+							<li {if $key eq "ABCDEFG"}class="selectTag"{/if}><a onclick="chooseTag('tagContents{$key}',this)" href="javascript:void(0)">{$key}</a></li>
+							{/foreach}
+						</ul>
+					  	<div id="tagContents">
+							
+							{foreach from=$dh_city_list key=group_key item=city_group}
+							<div class="tagContent {if $group_key eq "ABCDEFG"}selectTag{/if}" id="tagContents{$group_key}">
+								
+								{foreach from=$city_group key=pyfirst item=city_zu}
+								<div class="line">
+									<div class="line_left">{$pyfirst}</div>
+									<div class="line_right">
+										{foreach from=$city_zu item=city_item}
+										<a href="javascript:void(0);" class="city_name" rel="nofollow" title="{$city_item.name}">{$city_item.name}</a>
+										{/foreach}
+									</div>
+								</div>
+								{/foreach}
+								
+							</div>
+							{/foreach}
+								
+						</div>
+					</div>
+				</div>
+			<span class="start_city_notice"></span></dd>
+		</dl>
+
+		<dl class="destination_dl">
+			<dt class="f_l"><span class="red">*</span>目的地：</dt>
+			<dd><textarea type="text" name="destination" value="" class="destinations">可输入多个出游目的地，以逗号隔开</textarea> <span class="destination_notice"></span></dd>
+		</dl>
+		<dl>
+			<dt class="f_l"><span class="red">*</span>预计出游时间：</dt>
+			<dd><input type="text" name="start_date"> <span class="start_date_notice"></span></dd>
+		</dl>
+		<dl>
+			<dt class="f_l"><span class="red">*</span>预计出游天数：</dt>
+			<dd><input type="text" name="date_num" class="date_num"><span class="unit">天</span> <span class="date_num_notice"></span></dd>
+		</dl>
+		<dl>
+			<dt class="f_l"><span class="red">*</span>预计出游人数：</dt>
+			<dd><input type="text" name="people_min" class="width126"><span class="unit">人</span>&nbsp;~&nbsp;<input type="text" name="people_max" class="width126"><span class="unit">人</span> <span class="people_num_notice"></span></dd>
+		</dl>
+		<dl>
+			<dt class="f_l">出游总预算：</dt>
+			<dd><input type="text" name="budget_min" class="width126"><span class="unit">元</span>&nbsp;~&nbsp;<input type="text" name="budget_max" class="width126"><span class="unit">元</span><span class="budget_notice"></span></dd>
+		</dl>
+		<dl>
+			<dt class="f_l">其他要求：</dt>
+			<dd><textarea type="text" name="other_require" class="other_require"></textarea></dd>
+		</dl>
+	</div>	
+	<h3>联系人信息</h3>
+	<div class="tra_info">
+		<dl>
+			<dt class="f_l"><span class="red">*</span>公司名称：</dt>
+			<dd><input type="text" name="company_name"><span class="company_name_notice"></span></dd>
+		</dl>
+		<dl>
+			<dt class="f_l"><span class="red">*</span>联系人：</dt>
+			<dd><input type="text" name="contacts"><span class="contacts_notice"></span></dd>
+		</dl>
+		<dl>
+			<dt class="f_l"><span class="red">*</span>手机：</dt>
+			<dd><input type="text" name="mobilephone"><span class="mobilephone_notice"></span></dd>
+		</dl>
+		<dl>
+			<dt class="f_l">固定电话：</dt>
+			<dd><input type="text" name="area_code" class="width56" value="区号">&nbsp;-&nbsp;<input type="text" name="telephone" class="width150" value="电话号码"><span class="telephone_notice"></span></dd>
+		</dl>
+		<dl>
+			<dt class="f_l"><span class="red">*</span>QQ：</dt>
+			<dd><input type="text" name="qq"><span class="qq_notice"></span></dd>
+		</dl>
+		<dl>
+			<dt class="f_l">公司地址：</dt>
+			<dd><input type="text" name="address" value="个人组织可不填写"><span class="address_notice"></span></dd>
+		</dl>
+		<dl>
+			<dt class="f_l"><span class="red">*</span>验证码：</dt>
+			<dd class="yamdd"><input type="text" name="yzm" class="yzm">{insert name="verifyimg"}<span class="yzm_notice"></span></dd>
+		</dl>
+		<dl>
+			<dt class="f_l">&nbsp;</dt>			
+			<dd><input type="button"  class="sub" value=""><span class="sub_notice"></span></dd>
+		</dl>
+		<input type="submit" style="display:none;" />
+	</div>
+</form>
+</div>
+
+
+
+
+
+
+{include file="inc/footer.html"} 

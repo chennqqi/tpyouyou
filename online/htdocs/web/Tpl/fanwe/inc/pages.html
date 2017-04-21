@@ -1,0 +1,34 @@
+{if $pager.page_count > 1}
+<div class="pages">
+	{if $pager.page > 1}
+            {if $pager.is_ajax eq 1}
+                <a href="javascript:void(0)" url="{$pager.page_prev}" class="page_prev page_btn" page="{$pager.prev_page}">{lang v="PAGE_PREV"}</a>
+            {else}
+                <a href="{$pager.page_prev}"  class="page_prev page_btn" page="{$pager.prev_page}">{lang v="PAGE_PREV"}</a>
+            {/if}
+	
+	{/if}
+	{foreach from=$pager.page_nums item=page_num}
+	{if $pager.page eq $page_num.name}
+	<span>{$page_num.name}</span>
+	{elseif $page_num.name eq '...'}
+	<i>...</i>
+	{else}
+            {if $pager.is_ajax eq 1}
+                <a class="page_btn" href="javascript:void(0);" url="{$page_num.url}" page="{$page_num.name}">{$page_num.name}</a>
+            {else}
+                <a class="page_btn" href="{$page_num.url}" page="{$page_num.name}">{$page_num.name}</a>
+            {/if}
+	
+	{/if}
+	{/foreach}
+	{if $pager.page lt $pager.page_count}
+            {if $pager.is_ajax eq 1}
+                <a class="page_btn" href="javascript:void(0);" url="{$pager.page_next}" class="page_next" page="{$pager.next_page}">{lang v="PAGE_NEXT"}</a>
+            {else}
+                <a class="page_btn" href="{$pager.page_next}" class="page_next" page="{$pager.next_page}">{lang v="PAGE_NEXT"}</a>
+            {/if}
+	
+	{/if}
+</div>
+{/if}

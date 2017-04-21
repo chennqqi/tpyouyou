@@ -1,0 +1,22 @@
+{if $tour_area_list}
+	<div class="side_areas" id="J_side_areas">
+		<?php $idx=1; ?>
+		{foreach from=$tour_area_list item="area" }
+		{if $area.places}
+		<div class="item">
+			<div class="dt">
+				<span class="f_l">{$area.name}</span>
+				<a href="javascript:void(0);" class="view_btn <?php if($idx==1){echo "v";} ?> f_r"></a>
+			</div>
+			<div class="bx clearfix" <?php if($idx>1){echo "style='display:none'";} ?>>
+				{foreach from=$area.places item="place"}
+				<a href="{$place.url}" title="{$place.name}">{$place.name}</a>
+				{/foreach}
+			</div>
+		</div>
+		<?php ++$idx; ?>
+		{/if}
+		{/foreach}
+	</div>
+	<div class="blank15"></div>
+{/if}

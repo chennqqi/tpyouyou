@@ -1,0 +1,104 @@
+<div class="order_box order_box_message clearfix">
+    <h2>联系人信息</h2>
+    <div class="routes_info ">
+        <table class="input_table" id="inputTable">
+            <tbody>
+                <tr>
+                    <td width="125" align="right">
+                        <label>预订人姓名</label>
+                        <span class="cred">*</span>
+						&nbsp;
+                    </td>
+                    <td>
+                        <input type="text" name="appoint_name" id="appointName" holder="请填写预订人姓名"  value="{$user.name}" class="txt_input" >
+                        <span class="err_structure hide" id="appointNameError">
+                        <span class="error_notice ">
+                            <i></i>
+                        </span>
+                        </span>
+                    </td>
+                </tr>
+                 <tr>
+                    <td width="125" align="right">
+                        <label>预订人手机</label>
+                        <span class="cred">*</span>
+						&nbsp;
+                    </td>
+                    <td>
+                        <input type="text" name="appoint_mobile" id="appointMobile" holder="请填写预订人手机" class="txt_input" value="{$user.mobile}">
+                        <span class="err_structure hide" id="appointMobileError">
+                            <span class="error_notice ">
+                                <i></i>
+                            </span>
+                        </span>
+                    </td>
+                </tr>
+				{if $paper_must eq 1}
+				<tr>
+                    <td width="125" align="right">
+                        <label style="padding-right:2px;">证件类型</label>
+						<span class="cred">*</span>
+						&nbsp;
+                    </td>
+                    <td>
+                        <select name="paper_type" id="paperType" class="f_l">
+                        	<option value="0" {if $user.paper_type eq 0}selected="selected"{/if}>请选择证件类型</option>
+							<option value="1" {if $user.paper_type eq 1}selected="selected"{/if} >身份证</option>
+							<option value="2">护照</option>
+							<option value="3">军官证</option>
+							<option value="4">港澳通行证</option>
+							<option value="5">台胞证</option>
+							<option value="6">其他</option>
+                        </select>
+						 <span style="color:#666;" class="f_l">
+                        	（必选）
+						</span>
+                        <span class="err_structure hide" id="paperTypeError">
+                            <span class="error_notice" id="">
+                                <i>请选择证件类型</i>
+                            </span>
+                        </span>
+                    </td>
+                </tr>
+				<tr>
+                    <td width="125" align="right">
+                        <label style="padding-right:2px;">证件号</label>
+						<span class="cred">*</span>
+						&nbsp;
+                    </td>
+                    <td>
+                        <input type="text" name="paper_sn" id="paperSn" holder="请填写证件号" class="txt_input" value="{$user.paper_sn}">
+                        <span style="color:#666;" class="f_l">
+                        	（必填）
+						</span>
+                        <span class="err_structure hide" id="paperSnError">
+                            <span class="error_notice" id="">
+                                <i>请填写证件号</i>
+                            </span>
+                        </span>
+                    </td>
+                </tr>
+				{/if}
+                <tr>
+                    <td width="125" align="right">
+                        <label style="padding-right:2px;">预订人邮箱</label>
+						<span class="cred">&nbsp;</span>
+						&nbsp;
+                    </td>
+                    <td>
+                        <input type="text" name="appoint_email" id="appointEmail" holder="请填写取票人邮箱" class="txt_input" value="{$user.email}">
+                        <span style="color:#666;" class="f_l">
+                        	（选填）
+						</span>
+                        <span class="err_structure hide" id="appointEmailError">
+                            <span class="error_notice" id="">
+                                <i></i>
+                            </span>
+                        </span>
+                    </td>
+                </tr>
+				
+             </tbody>
+        </table>
+    </div>
+</div>

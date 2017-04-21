@@ -1,0 +1,61 @@
+.order_table{width:100%;line-height:22px;}
+.order_table th{
+	background: #F4F4F4;
+	padding: 0px 15px;
+	line-height: 28px;
+	border-top: 1px solid #E6E6E6;
+	font-weight: bolder;
+	text-align:left;
+
+}
+.order_table td{
+
+}
+.order_table_1{
+	width:100%;
+	line-height:22px;
+}
+.order_table_1 td{
+	width:25%;
+}
+.order_table_2 th{
+	padding-left:0px;
+}
+.order_table_2 td{
+	border-bottom:1px dotted #E6E6E6;
+}
+.order_table_2 td strong{
+	font-weight:bolder;
+}
+.ral_imf {
+	font-size:14px;
+	font-weight: bold;
+	color: black;
+	margin-bottom: 6px;
+	color: #117FBA
+}
+.refund_box {
+	border: 1px solid #E6E6E6;
+	
+}
+.refund_box .refund_title{
+	background: #F4F4F4;
+	padding: 0px 15px;
+	line-height: 28px;
+	font-weight: bolder;
+	text-align: left;
+}
+.refund_box .refund_form{
+	padding:15px;
+}
+.f-textarea {
+	border: #CCC 1px solid;
+	padding-bottom: 3px;
+	padding-left: 4px;
+	padding-right: 4px;
+	font-size: 14px;
+	padding-top: 3px;
+}
+.refund_box .refund_txt{
+	padding-top:10px;
+}

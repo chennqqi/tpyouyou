@@ -1,0 +1,339 @@
+<?php
+	$this->_var['pagecss'][] = TMPL_REAL."/css/style.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/weebox.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/spot.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/review.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/spot_sale_list.css";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.bgiframe.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.weebox.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.pngfix.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/lazyload.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/script.js";
+	$this->_var['cpagejs'][] = TMPL_REAL."/js/script.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/spot.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/ajax_pages_more.js";
+?>
+{include file="inc/header.html"} 
+{include file="inc/ur_here.html"}
+<div class="wrap">
+	<div class="w210 f_l">
+		{include file="inc/side_supplier.html"}
+		{include file="inc/side_area.html"}
+		{include file="inc/spot/rand_spot.html"}
+		<!--广告二-->
+		{if $spot.adv2_image neq ''}
+		<a href="{$spot.adv2_url}" title="{$spot.adv2_name}"><img src="{$spot.adv2_image}" /></a>
+		{/if}
+	</div>
+	<div class="w780 f_r">
+		<div class="spot-box">
+			<div class="hd clearfix">
+				<div class="hd-l f_l">
+					<h3>{$spot.name}</h3>
+					<div class="adr">具体地址：{$spot.address}</div>
+				</div>
+				<div class="hd-r f_r">
+					<div class="price f_l">
+						门票价格<br>
+						<em>{function name="format_price_to_display" v="$spot.ticket_price"}</em>元起
+					</div>
+					<a href="#tickets" class="to_ord f_r">预&nbsp;&nbsp;订</a>
+				</div>
+			</div>
+			
+			<div class="spot-cont">
+				<div class="spot-pic">
+					{foreach from=$images key=key item=image}
+					<div class="pi li_{$key}">
+						<a href="{$image.image}">
+							{if $key eq 0}
+							<img src="{function name="get_spec_image" v=$image.image w=190 h=200 g=1}" />
+							{elseif $key eq 1 || $key eq 6}
+							<img src="{function name="get_spec_image" v=$image.image w=145 h=95 g=1}" />
+							{elseif $key eq 2 || $key eq 5}
+							<img src="{function name="get_spec_image" v=$image.image w=220 h=95 g=1}" />
+							{elseif $key eq 3 || $key eq 4}
+							<img src="{function name="get_spec_image" v=$image.image w=220 h=95 g=1}" />
+							{/if}
+						</a>
+					</div>
+					{/foreach}
+				</div>
+<!--				<div class="spot-des">
+					<div class="spot-pl">
+						<div class="t">综合满意度：</div>
+						<div class="pit">{$spot.satify}%</div>
+					</div>
+					<div class="static">
+						累计销售<span>{$spot.sale_total}</span>张门票中的<span> {$spot.review_total} </span>次点评
+					</div>
+				</div>-->
+			</div>
+			{if $spot.tickets}
+			<div class="blank15"></div>
+			<div class="spot-tickets" id="J_spotv_tickets">
+				<div class="dt" id="tickets" name="tickets">门票预订</div>
+				<div class="dx">
+					<div class="hd">
+						<div class="tit f_l">产品名称</div>
+						<div class="ori_price f_l">景点报价</div>
+						<div class="cur_price f_l">{$LANG.SITE_PRICE}</div>
+						<div class="pay f_l">支付方式</div>
+						<div class="op f_r"></div>
+					</div>
+					{foreach from="$spot.tickets" item="tk" name="tks"}
+					<div class="tk clearfix" {if $smarty.foreach.tks.first} style="border-top:0"{/if}>
+						<div class="tit f_l">
+							<label><a href="javascript:void(0);" title="&lt;{$tk.name}&gt;{$tk.name_brief}"><em>&lt;{$tk.name}&gt;</em>{$tk.name_brief}</a></label>
+							<span class="j">▼</span>
+							{if $tk.return_money > 0}
+							<span class="return_price">
+							{function name="format_price_to_display" v=$tk.return_money}</span>
+							{/if}
+						</div>
+						<div class="ori_price f_l"><em class="u">&yen;</em><em class="p">{function name="format_price_to_display" v=$tk.origin_price}</em></div>
+						<div class="cur_price f_l"><em class="u">&yen;</em><em class="p">{function name="format_price_to_display" v=$tk.current_price}</em></div>
+						<div class="pay f_l">{if $tk.sale_price eq 0}线下支付{else}网上支付{/if}</div>
+						<div class="op f_r">
+							{if $tk.id gt 0}
+								{if $tk.is_tuan eq 1}
+								<a href="{url r="tuan#detail" p="did=$tk.tuan_id"}">团购</a>
+								{else}
+								<a href="{url r="ticket_order#index" p="id=$tk.id"}">预订</a>
+								{/if}
+							{else}
+							<a href="javascript:void(0);" style="background:#ccc">预订</a>
+							{/if}
+						</div>
+						<div class="des clearfix">
+							<ul class="clearfix">
+								<li><strong>门票类型：</strong><span>电子票{if $tk.is_delivery eq 1}、实体票{/if}</span></li>
+								<li><strong>预定方式：</strong><span>{if $tk.pay_type eq 1}全款在线支付{elseif $tk.pay_type eq 2}定金支付、到景点付全款{elseif $tk.pay_type eq 3}到景点支付{/if}</span></li>
+		                        <li><strong>入园方式：</strong><span>数字码换票{if $tk.is_delivery eq 1}、实体票{/if}入园</span></li>
+		                        <li><strong>退票说明：</strong><span>{if $tk.is_appoint_time eq 0 && $tk.is_refund eq 1}可退{elseif $tk.is_appoint_time eq 1 && $tk.is_refund eq 1}可退改{else}不可退{/if}{if $tk.is_refund eq 1 && $tk.refund_desc},{$tk.refund_desc}{/if}</span></li>
+								<li><strong>门票有效期：</strong><span>
+									{if $tk.is_appoint_time eq 0}
+										{if $tk.is_end_time eq 0}
+											{if $tk.end_time gt 0}
+											{function name="to_date" v=$tk.end_time f="Y-m-d"}过期
+											{else}
+											永不过期
+											{/if}
+										{else}
+											{if $tk.end_time_day eq 0}
+											购买当天使用
+											{else}
+											{$tk.end_time_day}天后过期
+											{/if}
+										{/if}
+									{else}
+										{if $tk.is_end_time eq 0}
+											{if $tk.end_time gt 0}
+											{function name="to_date" v=$tk.end_time f="Y-m-d"}过期
+											{else}
+											永不过期
+											{/if}
+										{/if}
+									{/if}
+								</span></li>
+		                        <li><strong>其他说明：</strong><span>{$spot.brief}</span></li>
+							</ul>
+						</div>
+					</div>
+					{/foreach}
+				</div>
+			</div>
+			{/if}
+			<div class="blank15"></div>
+			<div class="spot-tab-box">
+				<div class="nav">
+					<ul id="J_navbar">
+						<li class="cur"><a href="javascript:void(0);" rel="0">景点介绍</a></li>
+						<li><a href="javascript:void(0);" rel="1">预订须知</a></li>
+						{if $spot.spot_desc_1_name neq ''}
+						<li><a href="javascript:void(0);" rel="s1">{$spot.spot_desc_1_name}</a></li>
+						{/if}
+						{if $spot.spot_desc_2_name neq ''}
+						<li><a href="javascript:void(0);" rel="s2">{$spot.spot_desc_2_name}</a></li>
+						{/if}
+						{if $spot.spot_desc_3_name neq ''}
+						<li><a href="javascript:void(0);" rel="s3">{$spot.spot_desc_3_name}</a></li>
+						{/if}
+						{if $spot.spot_desc_4_name neq ''}
+						<li><a href="javascript:void(0);" rel="s4">{$spot.spot_desc_4_name}</a></li>
+						{/if}
+						{if $sid eq 0}
+							{if $spot.show_sale_list eq 1}
+							<li><a href="javascript:void(0);" rel="3">成交记录</a></li>
+							{/if}
+							<li><a href="javascript:void(0);" rel="4">游客点评</a></li>
+							{if $spot.tour_guide_key neq ''}
+							<li><a href="javascript:void(0);" rel="999">游记</a></li>
+							{/if}
+						{/if}
+					</ul>
+				</div>
+				<!--广告一-->
+				{if $spot.adv1_image neq ''}
+				<div class="blank15"></div>
+				<a href="{$spot.adv1_url}" title="{$spot.adv1_name}"><img src="{$spot.adv1_image}" /></a>
+				{/if}
+				<!--景点介绍-->
+				<div class="box" id="J_nbox_0">
+					<div class="t">景点介绍</div>
+					<div class="bx">{$spot.description}</div>
+				</div>
+				<!--预订须知-->
+				<div class="box" id="J_nbox_1">
+					<div class="t">预订须知</div>
+					<div class="bx">{$spot.appointment_desc}</div>
+				</div>
+				{if $spot.spot_desc_1_name neq ''}
+				<!--{$spot.spot_desc_1_name}-->
+				<div class="box" id="J_nbox_s1">
+					<div class="t">{$spot.spot_desc_1_name}</div>
+					<div class="bx">{$spot.spot_desc_1}</div>
+				</div>
+				{/if}
+				
+				{if $spot.spot_desc_2_name neq ''}
+				<!--{$spot.spot_desc_2_name}-->
+				<div class="box" id="J_nbox_s2">
+					<div class="t">{$spot.spot_desc_2_name}</div>
+					<div class="bx">{$spot.spot_desc_2}</div>
+				</div>
+				{/if}
+				{if $spot.spot_desc_3_name neq ''}
+				<!--{$spot.spot_desc_3_name}-->
+				<div class="box" id="J_nbox_s3">
+					<div class="t">{$spot.spot_desc_3_name}</div>
+					<div class="bx">{$spot.spot_desc_3}</div>
+				</div>
+				{/if}
+				{if $spot.spot_desc_4_name neq ''}
+				<!--{$spot.spot_desc_4_name}-->
+				<div class="box" id="J_nbox_s4">
+					<div class="t">{$spot.spot_desc_4_name}</div>
+					<div class="bx">{$spot.spot_desc_4}</div>
+				</div>
+				{/if}
+				{if $sid eq 0}
+				{if $spot.show_sale_list eq 1}
+				<!--成交了记录-->
+				<div class="box" id="J_nbox_3">
+					<div class="t">成交记录</div>
+					<div class="bx">
+						<div id="SPOT_SALE_LIST" class="sale_list">
+						{$sale_result.html}
+						</div>
+						<div id="SPOT_SALE_PAGES" class="page" style="text-align: right;">
+						{$sale_result.pager}
+						</div>
+					</div>
+				</div>
+				<!--成交了记录-->
+				{/if}
+				
+				
+				<!--游客点评-->
+				<div class="box" id="J_nbox_4">
+					<div class="t">游客点评</div>
+					<div class="bx">{$review_html}</div>
+				</div>
+				{if $spot.tour_guide_key neq ''}
+				<!--游客点评-->
+                <div class="box" id="J_nbox_999">
+					<div class="t">游记</div>
+					<div class="bx">{insert name="view_guide" p="$spot.tour_guide_key"}</div>
+				</div>
+				{/if}
+				{/if}
+			</div>
+			
+		</div>
+	</div>
+</div>
+<div class="blank20"></div>
+<script type="text/javascript">
+	var timer;  
+    $(function(){
+		var default_tp = $("#J_navbar").parent().offset().top;
+	  
+		$("#SPOT_SALE_PAGES .pages").init_page($("#SPOT_SALE_LIST"),null);
+		$("#J_navbar a").bind("click",function(){
+		  	var rel = $(this).attr("rel");
+			var box = $("#J_nbox_"+rel);
+			var top = $(box).offset().top-30;
+			$("html,body").animate({scrollTop:top},"fast","swing");
+		});
+	
+      $(window).scroll(function(){  
+        clearInterval(timer);  
+        var topScroll=getScroll(); 
+		if(topScroll > default_tp){
+			 $("#J_navbar").addClass("fixed");
+            if ($.browser.msie && $.browser.version == "6.0") {
+               var topDiv=0;  
+               var top=topScroll+parseInt(topDiv);
+               timer=setInterval(function(){  
+                    $("#J_navbar").animate({"top":top+"px"},50);  
+               },0);
+           }
+		   
+			if(topScroll>=Math.floor($("#J_nbox_0").offset().top-30)){
+				$("#J_navbar li").removeClass("cur");
+				$("#J_navbar li a[rel='0']").parent().addClass("cur");
+			}
+			if(topScroll>=Math.floor($("#J_nbox_1").offset().top-30)){
+				 $("#J_navbar li").removeClass("cur");
+				 $("#J_navbar li a[rel='1']").parent().addClass("cur");
+			}
+			{if $spot.spot_desc_1_name neq ''}
+			if(topScroll>=Math.floor($("#J_nbox_s1").offset().top-30)){
+				 $("#J_navbar li").removeClass("cur");
+				 $("#J_navbar li a[rel='s1']").parent().addClass("cur");
+			}
+			{/if}
+			{if $spot.spot_desc_2_name neq ''}
+			if(topScroll>=Math.floor($("#J_nbox_s2").offset().top-30)){
+				 $("#J_navbar li").removeClass("cur");
+				 $("#J_navbar li a[rel='s2']").parent().addClass("cur");
+			}
+			{/if}
+			{if $spot.spot_desc_3_name neq ''}
+			if(topScroll>=Math.floor($("#J_nbox_s3").offset().top-30)){
+				 $("#J_navbar li").removeClass("cur");
+				 $("#J_navbar li a[rel='s3']").parent().addClass("cur");
+			}
+			{/if}
+			{if $spot.spot_desc_4_name neq ''}
+			if(topScroll>=Math.floor($("#J_nbox_s4").offset().top-30)){
+				 $("#J_navbar li").removeClass("cur");
+				 $("#J_navbar li a[rel='s4']").parent().addClass("cur");
+			}
+			{/if}
+			{if $spot.show_sale_list eq 1}
+			if(topScroll>=Math.floor($("#J_nbox_3").offset().top-30)){
+				 $("#J_navbar li").removeClass("cur");
+				 $("#J_navbar li a[rel='3']").parent().addClass("cur");
+			}
+			{/if}
+			if(topScroll>=Math.floor($("#J_nbox_4").offset().top-30)){
+				 $("#J_navbar li").removeClass("cur");
+				 $("#J_navbar li a[rel='4']").parent().addClass("cur");
+			}
+			if($("#J_nbox_999").length > 0 && topScroll>=Math.floor($("#J_nbox_999").offset().top-30)){
+				 $("#J_navbar li").removeClass("cur");
+				 $("#J_navbar li a[rel='999']").parent().addClass("cur");
+			}
+		}
+		else{
+			$("#J_navbar").removeClass("fixed");
+		}
+		
+      });  
+    }) ;
+    
+
+</script>
+{include file="inc/footer.html"} 

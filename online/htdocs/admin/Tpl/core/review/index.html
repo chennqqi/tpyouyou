@@ -1,0 +1,103 @@
+<form id="pagerForm" method="post" action="#rel#">
+	<input type="hidden" name="pageNum" value="{$param.pageNum}" />
+	<input type="hidden" name="numPerPage" value="{$param.pageSize}" />
+	<input type="hidden" name="orderField" value="{$param.orderField}" />
+	<input type="hidden" name="orderDirection" value="{$param.orderDirection}" />
+</form>
+<div class="pageHeader">
+	<form rel="pagerForm" onsubmit="return navTabSearch(this);" action="{$formaction}" method="post">
+	<div class="searchBar">
+		<div class="pageFormContent cf" >
+			<div class="searchtableRow">
+				
+				<table>
+					<tr>
+						<td>
+						{lang v="REVIEW_TYPE"}：
+						</td>
+						<td>
+                                                    <select name='review_type'>
+                                                        <option value=''>请选择点评分类</option>
+                                                        <option value='1' {if $param.review_type eq "1"}selected="true"{/if}>线路</option>
+                                                        <option value='2' {if $param.review_type eq "2"}selected="true"{/if}>门票</option>
+                                                    </select>
+						</td>
+                                               <td>
+						{lang v="REVIEW_IS_VERIFY"}：
+						</td>
+						<td>
+						<select name='is_verify'>
+                                                        <option value=''>请选择点评审核状态</option>
+                                                        <option value='n' {if $param.is_verify eq "n"}selected="true"{/if}>未审核</option>
+                                                        <option value='y' {if $param.is_verify eq "y"}selected="true"{/if}>已审核</option>
+                                                    </select>
+						</td>
+        
+						
+						<td>
+						<div class="buttonActive"><div class="buttonContent"><button type="submit">{lang v="SEARCH"}</button></div></div>
+						</td>
+					</tr>
+				</table>
+				
+			</div>
+
+			
+			
+			
+		</div>
+
+	</div>
+	</form>
+</div>
+<div class="pageContent">
+	<div class="panelBar">
+		<ul class="toolBar">
+			<li><a title="{lang v="CONFIRM_DELETE"}" target="selectedTodo" rel="id" postType="string" href="{$delurl}" class="delete"><span>{lang v="DEL"}</span></a></li>
+		</ul>
+	</div>
+	<table class="table" width="100%" layoutH="145">
+		<thead>
+                        <tr>
+				<th width="22"><input type="checkbox" group="id" class="checkboxCtrl"></th>
+				<th  width="50" orderField="id" {if $param.orderField eq 'id'} class="{$param.orderDirection}"{/if}>{lang v="ID"}</th>
+				<th>{lang v="REVIEW_REL_NAME"}</th>
+                                <th>{lang v="REVIEW_USER"}</th>
+                                <th>{lang v="REVIEW_CHECK"}</th>
+				<th width="100">{lang v="TAG_LANG_OPERATE"}</th>
+			</tr>
+		</thead>
+		<tbody>
+		
+			{foreach from=$list item=item}
+			<tr  rel="{$item.id}">
+				<td><input name="id" value="{$item.id}" type="checkbox"></td>
+                                <td>{$item.id}</td>
+				<td>{$item.review_rel_name}</td>
+                                <td>
+                                    {$item.nickname}
+                                </td>
+                                <td>{if $item.is_verify}已审核{else}<a title="审核点评" target="dialog" rel="dlg_page1" width="800" height="600" href="{$showurl}&id={$item.id}">点击审核</a>{/if}</td>
+				<td>
+					<a title="{lang v="CONFIRM_DELETE"}" target="ajaxTodo" href="{$delurl}&id={$item.id}" class="btnDel">{lang v="DEL"}</a>
+				</td>
+			</tr>
+			{/foreach}
+		</tbody>
+	</table>
+	<div class="panelBar">
+		<div class="pages">
+			<span>{lang v="DISPLAY_PAGE_SIZE"}</span>
+			<select class="combox" name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value})">
+				<option value="<?php echo ADMIN_PAGE_SIZE1;?>" {if $param.pageSize eq ADMIN_PAGE_SIZE1}selected="selected"{/if} ><?php echo ADMIN_PAGE_SIZE1;?></option>
+				<option value="<?php echo ADMIN_PAGE_SIZE2;?>" {if $param.pageSize eq ADMIN_PAGE_SIZE2}selected="selected"{/if}><?php echo ADMIN_PAGE_SIZE2;?></option>
+				<option value="<?php echo ADMIN_PAGE_SIZE3;?>" {if $param.pageSize eq ADMIN_PAGE_SIZE3}selected="selected"{/if}><?php echo ADMIN_PAGE_SIZE3;?></option>
+				<option value="<?php echo ADMIN_PAGE_SIZE4;?>" {if $param.pageSize eq ADMIN_PAGE_SIZE4}selected="selected"{/if}><?php echo ADMIN_PAGE_SIZE4;?></option>
+			</select>
+			<span>&nbsp;&nbsp;{lang v="PAGE_TOTAL_COUNT" p="$totalCount"}</span>
+		</div>
+		
+		<div class="pagination" targetType="navTab" totalCount="{$totalCount}" numPerPage="{$param.pageSize}" pageNumShown="10" currentPage="{$param.pageNum}"></div>
+
+	</div>
+</div>

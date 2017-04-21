@@ -1,0 +1,31 @@
+<?php
+	$this->_var['pagecss'][] = TMPL_REAL."/css/user_common.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/user_home.css";
+
+	$this->_var['pagecss'][] = TMPL_REAL."/css/style.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/weebox.css";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.bgiframe.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.weebox.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.pngfix.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/lazyload.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/script.js";
+	$this->_var['cpagejs'][] = TMPL_REAL."/js/script.js";
+?>
+
+{include file="inc/header.html"}
+<div class="wrap uc_box"> 
+{include file="inc/uc_home_header.html"}
+<div class="blank10"></div>
+{if $home_nav eq 'share'}
+    {insert name="user_home_active" uid="$uid"}
+{/if}
+{if $home_nav eq 'follow'}
+    {include file="inc/uc_home_follow.html"}
+{/if}
+{if $home_nav eq 'fans'}
+    {include file="inc/uc_home_fans.html"}
+{/if}
+</div>
+<div class="blank10"></div>
+{include file="inc/footer.html"} 
+</div>

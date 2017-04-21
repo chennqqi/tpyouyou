@@ -1,0 +1,139 @@
+<script type="text/javascript">
+function memcache()
+{
+	var cache = $("select[name='CACHE_TYPE']").val();
+	if(cache=='Memcached')
+	$("input[name='MEMCACHE_HOST']").parent().parent().show();
+	else
+	$("input[name='MEMCACHE_HOST']").parent().parent().hide();
+}
+$(document).ready(function(){
+	$("select[name='CACHE_TYPE']").bind("change",function(){
+		memcache();
+	});
+	memcache();
+});
+
+function newvalidateCallback(form, callback, confirmMsg) {
+	var $form = $(form);
+
+	if (!$form.valid()) {
+		return false;
+	}
+	
+	var _submitFn = function(){
+		$.ajax({
+			type: form.method || 'POST',
+			url:$form.attr("action"),
+			data:$form.serializeArray(),
+			dataType:"json",
+			cache: false,
+			success: callback || DWZ.ajaxDone,
+			error: DWZ.ajaxError
+		});
+	}
+	
+	if (confirmMsg) {
+		alertMsg.confirm(confirmMsg, {okCall: _submitFn});
+	} else {
+		_submitFn();
+	}
+	
+	return false;
+}
+
+function confcallback(obj)
+{
+	IS_RUN_CRON = obj.sender_open;
+	IS_WATER = obj.is_water;
+	alertMsg.correct(obj.message);
+}
+</script>
+<h2 class="contentTitle">{lang v="CONF_INDEX"}</h2>
+<form action="{$formaction}" method="post" class="pageForm required-validate" onsubmit="return newvalidateCallback(this, confcallback)">
+<div class="pageContent">
+	<div class="pageFormContent" layoutH="97">		
+
+		<div class="tabs">
+			<div class="tabsHeader">
+				<div class="tabsHeaderContent">
+					<ul>
+						{foreach from=$conf key=key item=conf_group}						
+						<li class="selected"><a href="javascript:void(0)"><span><?php echo lang("CONF_GROUP_".$this->_var['key']); ?></span></a></li>
+						{/foreach}
+					</ul>
+				</div>
+			</div>
+			<div class="tabsContent cf" >
+				{foreach from=$conf key=key item=conf_group}		
+				<div>
+					<table class="formtable">
+					{foreach from=$conf_group item=conf_item}
+					<tr  {if $conf_item.name eq 'DB_VOL_MAXSIZE'}style="display:none;"{/if}>
+					
+						<td class="item_title">{$conf_item.title}：</td>
+						<td class="item_input">
+							<!--系统配置文本输入-->
+							{if $conf_item.input_type eq 0}
+							<input type="text"  name="{$conf_item.name}" value="{$conf_item.value}"  />
+							{/if}
+							<!--系统配置文本输入-->
+							
+							<!--系统配置密码框输入-->
+							{if $conf_item.input_type eq 4}
+							<input type="password"  name="{$conf_item.name}" value="{$conf_item.value}"  />
+							{/if}
+							<!--系统配置文本输入-->
+							
+							<!--系统配置文本域输入-->
+							{if $conf_item.input_type eq 5}
+							<textarea name="{$conf_item.name}" class="textInput" style="width:680px;height:150px;">{$conf_item.value}</textarea>							
+							{/if}
+							<!--系统配置文本输入-->
+							
+							<!--系统配置下拉输入-->
+							{if $conf_item.input_type eq 1}
+								<select class="combox" name="{$conf_item.name}">
+								{foreach from=$conf_item.value_scope item=preset_value}
+									<option value="{$preset_value.val}" {if $conf_item.value eq $preset_value.val}selected="selected"{/if}>										
+										{$preset_value.show_val}
+									</option>
+								{/foreach}
+								</select>				
+							{/if}
+							<!--系统配置下拉输入-->
+							
+							
+							<!--系统配置图片输入-->
+							{if $conf_item.input_type eq 2}							
+							{function name="load_keimg" p1=$conf_item.name p2=$conf_item.value}							
+							{/if}
+							<!--系统配置图片输入-->
+							<!--系统配置编辑器输入-->
+							{if $conf_item.input_type eq 3}
+							<textarea name="{$conf_item.name}" class="ketext" style="width:680px;height:250px;visibility:hidden;">{$conf_item.value}</textarea>							
+							{/if}
+							<!--系统配置编辑器输入-->
+							
+							
+						</td>					
+					</tr>
+					{/foreach}
+					</table>
+				</div>				
+				{/foreach}
+			</div>
+			<div class="tabsFooter">
+				<div class="tabsFooterContent"></div>
+			</div>
+		</div>
+		
+	</div>
+	<div class="formBar">
+		<ul>
+			<li><div class="buttonActive"><div class="buttonContent"><button type="submit">{lang v="SAVE"}</button></div></div></li>
+			<li><div class="button"><div class="buttonContent"><button class="close" type="button">{lang v="CLOSE"}</button></div></div></li>
+		</ul>
+	</div>
+</div>
+</form>

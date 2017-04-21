@@ -1,0 +1,10 @@
+.getvoucher,.getvoucher:hover{ 
+  background: url("../images/user/btn_bg.gif");
+  color: #fff;
+  display: inline-block;
+  line-height: 29px;
+  text-align: center;
+  text-decoration: none;
+  width: 64px;
+}
+

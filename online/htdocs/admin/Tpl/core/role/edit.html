@@ -1,0 +1,59 @@
+<script type="text/javascript" src="{$TMPL}/core/include/js/role.js"></script>
+<h2 class="contentTitle">{lang v="ROLE_INDEX"}</h2>
+<form action="{$formaction}" method="post" class="pageForm required-validate" onsubmit="return validateCallback(this, navTabAjaxDone)">
+<div class="pageContent">
+<div class="pageFormContent" layoutH="97">		
+
+			<table class="formtable">					
+			<tr>					
+				<td class="item_title">{lang v="NAME"}：</td>
+				<td class="item_input">
+					<input type="text" class="required textInput valid" maxlength="20" name="name" value="{$vo.name}">
+					<label class="tip"></label>
+				</td>					
+			</tr>
+			
+			<tr>
+				<td class="item_title">{lang v="IS_EFFECT"}:</td>
+				<td class="item_input">
+					<lable>{lang v="IS_EFFECT_1"}<input type="radio" name="is_effect" value="1" {if $vo.is_effect eq 1}checked="checked" {/if}/></lable>
+					<lable>{lang v="IS_EFFECT_0"}<input type="radio" name="is_effect" value="0" {if $vo.is_effect eq 0}checked="checked" {/if} /></lable>
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="item_title">{lang v="ROLE_ACCESS"}:</td>
+				<td class="item_input">
+					<table class="access_list" cellpadding=0 cellspacing=0>
+					
+					{foreach from=$access_list key=module item=access_item}
+						<tr>
+							<td class="access_left" style="width:180px;">
+							<span title="{$module}">{$access_item.name}</span>&nbsp;&nbsp;{lang v="CHECK_ALL"}<input type="checkbox" value="{$module}" name="role_access[]" onclick="check_module(this);" {if $access_item.module_auth eq 1}checked="checked"{/if} />
+							
+							</td>
+							<td>
+		
+									{foreach from=$access_item.node item=node_item}
+									<label style="padding:5px;"><span title="{$node_item.action}">{$node_item.name}</span><input type="checkbox" value="{$module}|{$node_item.action}" name="role_access[]" class="node_item" onclick="check_is_all(this);"  {if $node_item.node_auth eq 1}checked="checked"{/if}     {if $access_item.module_auth eq 1}disabled{/if} /></label>
+									{/foreach}
+		
+							</td>
+						</tr>
+					{/foreach}
+					</table>
+				</td>
+			</tr>
+			
+			</table>
+					
+	</div>
+	<div class="formBar">
+		<ul>
+			<input type="hidden" name="id" value="{$vo.id}" />
+			<li><div class="buttonActive"><div class="buttonContent"><button type="submit">{lang v="SAVE"}</button></div></div></li>
+			<li><div class="button"><div class="buttonContent"><button class="close" type="button">{lang v="CLOSE"}</button></div></div></li>
+		</ul>
+	</div>
+</div>
+</form>

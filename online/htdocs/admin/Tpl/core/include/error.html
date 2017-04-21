@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
+<html>
+<head>
+<title>{lang v="ERROR"}</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+<style>
+body{background:#fff; font-size:12px; font-family:"verdana,Arial";  margin:0px; padding:0px; color:#404040; }
+div{margin:0 auto; padding:0;}
+h1,h2,h3,h4,h5,h6,ul,li,dl,dt,dd,form,img,p{margin:0; padding:0; border:none; list-style-type:none;}
+a{ color:#4e6a81;}
+a:hover{ color:#ff9600;}
+
+/* 提示消息 */
+.message{ width:400px; padding-top:100px; }
+.message table{ width:100%;}
+.message td{ text-align:center; padding:5px 0px;}
+.title_row{ font-size:14px; font-weight:bold; padding:10px 0px;;}
+.message_row{ font-size:12px; color:#f30; font-weight:bold; padding:10px 0px; }
+
+
+/* 数据表 */
+.dataTable{ width:100%; border-top:#ccc solid 1px; border-left:#ccc solid 1px; background:#fff;}
+.dataTable th{ height:25px; text-align:center; background:#edf3f7; line-height:25px;  border-right:#ccc solid 1px; border-bottom:#ccc solid 1px;}
+.dataTable td{ padding:5px; border-right:#ccc solid 1px; border-bottom:#ccc solid 1px;}
+.dataTable td.topTd, .dataTable td.bottomTd{background:url({$TMPL}/core/include/images/bgline.gif) repeat-x 0px 0px; padding:0px;  height:5px; font-size:0px; line-height:0px;}
+
+
+table.form{ width:100%; border-top:#ccc solid 1px; font-size:14px; border-left:#ccc solid 1px; background:#fff;}
+table.form th{ height:25px; text-align:center; background:#edf3f7; line-height:25px;  border-right:#ccc solid 1px; border-bottom:#ccc solid 1px;}
+table.form td{ padding:5px; border-right:#ccc solid 1px; border-bottom:#ccc solid 1px;}
+table.form .topTd, table.form .bottomTd{ background:url({$TMPL}/core/include/images/bgline.gif) repeat-x; height:5px; font-size:0px; padding:0px;}
+
+</style>
+</head>
+<body>
+<div class="message">
+<table cellpadding=0 cellspacing=0 class="form" >
+	<tr>
+		<td class="topTd"></td>
+	</tr>
+	<tr class="row" >
+		<th class="title_row">{$page_title}</th>
+	</tr>
+	
+
+	<tr class="row">
+		<td class="message_row">{$msg}</td>
+	</tr>
+
+	<tr class="row">
+		<td  style="font-weight:bold;">
+			{lang v="JUMP_TIPS" p="$jump"}
+		</td>
+	</tr>
+
+	<tr>
+			<td class="bottomTd"></td>
+	</tr>
+	</table>
+</div>
+</body>
+</html>

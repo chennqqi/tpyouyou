@@ -1,0 +1,47 @@
+<?php
+	$this->_var['pagecss'][] = TMPL_REAL."/css/style.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/weebox.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/transaction.css";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.bgiframe.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.weebox.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.pngfix.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/lazyload.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/script.js";
+	$this->_var['cpagejs'][] = TMPL_REAL."/js/script.js";
+
+?>
+{include file="inc/header_order.html"}
+<div class="blank15"></div>
+<div class="wrap">
+	<div class="t_nav">
+		<ul class="clearfix">
+			{if $order_data.order_confirm_type neq 2}
+			<li class="f_l">1.填写订单</li>
+			<li class="f_l">2.网上支付</li>
+			<li class="f_l cur" style="margin-right:0px;">3.预定成功</li>
+			{else}
+			<li class="f_l li_width">1.填写订单</li>
+			<li class="f_l li_width">2.商家确定</li>
+			<li class="f_l li_width">3.网上支付</li>
+			<li class="f_l cur li_width_last" style="margin-right:0px;">4.预定成功</li>
+			{/if}
+		</ul>
+	</div>
+	<div class="s_cont">
+		<ul>
+			<li class="o_success">订单付款成功</li>
+			<li class="o_sn">订单号：{$order_data.sn}</li>
+			<li>
+				<div class="blank"></div>
+				本产品与服务由 <span class="f60">{$order_data.company_name}</span> 提供，商家客服人员会尽快与你联系确认出游需求。
+			</li>
+			<li>如您需要咨询：请致电 <span class="f60">{$order_data.contact_mobile}&nbsp;&nbsp;&nbsp;&nbsp;{$order_data.contact_tel}</span>。</li>
+			<li>
+				<div class="blank"></div>
+				<div class="blank"></div>
+				<a href="{$order_data.url}" class="a_but">查看订单</a>
+			</li>
+		</ul>
+	</div>
+</div>
+{include file="inc/footer_order.html"}

@@ -1,0 +1,36 @@
+<?php
+	$this->_var['pagecss'][] = TMPL_REAL."/css/style.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/weebox.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/transaction.css";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.bgiframe.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.weebox.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.pngfix.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/lazyload.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/script.js";
+	$this->_var['cpagejs'][] = TMPL_REAL."/js/script.js";
+
+?>
+{include file="inc/header_order.html"}
+<div class="blank15"></div>
+<div class="wrap">
+	<div class="t_nav">
+		<ul class="clearfix">
+			<li class="f_l">1.提交订单</li>
+			<li class="f_l">2.网上支付</li>
+			<li class="f_l cur" style="margin-right:0px;">3.充值成功</li>
+			
+		</ul>
+	</div>
+	<div class="s_cont">
+		<ul>
+			<li class="o_success">您已成功充值 {$order_data.money}元 </li>
+			<li class="o_sn">订单号：{$order_data.order_sn}</li>
+			<li>
+				<div class="blank"></div>
+				<div class="blank"></div>
+				<a href="{url r="account#money"}" class="a_but">返回会员帐户</a>
+			</li>
+		</ul>
+	</div>
+</div>
+{include file="inc/footer_order.html"}

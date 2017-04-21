@@ -1,0 +1,46 @@
+<?php
+	$this->_var['pagecss'][] = TMPL_REAL."/css/style.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/weebox.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/news.css";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.bgiframe.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.weebox.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.pngfix.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/lazyload.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/script.js";
+	$this->_var['cpagejs'][] = TMPL_REAL."/js/script.js";
+?>
+{include file="inc/header.html"} 
+<div class="blank"></div>
+<div class="blank"></div>
+<div class="wrap">
+	<div class="news_left newsbox">
+		<div class="title">您当前的位置：<a href="{url r="index"}">首页</a> > <a href="{$cate_data.url}">{$cate_data.name}</a></div>	
+		<div class="list">
+			
+			{foreach from=$news_list item=news_item}
+			<div class="news_row">
+				<a href="{$news_item.url}" title="{$news_item.name}">{function name="msubstr" v=$news_item.name b=0 e=40} {if $news_item.is_image eq 1}[图]{/if}</a>
+				<span>{$news_item.create_time}</span>
+			</div>
+			{/foreach}
+			
+			
+		</div>	
+		<div class="pages">{$pages}</div>
+	</div>
+	<div class="news_right newsbox">
+		<div class="title hot">热门文章排行</div>	
+		<div class="list">
+			
+			{foreach from=$hot_news item=news_item name=hot_loop}
+			<div class="news_row">
+				<i {if $smarty.foreach.hot_loop.iteration eq 1}style="color:#ff714b;"{elseif $smarty.foreach.hot_loop.iteration eq 2}style="color:#ff944f;"{elseif $smarty.foreach.hot_loop.iteration eq 3}style="color:#fdb94c;"{else}style="color:#acacac;"{/if}>{$smarty.foreach.hot_loop.iteration}</i>	<a href="{$news_item.url}" title="{$news_item.name}">{function name="msubstr" v=$news_item.name b=0 e=20} {if $news_item.is_image eq 1}[图]{/if}</a>
+			</div>
+			{/foreach}
+			
+		</div>
+	</div>	
+</div>
+<div class="blank"></div>
+<div class="blank"></div>
+{include file="inc/footer.html"} 

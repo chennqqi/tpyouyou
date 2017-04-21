@@ -1,0 +1,261 @@
+/* 当前位置区 */
+.nav_locate{
+    width:1000px;
+    height:40px;
+    line-height:40px;
+    margin:0 auto;
+}
+.nav_locate a{
+    font-size:12px;
+    padding:0 3px;
+}
+/* 游记信息区 */
+.notes_head{
+    height:213px;
+    background:url(../images/guide/bg_notes_info.png);
+}
+.notes_head_inner{
+    height:193px;
+    width:1000px;
+    padding-top:20px;
+    font-family:Microsoft YaHei;
+    position:relative;
+}
+.notes_head_inner h2{
+    font-size:20px;
+
+    float:left;
+    color:#393939;
+}
+.notes_head_inner a.public{
+    float:right;
+    display:block;
+}
+.notes_info{
+    width:1000px;
+    height:100px;
+    float:left;
+    padding-left:72px;
+    position:relative;
+}
+.portrait{
+    display:block;
+    width:52px;
+    height:52px;
+    padding:2px;
+    border:1px solid #e7e7e7;
+    position:absolute;
+    left:0px;
+}
+.member_name{
+    display:block;
+    line-height:22px;
+}
+.member_name a{
+    color:#0068c9;
+    margin-right:8px;
+}
+.start_time,.from_to,.sustain_time,.average_cost{
+    line-height:32px;
+    margin-right:30px;
+    background:url(../images/guide/bg_notes_info2.png) no-repeat left top;
+    padding-left:20px;
+}
+.start_time{
+    background-position:0px -51px;
+    padding-left:17px;
+}
+.from_to{
+    background-position:0px -202px;
+}
+.sustain_time{
+    background-position:0px -102px;
+}
+.average_cost{
+    background-position:2px -152px;
+}
+.reply_view_num{
+    color:#9d9d9d;
+    line-height:32px;
+    display:block;
+}
+.notes_head_inner .seal{
+    height:106px;
+
+    margin-top:23px;
+
+    position:absolute;
+    right:0px;
+    top:60px;
+}
+.notes_head_inner .seal img{
+    width:106px;
+    height:106px;
+    margin-left:25px;
+}
+/* 主内容区 */
+.main{
+    width:1000px;
+    margin:20px auto;
+    overflow:hidden;
+}
+.notes_main{
+    width:778px;
+    overflow:hidden;
+    float:left;
+
+
+}
+.notes_main .nav_ul{
+    border-bottom: 3px solid #008ad3;
+    border-left:none;
+    width:777px;
+    font-size: 14px;
+    overflow:hidden;
+}
+.notes_main .nav .fixed {
+position: fixed;
+_position: absolute;
+top: 0;
+background: #fff;
+z-index:999
+}
+.notes_main .nav_ul li{
+    height: 37px;
+    line-height: 36px;
+    float:left;
+    text-align:center;
+}
+.notes_main .nav_ul li.current{
+    background: #0093E1;
+    color: #fff;
+    font-weight: bolder;
+}
+.notes_main .nav_ul li a{
+    float: left;
+    font-size: 14px;
+    padding: 0 24px;
+    height: 36px;
+    display: block;
+    text-decoration: none;
+}
+.notes_main .nav_ul li.current a{
+    color:#fff;
+
+}
+.notes_content{
+    width:776px;
+    line-height:32px;
+    font-size:16px;
+    font-family:Microsoft YaHei;
+    border-bottom: 1px solid #ddd;
+}
+.room-title p span,.room-city .city-name span{
+background: url("../images/icon_single_note_24.png") no-repeat;
+_background: url("../images/icon_single_note.png") no-repeat;
+}
+.day_box{
+    font-family: Microsoft YaHei;
+    line-height: 1.5;
+}
+.room-title {
+padding-top: 30px;
+padding-bottom: 20px;
+border-bottom: 1px solid #e3e3e3;
+}
+.room-title p {
+text-align: center;
+font-size: 16px;
+color: #000;
+}
+.room-title p em {
+font-size: 30px;
+}
+.room-title p.date, .room-title p.cities {
+font-size: 14px;
+color: #999;
+}
+.room-title p.cities {
+line-height: 36px;
+}
+.room-title p span {
+display: inline-block;
+width: 22px;
+height: 22px;
+background-position: -521px -83px;
+vertical-align: middle;
+}
+.day_content .route_title{
+    padding: 26px 20px 0;
+line-height: 24px;
+overflow: hidden;
+width: 776px;
+font-size: 14px;
+color: #404040;
+}
+.room-city .city-name {
+text-align: center;
+font-size: 16px;
+color: #333;
+font-weight: bold;
+margin: 18px 0;
+}
+.room-city .city-name span {
+    display: inline-block;
+    background-position: -456px -104px;
+    width: 25px;
+    height: 28px;
+    vertical-align: bottom;
+}
+.spot_gallery_list .pic_item{
+    width:776px;
+    margin-bottom:10px;
+    text-align: left;
+}
+.spot_gallery_list .pic_item img{
+    max-width: 776px;
+    _max-width:776px;
+}
+.day_content .day_desc{
+    padding: 15px 20px 10px;
+    line-height: 24px;
+    overflow: hidden;
+    width: 730px;
+    font-size: 14px;
+    color: #404040;
+}
+
+/* 右侧区 */
+.notes_banner{
+    width:208px;
+    float:right;
+
+}
+.notes_praise_num,.notes_comment_num{
+    width:208px;
+    height:37px;
+
+    margin-bottom:10px;
+    background:#f7f7f7;
+}
+.notes_praise_num img,.notes_comment_num img{
+    width:79px;
+    height:37px;
+    vertical-align:middle;
+}
+.notes_praise_num span,.notes_comment_num span{
+    margin-left:5px;
+    vertical-align:middle;
+}
+.adver1,.adver2{
+    width:208px;
+    height:130px;
+    margin-bottom:10px;
+}
+
+
+
+
+
+
+

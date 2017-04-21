@@ -1,0 +1,118 @@
+<h2 class="contentTitle">{lang v="EDIT"}资讯</h2>
+<form action="{$formaction}" method="post" class="pageForm required-validate" onsubmit="return validateCallback(this, navTabAjaxDone)">
+<div class="pageContent">
+<div class="pageFormContent" layoutH="97">		
+
+			<table class="formtable">			
+			
+			
+			
+			<tr>
+				<td class="item_title">{lang v="NAME"}:</td>
+				<td class="item_input">
+					<input type="text" class="required textInput valid"   maxlength="100" name="name" value="{$vo.name}">
+					<label class="tip"></label>
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="item_title">出处:</td>
+				<td class="item_input">
+					<input type="text" class="textInput valid"   maxlength="100" name="source" value="{$vo.source}">
+					<label class="tip"></label>
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="item_title">作者:</td>
+				<td class="item_input">
+					<input type="text" class="textInput valid"   maxlength="100" name="author" value="{$vo.author}">
+					<label class="tip"></label>
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="item_title">简介:</td>
+				<td class="item_input">
+					<textarea class="textInput" name="brief" cols=80 rows=5>{$vo.brief}</textarea>
+				</td>
+			</tr>	
+			
+			<tr>
+				<td class="item_title">封面图:</td>
+				<td class="item_input">
+					{function name="load_keimg" p1="image" p2=$vo.image}
+				</td>
+			</tr>	
+			
+			<tr>
+				<td class="item_title">分类:</td>
+				<td class="item_input">
+					<select name="cate_id" class="combox">
+						<option value="0">未选择</option>
+						{foreach from=$cate_list item=cate_item}
+						<option value="{$cate_item.id}" {if $cate_item.id eq $vo.cate_id}selected="selected"{/if}>{$cate_item.name}</option>
+						{/foreach}
+					</select>
+				</td>
+			</tr>	
+			
+			<tr>
+				<td class="item_title">焦点资讯:</td>
+				<td class="item_input">
+					<select name="is_hot" class="combox">
+						<option value="0" {if $vo.is_hot eq 0}selected="selected"{/if}>否</option>
+						<option value="1" {if $vo.is_hot eq 1}selected="selected"{/if}>是</option>
+					</select>
+				</td>
+			</tr>	
+			
+			<tr>
+				<td class="item_title">资讯首页轮播:</td>
+				<td class="item_input">
+					<select name="is_loop" class="combox">
+						<option value="0" {if $vo.is_loop eq 0}selected="selected"{/if}>否</option>
+						<option value="1" {if $vo.is_loop eq 1}selected="selected"{/if}>是</option>
+					</select>
+				</td>
+			</tr>	
+			
+			<tr>
+				<td class="item_title">推荐到首页:</td>
+				<td class="item_input">
+					<select name="is_recommend" class="combox">
+						<option value="0" {if $vo.is_recommend eq 0}selected="selected"{/if}>否</option>
+						<option value="1" {if $vo.is_recommend eq 1}selected="selected"{/if}>是</option>
+					</select>
+				</td>
+			</tr>	
+			
+			<tr>
+				<td class="item_title">资讯内容:</td>
+				<td class="item_input">
+					<textarea name="content" class="ketext required" style="width:680px;height:250px;visibility:hidden;">{$vo.content}</textarea>							
+							
+				</td>
+			</tr>	
+			
+			
+			
+			<tr>
+				<td class="item_title">排序:</td>
+				<td class="item_input">
+					<input type="text" class="required textInput digits"   maxlength="20" name="sort" value="{$vo.sort}">
+				</td>
+			</tr>	
+						
+			</table>
+					
+	</div>
+	<div class="formBar">
+		<ul>
+			<input type="hidden" name="id" value="{$vo.id}" />
+			<li><div class="buttonActive"><div class="buttonContent"><button type="submit">{lang v="SAVE"}</button></div></div></li>
+			<li><div class="button"><div class="buttonContent"><button class="close" type="button">{lang v="CLOSE"}</button></div></div></li>
+		</ul>
+	</div>
+</div>
+</form>

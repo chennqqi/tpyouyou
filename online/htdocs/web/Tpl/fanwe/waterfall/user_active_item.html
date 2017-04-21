@@ -1,0 +1,27 @@
+{foreach from=$list item=row}
+<div class="item">
+    {if $row.image}
+        <div class="notes_title">
+            <a href="{$row.url}" class="title_pic"><img src="{function name="get_spec_image" v=$row.image w=166 }" />	</a>
+        </div>
+    {/if}
+    <!--点赞，回复数量，浏览数量 功能占未开放
+    <div class="notes_count">
+        
+        <span class="praise">{$row.recommend_count}</span>
+        <span class="reply_count">{$row.comment_count}</span>
+        <span class="view_count">{$row.browse_count}</span>
+       
+    </div>
+     -->
+    <div class="notes_info">
+        <a href="{url r="user#home" p="uid=$row.user_id"}"><img class="GUID" uid="{$row.user_id}" src="{$row.avatar}"></a>
+        <span><a href="{url r="user#home" p="uid=$row.user_id"}">{$row.nickname}</a></span>
+        <div><a href="{$row.url}" class="notes_info_content">{function name="msubstr" v=$row.content b=0 e=35}</a></div>
+    </div>
+</div>
+{/foreach}
+
+
+
+

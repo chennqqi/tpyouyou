@@ -1,0 +1,36 @@
+{foreach from=$route_data item=route_item}
+<div class="day_item">
+    <div class="room-title">
+        <p>第<em>{$route_item.day_num}</em>天</p>
+        <p class="date">{$route_item.route_time}</p>
+        <p class="cities">
+            {foreach from=$route_item.spot_list item=spot_item name=spot_item}
+            <span></span>&nbsp;&nbsp;<a href="javascript:;" rel="nofollow">{$spot_item.area_name}</a>
+            {if $smarty.foreach.spot_item.last}{else}&nbsp;&nbsp;&gt;{/if}
+            {/foreach}												
+        </p>
+    </div>
+
+    <div class="day_content">
+        <div class="route_title">{$route_item.title}</div>
+        {foreach from=$route_item.spot_list item=spot_item }
+        <div class="day_spot">
+            <div class="room-city">
+                <p class="city-name" data-destination="{$spot_item.area_name}"><span></span>&nbsp;<a href="javascript:;" rel="nofollow">{$spot_item.area_name}</a></p>
+            </div>
+            <div class="spot_gallery_list">
+                <ul>
+                    {foreach from=$spot_item.gallery_list item=gallery_item}
+                    <li class="pic_item">
+                        <a href=""><img src="{$gallery_item.image}"/></a>
+                    </li>
+                    {/foreach}
+                </ul>
+            </div>
+        </div>
+        {/foreach}
+        <div class="day_desc"></div>
+    </div>
+</div>
+{/foreach}
+</div>

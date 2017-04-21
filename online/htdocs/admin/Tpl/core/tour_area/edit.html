@@ -1,0 +1,119 @@
+<h2 class="contentTitle">{lang v="EDIT"}{lang v="TOUR_AREA"}</h2>
+
+<form action="{$formaction}" method="post" class="pageForm required-validate" onsubmit="return validateCallback(this, navTabAjaxDone)">
+
+<div class="pageContent">
+
+<div class="pageFormContent" layoutH="97">		
+
+
+
+			<table class="formtable">				
+
+			<tr>
+
+				<td class="item_title">{lang v="NAME"}:</td>
+
+				<td class="item_input">
+
+					<input type="text" class="required textInput valid"   maxlength="20" name="name" value="{$vo.name}">
+
+					<label class="tip"></label>
+
+				</td>
+
+			</tr>
+
+
+
+			<tr>
+
+				<td class="item_title">{lang v="PY"}:</td>
+
+				<td class="item_input"><input type="text" class="required textInput lettersonly" name="py" value="{$vo.py}" /></td>
+
+			</tr>	
+
+			
+
+			<tr>
+
+				<td class="item_title">{lang v="PROVINCE"}:</td>
+
+				<td class="item_input">
+
+					<input name="tour_province.py"  lookupSend="tour_province_data" type="hidden" value="{$vo.province_match}"/>
+
+					<input size="80" name="tour_province.name" lookupSend="tour_province_data"  type="text"  readonly="true"  value="{$vo.province_match_row}" />
+
+					<a class="btnLook" href="{$searchprovinceurl}" lookupGroupSelect="tour_province">{lang v="SELECT_TOUR_PROVINCE"}</a>
+
+				</td>
+
+			</tr>	
+
+			
+
+			<tr>
+
+				<td class="item_title">{lang v="TYPE"}:</td>
+
+				<td class="item_input">
+
+					<select name="type" class="combox">
+
+						<option value="1" {if $vo.type eq 1}selected="selected"{/if}>{lang v="TOUR_AREA_TYPE_1"}</option>
+
+						<option value="2" {if $vo.type eq 2}selected="selected"{/if}>{lang v="TOUR_AREA_TYPE_2"}</option>
+						<option value="3" {if $vo.type eq 3}selected="selected"{/if}>{lang v="TOUR_AREA_TYPE_3"}</option>
+
+						<option value="4" {if $vo.type eq 4}selected="selected"{/if}>{lang v="TOUR_AREA_TYPE_4"}</option>
+						<option value="5" {if $vo.type eq 5}selected="selected"{/if}>{lang v="TOUR_AREA_TYPE_5"}</option>
+
+						
+
+					</select>
+
+				</td>
+
+			</tr>	
+
+			
+
+			<tr>
+
+				<td class="item_title">{lang v="IS_RECOMMEND"}:</td>
+
+				<td class="item_input">
+
+					<lable>{lang v="YES"}<input type="radio" name="is_recommend" value="1"   {if $vo.is_recommend eq 1}checked="checked"{/if} /></lable>
+
+					<lable>{lang v="NO"}<input type="radio" name="is_recommend" value="0"   {if $vo.is_recommend eq 0}checked="checked"{/if} /></lable>
+
+				</td>
+
+			</tr>
+
+			</table>
+
+					
+
+	</div>
+
+	<div class="formBar">
+
+		<ul>
+
+		<input type="hidden" name="id" value="{$vo.id}" />
+
+ 			<li><div class="buttonActive"><div class="buttonContent"><button type="submit">{lang v="SAVE"}</button></div></div></li>
+
+			<li><div class="button"><div class="buttonContent"><button class="close" type="button">{lang v="CLOSE"}</button></div></div></li>
+
+		</ul>
+
+	</div>
+
+</div>
+
+</form>

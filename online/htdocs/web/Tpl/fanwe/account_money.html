@@ -1,0 +1,96 @@
+<?php
+
+	$this->_var['pagecss'][] = TMPL_REAL."/css/style.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/weebox.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/account_incharge.css";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.bgiframe.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.weebox.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.pngfix.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/lazyload.js";
+
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.ui.core.js";	
+    $this->_var['pagejs'][] = TMPL_REAL."/js/jquery.ui.datepicker.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/load_datepicker.js";
+	$this->_var['cpagejs'][] = TMPL_REAL."/js/load_datepicker.js";
+
+	$this->_var['pagejs'][] = TMPL_REAL."/js/script.js";
+	$this->_var['cpagejs'][] = TMPL_REAL."/js/script.js";
+
+	
+
+	$this->_var['pagecss'][] = TMPL_REAL."/css/user_common.css";	
+	$this->_var['pagecss'][] = TMPL_REAL."/css/jquery-ui.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/datepicker.css";
+
+	$this->_var['pagejs'][] = TMPL_REAL."/js/account_incharge.js";
+	$this->_var['cpagejs'][] = TMPL_REAL."/js/account_incharge.js";
+	
+?>
+{include file="inc/header.html"} 
+<div class="wrap uc_box">
+	<div class="uc_menu">
+		{include file="inc/uc_menu.html"}
+	</div>
+	<div class="uc_main">
+		{insert name="load_uc_common_header"}
+		
+		<ul class="uc_tabs clearfix">
+			<li class="current"><a href="javascript:void(0);">充值记录</a></li>
+			{if app_conf("USER_ALLOW_DEPOSIT") eq 1}
+			<li><a href="{url r="account#deposit"}">提现记录</a></li>
+			{/if}
+			<li><a href="{url r="account#money_log"}">现金账单</a></li>
+		</ul>
+		<div class="blank15"></div>
+		
+		<div class="search_row">
+		<form action="{url r="account#money"}" method="get" class="getform">
+		<input type="text" name="begin_time" value="{$begin_time}" class="uc_ipt uc_datepicker" /> <label>-</label> <input type="text" value="{$end_time}" name="end_time" class="uc_ipt uc_datepicker" /> <input type="submit" value="搜索" />
+		</form>
+		</div>   
+		<div class="blank15"></div>
+		{if $list}
+		<table class="uc_table">
+		<tr>
+			<th>充值单号</th>			
+			<th width="100">充值金额</th>
+			<th width="100">到账金额</th>
+			<th width="150">到账时间</th>
+			<th width="150">支付状态</th>
+		</tr>
+		{foreach from=$list item=row}
+		<tr>
+			<td>{$row.order_sn}</td>			
+			<td style="text-align:center;">&yen;&nbsp;{$row.money}</td>
+			<td style="text-align:center;">&yen;&nbsp;{$row.pay_money}</td>
+			<td>{$row.pay_time}</td>
+			<td style="text-align:center;">{if $row.is_paid eq 1}<span>已支付</span>{else}<a href="{url r="account#do_incharge" p="order_sn=$row.order_sn"}" class="gopay">去付款</a>{/if}</td>
+		</tr>
+		{/foreach}
+		</table>
+		<div class="blank15"></div>
+		<div class="uc_pager">{$pages}</div>
+		{else}
+		<div class="empty_box">
+			没有相关的数据
+		</div>
+		{/if}
+		<div class="blank15"></div>
+		<div class="incharge_form">
+				<form action="{url r="account#do_incharge"}" method="get"  id="incharge_form" >
+				<div class="incharge_title">请输入要充值的金额</div>
+				<div class="incharge_main">
+					<div class="money_ipt_box">
+					<a href="#" class="minus_v">-</a><input type="text" class="money_v" name="money" value="100" maxlength="8" /><a href="#" class="add_v">+</a>
+					</div>
+					<div class="blank"></div>
+					<input type="submit" style="display:none;" />
+					<a href="#" class="do_incharge">立即充值</a>
+					<div class="blank"></div>
+				</div>
+				</form>
+		</div>
+	</div>
+</div>
+ <div class="blank15"></div>
+{include file="inc/footer.html"} 

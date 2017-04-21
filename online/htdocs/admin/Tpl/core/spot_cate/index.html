@@ -1,0 +1,129 @@
+<script type="text/javascript">
+var UPDATE_SUCCESS = '{lang v="UPDATE_SUCCESS"}';
+var UPDATE_FAILED = '{lang v="UPDATE_FAILED"}';
+function setsort(dom,id)
+{
+	var html = "<input type='text' value='"+$.trim($(dom).html())+"' class='textInput' style='width:40px;' onblur='blursort(this,"+id+");' />";	
+	var parent = $(dom).parent();
+	$(parent).html(html);
+	var ipt = $(parent).find("input");	
+	$(ipt).focus();
+	$(ipt).select();		
+}
+function blursort(dom,id)
+{
+	var newsort = $.trim($(dom).val());
+	$.ajax({
+		type:  'POST',
+		url:"{$setsorturl}&id="+id+"&sort="+newsort,
+		dataType:"json",
+		cache: false,
+		success: function(obj){
+			var html = "<a href='javascript:void(0);' onclick='setsort(this,"+id+");'>"+obj.message+"</a>";	
+			$(dom).parent().html(html);	
+			if(obj.statusCode==200)
+			{
+				alertMsg.correct(UPDATE_SUCCESS);
+			}
+			else
+			{
+				alertMsg.correct(UPDATE_FAILED);
+			}
+		}
+	});
+	
+}
+</script>
+<form id="pagerForm" method="post" action="#rel#">
+	<input type="hidden" name="pageNum" value="{$param.pageNum}" />
+	<input type="hidden" name="numPerPage" value="{$param.pageSize}" />
+	<input type="hidden" name="orderField" value="{$param.orderField}" />
+	<input type="hidden" name="orderDirection" value="{$param.orderDirection}" />
+</form>
+<div class="pageHeader">
+	<form rel="pagerForm" onsubmit="return navTabSearch(this);" action="{$formaction}" method="post">
+	<div class="searchBar">
+		<div class="pageFormContent cf" >
+			<div class="searchtableRow">
+				
+				<table>
+					<tr>
+						<td>
+						{lang v="NAME"}：
+						</td>
+						<td>
+						<input type="text" name="name" value="{$param.name}"/>
+						</td>
+						
+						<td>
+						<div class="buttonActive"><div class="buttonContent"><button type="submit">{lang v="SEARCH"}</button></div></div>
+						</td>
+					</tr>
+				</table>
+				
+			</div>
+
+			
+			
+			
+		</div>
+
+	</div>
+	</form>
+</div>
+
+<div class="pageContent">
+	<div class="panelBar">
+		<ul class="toolBar">
+			<li><a title="{lang v="ADD"}{lang v="NAME"}" target="navTab" rel="spot_cate_addpage"  href="{$addurl}" class="add"><span>{lang v="ADD"}</span></a></li>
+			<li><a title="{lang v="CONFIRM_DELETE"}" target="selectedTodo" rel="id" postType="string" href="{$delurl}" class="delete"><span>{lang v="DEL"}</span></a></li>
+		</ul>
+	</div>
+	<table class="table" width="100%" layoutH="140">
+		<thead>
+		<tr>
+				<th width="22"><input type="checkbox" group="id" class="checkboxCtrl"></th>
+				<th  width="50" orderField="id" {if $param.orderField eq 'id'} class="{$param.orderDirection}"{/if}>{lang v="ID"}</th>
+				<th>{lang v="NAME"}</th>
+				<th width="80" orderField="is_hot" {if $param.orderField eq 'is_hot'} class="{$param.orderDirection}"{/if}>当季热门</th>
+				<th width="80" orderField="is_recommend" {if $param.orderField eq 'is_recommend'} class="{$param.orderDirection}"{/if}>推荐</th>
+				<th width="80" orderField="is_index" {if $param.orderField eq 'is_index'} class="{$param.orderDirection}"{/if}>首页显示</th>
+				<th width="80"  orderField="sort" {if $param.orderField eq 'sort'} class="{$param.orderDirection}"{/if}>{lang v="SORT"}</th>
+				<th width="100">{lang v="TAG_LANG_OPERATE"}</th>
+			</tr>
+		</thead>
+		<tbody>
+		
+			{foreach from=$list item=item}
+			<tr  rel="{$item.id}">
+				<td><input name="id" value="{$item.id}" type="checkbox"></td>
+				<td>{$item.id}</td>
+				<td>{$item.name}</td>
+				<td ><a href="{$sethoturl}&id={$item.id}&is_hot={$item.is_hot}" target="ajaxTodo" class="{if $item.is_hot eq 1}btnSelect{else}btnDel{/if}">{$item.is_effect_show}</a></td>
+				<td ><a href="{$setrecurl}&id={$item.id}&is_recommend={$item.is_recommend}" target="ajaxTodo" class="{if $item.is_recommend eq 1}btnSelect{else}btnDel{/if}">{$item.is_recommend_show}</a></td>
+				<td ><a href="{$setidxcurl}&id={$item.id}&is_index={$item.is_index}" target="ajaxTodo" class="{if $item.is_index eq 1}btnSelect{else}btnDel{/if}">{$item.is_index_show}</a></td>
+				<td><a href="javascript:void(0);" onclick="setsort(this,{$item.id});">{$item.sort}</a></td>
+				<td>
+					<a title="{lang v="CONFIRM_DELETE"}" target="ajaxTodo" href="{$delurl}&id={$item.id}" class="btnDel">{lang v="DEL"}</a>
+					<a title="{lang v="EDIT"}{lang v="NAME"}{$item.name}" rel="spot_cate_editpage_{$item.id}" target="navTab" href="{$editurl}&id={$item.id}"  class="btnEdit">{lang v="EDIT"}</a>
+				</td>
+			</tr>
+			{/foreach}
+		</tbody>
+	</table>
+	<div class="panelBar">
+		<div class="pages">
+			<span>{lang v="DISPLAY_PAGE_SIZE"}</span>
+			<select class="combox" name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value})">
+				<option value="<?php echo ADMIN_PAGE_SIZE1;?>" {if $param.pageSize eq ADMIN_PAGE_SIZE1}selected="selected"{/if} ><?php echo ADMIN_PAGE_SIZE1;?></option>
+				<option value="<?php echo ADMIN_PAGE_SIZE2;?>" {if $param.pageSize eq ADMIN_PAGE_SIZE2}selected="selected"{/if}><?php echo ADMIN_PAGE_SIZE2;?></option>
+				<option value="<?php echo ADMIN_PAGE_SIZE3;?>" {if $param.pageSize eq ADMIN_PAGE_SIZE3}selected="selected"{/if}><?php echo ADMIN_PAGE_SIZE3;?></option>
+				<option value="<?php echo ADMIN_PAGE_SIZE4;?>" {if $param.pageSize eq ADMIN_PAGE_SIZE4}selected="selected"{/if}><?php echo ADMIN_PAGE_SIZE4;?></option>
+			</select>
+			<span>&nbsp;&nbsp;{lang v="PAGE_TOTAL_COUNT" p="$totalCount"}</span>
+		</div>
+		
+		<div class="pagination" targetType="navTab" totalCount="{$totalCount}" numPerPage="{$param.pageSize}" pageNumShown="10" currentPage="{$param.pageNum}"></div>
+
+	</div>
+</div>

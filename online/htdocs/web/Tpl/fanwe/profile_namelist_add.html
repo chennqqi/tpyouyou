@@ -1,0 +1,98 @@
+<?php
+	$this->_var['pagecss'][] = TMPL_REAL."/css/user_common.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/profile_namelist.css";
+
+	$this->_var['pagecss'][] = TMPL_REAL."/css/style.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/weebox.css";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.bgiframe.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.weebox.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.pngfix.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/lazyload.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/script.js";
+	$this->_var['cpagejs'][] = TMPL_REAL."/js/script.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/profile_namelist.js";
+?>
+{include file="inc/header.html"} 
+<script type="text/javascript">
+	var SET_DEFAULT_URL = '{url x="profile#set_namelist_default"}';
+	var DEL_CONSIGNEE_URL = '{url x="profile#namelist_del"}';
+</script>
+<div class="wrap uc_box">
+	<div class="uc_menu">
+		{include file="inc/uc_menu.html"}
+	</div>
+	<div class="uc_main">
+		<div class="m_box clearfix" id="J_consigneeBX">
+		<div class="dt"><span>{if $namelist.id gt 0}编辑{else}新增{/if}游客信息</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{url "profile#namelist"}">返回列表</a></div>
+			<div class="bx clearfix">
+			<form action="{url x="profile#namelist_do"}" id="namelist_form" method="post">
+			<div class="item clearfix">
+				<div class="ft">姓名：<span class="em">*</span></div>
+				<div class="fb">
+					<input type="text" name="name" id="namelistName" class="txt_input" holder="请填写姓名" value="{$namelist.name}" />
+		            <span class="err_structure delivery_err hide" id="namelistNameError">
+		            	<span class="error_notice"><i></i></span>
+		            </span>
+				</div>
+			</div>
+			
+			<div class="item clearfix">
+				<div class="ft">证件类型：<span class="em">*</span></div>
+				<div class="fb">
+		            <select name="paper_type" id="paperType">
+		            	<option {if $namelist.paper_type eq 1 || $namelist.paper_type eq 0 }selected="selected"{/if} value="1">身份证</option>
+                        <option value="2" {if $namelist.paper_type eq 2}selected="selected"{/if}>护照</option>
+                        <option value="4" {if $namelist.paper_type eq 4}selected="selected"{/if}>港澳通行证</option>
+                        <option value="5" {if $namelist.paper_type eq 5}selected="selected"{/if}>台胞证</option>
+                        <option value="3" {if $namelist.paper_type eq 3}selected="selected"{/if}>军官证</option>
+                        <option value="6" {if $namelist.paper_type eq 6}selected="selected"{/if}>其他</option>
+		            </select>	            
+				</div>
+			</div>
+			<div class="item clearfix">
+				<div class="ft">证件号：<span class="em">*</span></div>
+				<div class="fb">
+					<input type="text" name="paper_sn" id="paperSn" class="txt_input" holder="请填写姓名" value="{$namelist.paper_sn}" />
+		            <span class="err_structure delivery_err hide" id="paperSnError">
+		            	<span class="error_notice"><i></i></span>
+		            </span>
+				</div>
+			</div>
+			 <div class="item clearfix">
+		        <div class="ft">手机号码：<span class="em">*</span></div>
+		        <div class="fb">
+		            <input type="text" name="mobile" id="nameListTel" class="txt_input" holder="请填写手机号码"  value="{$namelist.mobile}" />
+		            <span class="err_structure delivery_err hide" id="nameListTelError">
+		                <span class="error_notice">
+		                    <i></i>
+		                </span>
+		            </span>
+		        </div>
+		    </div>
+			
+			<div class="item clearfix">
+		        <div class="ft">排序：</div>
+		        <div class="fb">
+		        <input type="text" name="sort" value="{$namelist.sort}" holder="数字越大，越优先加载" />    
+				</div>
+		    </div>
+			
+			<div class="item clearfix">
+		        <div class="ft">是否默认：</div>
+		        <div class="fb">
+		            <label><input type="radio" name="is_default" value="1" {if $namelist.is_default eq 1}checked="checked"{/if} />是</label>
+					<label><input type="radio" name="is_default" value="0" {if $namelist.is_default eq 0 ||$namelist.is_default eq ''}checked="checked"{/if} />否</label>
+		        </div>
+		    </div>
+			
+			<div class="act">
+				<input type="hidden" name="id" value="{$namelist.id}" />
+				<button type="submit" class="J_do_namelist">{if $namelist.id gt 0}编辑{else}添加{/if}游客信息</button>
+			</div>
+			</form>
+		</div>
+		</div>
+	</div>
+</div>
+ <div class="blank15"></div>
+{include file="inc/footer.html"} 

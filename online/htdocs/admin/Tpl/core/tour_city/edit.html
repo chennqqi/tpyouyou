@@ -1,0 +1,73 @@
+<h2 class="contentTitle">{lang v="EDIT"}{lang v="CITY"}</h2>
+<form action="{$formaction}" method="post" class="pageForm required-validate" onsubmit="return validateCallback(this, navTabAjaxDone)">
+<div class="pageContent">
+<div class="pageFormContent" layoutH="97">		
+
+			<table class="formtable">			
+			
+			
+			
+			<tr>
+				<td class="item_title">{lang v="NAME"}:</td>
+				<td class="item_input">
+					<input type="text" class="required textInput valid"   maxlength="20" name="name" value="{$vo.name}">
+					<label class="tip"></label>
+				</td>
+			</tr>
+			<tr>
+				<td class="item_title">{lang v="PY"}:</td>
+				<td class="item_input"><input type="text" class="required textInput lettersonly" name="py" value="{$vo.py}" /></td>
+			</tr>	
+			
+			<tr>
+				<td class="item_title">{lang v="IS_HOT_CITY"}:</td>
+				<td class="item_input">
+					<select name="is_hot" class="combox">
+						<option value="0" {if $vo.is_hot eq 0}selected="selected"{/if}>{lang v="NO"}</option>
+						<option value="1" {if $vo.is_hot eq 1}selected="selected"{/if}>{lang v="YES"}</option>
+					</select>
+				</td>
+			</tr>	
+			
+			<tr>
+				<td class="item_title">{lang v="IS_EFFECT"}:</td>
+				<td class="item_input">
+					<lable>{lang v="IS_EFFECT_1"}<input type="radio" name="is_effect" value="1"  {if $vo.is_effect eq 1}checked="checked"{/if}/></lable>
+					<lable>{lang v="IS_EFFECT_0"}<input type="radio" name="is_effect" value="0" {if $vo.is_effect eq 0}checked="checked"{/if} /></lable>
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="item_title">SEO标题:</td>
+				<td class="item_input">
+					<textarea type="text" class="textInput" cols="80" rows="4" name="seo_title">{$vo.seo_title}</textarea>
+					<label class="tip"></label>
+				</td>
+			</tr>
+			<tr>
+				<td class="item_title">SEO关键词:</td>
+				<td class="item_input">
+					<textarea class="textInput" cols="80" rows="4" name="seo_keywords">{$vo.seo_keywords}</textarea>
+					<label class="tip"></label>
+				</td>
+			</tr>
+			<tr>
+				<td class="item_title">SEO内容:</td>
+				<td class="item_input">
+					<textarea class="textInput" cols="80" rows="4" class="textInput" name="seo_description">{$vo.seo_description}</textarea>
+					<label class="tip"></label>
+				</td>
+			</tr>
+						
+			</table>
+					
+	</div>
+	<div class="formBar">
+		<ul>
+		<input type="hidden" name="id" value="{$vo.id}" />
+			<li><div class="buttonActive"><div class="buttonContent"><button type="submit">{lang v="SAVE"}</button></div></div></li>
+			<li><div class="button"><div class="buttonContent"><button class="close" type="button">{lang v="CLOSE"}</button></div></div></li>
+		</ul>
+	</div>
+</div>
+</form>

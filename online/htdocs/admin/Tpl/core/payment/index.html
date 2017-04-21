@@ -1,0 +1,129 @@
+<script type="text/javascript">
+var UPDATE_SUCCESS = '{lang v="UPDATE_SUCCESS"}';
+var UPDATE_FAILED = '{lang v="UPDATE_FAILED"}';
+function setsort(dom,id)
+{
+	var html = "<input type='text' value='"+$.trim($(dom).html())+"' class='textInput' style='width:40px;' onblur='blursort(this,"+id+");' />";	
+	var parent = $(dom).parent();
+	$(parent).html(html);
+	var ipt = $(parent).find("input");	
+	$(ipt).focus();
+	$(ipt).select();		
+}
+function blursort(dom,id)
+{
+	var newsort = $.trim($(dom).val());
+	$.ajax({
+		type:  'POST',
+		url:"{$setsorturl}&id="+id+"&sort="+newsort,
+		dataType:"json",
+		cache: false,
+		success: function(obj){
+			var html = "<a href='javascript:void(0);' onclick='setsort(this,"+id+");'>"+obj.message+"</a>";	
+			$(dom).parent().html(html);	
+			if(obj.statusCode==200)
+			{
+				alertMsg.correct(UPDATE_SUCCESS);
+			}
+			else
+			{
+				alertMsg.correct(UPDATE_FAILED);
+			}
+		}
+	});
+	
+}
+</script>
+<form id="pagerForm" method="post" action="#rel#">
+	<input type="hidden" name="pageNum" value="{$param.pageNum}" />
+	<input type="hidden" name="numPerPage" value="{$param.pageSize}" />
+	<input type="hidden" name="orderField" value="{$param.orderField}" />
+	<input type="hidden" name="orderDirection" value="{$param.orderDirection}" />
+</form>
+<form rel="pagerForm" onsubmit="return navTabSearch(this);" action="{$formaction}" method="post"></form>
+<div class="pageHeader">
+	
+	<div class="searchBar">
+		<div class="pageFormContent cf" >
+			<div class="searchtableRow">				
+				<table>
+					<tr>
+						<td>
+						支付接口列表
+						</td>
+					</tr>
+				</table>
+				
+			</div>		
+			
+		</div>
+
+	</div>
+
+</div>
+
+<div class="pageContent">
+	<table class="table" width="100%" layoutH="142">
+		<thead>
+		<tr>
+				<th>接口名称</th>
+				<th  width="80">{lang v="IS_EFFECT"}</th>
+				<th  width="80">安装</th>
+				<th  width="80">网银直连</th>
+				
+				<th  width="80">排序</th>
+				<th width="250">{lang v="TAG_LANG_OPERATE"}</th>
+			</tr>
+		</thead>
+		<tbody>
+		
+			{foreach from=$payment_list item=payment_item}
+			<tr>
+				<td>{$payment_item.name}</td>
+				<td>
+					{if $payment_item.installed eq 1}
+					<a href="{$seteffecturl}&id={$payment_item.id}&is_effect={$payment_item.is_effect}" target="ajaxTodo" class="{if $payment_item.is_effect eq 1}btnSelect{else}btnDel{/if}">{$payment_item.is_effect_show}</a>
+					{else}
+					<a href="javascript:void(0);"  class="btnDel">未安装</a>
+					{/if}
+				</td>
+				<td>
+					{if $payment_item.installed eq 1}
+					已安装
+					{else}
+					未安装
+					{/if}
+				</td>
+				
+				<td>
+					{if $payment_item.bank eq 1}
+					{lang v="YES"}
+					{else}
+					{lang v="NO"}
+					{/if}
+				</td>
+				
+				<td>
+					{if $payment_item.installed eq 1}
+					<a href="javascript:void(0);" onclick="setsort(this,{$payment_item.id});">{$payment_item.sort}</a>
+					{else}
+					未安装
+					{/if}
+				</td>
+				<td>
+				
+						{if $payment_item.installed eq 0}
+						<a title="安装{$payment_item.name}" target="navTab" rel="install_payment_page" href="{$installurl}&class_name={$payment_item.class_name}" >{lang v="INSTALL"}</a>
+						{else}
+							<a href="{$uninstallurl}&id={$payment_item.id}" target="ajaxTodo" title="确定要卸载吗？"  class="btnDel">{lang v="UNINSTALL"}</a>
+							<a href="{$editurl}&id={$payment_item.id}"  target="navTab" rel="edit_payment_page_{$payment_item.id}"  class="btnEdit">{lang v="EDIT"}{$payment_item.name}</a>							
+							<a title="{$payment_item.name}支付日志" target="dialog" max=true href="{$viewlogurl}&class={$payment_item.class_name}"  rel="view_payment_win" class="btnLook">{lang v="VIEW"}</a>
+				
+						{/if}
+				</td>
+			</tr>
+			{/foreach}
+		</tbody>
+	</table>
+	
+</div>

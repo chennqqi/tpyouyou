@@ -1,0 +1,141 @@
+<script type="text/javascript" src="{$TMPL}/core/include/js/tuan.js"></script>
+<h2 class="contentTitle">{lang v="EDIT"}{lang v="NAME"}</h2>
+<form action="{$formaction}" method="post" class="pageForm required-validate" onsubmit="return validateCallback(this, navTabAjaxDone)">
+<div class="pageContent">
+<div class="pageFormContent" layoutH="97">		
+
+			<table class="formtable">	
+			
+			<tr >
+				<td class="item_title">团购分类:</td>
+				<td class="item_input">
+					<select name="cate_id" class="combox">
+						<option value="0">未选择</option>
+						{foreach from="$tuan_cates" item="cate"}
+						<option value="{$cate.id}" {if $vo.cate_id eq $cate.id}selected="selected"{/if}>{$cate.name}</option>
+						{/foreach}
+					</select>
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="item_title">{lang v="TYPE"}:</td>
+				<td class="item_input" height="22">
+					<select name="type" style="display:none;">
+						<option value="0" rel="">{lang v="EMPTY_SELECT"}</option>
+						<option value="1" rel="{$searchtuanurl_1}" {if $vo.type eq 1}selected="selected"{/if}>{lang v="TYPE_1"}</option>
+						<option value="2" rel="{$searchtuanurl_2}" {if $vo.type eq 2}selected="selected"{/if}>{lang v="TYPE_2"}</option>
+						<!--<option value="3" rel="{$searchtuanurl_3}" {if $vo.type eq 3}selected="selected"{/if}>{lang v="TYPE_3"}</option>-->
+					</select>
+					{if $vo.type eq 1}{lang v="TYPE_1"}{elseif $vo.type eq 2}{lang v="TYPE_2"}{elseif $vo.type eq 1}{lang v="TYPE_3"}{/if}
+					<label class="tip"></label>
+				</td>
+			</tr>
+			
+					
+			<tr>
+				<td class="item_title">{lang v="NAME"}:</td>
+				<td class="item_input">
+					<input name="tuan.rel_id" type="hidden" value="{$vo.rel_id}" />
+					<input class="required" size="80" name="tuan.name"  type="text"  value="{$vo.name}" />
+					<a class="btnLook" href="<?php echo $this->_var['searchtuanurl_'.$this->_var['vo']['type']];?>" style="display:none;" lookupGroupSelect="tuan">{lang v="SELECT_TUAN"}</a>
+					<label class="tip">选择类型后才能关联</label>
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="item_title">图片:</td>
+				<td class="item_input">
+					{function name="load_keimg" p1="image" p2="$vo.image"}
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="item_title">原价:</td>
+				<td class="item_input">
+					<input name="tuan.origin_price" value="{$vo.origin_price_format}" />
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="item_title">现价:</td>
+				<td class="item_input">
+					<input name="tuan.current_price" value="{$vo.current_price_format}" />
+				</td>
+			</tr>
+			
+			
+			<tr>
+				<td class="item_title">销售价:</td>
+				<td class="item_input">
+					<input name="tuan.sale_price" value="{$vo.sale_price_format}" />
+				</td>
+			</tr>
+			
+			<tr class="tuan_box">
+				<td class="item_title">团购开始时间:</td>
+				<td class="item_input">
+					<input type="text" name="tuan.begin_time" value="{$vo.begin_time_format}" class="date textInput readonly valid" datefmt="yyyy-MM-dd HH:mm:ss"  readonly="true">
+					<a class="inputDateButton" href="javascript:;">选择</a>
+					<label class="tip">留空表示团购立即开始</label>
+				</td>
+			</tr>
+			<tr class="tuan_box">
+				<td class="item_title">团购结束时间:</td>
+				<td class="item_input">
+					<input type="text" name="tuan.end_time" value="{$vo.end_time_format}" class="date textInput readonly valid" datefmt="yyyy-MM-dd HH:mm:ss" readonly="true">
+					<a class="inputDateButton" href="javascript:;">选择</a>
+					<label class="tip">留空表示团购永久有效</label>
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="item_title">成团数量:</td>
+				<td class="item_input">
+					<input name="tuan.success_count" value="{$vo.success_count}" />
+				</td>
+			</tr>
+			
+			
+			
+			<tr>
+				<td class="item_title">简介:</td>
+				<td class="item_input">
+					<textarea name="brief" cols="80" rows="4" class="textInput">{$vo.brief}</textarea>
+					<label class="tip"></label>
+				</td>
+			</tr>
+			
+			<tr >
+				<td class="item_title">是否预告:</td>
+				<td class="item_input">
+					<select name="is_pre" class="combox">
+						<option value="0" {if $vo.is_pre eq 0}selected="selected"{/if}>否</option>
+						<option value="1" {if $vo.is_pre eq 1}selected="selected"{/if}>是</option>
+					</select>
+				</td>
+			</tr>
+			
+			<tr >
+				<td class="item_title">禁止销售:</td>
+				<td class="item_input">
+					<select name="is_history" class="combox">
+						<option value="0" {if $vo.is_history eq 0}selected="selected"{/if}>否</option>
+						<option value="1" {if $vo.is_history eq 1}selected="selected"{/if}>是</option>
+					</select>
+				</td>
+			</tr>
+			
+			
+		</table>
+					
+	</div>
+	<div class="formBar">
+		<ul>
+			<input type="hidden" name="id" value="{$vo.id}" />
+			<li><div class="buttonActive"><div class="buttonContent"><button type="submit">{lang v="SAVE"}</button></div></div></li>
+			<li><div class="button"><div class="buttonContent"><button class="close" type="button">{lang v="CLOSE"}</button></div></div></li>
+		</ul>
+	</div>
+</div>
+</form>

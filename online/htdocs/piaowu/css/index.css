@@ -1,0 +1,198 @@
+﻿/*选择城市部分*/
+.chooseInf {
+	width: 324px;
+	background: #fff;
+	margin-right: 14px;
+	float: left;
+	border:solid 1px #ccc;
+	height:400px;
+	display: inline;
+	overflow: hidden;
+}
+.chooseBut {
+	overflow: hidden;
+	margin-right: 4px;
+	color: #999;
+	width:50px;
+	float:left;
+	display:inline;
+}
+.but {
+	background: #efefef;
+	line-height: 60px;
+	padding:40px 10px;
+	float: left;
+	font-size: 23px;
+	text-align: center;
+	cursor:pointer;
+}
+.chooseBut li.active {
+	color: #FCFEFF;
+	background: #32A9CC;
+	position:relative;
+}
+.chooseBut li.active span{
+	position:absolute;
+	width:0;
+	height:0;
+	border:10px solid transparent;
+	border-right-color:#fff;
+	right:0;
+	top:50%;
+	margin-top:-5px;
+	
+	}
+.chooseType {
+	display:none;
+	width:270px;
+	height:400px;
+	overflow: hidden;
+	margin-top:15px;
+}
+.chooseInf .active {
+	display: block;
+}
+.chooseType ul{
+	width:270px;
+	line-height:20px;
+	float:left;
+	margin-bottom:25px;
+	padding-bottom:10px;
+	overflow:visible;
+	border-bottom:2px solid #ccc;
+	}
+	.chooseType ul li{
+		width:100px;
+		color:#000;
+		float:left;
+		font-size:16px;
+		text-align:center;
+		padding-bottom:5px;
+		margin-bottom:-12px;
+		cursor:pointer;
+		margin-right:10px;
+		}
+		.chooseType ul .active{
+			border-bottom:2px solid #06C;
+			position:relative;
+			color:#000;
+			}
+		.chooseType ul .active span{
+			width:0;
+			height:0;
+			border:5px solid transparent;
+			border-top-color:#06c;
+			top:100%;
+			margin-top:2px;
+			left:50%;
+			margin-left:-5px;
+			display:block;
+			position:absolute;
+			}
+.countryDetail{
+	clear:both;
+	height:350px;
+    width:270px;
+	position:relative;
+	}
+    .countryDetail form {
+        width:270px;
+    }
+.countryDetail .item{
+	overflow:hidden;
+	margin-bottom:15px;
+    padding-left:5px;
+	}
+.countryDetail .item label {
+	clear: both;
+	line-height: 36px;
+	float: left;
+	width: 70px;
+}
+.countryDetail .item input {
+	font-size: 14px;
+	float: left;
+	width: 150px;
+	border: 1px solid #ccc;
+	line-height: 30px;
+	height: 30px;
+	padding: 2px 0 2px 5px;
+	background: url(../bgimg/inputbac.png) 130px 6px no-repeat;
+}
+
+#hotel .item input{
+	width:175px;
+	background: none;
+	}
+	#hotel .time input{
+	background:url(../bgimg/inputbac.png) 155px -44px no-repeat;
+		}
+	#hotel .city {
+		background:url(../bgimg/inputbac.png) 155px 6px no-repeat;
+		}
+	#hotel .submit input{
+		width:100px;
+		background: url(../bgimg/btn_search.png) no-repeat;
+	}
+.countryDetail .time input {
+	width: 175px;
+	background: url(../bgimg/inputbac.png) 155px -44px no-repeat;
+}
+.countryDetail .disabled {
+	color: #aaa;
+}
+.countryDetail input:disabled {
+	background: #eee;
+}
+.countryDetail div.radio {
+	padding-left: 70px;
+}
+.countryDetail .radio label, .countryDetail .radio input {
+	margin-right: 5px;
+	width: auto;
+	float: none;
+	border: none;
+	vertical-align: middle;
+}
+.countryDetail .radio label {
+	margin-right: 15px;
+}
+.countryDetail p {
+	text-align: right;
+	font-size: 12px;
+	padding-right: 22px;
+}
+.countryDetail .submit div {
+	float: right;
+	margin: 15px 17px 17px 0;
+}
+.countryDetail .submit input {
+	text-align:center;
+	width: 100px;
+	height: 30px;
+	padding: 0;
+	background: url(../bgimg/btn_search.png) no-repeat;
+	color: #000;
+	font-size: 20px;
+	font-family: "黑体";
+	float: right;
+	border: 0;
+	cursor:pointer;
+}
+.exchange {
+	position: absolute;
+	top: 18px;
+	right: 14px;
+}
+.exchange a {
+	display: block;
+	background: url(../bgimg/inputbac.png) no-repeat 0 -100px;
+	width: 30px;
+	height: 53px;
+}
+.exchange a:hover {
+	display: block;
+	background: url(../bgimg/inputbac.png) no-repeat 0 -160px;
+	width: 30px;
+	height: 53px;
+}

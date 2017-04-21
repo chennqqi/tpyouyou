@@ -1,0 +1,97 @@
+<script type="text/javascript">
+function opdone(json){
+	DWZ.ajaxDone(json);
+	if (json.statusCode == DWZ.statusCode.ok){
+		navTab.reload("{$accounturl}");
+		$.pdialog.closeCurrent();
+	}
+}
+
+</script>
+<form action="{$formaction}" method="post" class="pageForm required-validate" onsubmit="return validateCallback(this, opdone)">
+<div class="pageContent">
+<div class="pageFormContent" layoutH="60">		
+
+			<table class="formtable">				
+									
+									<tr>
+										<td class="item_title">退款备注:</td>
+										<td class="item_input" colspan = 3>
+											{$order.refund_txt}
+										</td>									
+																					
+									</tr>
+									
+									<tr>
+										<td class="item_title">退款状态:</td>
+										<td class="item_input">
+											{$order.refund_status_format}
+										</td>									
+										<td class="item_title">已退金额:</td>
+										<td class="item_input">
+											{$order.refund_amount_format}
+										</td>									
+									</tr>																
+									<tr>
+										<td class="item_title">商家审核状态:</td>
+										<td class="item_input">
+											{$order.supplier_confirm_format}																						
+										</td>									
+										<td class="item_title">商家审核时间:</td>
+										<td class="item_input">
+											{$order.supplier_confirm_time_format}
+										</td>									
+									</tr>
+									<tr>
+										<td class="item_title">原因:</td>
+										<td class="item_input" colspan = 3>
+											{$order.refuse_reason}
+										</td>										
+									</tr>
+													
+									<tr>
+										<td class="item_title">退单儿童人数:</td>
+										<td class="item_input">
+											{$order.refund_child_count}
+										</td>
+										
+										<td class="item_title">退单成人人数:</td>
+										<td class="item_input">
+											{$order.refund_adult_count}
+										</td>										
+									</tr>
+									
+									<tr>
+										<td class="item_title">退签服务人数:</td>
+										<td class="item_input">
+											{$order.refund_visa_count}
+										</td>	
+										<td class="item_title">退票的时间:</td>
+										<td class="item_input">
+											{$order.re_action_time_format}
+										</td>																				
+									</tr>	
+									<tr>
+										<td class="item_title">可退金额:</td>
+										<td class="item_input" colspan=3>
+											<label class="tip">{$refund_amount} 元， 将 </label><label class="tip"><input type="text" class="textInput number" name="refund_amount" value="{$refund_amount}" /> </label><label class="tip"> 元 退到会员帐户余额中</label>
+										</td>																												
+									</tr>
+									<tr>
+										<td class="item_title">管理员备注:</td>
+										<td class="item_input" colspan=3>
+											<textarea name="admin_msg" cols="80" rows="3" class="textInput"></textarea>									
+										</td>
+									</tr>			
+			</table>
+					
+	</div>
+	<div class="formBar">
+		<ul>			
+			<input type="hidden" name="id" value="{$order.id}" />
+			<li><div class="buttonActive"><div class="buttonContent"><button type="submit">确定</button></div></div></li>
+			<li><div class="button"><div class="buttonContent"><button class="close" type="button">{lang v="CLOSE"}</button></div></div></li>
+		</ul>
+	</div>
+</div>
+</form>

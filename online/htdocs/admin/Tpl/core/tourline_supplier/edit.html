@@ -1,0 +1,1027 @@
+<script type="text/javascript" src="{$TMPL}/core/include/js/tourline.js"></script>
+
+<h2 class="contentTitle">审核商家提交线路修改</h2>
+
+<form action="{$formaction}" method="post" class="pageForm required-validate" onsubmit="return validateCallback(this, navTabAjaxDone)">
+
+<div class="pageContent">
+
+	<div class="pageFormContent" layouth="97">		
+
+		<div class="tabs">
+
+			<div class="tabsHeader">
+
+				<div class="tabsHeaderContent">
+
+					<ul>					
+
+						<li class="selected"><a href="javascript:void(0)"><span>基本设置</span></a></li>
+
+						<li><a href="javascript:void(0)"><span>相关内容</span></a></li>
+
+						<li><a href="javascript:void(0)"><span>时间价格数量</span></a></li>
+
+						<li><a href="javascript:void(0)"><span>退款设置</span></a></li>
+
+						<li><a href="javascript:void(0)"><span>团购设置</span></a></li>
+
+						<li><a href="javascript:void(0)"><span>签证设置</span></a></li>
+
+						<li><a href="javascript:void(0)"><span>保险设置</span></a></li>
+
+					</ul>
+
+				</div>
+
+			</div>
+
+			<div class="tabsContent cf" >
+
+				<!--基本设置-->
+
+				<div>
+
+					<table class="formtable">
+
+					<tr>
+
+						<td class="item_title">操作：</td>
+
+						<td class="item_input">
+
+						{if $vo.rel_id >0}
+
+							编辑线路(id:{$vo.rel_id})
+
+						{else}
+
+							增加线路
+
+						{/if}
+
+						</td>
+
+					</tr>
+
+						
+
+					<tr>
+
+						<td class="item_title">{lang v="TOURLINE_NAME"}:</td>
+
+						<td class="item_input">
+
+							<input type="text" class="required textInput valid" size="100" name="name" value="{$vo.name}" >
+
+							<label class="tip"></label>
+
+						</td>
+
+					</tr>
+
+					<tr>
+
+						<td class="item_title">{lang v="TOURLINE_SHORT_NAME"}:</td>
+
+						<td class="item_input">
+
+							<input type="text" class=""  size=50  name="short_name" value="{$vo.short_name}">
+
+							<label class="tip"></label>
+
+						</td>
+
+					</tr>
+
+					<tr>
+
+						<td class="item_title">{lang v="SUPPIER"}:</td>
+
+						<td class="item_input">
+
+							{$vo.company_name}
+
+						</td>
+
+					</tr>
+
+			
+
+					<tr>
+
+						<td class="item_title">出发{lang v="CITY"}:</td>
+
+						<td class="item_input">
+
+							<input name="start_city.city_id" type="hidden" value="{$vo.city_id}" />
+
+							<input class="required" size="20" name="start_city.name" type="text"  readonly="true" value="{$vo.city_name}" />
+
+							<a class="btnLook" href="{$searchstartcityurl}" lookupGroupSelect="start_city" mask="true" rel="dlg_start_city">{lang v="SELECT_TOUR_CITY"}</a>
+
+							<label class="tip"></label>
+
+						</td>
+
+					</tr>
+
+					
+
+					<tr>
+
+						<td class="item_title">{lang v="PROVINCE"}:</td>
+
+						<td class="item_input">
+
+							<input name="tour_province.py"  lookupSend="tour_province_data" type="hidden" value="{$vo.province_match}"/>
+
+							<input size="80" name="tour_province.name" lookupSend="tour_province_data"  type="text"  readonly="true"  value="{$vo.province_match_row}" />
+
+							<a class="btnLook" href="{$searchprovinceurl}" lookupGroupSelect="tour_province">{lang v="SELECT_TOUR_PROVINCE"}</a>
+
+						</td>
+
+					</tr>
+
+					
+
+					<tr>
+
+						<td class="item_title">允许显示的{lang v="CITY"}:</td>
+
+						<td class="item_input">
+
+							<input name="tour_city.py"  lookupSend="tour_city_data" type="hidden" value="{$vo.city_match}" />
+
+							<input class="" size="80" name="tour_city.name" lookupSend="tour_city_data"  type="text"  readonly="true" value="{$vo.city_match_row}" />
+
+							<a class="btnLook" href="{$searchcityurl}" lookupGroupSelect="tour_city">{lang v="SELECT_TOUR_CITY"}</a>
+
+							<label><input name="show_all_city" type="checkbox" value="1" />全国显示</label>
+
+						</td>
+
+					</tr>
+
+					
+
+					<tr>
+
+						<td class="item_title">周边{lang v="CITY"}:</td>
+
+						<td class="item_input">
+
+							<input name="around_city.py"  lookupSend="around_city_data" type="hidden" value="{$vo.around_city_match}" />
+
+							<input class="" size="80" name="around_city.name" lookupSend="around_city_data"  type="text"  readonly="true" value="{$vo.around_city_match_row}" />
+
+							<a class="btnLook" href="{$searchcityurl}" lookupGroupSelect="around_city">{lang v="SELECT_TOUR_CITY"}</a>
+
+						</td>
+
+					</tr>
+
+					<tr>
+
+						<td class="item_title">{lang v="TOUR_AREA"}:</td>
+
+						<td class="item_input">
+
+							<input name="tour_area.py"  lookupSend="tour_area_data" type="hidden" value="{$vo.area_match}" />
+
+							<input class="required" size="80" name="tour_area.name" lookupSend="tour_area_data"  type="text"  readonly="true" value="{$vo.area_match_row}" />
+
+							<a class="btnLook" href="{$searchareaurl}" lookupGroupSelect="tour_area">{lang v="SELECT_TOUR_AREA"}</a>
+
+						</td>
+
+					</tr>
+
+					
+
+					<tr>
+
+						<td class="item_title">{lang v="TOUR_PLACE"}:</td>
+
+						<td class="item_input">	
+
+							<input name="tour_place.py"  lookupSend="tour_place_data" type="hidden" value="{$vo.place_match}" />				
+
+							<input  class="" size="80" name="tour_place.name" lookupSend="tour_place_data"  type="text" readonly="true" value="{$vo.place_match_row}" />
+
+							<a class="btnLook" href="{$searchplaceurl}" lookupGroupSelect="tour_place">{lang v="SELECT_TOUR_PLACE"}</a>
+
+						</td>
+
+					</tr>
+
+					<tr>
+
+						<td class="item_title">{lang v="TOUR_PLACE_TAG"}:</td>
+
+						<td class="item_input">					
+
+							<input  size="80" name="tour_place_tag.tag_name" lookupSend="tour_place_tag_data"  type="text"  value="{$vo.tag_match_row}" />
+
+							<a class="btnLook" href="{$searchtagurl}" lookupGroupSelect="tour_place_tag">{lang v="SELECT_TOUR_PLACE_TAG"}</a>
+
+						</td>
+
+					</tr>
+
+					<tr>
+
+						<td class="item_title">{lang v="TOURLINE_QUYU"}:</td>
+
+						<td class="item_input">
+
+							<input name="tour_range" type="radio"  value="1" {if $vo.tour_range eq 1}checked=checked{/if} /><span>境内旅行社</span>
+							<input name="tour_range" type="radio"  value="2" {if $vo.tour_range eq 2}checked=checked{/if} /><span>出境游旅行社</span>
+                            <input name="tour_range" type="radio"  value="3"  {if $vo.tour_range eq 3}checked=checked{/if} /><span>周边游旅行社</span>
+							<input name="tour_range" type="radio"  value="4"  {if $vo.tour_range eq 4}checked=checked{/if} /><span>目的地旅行社</span>  
+                            <input name="tour_range" type="radio"  value="5"  {if $vo.tour_range eq 5}checked=checked{/if} /><span>综合旅游资源</span> 
+
+						</td>
+
+					</tr>
+
+					
+
+
+
+					
+
+					<tr>
+
+						<td class="item_title">{lang v="TOURLINE_NAMELIST"}:</td>
+
+						<td class="item_input">
+
+							<input name="is_namelist" type="radio"  value="1"  {if $vo.is_namelist eq 1}checked=checked{/if} /><span>必填</span>
+
+							<input name="is_namelist" type="radio"  value="0"  {if $vo.is_namelist eq 0}checked=checked{/if} /><span>可不填</span>
+
+						</td>
+
+					</tr>
+
+					
+
+					<tr>
+
+						<td class="item_title">{lang v="TOURLINE_ORDER_CONFIRM_TYPE"}:</td>
+
+						<td class="item_input">
+
+							<input name="order_confirm_type" type="radio"  value="1" {if $vo.order_confirm_type eq 1}checked=checked{/if}  /><span>付款后手动确认</span>
+
+							<input name="order_confirm_type" type="radio"  value="2" {if $vo.order_confirm_type eq 2}checked=checked{/if}  /><span>手动确认后付款</span>
+
+							<input name="order_confirm_type" type="radio"  value="3" {if $vo.order_confirm_type eq 3}checked=checked{/if} /><span>自动确认</span>
+
+						</td>
+
+					</tr>
+
+					
+
+					<tr>
+
+						<td class="item_title">行程天数:</td>
+
+						<td class="item_input">
+
+							<input type="text" class="number"  size=20  name="tour_total_day" value="{$vo.tour_total_day}">
+
+							<label class="tip"></label>
+
+						</td>
+
+					</tr>
+
+					
+
+					<tr>
+
+						<td class="item_title">{lang v="TOURLINE_IMAGE"}:</td>
+
+						<td class="item_input">					
+
+							{function name="load_keimg" p1='image' p2=$vo.image }
+
+						</td>
+
+					</tr>
+
+					
+
+					<tr>
+
+						<td class="item_title">{lang v="TOURLINE_BRIEF"}:</td>
+
+						<td class="item_input">
+
+							<textarea name="brief" cols="80" rows="4" class="textInput">{$vo.brief}</textarea>
+
+							<label class="tip"></label>
+
+						</td>
+
+					</tr>
+
+					
+
+					<tr>
+
+						<td class="item_title">{lang v="TOURLINE_TOUR_DESC"}</td>
+
+						<td class="item_input">
+
+							<textarea name="tour_desc" class="ketext" style="width:680px;height:250px;visibility:hidden;">{$vo.tour_desc}</textarea>
+
+							<label class="tip"></label>
+
+						</td>
+
+					</tr>
+
+					
+
+					<tr>
+
+						<td class="item_title">{lang v="TOURLINE_APPOINT_DESC"}</td>
+
+						<td class="item_input">
+
+							<textarea name="appoint_desc" class="ketext" style="width:680px;height:250px;visibility:hidden;">{$vo.appoint_desc}</textarea>
+
+							<label class="tip"></label>
+
+						</td>
+
+					</tr>
+
+		
+
+					</table>
+
+				</div>
+
+				
+
+				<!--相关内容-->
+
+				<div>
+
+					<table class="formtable">
+
+						<tr>
+
+							<td colspan="2" class="item_input">
+
+								<div style="padding:10px">此处<span style="font-weight:bolder;color:red;">内容名</span>如若不设置，前台将不会显示相应内容</div>
+
+							</td>
+
+						</tr>
+
+						<tr>
+
+							<td class="item_title">内容名一:</td>
+
+							<td class="item_input">
+
+								<input type="text" class="textInput" name="tour_desc_1_name" size="50" value="{$vo.tour_desc_1_name}" />
+
+							</td>
+
+						</tr>
+
+						<tr>
+
+							<td class="item_title">内容一:</td>
+
+							<td class="item_input">
+
+								<textarea name="tour_desc_1" class="ketext" style="width:680px;height:400px;visibility:hidden;">{$vo.tour_desc_1}</textarea>
+
+							</td>
+
+						</tr>	
+
+						<tr><td colspan="2" class="item_title"></td></tr>
+
+						<tr>
+
+							<td class="item_title">内容名二:</td>
+
+							<td class="item_input">
+
+								<input type="text" class="textInput" name="tour_desc_2_name" size="50" value="{$vo.tour_desc_2_name}" />
+
+							</td>
+
+						</tr>
+
+						<tr>
+
+							<td class="item_title">内容二:</td>
+
+							<td class="item_input">
+
+								<textarea name="tour_desc_2" class="ketext" style="width:680px;height:400px;visibility:hidden;">{$vo.tour_desc_2}</textarea>
+
+							</td>
+
+						</tr>
+
+						<tr><td colspan="2" class="item_title"></td></tr>
+
+						<tr>
+
+							<td class="item_title">内容名三:</td>
+
+							<td class="item_input">
+
+								<input type="text" class="textInput" name="tour_desc_3_name" size="50" value="{$vo.tour_desc_3_name}" />
+
+							</td>
+
+						</tr>
+
+						<tr>
+
+							<td class="item_title">内容三:</td>
+
+							<td class="item_input">
+
+								<textarea name="tour_desc_3" class="ketext" style="width:680px;height:400px;visibility:hidden;">{$vo.tour_desc_3}</textarea>
+
+							</td>
+
+						</tr>
+
+						<tr><td colspan="2" class="item_title"></td></tr>
+
+						<tr>
+
+							<td class="item_title">内容名四:</td>
+
+							<td class="item_input">
+
+								<input type="text" class="textInput" name="tour_desc_4_name" size="50" value="{$vo.tour_desc_4_name}" />
+
+							</td>
+
+						</tr>
+
+						<tr>
+
+							<td class="item_title">内容四:</td>
+
+							<td class="item_input">
+
+								<textarea name="tour_desc_4" class="ketext" style="width:680px;height:400px;visibility:hidden;">{$vo.tour_desc_4}</textarea>
+
+							</td>
+
+						</tr>
+
+					</table>
+
+				</div>
+
+				
+
+				<!--时间价格-->
+
+				<div>
+
+					<table class="formtable">
+
+					<tr>
+
+						<td class="item_title">{lang v="ORIGIN_PRICE"}:</td>
+
+						<td class="item_input">
+
+							<input type="text" class="textInput number"   maxlength="10" name="origin_price" value="{function name=format_price_to_display v=$vo.origin_price }">
+
+							<label class="tip"></label>
+
+						</td>
+
+					</tr>
+
+					<tr>
+
+						<td class="item_title">收费最低起步价:</td>
+
+						<td class="item_input">
+
+							<input type="text" class="textInput number"   maxlength="10" name="price" value="{function name=format_price_to_display v=$vo.price }">
+
+							<label class="tip"></label>
+
+						</td>
+
+					</tr>
+
+					<tr>
+
+						<td class="item_title">起价说明:</td>
+
+						<td class="item_input">
+
+							<textarea name="price_explain" cols="80" rows="8" class="textInput">{$vo.price_explain}</textarea>
+
+							<label class="tip"></label>
+
+						</td>
+
+					</tr>
+
+					<tr>
+
+						<td class="item_title">儿童标准:</td>
+
+						<td class="item_input">
+
+							<textarea name="child_norm" cols="80" rows="8" class="textInput">{$vo.child_norm}</textarea>
+
+							<label class="tip"></label>
+
+						</td>
+
+					</tr>
+
+					
+
+					<tr>
+
+						<td class="item_title">提前报名天数:</td>
+
+						<td class="item_input">
+
+							<input type="text" class="textInput digits"  name="advance_day" value="{$vo.advance_day}">
+
+							<label class="tip"></label>
+
+						</td>
+
+					</tr>
+
+					<tr>
+
+						<td class="item_title">时间价格:</td>
+
+						<td class="item_input" id="tourline_items" editurl="{$edititem}">
+
+							<a class="button" href="{$additem}" target="dialog" title="{lang v="ADD_TOURLINE_ITEM"}" width="800" height="480" mask="true"  rel="dlg_tourline_items"><span>{lang v="ADD_TOURLINE_ITEM"}</span></a>
+
+							<div >
+
+								<table class="list nowrap " width="100%" style="clear: both;">
+
+									<thead>
+
+										<tr>
+
+											<th>发团日期</th>
+
+											<th width="90">成人价</th>
+
+											<th width="90">成人预付价</th>
+
+											<th width="90">儿童价</th>
+
+											<th width="90">儿童预付价</th>
+
+											<th width="100">成人报名总数</th>
+
+											<th width="100">儿童报名总数</th>
+
+											<th width="150">操作</th>
+
+										</tr>
+
+									</thead>
+
+									<tbody>
+
+										{foreach from=$tourline_items item=item }
+
+										<tr>
+
+											<th>{if $item.is_forever eq 1}永久{else}{$item.start_time}{/if}<input type="hidden" name="tourline_items[]" value="{$item.tourline_item_data}" /></th>
+
+											<th width="90" align="center" >{$item.adult_price}</th>
+
+											<th width="90" align="center" >{$item.adult_sale_price}</th>
+
+											<th width="90" align="center" >{$item.child_price}</th>
+
+											<th width="90" align="center" >{$item.child_sale_price}</th>
+
+											<th width="100" align="center" >{$item.adult_limit}</th>
+
+											<th width="100" align="center" >{$item.child_limit}</th>
+
+											<th width="150">
+
+												<a href="javascript:void(0)" class="edit_tourline_item">编辑</a>&nbsp;
+
+												<a href="javascript:void(0)" class="remove_tourline_item">删除</a>
+
+											</th>
+
+										</tr>
+
+										{/foreach}
+
+									</tbody>
+
+								</table>
+
+							</div>
+
+						</td>
+
+		
+
+					</tr>	
+
+					</table>
+
+				</div>
+
+							
+
+				<!--退改设置-->
+
+				<div>
+
+					<table class="formtable">
+
+						<tr>
+
+							<td class="item_title">确认后是否支持退款:</td>
+
+							<td class="item_input">
+
+								<select name="is_refund" class="combox">
+
+									<option value="0" {if $vo.is_refund eq 0}selected=selected{/if} >否</option>
+
+									<option value="1" {if $vo.is_refund eq 1}selected=selected{/if} >是</option>
+
+								</select>
+
+							</td>
+
+						</tr>
+
+						<tr class="refund_box">
+
+							<td class="item_title">退款说明:</td>
+
+							<td class="item_input">
+
+								<textarea name="refund_desc" cols="80" rows="4" class="textInput">{$vo.refund_desc}</textarea>
+
+							</td>
+
+						</tr>
+
+						<tr class="refund_box">
+
+							<td class="item_title">过期允许退款:</td>
+
+							<td class="item_input">
+
+								<select name="is_expire_refund" class="combox">
+
+									<option value="0" {if $vo.is_expire_refund eq 0}selected=selected{/if} >不可以</option>
+
+									<option value="1" {if $vo.is_expire_refund eq 1}selected=selected{/if}>可以</option>
+
+								</select>
+
+							</td>
+
+						</tr>
+
+					</table>
+
+				</div>
+
+				
+
+				<!--团购设置-->
+
+				<div>
+
+					<table class="formtable">	
+
+						<tr >
+
+							<td class="item_title">是否团购:</td>
+
+							<td class="item_input">
+
+								<select name="is_tuan" class="combox">
+
+									<option value="0" {if $vo.is_tuan eq 0}selected=selected{/if} >否</option>
+
+									<option value="1" {if $vo.is_tuan eq 1}selected=selected{/if} >是</option>
+
+								</select>
+
+								<label class="tip">选 是 下面设置才生效</label>
+
+							</td>
+
+						</tr>
+
+						<tr >
+
+							<td class="item_title">团购分类:</td>
+
+							<td class="item_input">
+
+								<select name="tuan_cate" class="combox">
+
+									<option value="0">未选择</option>
+
+									{foreach from="$tuan_cates" item="cate"}
+
+									<option value="{$cate.id}" {if $cate.id eq $vo.tuan_cate}selected=selected{/if}>{$cate.name}</option>
+
+									{/foreach}
+
+								</select>
+
+							</td>
+
+						</tr>
+
+						<tr class="tuan_box">
+
+							<td class="item_title">团购开始时间:</td>
+
+							<td class="item_input">
+
+								<input type="text" name="tuan_begin_time" value="{function name=to_date v=$vo.tuan_begin_time}" class="date textInput readonly valid" datefmt="yyyy-MM-dd HH:mm:ss"  readonly="true">
+
+								<a class="inputDateButton" href="javascript:;">选择</a>
+
+							</td>
+
+						</tr>
+
+						
+
+						<tr class="tuan_box">
+
+							<td class="item_title">团购结束时间:</td>
+
+							<td class="item_input">
+
+								<input type="text" name="tuan_end_time" value="{function name=to_date v=$vo.tuan_end_time}" class="date textInput readonly valid" datefmt="yyyy-MM-dd HH:mm:ss" readonly="true">
+
+								<a class="inputDateButton" href="javascript:;">选择</a>
+
+							
+
+							</td>
+
+						</tr>
+
+						
+
+						<tr class="tuan_box">
+
+							<td class="item_title">成团数量:</td>
+
+							<td class="item_input">
+
+								<input type="text" class="textInput digits"   maxlength="10" name="tuan_success_count" value="{$vo.tuan_success_count}">
+
+								<label class="tip"></label>
+
+							</td>
+
+						</tr>
+
+						
+
+						<tr class="tuan_box">
+
+							<td class="item_title">是否预告:</td>
+
+							<td class="item_input">
+
+								<select name="tuan_is_pre" class="combox">
+
+									<option value="0" {if $vo.tuan_is_pre eq 0}selected=selected{/if}>否</option>
+
+									<option value="1" {if $vo.tuan_is_pre eq 1}selected=selected{/if}>是</option>
+
+								</select>
+
+							</td>
+
+						</tr>
+
+					</table>
+
+				</div>
+
+				<!--签证设置-->
+
+				<div>
+
+					<table class="formtable">
+
+					   <tr>
+
+							<td class="item_title">是否提供签证服务:</td>
+
+							<td class="item_input">
+
+								<select name="is_visa" class="combox">
+
+									<option value="0" {if $vo.is_visa eq 0}selected=selected{/if} >否</option>
+
+									<option value="1" {if $vo.is_visa eq 1}selected=selected{/if} >是</option>
+
+								</select>
+
+							</td>
+
+						</tr>
+
+						<tr>
+
+							<td class="item_title">签证名称:</td>
+
+							<td class="item_input">
+
+								<input type="text" class="textInput"   maxlength="10" name="visa_name" value="{$vo.visa_name}">
+
+								<label class="tip"></label>
+
+							</td>
+
+						</tr>
+
+						<tr>
+
+							<td class="item_title">签证单价:</td>
+
+							<td class="item_input">
+
+								<input type="text" class="textInput number"   maxlength="10" name="visa_price" value="{function name=format_price_to_display v=$vo.visa_price }">
+
+								<label class="tip"></label>
+
+							</td>
+
+						</tr>
+
+						<tr>
+
+							<td class="item_title">签证说明:</td>
+
+							<td class="item_input">
+
+								<textarea name="visa_brief" class="ketext" style="width:680px;height:250px;visibility:hidden;">{$vo.visa_brief}</textarea>
+
+								<label class="tip"></label>
+
+							</td>
+
+						</tr>
+
+					</table>
+
+				</div>
+
+				<!--保险设置-->
+
+				<div>
+
+					<table class="formtable">
+
+						<tr>
+
+						<td class="item_title">保险:</td>
+
+						<td class="item_input">
+
+							<input name="insurance.id"  lookupSend="insurance_data" type="hidden" value="{$vo.insurance_ids}" />
+
+							<input class="" size="80" name="insurance.name" lookupSend="insurance_data"  type="text"  readonly="true" value="{$vo.insurance_names}" />
+
+							<a class="btnLook" href="{$searchinsurance}" lookupGroupSelect="insurance">选择保险</a>
+
+						</td>
+
+					</tr>
+
+					<tr>
+
+						<td class="item_title">增加新保险:</td>
+
+						<td class="item_input" id="new_insurances" editurl="{$edit_new_insurance}">
+
+							<a class="button" href="{$add_new_insurance}" target="dialog" title="增加新保险" width="800" height="600" mask="true"  rel="dlg_new_insurances"><span>{lang v="增加新保险"}</span></a>
+
+							<div >
+
+								<table class="list nowrap " width="100%" style="clear: both;">
+
+									<thead>
+
+										<tr>
+
+											<th width="">保险名称</th>
+
+											<th width="90">价格</th>
+
+											<th width="150">操作</th>
+
+										</tr>
+
+									</thead>
+
+									<tbody>
+
+										{foreach from=$other_insurance_cfg item=other}
+
+										<tr>
+
+											<td>{$other.name}<input type="hidden" name="new_insurances[]" value="{$other.new_insurance_data}" /></td>
+
+											<td width="90" align="center" >{$other.price}</td>
+
+											<td width="150">
+
+												<a href="javascript:void(0)" class="edit_new_insurance">编辑</a>&nbsp;
+
+												<a href="javascript:void(0)" class="remove_new_insurance">删除</a>
+
+											</td>
+
+										</tr>
+
+										{/foreach}
+
+									</tbody>
+
+								</table>
+
+							</div>
+
+						</td>
+
+					</tr>	
+
+					</table>
+
+				</div>
+
+				
+
+			</div>
+
+	
+
+			 <div class="tabsFooter">
+
+				<div class="tabsFooterContent"></div>
+
+			</div>
+
+		 </div>
+
+	</div>
+
+	<div class="formBar">
+
+		<ul>
+
+			<input type="hidden" name="id" value="{$vo.id}" />
+
+			<li><div class="buttonActive"><div class="buttonContent"><button type="submit">审核过通</button></div></div></li>
+
+			<li><div class="button"><div class="buttonContent"><button class="close" type="button">{lang v="CLOSE"}</button></div></div></li>
+
+		</ul>
+
+	</div>
+
+</div>
+
+</form>

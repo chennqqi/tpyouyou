@@ -1,0 +1,151 @@
+<?php
+	$this->_var['pagecss'][] = TMPL_REAL."/css/style.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/weebox.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/ticket_order.css";
+	
+	$this->_var['pagecss'][] = TMPL_REAL."/css/doubleDate.css";
+	
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.bgiframe.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.weebox.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.pngfix.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/lazyload.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/script.js";
+	$this->_var['cpagejs'][] = TMPL_REAL."/js/script.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/ticket_order.js";
+	
+	$this->_var['pagejs'][] = TMPL_REAL."/js/doubleDate2.0.js";
+?>
+{include file="inc/header_order.html"}
+<script type="text/javascript">
+	var json_data = {$json_list};
+	{if $deliver_json_data}
+	var deliver_json_data = {$deliver_json_data};
+	{else}
+	var deliver_json_data = null;
+	{/if}
+	var AJAX_DEL_CART_ITEM_URL = "{url x="ticket_order#del"}";
+	var AJAX_SUBMIT_CART_URL = "{url x="ticket_order#submit_cart"}";
+</script>
+<div class="wrap">
+	<div class="step"><img src="{$TMPL}/images/ord_step1.jpg" /></div>
+	
+	
+	<div class="w780 f_l">
+		<div class="ticket_order" id="J_ORDER_BOX">
+			<form name="ticket_order_form" id="ticket_order_form">
+			{include file="inc/ticket_order/ticket_item.html"} 
+			
+			<div class="order_info_box clearfix">
+				<!--优惠券-->
+				{include file="inc/ticket_order/promotion.html"} 
+				<!--优惠券END-->
+				
+				<!--余额-->
+				{include file="inc/ticket_order/account.html"} 
+				<!--余额END-->
+				
+				<!--联系人-->
+				{include file="inc/ticket_order/contact.html"} 
+				<!--联系人END-->
+				
+				<!--配送STRAT-->
+				{include file="inc/ticket_order/deliver.html"} 
+				<!--配送END-->
+				
+				<!--备注STRAT-->
+				<div class="blank15"></div>
+				<div id="order_memo_part" class="order_box ">
+				    <h2>订单备注</h2>
+					<div class="routes_info pl15">
+						<textarea cols="60" holder="请输入订单备注（大于10个字，小于100个字）" rows="5" class="area_input" name="order_memo"></textarea>
+						<span class="err_structure hide" id="orderMemoError" >
+		                    <span class="error_notice">
+		                        <i>内容不得小于10个字，大于100个字</i>
+		                    </span>
+		                </span>
+					</div>
+					
+				</div>
+				<div class="blank15"></div>
+				<!--备注END-->
+				<div class="next_step_s2">
+	                <input type="button" value="提交订单" class="blue_btn J_subButton" id="subButton">
+					<img src="{$TMPL}/images/subcart.gif" class="hide J_doing" />
+	            </div>
+				<div id="ydxz" class="ready_rule">
+                    <p class="rr_check">
+                    	<label>
+                        <input type="checkbox" value="1" id="check_book_notice" checked="checked">我已阅读并同意以下协议
+						</label>
+						<span class="err_structure hide" id="book_notice_tip" >
+							<span class="error_notice"><i>请阅读预订须知并勾选“我已阅读并同意”</i></span>
+						</span>
+                    </p>
+					
+					{if $api_list}
+					<p align="center">
+						<label>
+						<input type="checkbox" value="1" name="share_order" checked="checked" /><b>微博晒单，邀请好友获取返利</b>
+						</label>
+					</p>
+					{/if}
+					
+                    <div class="rule_name">
+                    	<a href="javascript:void(0);" class="t" rid="1" >预订协议</a>
+					</div>
+					<div class="rule_desc">
+                    	<div id="desc_box_1"  class="desc_box hide">{function name=app_conf v='PREARRANGEMENT_AGREEMENT'}</div>
+					</div>
+                   
+				</div>
+			</div>
+			
+			</form>
+		</div>
+		
+	</div>
+	<div class="w210 f_r">
+		<div class="blank15"></div>
+		<div id="summaryInfo">
+			<div class="hd">结算信息</div>
+			<div class="bx">
+			{foreach from="$list" item="item"}
+			<div class="item clearfix" id="item_{$item.id}">
+				<div class="dt">
+					&lt;{$item.ticket_name}&gt;{$item.name_brief}（网上支付）
+				</div>
+				<div class="pn clearfix">
+					<div class="tip org f_l">请选择出游日期</div>
+					<div class="price f_r">0元</div>
+				</div>
+			</div>
+			{/foreach}
+			</div>
+			<p class="it_money">配送费：
+                <span id="totalPickNet">0元</span>
+            </p>
+			<p class="it_money">代金券：
+                <span id="totalvoucherNet">0元</span>
+            </p>
+			<p class="it_money">余&nbsp;&nbsp;&nbsp;&nbsp;额：
+                <span id="totalaccountNet">0元</span>
+            </p>
+			<p class="totl_money">应付总额：
+                <span id="totalPayNet">0元</span>
+            </p>
+			<div class="act_btn">
+			 <input type="button" value="提交订单" class="blue_btn J_subButton" id="subButton">
+			 <img src="{$TMPL}/images/subcart.gif" class="hide J_doing" />
+			</div>
+			<div class="blank"></div>
+		</div>
+		
+	</div>
+</div>
+<div class="blank20"></div>
+<script type="text/javascript" defer="defer">
+$(function(){
+	doneCart();
+});
+</script>
+{include file="inc/footer_order.html"} 

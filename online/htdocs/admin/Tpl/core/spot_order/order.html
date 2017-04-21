@@ -1,0 +1,567 @@
+<style type="text/css">
+	ul.rightTools {float:right; display:block;}
+	ul.rightTools li{float:left; display:block; margin-left:5px}
+	table.userinfo td{ padding:10px 5px;}
+</style>
+<script type="text/javascript">
+function opdone(json){
+	DWZ.ajaxDone(json);
+	if (json.statusCode == DWZ.statusCode.ok){
+		navTab.reload("{$accounturl}", {navTabId: "user_account_page"});
+		$.pdialog.closeCurrent();
+	}
+}
+
+function opdone2(json){
+	
+	if (json.statusCode == DWZ.statusCode.ok){
+		//navTab.reload("{$accounturl}", {navTabId: "user_account_page"});
+		//$.pdialog.closeCurrent();
+	}
+}
+
+function doConfirm(info,url){
+	alertMsg.confirm(info, {
+		okCall: function(){
+			ajaxTodo(url);
+		}
+	});
+	
+	/*
+	 if(confirm(info))
+	 { 
+		 alert(url);
+		 return true; }
+	 else
+	{
+		 return false; 
+	}
+	*/
+}
+</script>
+<div class="pageContent" style="padding:5px">
+{if $order.order_status neq 4}
+	<div class="formBar">
+		<ul>
+		
+			{if $order.pay_status eq 1 and $order.order_status < 3 and $order.refund_status eq 0}
+			<li>				
+				<a href="{$sendurl}&send_type=1" target="ajaxTodo" class="button"><span>重发订单通知短信</span></a>			
+			</li>
+			<li>			
+				<a href="{$sendurl}&send_type=2" target="ajaxTodo" class="button"><span>重发订单通知邮件</span></a>		
+			</li>
+			{/if}
+			
+			{if $order.verify_time eq 0 && $order.verify_code neq ''}
+				<li>
+					<div class="button"><div class="buttonContent"><button onclick="javascript:doConfirm('确认验证码,标识使用,并完成订单?','{$use_verify_code_url}');" >验证码,标识使用,并完成订单</button></div></div>
+				</li>
+			{/if}
+							
+			{if $order.order_status eq 2}
+				{if $order.delivery_status eq 0}	
+				<li>
+					<a class="button" href="{$order_delivery_url}" target="dialog" rel="dlg_page" height="230" width=700><span>发货</span></a>
+				</li>
+				{/if}
+				{if $order.delivery_status eq 1}
+				<li>
+					<div class="button"><div class="buttonContent"><button onclick="javascript:doConfirm('确定要标识用户已经收到货?','{$order_delivery2_url}');" >标识收货</button></div></div>
+				</li>
+				{/if}
+			{/if}
+															
+			{if $order.refund_status eq 0 || $order.refund_status eq 2 || $order.refund_status eq 3}
+				{if $order.pay_status eq 0}
+				<li>
+					<div class="button"><div class="buttonContent"><button onclick="javascript:doConfirm('确定要进行管理员后台，手工收款?','{$pay_order_url}');" >手工收款</button></div></div>
+				</li>
+				{/if}
+				
+				{if $order.order_status eq 1}
+				{if $order.order_confirm_type eq 2 || $order.pay_status eq 1}
+				<li>
+					<div class="button"><div class="buttonContent"><button onclick="javascript:doConfirm('订单确认通过?','{$order_status_url}&order_status=2');" >
+					
+					{if $order.order_confirm_type eq 2 && $order.pay_status eq 0}
+						确认通过,同意付款
+					{else}
+						确认通过
+					{/if}					
+					</button></div></div>
+				</li>
+				
+				<li>
+					<div class="button"><div class="buttonContent"><button onclick="javascript:doConfirm('订单确认不通过?','{$order_status_url}&order_status=5');" >不通过</button></div></div>
+				</li>	
+				{/if}			
+				{/if}
+				
+				{if $order.order_status eq 2}
+				<li>
+					<div class="button"><div class="buttonContent"><button onclick="javascript:doConfirm('订单完成?','{$order_status_url}&order_status=3');" >订单完成</button></div></div>
+				</li>
+				{/if}
+				{if $order.order_status neq 4}
+				<li>
+					<div class="button"><div class="buttonContent"><button onclick="javascript:doConfirm('订单作废?','{$order_status_url}&order_status=4');" >订单作废</button></div></div>
+				</li>
+				{/if}			
+			{/if}
+			
+			{if $order.refund_status eq 1}
+			<li>
+				<a class="button" href="{$refuse_refund_url}" target="dialog" rel="dlg_page" height="400" width=700><span>退票处理</span></a>
+			</li>
+			{/if}								
+		</ul>
+		</div>
+{/if}
+		
+	<div class="tabs">
+		<div class="tabsHeader">
+			<div class="tabsHeaderContent">
+				<ul>
+					<li><a href="javascript:;"><span>订单详情</span></a></li>
+					<li><a href="javascript:;" rel="ticketlistpage"><span>门票列表</span></a></li>
+					<li><a href="javascript:;" rel="logpage"><span>订单日志</span></a></li>
+					<li><a href="javascript:;" rel="payment_notice"><span>支付日志</span></a></li>
+					
+				</ul>
+			</div>
+		</div>
+		<div class="tabsContent" layoutH="87">
+			
+			<div>
+								<table class="formtable userinfo">		
+								<tr>
+									<td class="item_title">门票:</td>
+									<td class="item_input" colspan = 3>
+										{$order.ticket_name}
+									</td>
+								</tr>		
+								<tr>
+									<td class="item_title">订单号:</td>
+									<td class="item_input">
+										{$order.sn}
+									</td>
+									
+									<td class="item_title">商家名称:</td>
+									<td class="item_input">
+										{$order.supplier_name}
+									</td>									
+									
+								</tr>
+								<tr>
+									
+									<td class="item_title">会员名:</td>
+									<td class="item_input">
+										{$order.user_name}
+									</td>
+									
+									<td class="item_title">发货状态:</td>
+									<td class="item_input">
+										{$order.delivery_status_format}
+									</td>
+								</tr>
+								
+								<tr>
+									<td class="item_title">支付状态:</td>
+									<td class="item_input">
+										{$order.pay_status_format},{$order.order_confirm_type_format}
+									</td>
+									
+									<td class="item_title">订单状态:</td>
+									<td class="item_input">
+										{$order.order_status_format},{$order.refund_status_format}
+									</td>
+								</tr>
+																
+								<tr>
+									<td class="item_title">下单时间:</td>
+									<td class="item_input">
+										{$order.create_time_format}
+									</td>
+									
+									<td class="item_title">订单金额:</td>
+									<td class="item_input">
+										{$order.total_price_format}
+									</td>
+								</tr>
+								<tr>
+									<td class="item_title">已付金额:</td>
+									<td class="item_input">
+										{$order.pay_amount_format}
+									</td>
+									<td class="item_title">在线支付金额:</td>
+									<td class="item_input">
+										{$order.online_pay_format}
+									</td>
+								</tr>
+								<tr>
+									<td class="item_title">代金券支付:</td>
+									<td class="item_input">
+										{$order.voucher_pay_format}
+									</td>
+									<td class="item_title">余额支付:</td>
+									<td class="item_input">
+										{$order.account_pay_format}
+									</td>
+								</tr>
+
+								
+								<tr>
+									<td class="item_title">支付时间:</td>
+									<td class="item_input">
+										{$order.pay_time_format}
+									</td>
+									
+									<td class="item_title">订单确认时间:</td>
+									<td class="item_input">
+										{$order.confirm_time_format}
+									</td>
+								</tr>
+								
+								<tr>
+									<td class="item_title">完成时间:</td>
+									<td class="item_input">
+										{$order.over_time_format}
+									</td>
+									
+									<td class="item_title">预定人姓名:</td>
+									<td class="item_input">
+										{$order.appoint_name}; {$order.appoint_time_format}
+									</td>
+								</tr>
+								
+								<tr>
+									<td class="item_title">预定人手机:</td>
+									<td class="item_input">
+										{$order.appoint_mobile}
+									</td>
+									
+									<td class="item_title">预约人邮箱:</td>
+									<td class="item_input">
+										{$order.appoint_email}
+									</td>
+								</tr>
+								<tr>
+									<td class="item_title">是否支持退单:</td>
+									<td class="item_input">										
+										{if $order.is_refund eq 0}
+											否
+										{else}
+											是
+										{/if}										
+									</td>
+									
+									<td class="item_title">过期退:</td>
+									<td class="item_input">
+										{if $order.is_expire_refund eq 0}
+											否
+										{else}
+											是
+										{/if}										
+									</td>
+								</tr>								
+								<tr>
+									<td class="item_title">是否为团体票:</td>
+									<td class="item_input">										
+										{$order.is_divide_format}																			
+									</td>
+									
+									<td class="item_title">是否允为实体票:</td>
+									<td class="item_input">
+										{if $order.is_delivery eq 0}
+											否
+										{else}
+											是
+										{/if}										
+									</td>
+								</tr>
+								
+								<tr>
+									<td class="item_title">已返现总额:</td>
+									<td class="item_input">										
+										{$order.return_money_total_format}																			
+									</td>
+									
+									<td class="item_title">已返积分总额:</td>
+									<td class="item_input">
+										{$order.return_score_total}																			
+									</td>
+								</tr>
+									
+								<tr>
+									<td class="item_title">返经验总额:</td>
+									<td class="item_input">										
+										{$order.return_exp_total}																			
+									</td>
+									
+									<td class="item_title">过期时间:</td>
+									<td class="item_input">										
+										{$order.end_time_format}																			
+									</td>									
+									
+
+								</tr>		
+																						
+								<tr>
+										<td class="item_title">销售张数:</td>
+										<td class="item_input">
+											{$order.sale_count}
+										</td>
+										<td class="item_title">退票张数:</td>
+										<td class="item_input">
+											{$order.refund_count}
+										</td>																		
+								</tr>
+									
+								<tr>
+									<td class="item_title">订单备注:</td>
+									<td class="item_input" colspan = 3>
+										{$order.order_memo}
+									</td>
+								</tr>
+																
+								{if $order.delivery_status gt -1}
+																<tr>
+										<td class="item_title" colspan = 4>
+											
+										</td>									
+																				
+									</tr>
+									
+								<tr>
+									<td class="item_title">运费:</td>
+									<td class="item_input">
+										{$order.delivery_fee_format}
+									</td>
+									
+									<td class="item_title">快递单号:</td>
+									<td class="item_input">
+										{$order.delivery_sn}
+									</td>
+								</tr>
+								
+								<tr>
+									<td class="item_title">快递时间:</td>
+									<td class="item_input">
+										{$order.delivery_time_format}
+									</td>
+									
+									<td class="item_title">邮编:</td>
+									<td class="item_input">
+										{$order.zip}
+									</td>
+								</tr>	
+								
+								
+								<tr>
+									<td class="item_title">收件人:</td>
+									<td class="item_input">
+										{$order.delivery_name}
+									</td>
+									
+									<td class="item_title">收件电话:</td>
+									<td class="item_input">
+										{$order.delivery_mobile}
+									</td>
+								</tr>								
+								<tr>
+									
+									
+									<td class="item_title">快递地址:</td>
+									<td class="item_input" colspan = 3>
+										{$order.province_name}{$order.city_name}{$order.address}
+									</td>
+								</tr>	
+																						
+								{/if}	
+																																																																
+								{if $order.refund_status gt 0}
+									<tr>
+										<td class="item_title" colspan = 4>
+											
+										</td>									
+																				
+									</tr>
+									
+									<tr>
+										<td class="item_title">退款备注:</td>
+										<td class="item_input" colspan = 3>
+											{$order.refund_txt}
+										</td>									
+																					
+									</tr>	
+									
+									<tr>
+										<td class="item_title">退票张数:</td>
+										<td class="item_input">
+											{$order.refund_count}
+										</td>									
+										<td class="item_title">已退金额:</td>
+										<td class="item_input">
+											{$order.refund_amount_format}
+										</td>									
+									</tr>																
+									<tr>
+										<td class="item_title">商家审核状态:</td>
+										<td class="item_input">
+											{$order.supplier_confirm_format}												
+										</td>									
+										<td class="item_title">商家审核时间:</td>
+										<td class="item_input">
+											{$order.supplier_confirm_time_format}
+										</td>									
+									</tr>
+									<tr>
+										<td class="item_title">原因:</td>
+										<td class="item_input" colspan = 3>
+											{$order.refuse_reason}
+										</td>										
+									</tr>
+																	
+								{/if}
+																
+								
+								
+								</table>
+						
+			</div>
+			
+			
+			<div id="ticketlistpage">
+				<div class="pageContent">
+					<table class="table" width="100%" layoutH="45" >
+						
+							<thead>
+								<tr>
+									
+									<th width="118">验证码</th>
+									<th width="125">开始时间</th>
+									<th width="125">过期时间</th>
+									
+									<th width="118">预约时间</th>
+									
+									<th width="125">验证时间</th>
+									<th width="118">是否有效</th>
+									<th width="118">改约状态</th>									
+									<th width="118">改约日期</th>
+									
+									<th width="118">退款状态</th>
+									
+									<th>操作</th>
+								</tr>
+							</thead>
+							<tbody>
+							{foreach from=$ticketlist item=item}
+							<tr  rel="{$item.id}">							
+								<td>{$item.verify_code}</td>
+								
+								
+								<td>{$item.begin_time_format}</td>
+								<td>{$item.end_time_format}</td>
+								
+								<td>{$item.appoint_time_format}</td>
+								
+								<td>{$item.verify_time_format}</td>
+								<td>
+								{if $item.is_verify_code_invalid eq 0}
+											是
+										{else}
+											否
+										{/if}
+								</td>
+								
+								<td>{$item.re_appoint_status_format}</td>
+								<td>{$item.re_action_time_format}</td>
+								
+								<td>{$item.refund_status_format}</td>
+								
+								<td>
+								
+								{if $item.re_appoint_status eq 1}
+									<a title="门票详情" rel="op_page" target="dialog" height="400" width=700  href="{$order_item_url}&id={$item.id}"  class="btnEdit"  style="float:left;">详情</a>
+								{else}
+									<a title="门票详情" rel="op_page" target="dialog" height="300" width=700  href="{$order_item_url}&id={$item.id}"  class="btnView"  style="float:left;">详情</a>
+								{/if}
+								
+								</td>
+							</tr>
+							{/foreach}
+						</tbody>
+					</table>
+				</div>			
+			
+			</div>
+						
+			
+			<div id="logpage">
+				<div class="pageContent">
+					<table class="table" width="100%" layoutH="45" >
+						
+							<thead>
+								<tr>
+									<th width="150">日志发生时间</th>
+									<th>日志内容</th>
+									<th width="118">是否由商家操作</th>
+								</tr>
+							</thead>
+							<tbody>
+							{foreach from=$order_log item=item}
+							<tr  rel="{$item.id}">
+								<td>{$item.log_time_format}</td>				
+								<td>{$item.log_info}</td>
+								<td>{$item.is_supplier_format}</td>
+							</tr>
+							{/foreach}
+						</tbody>
+					</table>
+				</div>			
+			</div>
+						
+			<div id="payment_notice">
+				<div class="pageContent">
+					<table class="table" width="100%" layoutH="45" >
+						
+							<thead>
+								<tr>
+									<th width="150">支付单号</th>
+									<th width="150">创建时间</th>
+									<th width="150">支付成功时间</th>
+									<th>是否支付成功</th>
+									<th>接口名称</th>
+									<th>支付金额</th>
+									<th>外部单号</th>
+								</tr>
+							</thead>
+							<tbody>
+							{foreach from=$payment_notice item=item}
+							<tr  >
+								<td>{$item.notice_sn}</td>	
+								<td>{$item.create_time_format}</td>
+								<td>{$item.pay_time_format}</td>
+								<td>{$item.is_paid_format}</td>
+								<td>{$item.payment_name}</td>			
+								<td>{$item.money_format}</td>
+								<td>{$item.outer_notice_sn}</td>
+							</tr>
+							{/foreach}
+						</tbody>
+					</table>
+				</div>			
+			</div>
+					
+		</div>
+
+
+		
+	</div>
+	
+</div>
+
+
+	
+

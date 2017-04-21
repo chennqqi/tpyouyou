@@ -1,0 +1,60 @@
+<script type="text/javascript" src="{$TMPL}/core/include/js/database.js"></script>
+<script type="text/javascript">
+var DUMP_URL = "{$dumpurl}";
+var RESTORE_URL = "{$restoreurl}";
+</script>
+<form id="pagerForm" method="post" action="#rel#">
+</form>
+<form rel="pagerForm" action="" method="post">
+</form>
+<div class="pageHeader">
+	
+	<div class="searchBar">
+		<div class="pageFormContent cf" >
+			<div class="searchtableRow">				
+				<table>
+					<tr>
+						<td>
+						
+						<a href="javascript:void(0);" onclick="backup();" class="buttonActive"><span>{lang v="BACKUP"}</span></a>
+						
+						</td>
+					</tr>
+				</table>				
+			</div>
+		</div>
+	</div>
+
+</div>
+<div class="pageContent">
+	<div class="panelBar">
+		<ul class="toolBar">
+			<li><a title="{lang v="CONFIRM_DELETE"}" target="selectedTodo" rel="groupname" postType="string" href="{$delurl}" class="delete"><span>{lang v="DEL"}</span></a></li>
+		</ul>
+	</div>
+	<table class="table" width="100%" layoutH="138">
+		<thead>
+		<tr>
+				<th width="22"><input type="checkbox" group="groupname" class="checkboxCtrl"></th>
+				<th>{lang v="BACKUP_FILE"}</th>
+				<th>{lang v="CREATE_TIME"}</th>		
+				<th>{lang v="TAG_LANG_OPERATE"}</th>
+			</tr>
+		</thead>
+		<tbody>
+		
+			{foreach from=$sql_list item=sql_item key=groupname}
+			<tr rel="{$sql_item.groupname}">
+				<td><input name="groupname" value="{$groupname}" type="checkbox"></td>
+				<td>{$groupname}({$sql_item.vol_count_lang})</td>
+				<td>{$sql_item.backup_time}</td>
+					<td>
+					<a title="{lang v="CONFIRM_RESTORE"}"  href="javascript:void(0);"  onclick="restore_db('{$groupname}');"  >{lang v="RESTORE"}</a>
+					<a title="{lang v="CONFIRM_DELETE"}" target="ajaxTodo" href="{$delurl}&groupname={$groupname}" >{lang v="DEL"}</a>					
+				</td>
+			</tr>
+			{/foreach}
+		</tbody>
+	</table>
+	
+</div>

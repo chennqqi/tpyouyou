@@ -1,0 +1,74 @@
+<?php
+	$this->_var['pagecss'][] = TMPL_REAL."/css/style.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/weebox.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/news.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/comment.css";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.bgiframe.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.weebox.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.pngfix.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/lazyload.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/script.js";
+	$this->_var['cpagejs'][] = TMPL_REAL."/js/script.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/ajax_pages.js";
+	$this->_var['cpagejs'][] = TMPL_REAL."/js/ajax_pages.js";
+?>
+{include file="inc/header.html"} 
+<div class="blank"></div>
+<div class="blank"></div>
+<div class="wrap">
+	<div class="news_left newsbox">
+		<div class="title">您当前的位置：<a href="{url r="index"}">首页</a> > <a href="{$cate_data.url}">{$cate_data.name}</a> > <a href="{$news.url}" title="{$news.name}">{function name="msubstr" v=$news.name b=0 e=10}</a></div>	
+		<div class="news_content">
+			
+			<div class="news_title">{$news.name}</div>
+			
+			<div class="news_info">
+				<span class="pub_time">发布时间：{function name="to_date" v=$news.create_time f="Y-m-d"}</span>
+				<span class="pub_source">{$news.source}</span> 
+				<span class="pub_author">{$news.author}</span>
+			</div>
+			
+			<div class="news_count">点击量：{$news.count}</div>
+			<div class="blank"></div>
+			<div class="blank"></div>
+			
+			{if $news.brief}
+			<div class="news_brief">{function name="nl2br" v=$news.brief}</div>
+			<div class="blank"></div>
+			{/if}
+			
+			{if $news.image}
+			<div class="news_logo">
+				<img src="{function name="get_spec_image" v=$news.image w="605"}"  />
+				
+			</div>
+			<div class="blank"></div>
+			{/if}
+			
+			<div class="news_main">
+				{$news.content}
+			</div>
+			
+			<div class="blank"></div>	
+			
+			<div>
+				{$comment_html}
+			</div>
+		</div>	
+	</div>
+	<div class="news_right newsbox">
+		<div class="title hot">热门文章排行</div>	
+		<div class="list">
+			
+			{foreach from=$hot_news item=news_item name=hot_loop}
+			<div class="news_row">
+				<i {if $smarty.foreach.hot_loop.iteration eq 1}style="color:#ff714b;"{elseif $smarty.foreach.hot_loop.iteration eq 2}style="color:#ff944f;"{elseif $smarty.foreach.hot_loop.iteration eq 3}style="color:#fdb94c;"{else}style="color:#acacac;"{/if}>{$smarty.foreach.hot_loop.iteration}</i>	<a href="{$news_item.url}" title="{$news_item.name}">{function name="msubstr" v=$news_item.name b=0 e=20} {if $news_item.is_image eq 1}[图]{/if}</a>
+			</div>
+			{/foreach}
+			
+		</div>
+	</div>	
+</div>
+<div class="blank"></div>
+<div class="blank"></div>
+{include file="inc/footer.html"} 

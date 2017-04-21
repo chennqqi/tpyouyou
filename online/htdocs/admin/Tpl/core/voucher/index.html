@@ -1,0 +1,112 @@
+<form id="pagerForm" method="post" action="#rel#">
+	<input type="hidden" name="pageNum" value="{$param.pageNum}" />
+	<input type="hidden" name="numPerPage" value="{$param.pageSize}" />
+	<input type="hidden" name="orderField" value="{$param.orderField}" />
+	<input type="hidden" name="orderDirection" value="{$param.orderDirection}" />
+</form>
+<div class="pageHeader">
+	<form rel="pagerForm" onsubmit="return navTabSearch(this);" action="{$formaction}" method="post">
+	<div class="searchBar">
+		<div class="pageFormContent cf" >
+			<div class="searchtableRow">
+				
+				<table>
+					<tr>
+						<td>
+						{lang v="KEYWORD"}：
+						</td>						
+						<td>
+						<input type="text" name="voucher_name" value="{$param.voucher_name}"/>
+						<input type="hidden" name="type_id" value="{$param.type_id}"/>
+						</td>
+						<td>
+						{lang v="VOUCHER_MONEY"}：
+						</td>
+						<td>
+						<input type="text" name="voucher_money" value="{$param.voucher_money}"/>
+						<input type="hidden" name="user_id" value="{$param.user_id}" />
+						</td>
+						
+						
+						<td>
+						<div class="buttonActive"><div class="buttonContent"><button type="submit">{lang v="SEARCH"}</button></div></div>
+						</td>
+					</tr>
+				</table>
+				
+			</div>
+
+			
+			
+			
+		</div>
+
+	</div>
+	</form>
+</div>
+
+<div class="pageContent">
+	<div class="panelBar">
+		<ul class="toolBar">
+		<li><a title="{lang v="CONFIRM_DELETE"}" target="selectedTodo" rel="id" postType="string" href="{$delurl}" class="delete"><span>{lang v="DEL"}</span></a></li>
+		</ul>
+	</div>
+	<table class="table" width="100%" layoutH="140">
+		<thead>
+		<tr>
+				<th width="22"><input type="checkbox" group="id" class="checkboxCtrl"></th>
+				<th  width="50" orderField="id" {if $param.orderField eq 'id'} class="{$param.orderDirection}"{/if}>{lang v="ID"}</th>
+				<th>{lang v="NAME"}</th>
+				<th width="100" orderField="money" {if $param.orderField eq 'money'} class="{$param.orderDirection}"{/if}>{lang v="VOUCHER_MONEY"}</th>
+				<th width="100" orderField="user_id" {if $param.orderField eq 'user_id'} class="{$param.orderDirection}"{/if}>{lang v="USER_NAME"}</th>
+				<th width="80" orderField="is_effect" {if $param.orderField eq 'is_effect'} class="{$param.orderDirection}"{/if}>{lang v="IS_EFFECT"}</th>
+				<th width="150" orderField="create_time" {if $param.orderField eq 'create_time'} class="{$param.orderDirection}"{/if}>{lang v="DELIVER_TIME"}</th>
+				<th width="100" orderField="end_time" {if $param.orderField eq 'end_time'} class="{$param.orderDirection}"{/if}>{lang v="VOUCHER_END_TIME"}</th>
+				<th width="100" orderField="is_used" {if $param.orderField eq 'is_used'} class="{$param.orderDirection}"{/if}>是否使用</th>
+				<th width="100" orderField="use_time" {if $param.orderField eq 'use_time'} class="{$param.orderDirection}"{/if}>使用时间</th>
+				<th width="50">{lang v="TAG_LANG_OPERATE"}</th>
+			</tr>
+		</thead>
+		<tbody>
+		
+			{foreach from=$list item=item}
+			<tr  rel="{$item.id}">
+				<td><input name="id" value="{$item.id}" type="checkbox"></td>
+				<td>{$item.id}</td>
+				<td>{$item.voucher_name}</td>
+				<td>{$item.money}</td>
+				<td>{$item.user_name}</td>
+				<td><a href="{$seteffecturl}&id={$item.id}&is_effect={$item.is_effect}" target="ajaxTodo" class="{if $item.is_effect eq 1}btnSelect{else}btnDel{/if}">{$item.is_effect_show}</a></td>
+				
+				<td>
+						{$item.create_time}
+						
+				</td>
+				<td>{$item.end_time}</td>
+				<td>{$item.is_use}</td>
+				<td>{$item.use_time}</td>
+				<td>				
+						
+					<a title="{lang v="CONFIRM_DELETE"}" target="ajaxTodo" href="{$delurl}&id={$item.id}" class="btnDel">{lang v="DEL"}</a>
+
+				</td>
+			</tr>
+			{/foreach}
+		</tbody>
+	</table>
+	<div class="panelBar">
+		<div class="pages">
+			<span>{lang v="DISPLAY_PAGE_SIZE"}</span>
+			<select class="combox" name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value})">
+				<option value="<?php echo ADMIN_PAGE_SIZE1;?>" {if $param.pageSize eq ADMIN_PAGE_SIZE1}selected="selected"{/if} ><?php echo ADMIN_PAGE_SIZE1;?></option>
+				<option value="<?php echo ADMIN_PAGE_SIZE2;?>" {if $param.pageSize eq ADMIN_PAGE_SIZE2}selected="selected"{/if}><?php echo ADMIN_PAGE_SIZE2;?></option>
+				<option value="<?php echo ADMIN_PAGE_SIZE3;?>" {if $param.pageSize eq ADMIN_PAGE_SIZE3}selected="selected"{/if}><?php echo ADMIN_PAGE_SIZE3;?></option>
+				<option value="<?php echo ADMIN_PAGE_SIZE4;?>" {if $param.pageSize eq ADMIN_PAGE_SIZE4}selected="selected"{/if}><?php echo ADMIN_PAGE_SIZE4;?></option>
+			</select>
+			<span>&nbsp;&nbsp;{lang v="PAGE_TOTAL_COUNT" p="$totalCount"}</span>
+		</div>
+		
+		<div class="pagination" targetType="navTab" totalCount="{$totalCount}" numPerPage="{$param.pageSize}" pageNumShown="10" currentPage="{$param.pageNum}"></div>
+
+	</div>
+</div>

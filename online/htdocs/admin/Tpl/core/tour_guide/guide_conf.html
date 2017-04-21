@@ -1,0 +1,104 @@
+<h2 class="contentTitle">{lang v="GUIDE_CONF"}</h2>
+<form action="{$formaction}" method="post" class="pageForm required-validate" onsubmit="return validateCallback(this, navTabAjaxDone)">
+<div class="pageContent">
+<div class="pageFormContent" layoutH="97">		
+
+			<table class="formtable">				
+			<tr>
+				<td class="item_title">{lang v="GUIDE_MONEY"}:</td>
+				<td class="item_input">
+					<input type="text" class="required textInput valid"   maxlength="150" name="GUIDE_MONEY"  value="{if $conf.GUIDE_MONEY gt 0}{$conf.GUIDE_MONEY}{else}0{/if}">
+					<label class="tip"></label>
+				</td>
+			</tr>
+                        <tr>
+				<td class="item_title">{lang v="GUIDE_SCORE"}:</td>
+				<td class="item_input">
+					<input type="text" class="required textInput valid"   maxlength="150" name="GUIDE_SCORE" value="{if $conf.GUIDE_SCORE gt 0}{$conf.GUIDE_SCORE}{else}0{/if}">
+					<label class="tip"></label>
+				</td>
+			</tr>
+			<tr>
+				<td class="item_title">{lang v="GUIDE_EXP"}:</td>
+				<td class="item_input">
+					<input type="text" class="required textInput valid digits"   maxlength="150" name="GUIDE_EXP" value="{if $conf.GUIDE_EXP gt 0}{$conf.GUIDE_EXP}{else}0{/if}">
+					<label class="tip"></label>
+				</td>
+			</tr>
+                        <tr>
+				<td class="item_title">{lang v="GUIDE_PAGE_LOAD_GOUNT"}:</td>
+				<td class="item_input">
+					<input type="text" class="required textInput valid digits"   maxlength="150" name="GUIDE_PAGE_LOAD_GOUNT" value="{if $conf.GUIDE_PAGE_LOAD_GOUNT gt 0}{$conf.GUIDE_PAGE_LOAD_GOUNT}{else}0{/if}">
+					<label class="tip"></label>
+				</td>
+			</tr>
+                        <tr>
+				<td class="item_title">{lang v="GUIDE_PAGE_ITEM_COUNT"}:</td>
+				<td class="item_input">
+					<input type="text" class="required textInput valid digits"   maxlength="150" name="GUIDE_PAGE_ITEM_COUNT" value="{if $conf.GUIDE_PAGE_ITEM_COUNT gt 0}{$conf.GUIDE_PAGE_ITEM_COUNT}{else}0{/if}">
+					<label class="tip"></label>
+				</td>
+			</tr>
+                        <tr>
+				<td class="item_title">{lang v="GUIDE_IS_AGAIN"}:</td>
+				<td class="item_input">
+                                    <select name="GUIDE_IS_AGAIN">
+                                        <option value="0" {if $conf.GUIDE_IS_AGAIN eq 0}selected="selected"{/if}>否</option>
+                                        <option value="1" {if $conf.GUIDE_IS_AGAIN eq 1}selected="selected"{/if}>是</option>
+                                    </select>
+                                    <label class="tip"></label>
+				</td>
+			</tr>
+                        <tr>
+                            <td class="item_title">&nbsp;</td>
+				<td class="item_input">
+                                    是否开启，审核通过后允许用户二次编辑；<br/><br/>
+                                    如果开启：则审核一次通过后用户再次编辑则不需要审核直接显示。
+				</td>
+			</tr>
+                        <tr>
+				<td class="item_title">{lang v="GUIDE_HOT_SPOT"}:</td>
+				<td class="item_input">
+                                    <textarea rows="5" cols="20" name="GUIDE_HOT_SPOT" style="width:400px;">{if $conf.GUIDE_HOT_SPOT}{$conf.GUIDE_HOT_SPOT}{/if}</textarea>
+					<label class="tip"></label>
+				</td>
+			</tr>
+                        <tr>
+                            <td class="item_title">&nbsp;</td>
+				<td class="item_input">
+                                    游记热门景点：用于显示在游记首页左侧菜单的配置。<br/><br/>
+                                    批量添加，多个请用半角逗号“,”分割,【推荐配置18个左右】。
+				</td>
+			</tr>
+                        <tr>
+				<td class="item_title">{lang v="GUIDE_SEO_TITLE"}:</td>
+				<td class="item_input">
+					<input type="text" class=" textInput "  style="width:400px;"   maxlength="150" name="GUIDE_SEO_TITLE" value="{if $conf.GUIDE_SEO_TITLE}{$conf.GUIDE_SEO_TITLE}{/if}">
+					<label class="tip"></label>
+				</td>
+			</tr>
+                        <tr>
+				<td class="item_title">{lang v="GUIDE_SEO_KEYWORD"}:</td>
+				<td class="item_input">
+					<input type="text" class=" textInput "  style="width:400px;"   maxlength="150" name="GUIDE_SEO_KEYWORD" value="{if $conf.GUIDE_SEO_KEYWORD}{$conf.GUIDE_SEO_KEYWORD}{/if}">
+					<label class="tip"></label>
+				</td>
+			</tr>
+                        <tr>
+				<td class="item_title">{lang v="GUIDE_SEO_DESCRIPTION"}:</td>
+				<td class="item_input">
+                                    <textarea rows="3" cols="20" name="GUIDE_SEO_DESCRIPTION" style="width:400px;">{if $conf.GUIDE_SEO_DESCRIPTION}{$conf.GUIDE_SEO_DESCRIPTION}{/if}</textarea>
+					<label class="tip"></label>
+				</td>
+			</tr>
+			</table>
+					
+	</div>
+	<div class="formBar">
+		<ul>
+			<li><div class="buttonActive"><div class="buttonContent"><button type="submit">{lang v="SAVE"}</button></div></div></li>
+			<li><div class="button"><div class="buttonContent"><button class="close" type="button">{lang v="CLOSE"}</button></div></div></li>
+		</ul>
+	</div>
+</div>
+</form>

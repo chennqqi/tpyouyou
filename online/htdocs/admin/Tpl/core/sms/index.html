@@ -1,0 +1,95 @@
+<script type="text/javascript">
+	function send_demo()
+	{		
+		$.ajax({ 
+				url: "{$senddemourl}&test_mobile="+$.trim($("input[name='test_mobile']").val()), 
+				dataType: "json",
+				success: function(obj){
+					if(obj.statusCode==200)
+					{
+						alertMsg.correct(obj.message);
+					}
+					else
+						alertMsg.error(obj.message);
+				}
+		});
+	}
+	$(document).ready(function(){
+		$("button[name='test_mobile_btn']").bind("click",function(){
+			var mail = $.trim($("input[name='test_mobile']").val());	
+			if(mail!='')
+			send_demo();
+		});
+	});
+</script>
+
+<form id="pagerForm" method="post" action="#rel#">
+	<input type="hidden" name="pageNum" value="{$param.pageNum}" />
+	<input type="hidden" name="numPerPage" value="{$param.pageSize}" />
+	<input type="hidden" name="orderField" value="{$param.orderField}" />
+	<input type="hidden" name="orderDirection" value="{$param.orderDirection}" />
+</form>
+<form rel="pagerForm" onsubmit="return navTabSearch(this);" action="{$formaction}" method="post"></form>
+<div class="pageHeader">
+	
+	<div class="searchBar">
+		<div class="pageFormContent cf" >
+			<div class="searchtableRow">
+				
+				<table>
+					<tr>
+						<td>
+						{lang v="TEST_MOBILE"}：
+						</td>
+						<td>
+						<input type="text" name="test_mobile" value=""/>
+						</td>
+						<td>
+						<div class="buttonActive"><div class="buttonContent"><button type="button" name="test_mobile_btn">{lang v="TEST"}</button></div></div>
+						</td>
+					</tr>
+				</table>
+				
+			</div>		
+			
+		</div>
+
+	</div>
+
+</div>
+
+<div class="pageContent">
+	<table class="table" width="100%" layoutH="142">
+		<thead>
+		<tr>
+				<th  width="250">{lang v="SMS_NAME"}</th>
+				<th>{lang v="DESCRIPTION"}</th>
+				<th width="250">{lang v="TAG_LANG_OPERATE"}</th>
+			</tr>
+		</thead>
+		<tbody>
+		
+			{foreach from=$sms_list item=sms_item}
+			<tr>
+				<td>{$sms_item.name}</td>
+				<td>{$sms_item.description}</td>
+				<td>
+				
+						{if $sms_item.installed eq 0}
+						<a title="{lang v="INSTALL"}{lang v="SMS"}" target="navTab" rel="install_sms_page" href="{$installurl}&class_name={$sms_item.class_name}" >{lang v="INSTALL"}</a>
+						{else}
+							<a href="{$uninstallurl}&id={$sms_item.id}" target="ajaxTodo" title="确定要卸载吗？" >{lang v="UNINSTALL"}</a>
+							<a href="{$editurl}&id={$sms_item.id}"  target="navTab" rel="edit_sms_page" >{lang v="EDIT"}{lang v="SMS"}</a>
+							{if $sms_item.is_effect eq 0}
+								<a href="{$seteffecturl}&id={$sms_item.id}" target="ajaxTodo">{lang v="USE_THIS_SMS"}</a>
+							{else}
+								{lang v="SMS_USING"}
+							{/if}
+						{/if}
+				</td>
+			</tr>
+			{/foreach}
+		</tbody>
+	</table>
+	
+</div>

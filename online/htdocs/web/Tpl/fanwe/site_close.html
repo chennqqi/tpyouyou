@@ -1,0 +1,21 @@
+<?php
+	$this->_var['pagecss'][] = TMPL_REAL."/css/style.css";
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="Generator" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{$site_name} - {$site_title}</title>
+<meta name="keywords" content="{$site_keyword}" />
+<meta name="description" content="{$site_description}" />
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$pagecss"}" />
+
+</head>
+
+
+<body>
+	{function name="app_conf" v="SITE_CLOSE_TEXT"}
+</body>
+</html>

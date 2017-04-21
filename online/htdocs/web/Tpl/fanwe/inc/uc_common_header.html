@@ -1,0 +1,24 @@
+<div class="uc_intro clearfix">
+	{include file="inc/uc_avatar.html"}
+	
+	<div class="uc_info">
+		<span class="uc_user_name">{$user.user_name}</span> <span class="hello">您好</span><span class="uc_group">{$user.group_name}</span>
+		<div class="uc_account">
+			<div class="uc_userlevel">
+				<span class="level_title">会员等级：</span><span class="level_name">{$user.level_name}	</span>
+				
+				<span class="exp_bar"><label style="width:{$percent}%;" title="当前经验{$user.exp}，升级为{$nextlevel.name}所需经验{$nextlevel.exp}"></label></span> 
+			</div>
+			<div class="user_account_detail">
+				<span>现金账户：<i>&yen;{$user.money_format}</i> &nbsp;&nbsp;&nbsp;&nbsp;<a href="{url r="account#money"}">去充值</a></span>
+				<span>代金券：<i>&yen;{$user.voucher_money_format}</i> &nbsp;&nbsp;&nbsp;&nbsp; <a href="{url r="account#voucher"}">去领取</a></span>
+				<span>积分：<i>{$user.score}</i>  &nbsp;&nbsp;&nbsp;&nbsp;<a href="{url r="account#score"}">积分详情</a></span>
+			</div>
+		
+		
+		</div>
+	
+	</div>
+	
+</div>
+<div class="blank15"></div>

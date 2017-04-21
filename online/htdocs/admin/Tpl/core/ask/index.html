@@ -1,0 +1,113 @@
+<form id="pagerForm" method="post" action="#rel#">
+	<input type="hidden" name="pageNum" value="{$param.pageNum}" />
+	<input type="hidden" name="numPerPage" value="{$param.pageSize}" />
+	<input type="hidden" name="orderField" value="{$param.orderField}" />
+	<input type="hidden" name="orderDirection" value="{$param.orderDirection}" />
+</form>
+<div class="pageHeader">
+	<form rel="pagerForm" onsubmit="return navTabSearch(this);" action="{$formaction}" method="post">
+	<div class="searchBar">
+		<div class="pageFormContent cf" >
+			<div class="searchtableRow">
+				
+				<table>
+					<tr>
+						<td>
+						{lang v="ASK_TYPE"}：
+						</td>
+						<td>
+                                                    <select name='ask_type_id'>
+                                                        <option value=''>请选择问题分类</option>
+                                                        {foreach from=$ask_type item=row}
+                                                        <option value='{$row.id}' {if $param.ask_type_id eq $row.id}selected="true"{/if}>{$row.name}</option>
+                                                        {/foreach}
+                                                    </select>
+						</td>
+                                               <td>
+						{lang v="ASK_IS_REPLY"}：
+						</td>
+						<td>
+						<select name='is_reply'>
+                                                        <option value=''>请选择问答状态</option>
+                                                        <option value='n' {if $param.is_reply eq "n"}selected="true"{/if}>未回复</option>
+                                                        <option value='y' {if $param.is_reply eq "y"}selected="true"{/if}>已回复</option>
+                                                    </select>
+						</td>
+                                                 <td>
+						{lang v="ASK_USER"}：
+						</td>
+						<td>
+						<input type="text" name="nickname" value="{$param.nickname}"/>
+						</td>
+						
+						<td>
+						<div class="buttonActive"><div class="buttonContent"><button type="submit">{lang v="SEARCH"}</button></div></div>
+						</td>
+					</tr>
+				</table>
+				
+			</div>
+
+			
+			
+			
+		</div>
+
+	</div>
+	</form>
+</div>
+<div class="pageContent">
+	<div class="panelBar">
+		<ul class="toolBar">
+			<li><a title="{lang v="CONFIRM_DELETE"}" target="selectedTodo" rel="id" postType="string" href="{$delurl}" class="delete"><span>{lang v="DEL"}</span></a></li>
+		</ul>
+	</div>
+	<table class="table" width="100%" layoutH="75">
+		<thead>
+                        <tr>
+				<th width="22"><input type="checkbox" group="id" class="checkboxCtrl"></th>
+				<th  width="50" orderField="id" {if $param.orderField eq 'id'} class="{$param.orderDirection}"{/if}>{lang v="ID"}</th>
+				<th>{lang v="ASK_TITLE"}</th>
+                                <th>{lang v="ASK_TYPE"}</th>
+                                <th>{lang v="ASK_USER"}</th>
+                                <th>{lang v="ASK_CREATE_DATETIME"}</th>
+                                <th>查看/回复</th>
+				<th width="100">{lang v="TAG_LANG_OPERATE"}</th>
+			</tr>
+		</thead>
+		<tbody>
+		
+			{foreach from=$list item=item}
+			<tr  rel="{$item.id}">
+				<td><input name="id" value="{$item.id}" type="checkbox"></td>
+				<td>{$item.id}</td>
+                                <td>{$item.title}</td>
+                                <td>{foreach from=$ask_type item=ask_item}{if $ask_item.id eq $item.ask_type_id}{$ask_item.name}{/if}{/foreach}</td>
+				<td>{$item.nickname}</td>
+                                <td>{function name="to_date" v=$item.create_time}</td>
+                                <td>
+                                   <a title="查看/回复用户问答" target="dialog" rel="dlg_page1" width="600" height="300" href="{$showurl}&id={$item.id}" >{if $item.is_reply eq 1}查看【已回复】{else}回复{/if}</a> 
+                                </td>
+				<td>
+					<a title="{lang v="CONFIRM_DELETE"}" target="ajaxTodo" href="{$delurl}&id={$item.id}" class="btnDel">{lang v="DEL"}</a>
+				</td>
+			</tr>
+			{/foreach}
+		</tbody>
+	</table>
+	<div class="panelBar">
+		<div class="pages">
+			<span>{lang v="DISPLAY_PAGE_SIZE"}</span>
+			<select class="combox" name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value})">
+				<option value="<?php echo ADMIN_PAGE_SIZE1;?>" {if $param.pageSize eq ADMIN_PAGE_SIZE1}selected="selected"{/if} ><?php echo ADMIN_PAGE_SIZE1;?></option>
+				<option value="<?php echo ADMIN_PAGE_SIZE2;?>" {if $param.pageSize eq ADMIN_PAGE_SIZE2}selected="selected"{/if}><?php echo ADMIN_PAGE_SIZE2;?></option>
+				<option value="<?php echo ADMIN_PAGE_SIZE3;?>" {if $param.pageSize eq ADMIN_PAGE_SIZE3}selected="selected"{/if}><?php echo ADMIN_PAGE_SIZE3;?></option>
+				<option value="<?php echo ADMIN_PAGE_SIZE4;?>" {if $param.pageSize eq ADMIN_PAGE_SIZE4}selected="selected"{/if}><?php echo ADMIN_PAGE_SIZE4;?></option>
+			</select>
+			<span>&nbsp;&nbsp;{lang v="PAGE_TOTAL_COUNT" p="$totalCount"}</span>
+		</div>
+		
+		<div class="pagination" targetType="navTab" totalCount="{$totalCount}" numPerPage="{$param.pageSize}" pageNumShown="10" currentPage="{$param.pageNum}"></div>
+
+	</div>
+</div>

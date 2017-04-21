@@ -1,0 +1,52 @@
+<h2 class="contentTitle">{lang v="ADD"}{lang v="ADMIN"}</h2>
+<form action="{$formaction}" method="post" class="pageForm required-validate" onsubmit="return validateCallback(this, navTabAjaxDone)">
+<div class="pageContent">
+<div class="pageFormContent" layoutH="97">		
+
+			<table class="formtable">					
+			<tr>					
+				<td class="item_title">{lang v="ADM_NAME"}：</td>
+				<td class="item_input">
+					<input type="text" class="required textInput valid"  minlength="5" maxlength="20" name="adm_name">
+					<label class="tip"></label>
+				</td>					
+			</tr>
+			
+			<tr>					
+				<td class="item_title">{lang v="ADM_PASSWORD"}：</td>
+				<td class="item_input">
+					<input type="password" class="required textInput valid" minlength="5" maxlength="20" name="adm_password">
+					<label class="tip"></label>
+				</td>					
+			</tr>
+			
+			<tr>
+				<td class="item_title">{lang v="IS_EFFECT"}:</td>
+				<td class="item_input">
+					<lable>{lang v="IS_EFFECT_1"}<input type="radio" name="is_effect" value="1" checked="checked" /></lable>
+					<lable>{lang v="IS_EFFECT_0"}<input type="radio" name="is_effect" value="0" /></lable>
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="item_title">{lang v="ROLE"}:</td>
+				<td class="item_input">
+						<select name="role_id" class="combox">
+								{foreach from=$role_list item=role_item}
+								<option value="{$role_item.id}">{$role_item.name}</option>
+								{/foreach}
+						</select>
+				</td>
+			</tr>
+			
+			</table>
+					
+	</div>
+	<div class="formBar">
+		<ul>
+			<li><div class="buttonActive"><div class="buttonContent"><button type="submit">{lang v="SAVE"}</button></div></div></li>
+			<li><div class="button"><div class="buttonContent"><button class="close" type="button">{lang v="CLOSE"}</button></div></div></li>
+		</ul>
+	</div>
+</div>
+</form>

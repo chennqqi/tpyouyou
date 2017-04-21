@@ -1,0 +1,37 @@
+<?php
+	$this->_var['pagecss'][] = TMPL_REAL."/css/style.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/weebox.css";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.bgiframe.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.weebox.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.pngfix.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/lazyload.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/script.js";
+	$this->_var['cpagejs'][] = TMPL_REAL."/js/script.js";
+?>
+{include file="inc/header.html"} 
+<div class="blank"></div>
+<div class="wrap">
+	
+	<!--友情链接-->
+    <div class="footer_link">
+        <div class="blank"></div>
+        <div class="link_item">
+        	{foreach from=$link_list.all_text_link item=link_item}
+            <a href="{$link_item.url}" title="{$link_item.name}" target="_blank">{$link_item.name}</a>
+			{/foreach}	
+					
+        </div>
+        <div class="blank"></div>
+		<div class="link_item">
+        	{foreach from=$link_list.all_image_link item=link_item}
+            <a href="{$link_item.url}" title="{$link_item.name}" target="_blank"><img src="{$link_item.image}" width="88" height="31" /></a>
+			{/foreach}	
+					
+        </div>
+        <div class="blank"></div>
+    </div>
+    <!--end 友情链接-->
+	
+</div>
+<div class="blank15"></div><div class="blank15"></div>
+{include file="inc/footer.html"} 

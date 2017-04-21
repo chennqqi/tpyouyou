@@ -1,0 +1,78 @@
+<?php
+
+	$this->_var['pagecss'][] = TMPL_REAL."/css/style.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/weebox.css";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.bgiframe.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.weebox.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.pngfix.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/lazyload.js";
+        $this->_var['pagejs'][] = TMPL_REAL."/js/uc_ask_list.js";
+
+	$this->_var['pagejs'][] = TMPL_REAL."/js/script.js";
+	$this->_var['cpagejs'][] = TMPL_REAL."/js/script.js";
+
+	
+
+	$this->_var['pagecss'][] = TMPL_REAL."/css/user_common.css";
+        $this->_var['pagecss'][] = TMPL_REAL."/css/uc_ask_list.css";
+?>
+{include file="inc/header.html"} 
+<div class="wrap uc_box">
+	<div class="uc_menu">
+		{include file="inc/uc_menu.html"}
+	</div>
+	<div class="uc_main">
+		{insert name="load_uc_common_header"}
+		
+                <ul class="uc_tabs clearfix">
+			<li {if $is_reply eq ''}class="current"{/if}><a href="{url r="ask#uc_ask_list"}">我的问答</a></li>
+			<li {if $is_reply eq 'n'}class="current"{/if}><a href="{url r="ask#uc_ask_list" v="is_reply=n"}">待回复</a></li>
+			<li {if $is_reply eq 'y'}class="current"{/if}><a href="{url r="ask#uc_ask_list" v="is_reply=y"}">已回复</a></li>
+		</ul>
+		<div class="box_main">
+			<div class="uc_ask_box">
+                        {foreach from=$list item=row}
+			<div class="ask_row clearfix">
+                            <span class="title"><span>{$row.title}</span>{if $row.reply_content}<a href="javascript:void(0);" url="{url r="ask#ajax_load_ask"}" rel="{$row.id}" class="open_ask">展开</a>{/if} </span>
+				<span class="time">提问时间: {function name="to_date" v="$row.create_time" v2="Y-m-d"}&nbsp;&nbsp;{if $row.reply_content}回复时间: {function name="to_date" v="$row.reply_time" v2="Y-m-d"}{/if}&nbsp;&nbsp;&nbsp;&nbsp;<a href="{url r="user#ajax_del_ask" p="id=$row.id"}" class="del_ask">删除</a></span>
+				<div class="content" rel="content_{$row.id}">
+					<div class="blank"></div>
+					<div class="cnt">
+					</div>
+				</div>
+			</div>
+                        {/foreach}
+			</div>
+		</div>
+		<div class="blank15"></div>
+		<div class="uc_pager">{$pages}</div>
+                <div class="blank15"></div>
+		<div class="incharge_form">
+				<form action="{url r="ask#do_ask"}" method="post" id="incharge_form">
+				<div class="incharge_title">我要提问</div>
+				<div class="incharge_main">
+					<div class="blank"></div>
+                                        <div class="blank15"></div>
+                                        <div class="ask_type_box">
+                                            <label>问题的分类：</label>
+                                            <select name="ask_type_id" >
+                                                {foreach from=$ask_type item=ask_type_item}
+                                                    <option value="{$ask_type_item.id}">{$ask_type_item.name}</option>
+                                                {/foreach}
+                                            </select>
+                                        </div>
+                                        <div class="blank"></div>
+                                        <div><input name="title" class="input_limit input_data"   maxlength="30"  type="text" holder="给问题起个标题吧 ( 不超过30个字 )" value="{$guide_item.title}"/></div>
+                                        <div class="blank"></div>
+                                        <div><textarea name="content" rows="5" cols="40"  maxlength="300"  holder="有什么问题写这里，我们会尽快为您解答 ( 不超过300个字 )"></textarea></div>
+                                        
+					<input type="submit" style="display:none;">
+					<a href="javascript:void(0);" class="do_ask" >发布提问</a>
+					<div class="blank"></div>
+				</div>
+				</form>
+		</div>
+	</div>
+</div>
+ <div class="blank15"></div>
+{include file="inc/footer.html"} 

@@ -1,0 +1,34 @@
+<div class="comment_box">
+<div class="blank"></div>
+		<div class="commented_num">
+			已有<span class="comment_total">{$comment_total}</span>条网友的热情评论
+		</div>
+<div class="comment_list">
+		
+
+
+    </div>
+<div class="blank15"></div>
+<div class="pager_box" style="text-align: center;">
+    
+    
+</div>
+<div class="blank15"></div>
+<input type="hidden" class="comment_list_ajax_url" name="comment_list_ajax_url" value="{$comment_list_ajax_url}"/>
+<div class="comment_form_box">
+		<div class="form_head">
+                    回复
+		</div>
+		
+                <div class="comment_editor">
+                        <textarea name="comment_content" class="input_limit input_data" data_type="comment_content" date_route="23" hide_data="" maxlength="300" placeholder="回复游记评论(300字以内)"></textarea>
+                </div>
+                <input type="hidden" name="comment_user_id" value="{if $comment_user_id}{$comment_user_id}{/if}"/>
+                <input type="hidden" name="comment_type" value="{$comment_type}"/>
+                <input type="hidden" name="comment_rel_id" value="{$comment_rel_id}"/>
+                <input type="hidden" name="ajax_url" value="{$comment_save_ajax_url}"/>
+                <button type="button" class="reply_submit">发布</button>
+    </div>
+<div class="blank"></div>
+</div>
+<script type="text/JavaScript" src="{$TMPL}/js/comment.js"></script>

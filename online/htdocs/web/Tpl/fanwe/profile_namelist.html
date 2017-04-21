@@ -1,0 +1,59 @@
+<?php
+	$this->_var['pagecss'][] = TMPL_REAL."/css/user_common.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/profile_namelist.css";
+
+	$this->_var['pagecss'][] = TMPL_REAL."/css/style.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/weebox.css";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.bgiframe.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.weebox.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.pngfix.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/lazyload.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/script.js";
+	$this->_var['cpagejs'][] = TMPL_REAL."/js/script.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/profile_namelist.js";
+?>
+{include file="inc/header.html"} 
+<script type="text/javascript">
+	var SET_DEFAULT_URL = '{url x="profile#set_namelist_default"}';
+	var DEL_NAMELIST_URL = '{url x="profile#namelist_del"}';
+</script>
+<div class="wrap uc_box">
+	<div class="uc_menu">
+		{include file="inc/uc_menu.html"}
+	</div>
+	<div class="uc_main">
+		{insert name="load_uc_common_header"}
+		<div class="blank15"></div>
+		<div class="clearfix namelist_header">
+			<h2 class="common_h2 f_l">现有游客信息</h2> <a href="{url r="profile#namelist_add"}" class="f_l add" >添加游客信息</a>
+		</div>
+		<table width="100%" cellpadding="0" cellspacing="0" class="namelist" id="consignee_list">
+			<thead>
+				<tr>
+					<th width="80">姓名</th>
+					<th width="80">证件类型</th>
+					<th width="90">证件号</th>
+					<th width="60">电话/手机</th>
+					<th width="30">排序</th>
+					<th width="80">&nbsp;</th>
+					<th width="80">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				{foreach from="$namelist" item="namelist"}
+				<tr {if $consignee.is_default eq 1}class="def"{/if}>
+					<td >{$namelist.name}</td>
+					<td >{$namelist.paper_type_val}</td>
+					<td >{$namelist.paper_sn}</td>
+					<td >{$namelist.mobile}</td>
+					<td >{$namelist.sort}</td>
+					<td align="center" dataid="{$namelist.id}" class="J_setDefaultBX">{if $namelist.is_default eq 1}<span style="color:blue">默认地址</span>{else}<a href="javascript:void(0);" class="j_set_default" dataid="{$namelist.id}">设为默认</a>{/if}</td>
+					<td align="center"><a href="{$namelist.edit_url}" >修改</a> | <a href="javascript:void(0);" class="j_del_namelist" dataid="{$namelist.id}">删除</a></td>
+				</tr>
+				{/foreach}
+			</tbody>
+		</table>
+	</div>
+</div>
+ <div class="blank15"></div>
+{include file="inc/footer.html"} 

@@ -1,0 +1,70 @@
+@CHARSET "UTF-8";
+body{ word-break:break-all;
+   word-wrap:break-word;  font-size:12px; font-family: Arial,"宋体",Verdana; line-height:150%; margin:0px; padding:0px; color:#404040; }
+
+
+h1,h2,h3,h4,h5,h6,ul,li,dl,dt,dd,form,img,p{margin:0; padding:0; border:none; list-style-type:none;}
+/*自动高对齐*/
+.clearfix:after{
+content:"."; display:block; height:0; clear:both;
+visibility:hidden;
+}
+*html .clearfix{
+ height:1%;
+}
+*+html .clearfix{
+ height:1%;
+}
+.cf {
+    zoom: 1
+}
+
+/*英文强制换行*/
+.word{word-break:break-all;}
+
+/*页面留白*/
+.blank{height:10px; line-height:10px; clear:both; visibility:hidden;}
+
+
+#main_bg{ position:absolute; left:0px; top:0px; z-index:-1;}
+
+
+
+.user_login_box{ width:340px; position:absolute; z-index:10; top:100px; right:10%; 
+	  -moz-border-radius: 5px;      /* Gecko browsers */
+    -webkit-border-radius: 5px;   /* Webkit browsers */
+    border-radius:5px;            /* W3C syntax */
+	border:#e8e8e8 solid 2px;
+  -moz-box-shadow: 5px 5px 5px #ccc;
+  -webkit-box-shadow: 5px 5px 5px #ccc;
+   box-shadow: 5px 5px 5px #ccc;
+ }
+.user_login_box ul{ width:340px; height:36px; display: block;}
+.user_login_box ul li{ width:169px; height:36px; line-height:36px;  border-right:#ccc solid 1px; background:#fff; float:left; font-size:16px; font-weight:bold; text-align:center;}
+.user_login_box ul li.regist_link{ width:170px; background:#e9e9e9; border-right:none;}
+.user_login_box ul li.regist_link a{ color:#404040;}
+.user_login_box ul li.regist_link a:hover{ color:#929292;}
+.user_login_box ul li a{ display:block; text-decoration:none; }
+.user_login_box .box_main{background:#fff; }
+.user_login_box .box_foot{background:#fff;   height:12px; font-size:0px; line-height:0px; }
+
+.user_key_row{ padding-top:15px;}
+.user_key_row .user_key{ padding:10px;  font-size:12px;  border:#e8e8e8 solid 1px;  color:#929292; width:250px;  height:14px; background:url(../images/user/login_box_ico.gif) no-repeat right -36px #fff; display:block; margin:0 auto;}
+.user_key_row .hover{ border:#f30 solid 1px; }
+.user_key_row .normal{ border:#e8e8e8 solid 1px; }
+
+.user_pwd_row{ padding-top:15px;}
+.user_pwd_row .user_pwd{ padding:10px;  font-size:12px; color:#929292; border:#e8e8e8 solid 1px; width:250px;  height:14px; background:url(../images/user/login_box_ico.gif) no-repeat right 0px #fff; display:block; margin:0 auto;}
+.user_pwd_row .hover{ border:#f30 solid 1px; }
+.user_pwd_row .normal{ border:#e8e8e8 solid 1px; }
+
+.user_verify_row{ padding-top:15px; width:272px; margin:0 auto;  height:47px;}
+.user_verify_row .user_verify{padding:10px;  font-size:12px; color:#929292; border:#e8e8e8 solid 1px; width:153px;  height:14px; background:#fff; display:block; float:left; }
+.user_verify_row .hover{ border:#f30 solid 1px; }
+.user_verify_row .normal{ border:#e8e8e8 solid 1px; }
+
+.user_verify_row img{ float:left; margin-left:5px; }
+
+.user_login_row .login_btn{ background:url(../images/user/login_box_bg.png) no-repeat 0px -56px; width:272px; height:33px; display: block; margin:0 auto; font-size:0px; text-decoration:none; }
+
+#login_msg{ height:22px; line-height:22px; text-align:center; padding-top:5px; color:#f30;}

@@ -1,0 +1,76 @@
+<form id="pagerForm" method="post" action="#rel#">
+	<input type="hidden" name="pageNum" value="{$param.pageNum}" />
+	<input type="hidden" name="numPerPage" value="{$param.pageSize}" />
+	<input type="hidden" name="orderField" value="{$param.orderField}" />
+	<input type="hidden" name="orderDirection" value="{$param.orderDirection}" />
+</form>
+<div class="pageHeader">
+	<form rel="pagerForm" onsubmit="return dwzSearch(this, 'dialog');" action="{$formaction}" method="post">
+	<div class="searchBar">
+		
+			<div class="searchtableRow">
+				
+				<table>
+					<tr>
+						<td>
+						{lang v="KEYWORD"}：
+						</td>
+						<td>
+						<input type="text" name="name" value="{$param.name}"/>
+						<input type="hidden" name="selected_id" value="{$selected_data.id}" />
+						<input type="hidden" name="selected_name" value="{$selected_data.name}" />
+						</td>
+						
+						
+						<td>
+						<div class="buttonActive"><div class="buttonContent"><button type="submit">{lang v="SEARCH"}</button></div></div>
+						</td>
+					</tr>
+				</table>
+				
+			</div>
+
+	</div>
+	</form>
+</div>
+
+<div class="pageContent">	
+	<table class="table" width="100%" layoutH="95">
+		<thead>
+		<tr>
+				<th  width="50">{lang v="ID"}</th>
+				<th>{lang v="NAME"}</th>
+				<th width="80">是否审核</th>
+				<th width="80">选择</th>
+			</tr>
+		</thead>
+		<tbody>
+		
+			{foreach from=$list item=item}
+			<tr  rel="{$item.id}">
+				<td>{$item.id}</td>
+				<td>{$item.company_name}</td>
+				<td>{$item.is_verify_show}</td>
+				<th width="80">
+					<a class="btnSelect" href="javascript:$.bringBack({id:'{$item.id}', user_name:'{$item.company_name}', id:'{$item.id}'})" title="查找带回">选择</a>
+				</th>
+			</tr>
+			{/foreach}
+		</tbody>
+	</table>
+	<div class="panelBar">
+		<div class="pages">
+			<span>{lang v="DISPLAY_PAGE_SIZE"}</span>
+			<select class="combox" name="numPerPage"  onchange="dialogPageBreak({numPerPage:this.value})">
+				<option value="<?php echo ADMIN_PAGE_SIZE1;?>" {if $param.pageSize eq ADMIN_PAGE_SIZE1}selected="selected"{/if} ><?php echo ADMIN_PAGE_SIZE1;?></option>
+				<option value="<?php echo ADMIN_PAGE_SIZE2;?>" {if $param.pageSize eq ADMIN_PAGE_SIZE2}selected="selected"{/if}><?php echo ADMIN_PAGE_SIZE2;?></option>
+				<option value="<?php echo ADMIN_PAGE_SIZE3;?>" {if $param.pageSize eq ADMIN_PAGE_SIZE3}selected="selected"{/if}><?php echo ADMIN_PAGE_SIZE3;?></option>
+				<option value="<?php echo ADMIN_PAGE_SIZE4;?>" {if $param.pageSize eq ADMIN_PAGE_SIZE4}selected="selected"{/if}><?php echo ADMIN_PAGE_SIZE4;?></option>
+			</select>
+			<span>&nbsp;&nbsp;{lang v="PAGE_TOTAL_COUNT" p="$totalCount"}</span>
+		</div>
+		
+		<div class="pagination" targetType="dialog" totalCount="{$totalCount}" numPerPage="{$param.pageSize}" pageNumShown="5" currentPage="{$param.pageNum}"></div>
+
+	</div>
+</div>

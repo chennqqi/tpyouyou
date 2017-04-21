@@ -1,0 +1,357 @@
+#wrap {
+	width: 280px;
+	margin: 0 auto;
+	overflow: hidden;
+}
+#banner {
+	overflow: hidden;
+}
+/*选择城市部分*/
+.chooseCountry {
+	width: 324px;
+	background: #fff;
+	margin-right: 14px;
+	float: left;
+	border:solid 1px #ccc;
+	height:400px;
+	display: inline;
+	overflow: hidden;
+}
+.chooseCountry ul {
+	overflow: hidden;
+	margin-bottom: 15px;
+	color: #fff;
+}
+.chooseCountry li {
+	background: #0af;
+	background: -webkit-linear-gradient(270deg, #0af, #09e) ;
+	background: -ms-linear-gradient(270deg, #0af, #09e);
+	background: -o-linear-gradient(270deg, #0af, #09e);
+	background: -moz-linear-gradient(270deg, #0af, #09e);
+	width: 162px;
+	height: 50px;
+	line-height: 50px;
+	float: left;
+	font-size: 25px;
+	text-align: center;
+}
+.chooseCountry li.active {
+	color: #34bace;
+	background: #fff;
+}
+.countryDetail {
+	display: none;
+	position: relative;
+	width:324px;
+	overflow: hidden;
+	margin-top:15px;
+}
+.countryDetail form{
+	width:324px;
+}
+.countryDetail .item {
+	overflow: hidden;
+	padding-left: 25px;
+	margin-bottom: 15px;
+	zoom:1;
+}
+.chooseCountry .active {
+	display: block;
+}
+.countryDetail .item label {
+	clear: both;
+	line-height: 36px;
+	float: left;
+	width: 70px;
+}
+.countryDetail .item input {
+	font-size: 14px;
+	float: left;
+	width: 178px;
+	border: 1px solid #ccc;
+	line-height: 30px;
+	height: 30px;
+	padding: 2px 0 2px 5px;
+	background: url(../images/inputbac.png) 158px 6px no-repeat;
+}
+.hotel .item input {
+	width:214px;
+	background: url(../images/inputbac.png) 194px 6px no-repeat;
+}
+.ticket .item input {
+	width:214px;
+	background: url(../images/inputbac.png) 194px 6px no-repeat;
+}
+.countryDetail .time input {
+	width: 214px;
+	background: url(../images/inputbac.png) 194px -44px no-repeat;
+}
+.countryDetail .disabled {
+	color: #aaa;
+}
+.countryDetail input:disabled {
+	background: #eee;
+}
+.countryDetail div.radio {
+	padding-left: 95px;
+}
+.countryDetail .radio label, .countryDetail .radio input {
+	margin-right: 5px;
+	width: auto;
+	float: none;
+	border: none;
+	vertical-align: middle;
+}
+.countryDetail .radio label {
+	margin-right: 15px;
+}
+.countryDetail p {
+	text-align: right;
+	font-size: 12px;
+	padding-right: 22px;
+}
+.countryDetail .submit div {
+	float: right;
+	margin: 15px 17px 17px 0;
+}
+.countryDetail .submit input {
+	letter-spacing:10px;
+	text-align:center;
+	width: 100px;
+	height: 30px;
+	padding: 0;
+	background: url(../images/btn_search.png) no-repeat;
+	color: #000;
+	font-size: 20px;
+	font-family: "黑体";
+	float: right;
+	border: 0;
+	cursor:pointer;
+}
+.exchange {
+	position: absolute;
+	top: 18px;
+	right: 14px;
+}
+.exchange a {
+	display: block;
+	background: url(../images/inputbac.png) no-repeat 0 -100px;
+	width: 30px;
+	height: 53px;
+}
+.exchange a:hover {
+	display: block;
+	background: url(../images/inputbac.png) no-repeat 0 -160px;
+	width: 30px;
+	height: 53px;
+}
+/*地区弹出层*/
+#cityWrap {
+	top: 500px;
+	width: 285px;
+	border: 1px solid #aaa;
+	position: absolute;
+	background: #fff;
+	text-align: center;
+	font-size: 12px;
+	display: none;
+	padding-bottom: 5px;
+	z-index: 4;
+	left:0px;
+}
+#cityWrap .title {
+	text-align: left;
+	position: relative;
+	border-bottom: 1px dashed #aaa;
+	overflow: hidden;
+	line-height: 30px;
+	padding: 0 10px;
+	height:30px;
+}
+#cityWrap .title span {
+	position: absolute;
+	width: 14px;
+	height: 14px;
+	background: url(../images/closecity.gif);
+	top: 8px;
+	right: 8px;
+	cursor: pointer;
+}
+.le-tabs {
+	border-bottom: 1px solid #aaa;
+	margin-top: 8px;
+	line-height: 20px;
+	padding-left: 8px;
+	overflow: hidden;
+	height:21px;
+}
+#cityWrap .le-tabs li {
+	width: auto;
+	float: left;
+	margin: 0 8px 0 0;
+	display: inline;
+	padding: 0 10px;
+	border:1px solid #aaa;
+	border-bottom:none;
+	cursor: pointer;
+	background:#eee;
+}
+#cityWrap .city-panel {
+	display: none;
+}
+#cityWrap .le-tabs li.active {
+	background: #fff;
+	color: #33a;
+}
+.city-cont{
+	clear:both;
+}
+.c-item {
+	display: none;
+	clear:both;
+}
+.c-item.hot {
+	display: block;
+}
+.city-cont li{
+	float: left;
+	width: 70px;
+	line-height: 20px;
+}
+.international .gclearfix li {
+	float: left;
+	width: 85px;
+	line-height: 20px;
+}
+.gclearfix li a {
+	display: block;
+	cursor: pointer;
+}
+.gclearfix li a:hover {
+	text-decoration: underline;
+}
+/*特价机票*/
+#cheapFlight {
+	margin-top: 10px;
+	font-size: 12px;
+	background: #fff;
+	overflow: hidden;
+}
+#cheapFlight h1 {
+	height: 64px;
+	color: #fff;
+	background: #f90;
+	line-height: 64px;
+	font-size: 25px;
+	padding-left: 20px
+}
+#placeWrap {
+	margin: -58px 20px 0 0;
+	height: 58px;
+	line-height: 58px;
+	float: right;
+}
+#cheapFlight .place {
+	float: left;
+}
+#cheapFlight .place a {
+	color: #fff;
+	float: left;
+	width: 42px;
+	text-align: center;
+}
+#cheapFlight #placeWrap .active a {
+	color: #f90;
+	background: #fff;
+}
+#flightDetail{
+	border-width:0 2px 2px 2px;
+	border-color: #f90;
+	border-style:solid;
+}
+#flightDetail ul {
+	float: left;
+	width: 318px;
+	border-right: 1px dashed #ccc;
+}
+#flightDetail .flightBlock {
+	display: none;
+	padding: 10px 0;
+	overflow: hidden;
+}
+#flightDetail .flightBlock.active {
+	display: block;
+}
+#flightDetail ul.last {
+	border-right:none;
+}
+#flightDetail li {
+	line-height: 20px;
+	margin-bottom: 5px;
+	clear: both;
+	overflow: hidden;
+	padding: 0 25px;
+}
+#flightDetail li em {
+	float: left;
+	color: #0c8dcc;
+	width: 70px;
+}
+#flightDetail li .price {
+	color: #f60;
+	font-weight: bold;
+}
+#flightDetail li .dis {
+	float: right;
+	width: 40px;
+}
+.topic {
+	padding: 14px;
+	background: #fff;
+	margin-top: 15px;
+	overflow: hidden;
+    border:1px solid #ccc;
+    clear:both;
+    zoom:1;
+}
+.topic h1 {
+	padding: 0 0 3px 35px;
+	border-bottom: 1px solid #ccc;
+	font-size: 25px;
+	margin-bottom: 15px;
+}
+#hotPlace .detail {
+	width:100%;
+	float: left;
+	display: inline;
+	zoom:1;
+}
+.nav {
+	margin:0 auto;
+	text-align:center;
+	height: 85px;
+	width: 960px;
+}
+.nav .top {width:960px;height:80px; padding-top:5px;}
+.nav .top  .logo{width:243px;height:70px; background:url(../images/logo.png) no-repeat;float:left;}
+.nav .top .banner {height:80px;float:right;}
+.main{width:960px; border:0px solid #ccc; margin:0 auto;}
+.main .index_mid_left{width:270px;}
+.tuan{width:960x;margin:0 auto;height:auto;margin-bottom:15px;height:721px;}
+.tuan_left{width:270px;float:left;}
+
+.mainbox{
+    overflow:hidden;
+    position:relative;
+}
+.flashbox{
+   overflow:hidden;
+    position:relative;
+}
+.imagebox{
+    text-align:right;position:relative;z-index:999;
+}
+
+.bitdiv{display:inline-block;width:18px;height:18px;margin:0 10px 10px 0px;cursor:pointer;float:right;}
+.defimg{background-image:url(../images/02.png)}
+.curimg{background-image:url(../images/01.png)}

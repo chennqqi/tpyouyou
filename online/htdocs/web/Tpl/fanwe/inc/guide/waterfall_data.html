@@ -1,0 +1,20 @@
+{foreach from=$list item=row}
+<div class="item">
+    <div class="notes_title">
+        <a href="{url r="guide#show" v="id=$row.id"}" class="title_pic"><img src="{function name="get_spec_image" v=$row.image w=100 h=50}" />	</a>
+        <a href="{url r="guide#show" v="id=$row.id"}" class="title_content">{$row.title}</a>
+    </div>
+    <div class="notes_count">
+        <!--点赞功能占未开放
+        <span class="praise">{$row.recommend_count}</span>
+        -->
+        <span class="reply_count">{$row.comment_count}</span>
+        <span class="view_count">{$row.browse_count}</span>
+    </div>
+    <div class="notes_info">
+        <a  href="#"><img class="GUID" uid="{$row.user_id}" src="{$row.avatar}"></a>
+        <span><a href="#">{$row.nickname}</a></span>
+        <div><a href="#" class="notes_info_content">{function name="msubstr" v=$row.content b=0 e=35}</a></div>
+    </div>
+</div>
+{/foreach}

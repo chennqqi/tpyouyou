@@ -1,0 +1,29 @@
+<div class="hd clearfix">
+	<div class="user f_l">买家</div>
+	<div class="name f_l">出游时间</div>
+	<div class="number f_l">购买数量</div>
+	<div class="time f_l">成交时间</div>
+</div>
+
+{foreach from=$sale_list item="item" name="items"}
+	<div class="item {if $smarty.foreach.items.iteration mod 2 eq 0}item1{/if} clearfix">
+		<div class="user f_l">{$item.user_name}</div>
+		<div class="name f_l">{$item.end_time}</div>
+		<div class="number f_l">
+			{if $item.adult_count gt 0 && $item.child_count gt 0}
+			<span class="number_val">
+			           成人：{$item.adult_count}人<br />
+				儿童：{$item.child_count}人
+			</span>
+			{else}
+				{if $item.adult_count}
+				           成人：{$item.adult_count}人<br />
+				{/if}
+				{if $item.child_count}
+					儿童：{$item.child_count}人
+				{/if}
+			{/if}
+		</div>
+		<div class="time f_l">{function name="to_date" v=$item.create_time f="Y-m-d"}</div>
+	</div>
+{/foreach}

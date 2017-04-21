@@ -1,0 +1,28 @@
+@CHARSET "UTF-8";
+
+.regist_tab{ height:40px; margin-top:20px;}
+.regist_tab ul{ float:left;}
+.regist_tab ul li{ float:left; display:inline-block; width:150px; height:39px; border:#03a2da solid 1px; text-align:center; line-height:39px; font-size:14px; font-weight:bold; border-bottom:none;  }
+.regist_tab ul li.current{ background-color: #03a2da;}
+
+.regist_tab ul li a,.regist_tab ul li a:hover{ display:inline-block; width:150px; height:39px; text-decoration: none; background-image: url(../images/user/regist_ico.gif); background-repeat: no-repeat;}
+.regist_tab ul li.current a,.regist_tab ul li.current a:hover{ color:#fff;}
+
+.regist_tab ul li a#email_reg{ background-position: 25px -147px;   text-indent:35px; }
+.regist_tab ul li.current a#email_reg{ background-position: 25px -99px;  text-indent:35px;  }
+
+.regist_tab ul li a#mobile_reg{ background-position: 30px -48px;  text-indent:20px; }
+.regist_tab ul li.current a#mobile_reg{ background-position: 30px 4px;   text-indent:20px; }
+
+.regist_tab span{float:right; font-size: 14px;  } 
+.regist_tab span a{ color:#03a2da; display:inline-block; padding:0 3px; }
+.regist_main{ border:#ccc solid 1px; border-top:#03a2da solid 2px; height:700px; margin-bottom:30px; }
+
+.regist_left{ float:left; padding:20px 0px; width:740px;}
+.regist_banner{ width:240px; height:700px;  float:right; background:url(../images/user/user_regist_banner.gif);}
+
+
+.agreement{ width:550px; margin:0px auto; height:170px; overflow-y:scroll; border:#e8e8e8 solid 1px; margin-top:20px; padding:15px;}
+
+.message_tip{ height:40px; margin:30px 0px;}
+.message_tip label{ display:inline-block; padding:20px; border:#f30 solid 1px; background:#fff1f1; font-size:14px; font-weight:bold;}

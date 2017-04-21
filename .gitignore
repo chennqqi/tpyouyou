@@ -1,0 +1,14 @@
+docs/
+
+db/
+
+online/htdocs/1/
+online/htdocs/public/adv/
+online/htdocs/public/attachments/
+online/htdocs/public/images/
+online/htdocs/public/logs/
+online/htdocs/public/runtime/
+online/htdocs/system/extend/
+online/htdocs/system/scws/
+online/htdocs/system/sms/
+online/htdocs/web/Tpl/fanwe/images/

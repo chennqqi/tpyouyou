@@ -1,0 +1,123 @@
+<?php
+	$this->_var['pagecss'][] = TMPL_REAL."/css/style.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/weebox.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/news_index.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/image_slider.css";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.bgiframe.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.weebox.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.pngfix.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/lazyload.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.nivo.slide.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/script.js";
+	$this->_var['cpagejs'][] = TMPL_REAL."/js/script.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/image_slider.js";
+	$this->_var['cpagejs'][] = TMPL_REAL."/js/image_slider.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/news_index.js";
+	$this->_var['cpagejs'][] = TMPL_REAL."/js/news_index.js";
+?>
+{include file="inc/header.html"} 
+<div class="blank20"></div>
+<div class="news_wrap wrap">
+<!--begin row1-->	
+<div class="slider_box f_l image_slider" id="news_slider">
+	{foreach from=$loop_news item=news}
+	<a href="{$news.url}" title="{$news.name}"><img src="{function name="get_spec_image" v=$news.image w="660" h="310" g="1"}" /></a>
+	{/foreach}
+</div>
+
+
+<div class="s_box f_r">
+	{if $rec_top}
+	<div class="outer">
+		<div class="top">
+			<div class="title f_l">{$rec_top.name}</div>
+			<div class="more f_r"><a href="{$rec_top.url}" title="{$rec_top.name}">更多 >></a></div>
+		</div>
+		<div class="main">
+			<div class="adv_img">
+			<img src='/public/adv/img/201407/16/19/20140716190552_72182.jpg'>
+			</div>
+			<ul class="news_list">
+				{foreach from=$rec_top.list item=news}
+				<li><a href="{$news.url}">{$news.name}</a></li>
+				{/foreach}		
+			</ul>
+		</div>
+	</div>
+	{/if}
+</div>
+<!--end row1-->
+<div class="blank20"></div>
+<!--begin row2-->	
+{foreach from=$hot_news key=key item=news}
+<div class="s_box {if $key%3==0}f_l{/if}{if $key%3==1}f_l span_l{/if}{if $key%3==2}f_r{/if}">
+	<div class="outer">
+		<div class="top">
+			<div class="title f_l">{$news.cate.name}</div>
+			<div class="more f_r"><a href="{$news.cate.url}" title="{$news.cate.name}">更多 >></a></div>
+		</div>
+		<div class="main">
+			<div class="news_image">
+				<a href="{$news.url}" title="{$news.name}">
+					<img src="{function name="get_spec_image" v=$news.image w=298 h=175 g=1}" />
+				</a>
+			</div>
+			<div class="news_text">
+				<a href="{$news.url}" title="{$news.name}" class="title">{$news.name}</a>
+				<a href="{$news.url}" title="{$news.name}" class="brief">{$news.brief}</a>
+			</div>
+		</div>
+	</div>
+</div>
+{if $key%3==2}
+<div class="blank20"></div> 
+{/if}
+{/foreach}
+{if $key%3!=2}
+<div class="blank20"></div> 
+{/if}
+<!--end row2-->
+
+<!--begin adv_row-->	
+<adv adv_id="news_index_image" />
+<!--end adv_row-->
+<div class="blank20"></div>
+<!--begin row3-->
+{foreach from=$rec_cate key=key item=cate}
+<div class="b_box {if $key%2==0}f_l{else}f_r{/if}">
+	<div class="outer">
+		<div class="top">
+			<div class="title f_l {if $key%4==0}blue{/if}{if $key%4==1}green{/if}{if $key%4==2}pink{/if}{if $key%4==3}orange{/if}">{$cate.name}</div>
+			<div class="more f_r"><a href="{$cate.url}" title="{$cate.name}">更多 >></a></div>
+		</div>
+	
+		<div class="main">
+			<div class="brief_box">
+				<div class="brief_img f_l">
+					<a href="{$cate.top.url}" title="{$cate.top.name}"><img src="{function name="get_spec_image" v=$cate.top.image w=135 h=90 g=1}" /></a>
+				</div>
+				<div class="brief_text f_r">
+					<a href="{$cate.top.url}" title="{$cate.top.name}" class="title">{$cate.top.name}</a>
+					<a href="{$cate.top.url}" title="{$cate.top.name}" class="brief">{$cate.top.brief}</a>
+				
+				</div>
+			</div>
+			<ul class="news_list">
+				{foreach from=$cate.list item=news}
+					<li><a href="{$news.url}" title="{$news.name}">{$news.name}</a><span>{$news.create_time}</span></li>
+				{/foreach}		
+			</ul>
+		</div>
+	</div>
+</div>
+{if $key%2==1}
+<div class="blank20"></div> 
+{/if}
+{/foreach}
+{if $key%2==0}
+<div class="blank20"></div> 
+{/if}
+<!--end row3-->	
+</div><!--end wrap-->
+<div class="blank20"></div>
+{include file="inc/footer.html"} 

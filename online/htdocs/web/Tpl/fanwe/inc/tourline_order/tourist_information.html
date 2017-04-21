@@ -1,0 +1,97 @@
+<div class="order_box order_box_message clearfix">
+    <h2>游客信息</h2>
+    <div class="routes_info ">
+    	{foreach from=$youke_all_array item=y_item }
+		<div>
+        <table class="input_table" id="inputTable_{$y_item.num}">
+            <tbody>
+            	 <tr>
+                    <td width="125" align="left">
+                       	<strong class="youke_num">第{$y_item.num}位游客</strong>
+                    </td>
+                    <td>
+                       
+                    </td>
+                </tr>
+                <tr>
+                    <td width="125" align="right">
+                        <label>姓名</label>
+                        <span class="cred">*</span>
+						&nbsp;
+                    </td>
+                    <td>
+                        <input type="text" value="{$y_item.name}" name="name[]" id="name_{$y_item.num}" holder="请填写姓名"  onfocus="mive_notice(this);" class="txt_input" >
+                        <span class="err_structure hide" id="name{$y_item.num}Error">
+                        <span class="error_notice ">
+                            <i></i>
+                        </span>
+                        </span>
+						{if $namelist_count gt 0}
+						<select name="s_namelist" style="margin-left:5px;">
+							<option value="0">修改游客信息</option>
+							{foreach from="$user_namelist_idlist" item="idlist" }
+	                   		<option value="{$idlist.id}">{$idlist.name}</option>
+							{/foreach}
+						</select>
+						{/if}
+                    </td>
+                </tr>
+                 <tr>
+                    <td width="125" align="right">
+                        <label>证件类型</label>
+                        <span class="cred">*</span>
+						&nbsp;
+                    </td>
+                    <td>
+                       <select name="paper_type[]" id="paper_type_{$y_item.num}">
+                           <option value="1" {if $y_item.paper_type eq 1}selected="selected"{/if} >身份证</option>
+                           <option value="2" {if $y_item.paper_type eq 2}selected="selected"{/if} >护照</option>
+                           <option value="4" {if $y_item.paper_type eq 3}selected="selected"{/if} >港澳通行证</option>
+                           <option value="5" {if $y_item.paper_type eq 4}selected="selected"{/if} >台胞证</option>
+                           <option value="3" {if $y_item.paper_type eq 5}selected="selected"{/if} >军官证</option>
+                           <option value="6" {if $y_item.paper_type eq 6}selected="selected"{/if} >其他</option>
+                       </select>
+                        <span class="err_structure hide" id="paperType{$y_item.num}Error">
+                            <span class="error_notice ">
+                                <i></i>
+                            </span>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="125" align="right">
+                        <label style="padding-right:2px;">证件号</label>
+						<span class="cred">*</span>
+						&nbsp;
+                    </td>
+                    <td>
+                        <input type="text" value="{$y_item.paper_sn}" name="paper_sn[]" id="paper_sn_{$y_item.num}" holder="请填写证件号码" onfocus="mive_notice(this);" class="txt_input">
+                        <span class="err_structure hide" id="paperSn{$y_item.num}Error">
+                            <span class="error_notice" id="">
+                                <i></i>
+                            </span>
+                        </span>
+                    </td>
+                </tr>
+				 <tr>
+                    <td width="125" align="right">
+                        <label style="padding-right:2px;">手机号</label>
+						<span class="cred">*</span>
+						&nbsp;
+                    </td>
+                    <td>
+                        <input type="text" value="{$y_item.mobile}" name="mobile[]" id="mobile_{$y_item.num}" holder="请填写手机号码" onfocus="mive_notice(this);" class="txt_input" >
+                        <span class="err_structure hide" id="mobile{$y_item.num}Error">
+                            <span class="error_notice" id="">
+                                <i></i>
+                            </span>
+                        </span>
+                    </td>
+                </tr>
+             </tbody>
+        </table>
+		<hr class="hr_dotted" />
+		</div>
+		{/foreach}
+    </div>
+</div>

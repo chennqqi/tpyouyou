@@ -1,0 +1,44 @@
+<?php
+	$this->_var['pagecss'][] = TMPL_REAL."/css/style.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/weebox.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/news.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/comment.css";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.bgiframe.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.weebox.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.pngfix.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/lazyload.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/script.js";
+	$this->_var['cpagejs'][] = TMPL_REAL."/js/script.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/ajax_pages.js";
+	$this->_var['cpagejs'][] = TMPL_REAL."/js/ajax_pages.js";
+?>
+{include file="inc/header.html"} 
+<div class="blank"></div>
+<div class="blank"></div>
+<div class="wrap">
+<!--	<iframe	name="I1" src='http://www.ly.com/flight/flightunioncommonsearch.aspx?refid=71653961&t={$ipInfos["city"]}&q=%E4%B8%8A%E6%B5%B7&type=1&date=2014-09-18&Rtdate=%E6%97%B6%E9%97%B4/%E6%97%A5%E6%9C%9F&width=1000&sider=1&show=1' scrolling="no" frameborder="0"  width="1000px;" id='tongcheng'></iframe>
+        <script src="http://js.40017.cn/cn/new_ui/airplane/cooperation/tc_mes.0.0.1.js"></script>
+        <script type="text/javascript">
+            var messenger = Messenger.initInParent(document.getElementById('tongcheng'));
+            messenger.onmessage = function (data) {
+                document.getElementById('tongcheng').style.height = data + "px";
+            };
+            
+        </script>-->
+<iframe src="http://www.ly.com/flight/flightunioncommonsearch.aspx?refid=71653961&t={$ipInfos.city}&q=上海&type=1&date=2015-04-20&Rtdate=2015-04-25&width=800&sider=0&show=0" width="800" frameborder="0" scrolling="no" id="tongcheng"></iframe>
+        <script src="http://js.40017.cn/cn/new_ui/airplane/cooperation/tc_mes.0.0.1.js"></script>
+        <script type="text/javascript">
+            var messenger = Messenger.initInParent(document.getElementById('tongcheng'));
+            messenger.onmessage = function (data) {
+                document.getElementById('tongcheng').style.height = data + "px";
+            };
+            // 备注：”tongcheng”为嵌套的iframe的id名
+        </script>
+        
+        
+        
+	
+</div>
+<div class="blank"></div>
+<div class="blank"></div>
+{include file="inc/footer.html"} 

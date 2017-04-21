@@ -1,0 +1,128 @@
+<style>
+.clists_main_cont{
+    padding:20px;
+}
+.clists_stars i {
+    background: url({$css_img}review/star_bar.png) no-repeat 0px -19px;
+    float: left;
+    height: 22px;
+    display: inline-block;
+}
+.clists_stars i {
+    background: url({$css_img}review/star_bar.png) no-repeat 0px -19px;
+    float: left;
+    height: 22px;
+    display: inline-block;
+}
+
+ .clists_stars span {
+    background: url({$css_img}review/star_bar.png) no-repeat 0px 3px;
+    width: 75px;
+    height: 22px;
+    display: inline-block;
+}
+ .clists_stars i {
+background: url({$css_img}review/star_bar.png) no-repeat 0px -19px;
+float: left;
+height: 22px;
+display: inline-block;
+}
+ .clists_words {
+    width:378px;
+    margin-top: 10px;
+}
+ .clists_words span {
+    display: block;
+    float: left;
+    color: #999;
+    height: 24px;
+    line-height: 24px;
+    padding: 0 8px;
+    background-color: #f3f3f3;
+    margin-right: 1px;
+}
+ .clists_words span em {
+    color: #666;
+    padding-left: 5px;
+}
+ .comment_detail {
+    line-height: 30px;
+    margin-top: 5px;
+    word-wrap: break-word;
+}
+.pic_lists {
+margin: 15px 0;
+}
+.pic_lists .pic_big{
+    display:none;
+}
+.sp_content {
+float: left;
+overflow: hidden;
+position: relative;
+}
+.slidy_pic li {
+float: left;
+margin-right: 15px;
+}
+.slidy_pic li img {
+display: block;
+width: 120px;
+}
+</style>
+<form action="{$formaction}" method="post" class="pageForm required-validate" onsubmit="return validateCallback(this, ReviewReplyCallBack)">
+<div class="clists_main_cont" >
+    <p class="clists_stars clearfix">
+        <span class="point_start_bar" title="{if $row.point eq 1}不满意{elseif $row.point gt 1 && $row.point lt 4}一般{elseif $row.point gt 3}满意{/if}">
+            <i style="width:<?php echo $this->_var['row']['point']*20; ?>%;"></i>
+        </span>
+    </p>
+    <p class="clists_words clearfix">
+        {foreach from=$row.group_point item=point_item}
+        <span>{$point_item.name}<em>{if $point_item.point eq 1}不满意{elseif $point_item.point gt 1 && $point_item.point lt 4}一般{elseif $point_item.point gt 3}满意{/if}</em></span>
+        {/foreach}
+    </p>
+    <div  style="height: 10px;  overflow: hidden;  visibility: visible;  clear: both;"></div>
+    <p class="comment_detail">{$row.review_content}</p>
+    <div  style="height: 10px;  overflow: hidden;  visibility: visible;  clear: both;"></div>
+    <div class="pic_lists clearfix">
+        <div class="sp_content">
+            <ul class="slidy_pic clearfix">
+                {if $row.imgs}
+                {foreach from=$row.imgs item=img_item}
+                <li class="cur">
+                    <img src="{$img_item}" alt="">
+                </li>
+                {/foreach}
+                {/if}
+            </ul>
+        </div>
+        <div  style="height: 10px;  overflow: hidden;  visibility: visible;  clear: both;"></div>
+    </div>
+    <div><p>管理员回复:</p>
+        <div  style="height: 10px;  overflow: hidden;  visibility: visible;  clear: both;"></div>
+        <p><textarea class="textInput" name="review_reply" rows=5 cols=80 >{$ask_item.reply_content}</textarea></p></div>
+</div>
+<div class="formBar">
+		<ul>
+			<input type="hidden" value="{$row.id}" name="id" />
+                        <input type="hidden" value="1" name="ajax" />
+			<li><div class="buttonActive"><div class="buttonContent"><button type="submit">{lang v="SAVE"}</button></div></div></li>
+			<li><div class="button"><div class="buttonContent"><button class="close" type="button">{lang v="CLOSE"}</button></div></div></li>
+		</ul>
+	</div>
+</form>
+<script>
+    function ReviewReplyCallBack(args){
+	if(args.statusCode == 300){
+		alertMsg.error(args.message)
+		return false;
+	}
+        if(args.statusCode == 200){
+		alertMsg.correct(args.message)
+                $.pdialog.closeCurrent();
+                navTab.reload("{$review_url}",{navTabId: "review_index"});
+		return false;
+	}      
+    }
+</script>

@@ -1,0 +1,134 @@
+<form id="pagerForm" onsubmit="return divSearch(this, 'logpage');" action="{$formaction}" method="post">
+	<input type="hidden" name="pageNum" value="{$param.pageNum}" />
+	<input type="hidden" name="numPerPage" value="{$param.pageSize}" />
+	<input type="hidden" name="orderField" value="{$param.orderField}" />
+	<input type="hidden" name="orderDirection" value="{$param.orderDirection}" />
+
+	<div class="pageHeader">
+
+	<div class="searchBar">
+		<div class="pageFormContent cf" >
+			<div class="searchtableRow">
+				
+				<table>
+					<tr>
+						<td>
+						时间范围 
+						</td>
+						<td>
+						<input type="text" name="begin_time" class="textInput date readonly" datefmt="yyyy-MM-dd HH:mm:ss" readonly="true" value="{$param.begin_time}"/>
+						</td>
+						
+						<td>
+						-
+						</td>
+						<td>
+						<input type="text" name="end_time" class="textInput date readonly" datefmt="yyyy-MM-dd HH:mm:ss" readonly="true" value="{$param.end_time}"/>
+						</td>
+						
+						
+						
+						<td>
+						<div class="buttonActive"><div class="buttonContent"><button type="submit">{lang v="SEARCH"}</button></div></div>
+						</td>
+					</tr>
+				</table>
+				
+			</div>
+
+			
+			
+			
+		</div>
+
+	</div>
+
+	</div>
+</form>
+<script type="text/javascript">
+function reloadlogpage(res)
+{
+	if(res.statusCode==200)
+	{
+		divSearch($("#pagerForm",navTab.getCurrentPanel()), "logpage");
+	}
+	else
+	{
+		alertMsg.error(res.message);
+	}
+}
+</script>
+<div class="pageContent">
+	<div class="panelBar">
+		<ul class="toolBar">
+			<li><a title="{lang v="CONFIRM_DELETE"}" target="selectedTodo" rel="log_id" postType="string" href="{$delurl}" callback="reloadlogpage" class="delete"><span>{lang v="DEL"}</span></a></li>
+		</ul>
+	</div>
+	<table class="table" width="100%" layoutH="235" rel="logpage" >
+		<thead>
+			<tr>
+				<th width="22"><input type="checkbox" group="log_id" class="checkboxCtrl"></th>
+				<th  width="50" orderField="id" {if $param.orderField eq 'id'} class="{$param.orderDirection}"{/if}>{lang v="ID"}</th>
+				<th>日志内容</th>
+				<th  width="80"  orderField="log_type" {if $param.orderField eq 'log_type'} class="{$param.orderDirection}"{/if}>类型</th>
+				<th width="150" >帐户变动</th>
+				<th width="150"  orderField="log_time" {if $param.orderField eq 'log_time'} class="{$param.orderDirection}"{/if}>日志时间</th>
+				<th width="150" >操作者IP</th>
+				
+				<th width="100">{lang v="TAG_LANG_OPERATE"}</th>
+			</tr>
+		</thead>
+		<tbody>
+		
+			{foreach from=$list item=item}
+			<tr  rel="{$item.id}">
+				<td><input name="log_id" value="{$item.id}" type="checkbox"></td>
+				<td>{$item.id}</td>
+				<td>{$item.log_info}</td>
+				<td>
+					{if $item.log_type eq 1}
+					金额
+					{elseif $item.log_type eq 2}
+					积分
+					{elseif $item.log_type eq 3}
+					经验
+					{elseif $item.log_type eq 4}
+					代金券
+					{/if}
+				</td>
+				<td>
+					{if $item.log_type eq 1}
+					{$item.money}
+					{elseif $item.log_type eq 2}
+					{$item.score}
+					{elseif $item.log_type eq 3}
+					{$item.exp}
+					{elseif $item.log_type eq 4}
+					{$item.voucher_money}
+					{/if}
+				</td>
+				<td>{$item.log_time}</td>
+				<td>{$item.log_ip}</td>
+				<td>
+					<a title="{lang v="CONFIRM_DELETE"}" callback="reloadlogpage" target="ajaxTodo" href="{$delurl}&id={$item.id}" class="btnDel">{lang v="DEL"}</a>
+				</td>
+			</tr>
+			{/foreach}
+		</tbody>
+	</table>
+	<div class="panelBar">
+		<div class="pages">
+			<span>{lang v="DISPLAY_PAGE_SIZE"}</span>
+			<select class="combox" name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value},'logpage')">
+				<option value="<?php echo ADMIN_PAGE_SIZE1;?>" {if $param.pageSize eq ADMIN_PAGE_SIZE1}selected="selected"{/if} ><?php echo ADMIN_PAGE_SIZE1;?></option>
+				<option value="<?php echo ADMIN_PAGE_SIZE2;?>" {if $param.pageSize eq ADMIN_PAGE_SIZE2}selected="selected"{/if}><?php echo ADMIN_PAGE_SIZE2;?></option>
+				<option value="<?php echo ADMIN_PAGE_SIZE3;?>" {if $param.pageSize eq ADMIN_PAGE_SIZE3}selected="selected"{/if}><?php echo ADMIN_PAGE_SIZE3;?></option>
+				<option value="<?php echo ADMIN_PAGE_SIZE4;?>" {if $param.pageSize eq ADMIN_PAGE_SIZE4}selected="selected"{/if}><?php echo ADMIN_PAGE_SIZE4;?></option>
+			</select>
+			<span>&nbsp;&nbsp;{lang v="PAGE_TOTAL_COUNT" p="$totalCount"}</span>
+		</div>
+		
+		<div class="pagination"  rel="logpage"  totalCount="{$totalCount}" numPerPage="{$param.pageSize}" pageNumShown="10" currentPage="{$param.pageNum}"></div>
+
+	</div>
+</div>

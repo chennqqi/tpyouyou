@@ -1,0 +1,32 @@
+<div class="tip_info">
+    <a class="uname" href="{url r="user#home" p="uid=$user_info.id"}"><img uid="{$user_info.id}" src="{function name="get_spec_image" v="$user_info.avatar" w=60 h=60 g=1}" class="avatar"/></a>
+        <div class="info">
+            <p><a class="uname" href="{url r="user#home" p="uid=$user_info.id"}">{$user_info.nickname}</a></p>
+            <p>会员等级: {$user_info.level_name}</p>
+            <p>动态数:<a>{$user_info.active_count}</a>&nbsp; 关注数:<a>{$user_info.follow_count}</a>&nbsp;  粉丝数:<a>{$user_info.fans_count}</a> </p>
+        </div>
+        
+        <!--<div class="blank3"></div><div class="intro"><span>真懒啊，连自我介绍都不写。</span></div>-->
+    </div>
+    {if $is_me eq 1}
+    <div class="tip_toolbar">&nbsp;&nbsp;&nbsp;自己都不认识了？
+        <div class="blank3"></div>
+    </div>
+    {else}
+        {if $is_follow eq 1}
+        <div class="tip_toolbar"><span class="fl icrad_add">已关注</span>
+            <a class="follow_del" href="javascript:;" onclick="$.User_Follow({$user_info.id},this,'UserTipFollowHandler');">取消</a>
+            <div class="blank3"></div>
+        </div>
+        {else}
+        <div class="tip_toolbar">
+            <div class="blank3"></div>
+            &nbsp;<a class="follow_button" onclick="$.User_Follow({$user_info.id},this,'UserTipFollowHandler');" href="javascript:;" _hover-ignore="1" _orighref="javascript:;" _tkworked="true">+加关注</a>
+            <div class="blank3"></div>
+        </div>
+        {/if}
+    {/if}
+    
+    
+    
+    <div class="tip_arrow" style="margin-left: 7px;"></div>

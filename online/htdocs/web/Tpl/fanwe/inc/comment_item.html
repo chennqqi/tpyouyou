@@ -1,0 +1,26 @@
+{foreach from=$list item=row}
+<div class="comment_content">
+        <div class="comment_info">
+                <div class="floor_info">
+                        <p class="floor_info_p">
+                                <a href="{url r="user#home" p="uid=$row.id"}">{$row.nickname}</a>
+                        </p>
+                        <div class="floor_content">
+                                <div class="inner_floor_content">
+                                        <blockquote>
+                                                <p>{$row.content}</p>
+                                        </blockquote>
+                                        <div class="quote_info">
+                                                <span class="quote_time">发表于 {$row.create_time}</span>
+                                        </div>
+                            </div>
+
+                        </div>
+                        <div class="blank15"></div>
+                </div>
+        </div>
+        <div class="comment_portait">
+                <a href="{url r="user#home" p="uid=$row.id"}">{$row.avatar}</a>
+    </div>
+</div>
+{/foreach}

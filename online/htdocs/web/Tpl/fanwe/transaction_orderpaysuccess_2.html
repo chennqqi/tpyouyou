@@ -1,0 +1,77 @@
+<?php
+	$this->_var['pagecss'][] = TMPL_REAL."/css/style.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/weebox.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/transaction.css";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.bgiframe.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.weebox.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.pngfix.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/lazyload.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/script.js";
+	$this->_var['cpagejs'][] = TMPL_REAL."/js/script.js";
+
+?>
+{include file="inc/header_order.html"}
+<div class="blank15"></div>
+<div class="wrap">
+	{if $order_data.order_list}
+	{foreach from=$order_data.order_list item=order_item}
+	<div class="t_nav">
+		<ul class="clearfix">
+			<li class="f_l">1.填写订单</li>
+			{if $order_item.pay_status eq 1}			
+			<li class="f_l">2.网上支付</li>
+			<li class="f_l cur" style="margin-right:0px;">3.预定成功</li>
+			{else}
+			<li class="f_l cur">2.网上支付</li>
+			<li class="f_l" style="margin-right:0px;">3.预定成功</li>
+			{/if}
+			
+		</ul>
+	</div>
+	<div class="s_cont">
+		{if $order_item.pay_status eq 1}	
+		<ul>
+			<li class="o_success">您订购的门票 {$order_item.ticket_name} 订单付款成功</li>
+			<li class="o_sn">订单号：{$order_item.sn}</li>			
+			<li>
+				<div class="blank"></div>
+				<div class="blank"></div>
+				<a href="{$order_item.url}" class="a_but">查看订单</a>
+			</li>
+		</ul>
+		{else}
+		<ul>
+			<li class="o_success">您订购的门票 {$order_item.ticket_name} 已付款 {$order_item.pay_amount} 元，还需支付  {$order_item.money}元</li>
+			<li class="o_sn">订单号：{$order_item.sn}</li>			
+			<li>
+				<div class="blank"></div>
+				<div class="blank"></div>
+				<a href="{$order_item.url}" class="a_but">继续支付</a>
+			</li>
+		</ul>
+		{/if}
+	</div>
+	{/foreach}
+	{else}
+	<div class="t_nav">
+		<ul class="clearfix">
+			<li class="f_l">1.填写订单</li>
+			<li class="f_l">2.网上支付</li>
+			<li class="f_l cur" style="margin-right:0px;">3.预定成功</li>
+			
+		</ul>
+	</div>
+	<div class="s_cont">
+		<ul>
+			<li class="o_success">您订购的门票 {$order_data.ticket_name} 订单付款成功</li>
+			<li class="o_sn">订单号：{$order_data.sn}</li>			
+			<li>
+				<div class="blank"></div>
+				<div class="blank"></div>
+				<a href="{$order_data.url}" class="a_but">查看订单</a>
+			</li>
+		</ul>
+	</div>
+	{/if}
+</div>
+{include file="inc/footer_order.html"}

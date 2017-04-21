@@ -1,0 +1,15 @@
+@CHARSET "UTF-8";
+.uc_msg_box{ padding:10px; }
+
+.msg_row{ padding:5px 0px; border-bottom:#ccc dotted 1px;}
+.msg_row .title{ float:left; display:block;}
+.msg_row .time{ float:right;; display:block;}
+
+
+.msg_row .title span,.msg_row .title a{ float:left;}
+
+.msg_row .open_msg,.msg_row .open_msg:hover{ margin-left:10px; display:inline-block; color:#0088d2; background:url(../images/down_arrow.gif) no-repeat right 7px; width:33px; height:20px;}
+.msg_row .new_msg{ font-size:0; line-height:0; overflow:hidden; margin-left:10px; display:inline-block; background:url(../images/new_pm.gif) no-repeat 0px 3px; width:18px; height:20px; }
+
+.del_msg{ color:#0088d2;}
+.msg_row .content{ display:none;}

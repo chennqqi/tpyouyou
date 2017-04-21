@@ -1,0 +1,76 @@
+select {
+vertical-align: middle;
+font-size: 12px;
+padding: 1px;
+font-family: Arial;
+}
+.dialog_city {
+padding: 3px 5px;
+border: 1px solid #ddd;
+width: 110px;
+}
+.error_notice {
+	display: inline-block;
+	height: 25px;
+	line-height: 25px;
+	background: url(../images/spot.gif) no-repeat 0 -584px;
+	padding-left: 30px;
+	margin-left: 10px;
+}
+.error_notice i {
+	font-style: normal;
+	display: inline-block;
+	line-height: 26px;
+	background: url(../images/spot.gif) no-repeat right -609px;
+	padding-right: 10px;
+	font-size: 13px;
+}
+.m_box{ border-top: 2px solid #008fdb;border-left: 1px solid #F1F1F1;border-radius: 4px 4px 0 0;border-right: 1px solid #F1F1F1;border-bottom: 1px solid #F1F1F1;}
+.m_box .dt{ line-height:32px; height:32px; padding-left:15px;color:#f60;border-bottom:1px solid #F1F1F1; font-weight:bolder;}
+.m_box .bx{ padding:15px;}
+.m_box .bx .item{  line-height:30px; padding: 3px 0}
+.m_box .bx .item .ft{ float:left; width:100px; text-align:right; padding-right:5px;}
+.m_box .bx .item .fb{ float:left;  width:600px}
+.m_box .bx .item .fb .txt_input{ float:left; border:1px solid #BCBCBC; height:24px; line-height:24px; padding:0 5px; width:220px}
+.m_box .bx .item .ft span.em{ color:#f60}
+.m_box .act { padding-left:105px; padding-top:5px;}
+.m_box .act .J_do_namelist{
+text-decoration: none;
+background: url(../images/user/regist_ico.gif) no-repeat 0px -330px;
+display: inline-block;
+width: 206px;
+height: 33px;
+font-size: 14px;
+line-height: 33px;
+color: #fff;
+font-weight: bold;
+text-align: center;
+border:none;
+}
+
+.namelist {border:1px solid #ddd; }
+.namelist th{ background: #f2f2f2;font-weight: bold; height:30px; line-height:30px;  padding:0 5px; text-align:left;}
+.namelist td{padding:0 5px; height:30px; line-height:30px;  border-top:1px solid #ddd;}
+.namelist tr.cur{ background:#f9f9f9}
+.namelist tr .j_set_default{display:none;color:#6aafe2}
+.namelist tr.cur .j_set_default{display:block;}
+.namelist tr.def{ background:#f8f8f8}
+
+.namelist_header{
+	line-height: 34px;
+	border-bottom: 1px #ccc solid;
+	margin-bottom: 10px;
+}
+
+h2.common_h2 {
+	font-size: 14px;
+	line-height: 34px;
+	width:130px;
+}
+a.add{
+	color: #0088D2;
+	font-weight:bolder;
+}
+a.add:hover{
+	text-decoration:none;
+}

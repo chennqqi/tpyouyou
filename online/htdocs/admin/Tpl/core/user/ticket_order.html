@@ -1,0 +1,236 @@
+<form id="pagerForm" onsubmit="return divSearch(this, 'ticketorderpage');" action="{$formaction}" method="post">
+	<input type="hidden" name="pageNum" value="{$param.pageNum}" />
+	<input type="hidden" name="numPerPage" value="{$param.pageSize}" />
+	<input type="hidden" name="orderField" value="{$param.orderField}" />
+	<input type="hidden" name="orderDirection" value="{$param.orderDirection}" />
+<div class="pageHeader" style="overflow:auto; height:145px;">
+	
+	<div class="searchBar">
+		<div class="pageFormContent cf" >
+			<div class="searchtableRow">
+				
+				<table>
+					<tr>
+						<td>
+						订单号：
+						</td>
+						<td>
+						<input type="text" name="sn" value="{$param.sn}"/>
+						</td>
+
+							
+						<td>
+						预定人姓名：
+						</td>
+						<td>
+						<input type="text" name="appoint_name" value="{$param.appoint_name}"/>
+						</td>
+						
+						<td>
+						预定人手机：
+						</td>
+						<td>
+						<input type="text" name="appoint_mobile" value="{$param.appoint_mobile}"/>
+						</td>	
+						
+						<td>
+						门票ID：
+						</td>
+						<td>
+						<input type="text" name="ticket_id" value="{$param.ticket_id}"/>
+						</td>					
+					</tr>	
+					<tr>			
+						<td>
+						商家ID：
+						</td>
+						<td>
+						<input type="text" name="supplier_id" value="{$param.supplier_id}"/>
+						</td>	
+						
+						<td>
+						支付状态：
+						</td>
+						<td>
+						<select name="pay_status" class="combox">
+							<option value="-1">全部</option>
+							<option value="0" {if $param.pay_status eq 0}selected=selected{/if}>未支付</option>
+							<option value="1" {if $param.pay_status eq 1}selected=selected{/if} >已支付</option>
+						</select>
+						</td>
+						<td>											
+						订单状态：
+						</td>
+						<td>
+						<select name="order_status" class="combox">
+							<option value="0">全部</option>
+							<option value="1" {if $param.order_status eq 1}selected=selected{/if}>新订单</option>
+							<option value="2" {if $param.order_status eq 2}selected=selected{/if}>已确认</option>
+							<option value="3" {if $param.order_status eq 3}selected=selected{/if}>已完成</option>
+							<option value="4" {if $param.order_status eq 4}selected=selected{/if}>已作废</option>
+						</select>
+						</td>											
+					</tr>												
+					<tr>
+						<td>
+						退款状态：
+						</td>
+						<td>
+						<select name="refund_status" class="combox">
+							<option value="-1">全部</option>
+							<option value="0" {if $param.refund_status eq 0}selected=selected{/if}>未申请退款</option>
+							<option value="1" {if $param.refund_status eq 1}selected=selected{/if} >申请退款中</option>
+							<option value="2" {if $param.refund_status eq 2}selected=selected{/if} >确认退款</option>
+							<option value="3" {if $param.refund_status eq 3}selected=selected{/if} >拒绝退款</option>
+						</select>
+						</td>
+						
+						<td>	
+						发货状态：
+						</td>
+						<td>
+						<select name="delivery_status" class="combox">		
+							<option value="-2">全部</option>					
+							<option value="-1" {if $param.delivery_status eq -1}selected=selected{/if}>无需发货</option>
+							<option value="0" {if $param.delivery_status eq 0}selected=selected{/if}>未发货</option>
+							<option value="1" {if $param.delivery_status eq 1}selected=selected{/if} >已发货</option>
+							<option value="2" {if $param.delivery_status eq 2}selected=selected{/if} >已收货</option>
+						</select>
+						</td>
+							
+						<td>
+						改期申请：
+						</td>
+						<td>
+						<select name="re_appoint_status" class="combox">
+							<option value="-1">全部</option>
+							<option value="0" {if $param.re_appoint_status eq 0}selected=selected{/if}>无</option>
+							<option value="1" {if $param.re_appoint_status eq 1}selected=selected{/if} >有</option>
+						</select>
+						</td>
+						<td>
+							
+					</tr>
+					
+					<tr>
+						<td colspan = 10>
+						<table>
+							<tr>
+						
+							<td>
+							下单时间：
+							</td>
+							<td>							
+								<input type="text" name="create_time_begin" value="{$param.create_time_begin}" class="required date textInput readonly valid"  datefmt="yyyy-MM-dd"  readonly="true">		
+								<a class="inputDateButton" href="javascript:;">选择</a>								-																			
+							</td>	
+						
+							<td>							
+								
+								<input type="text" name="create_time_end" value="{$param.create_time_end}" class="required date textInput readonly valid"  datefmt="yyyy-MM-dd"  readonly="true">		
+								<a class="inputDateButton" href="javascript:;">选择</a>																				
+							</td>
+												
+							<td>
+							支付时间：
+							</td>
+							<td colspan = 2>							
+								<input type="text" name="pay_time_begin" value="{$param.pay_time_begin}" class="required date textInput readonly valid"  datefmt="yyyy-MM-dd"  readonly="true">		
+								<a class="inputDateButton" href="javascript:;">选择</a>
+								-				
+							</td>										
+							<td>							
+								<input type="text" name="pay_time_end" value="{$param.pay_time_end}" class="required date textInput readonly valid"  datefmt="yyyy-MM-dd"  readonly="true">		
+								<a class="inputDateButton" href="javascript:;">选择</a>				
+							</td>
+								
+													
+							<td>
+							<div class="buttonActive"><div class="buttonContent"><button type="submit">{lang v="SEARCH"}</button></div></div>
+							</td>
+						
+							</tr>
+																		
+						</table>	
+						</td>								
+					</tr>					
+				</table>
+				
+			</div>
+
+			
+			
+			
+		</div>
+
+	</div>
+	
+</div>
+</form>
+<div class="pageContent">
+	<table class="table" width="100%" layoutH="235">
+		<thead>
+		<tr>
+				<th width="150">订单号</th>
+				<th width="100" >门票</th>
+				<th width="100">商家名称</th>
+				<th width="100">购买会员</th>
+				<th width="70">预定人姓名</th>
+				<th width="90">预定人手机</th>
+				<th width="90">预定时间</th>
+				<th width="125">下单时间</th>
+				<th width="60">订单金额</th>								
+				<th width="60">已付金额</th>
+				<th width="60">发货状态</th>
+				<th width="60">支付状态</th>
+				<th width="60">订单状态</th>
+				<th width="60">退款状态</th>
+				<th width="30">改期</th>
+				
+				<th width="80">操作</th>
+			</tr>
+		</thead>
+		<tbody>
+		
+			{foreach from=$list item=item}
+			<tr  rel="{$item.id}">
+				<td>{$item.sn}</td>
+				<td>{$item.ticket_name}</td>
+				<td>{$item.supplier_name}</td>
+				<td>{$item.user_name}</td>
+				<td>{$item.appoint_name}</td>
+				<td>{$item.appoint_mobile}</td>
+				<td>{$item.appoint_time_format}</td>
+				
+				<td>{$item.create_time_format}</td>
+				
+				<td>{$item.total_price_format}</td>
+				<td>{$item.pay_amount_format}</td>
+				<td>{$item.delivery_status_format}</td>
+				<td>{$item.pay_status_format}</td>
+				<td>{$item.order_status_format}</td>
+				<td>{$item.refund_status_format}</td>
+				<td>{$item.re_appoint_status_format}</td>
+				<td>
+					<a title="线路订单{$item.sn}" rel="tourline_order_editpage_{$item.id}" target="navTab" href="{$editurl}&id={$item.id}"  class="btnEdit">{lang v="EDIT"}</a>
+				</td>
+			</tr>
+			{/foreach}
+		</tbody>
+	</table>
+	<div class="panelBar">
+		<div class="pages">
+			<span>{lang v="DISPLAY_PAGE_SIZE"}</span>
+			<select class="combox" name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value},'ticketorderpage')">
+				<option value="<?php echo ADMIN_PAGE_SIZE1;?>" {if $param.pageSize eq ADMIN_PAGE_SIZE1}selected="selected"{/if} ><?php echo ADMIN_PAGE_SIZE1;?></option>
+				<option value="<?php echo ADMIN_PAGE_SIZE2;?>" {if $param.pageSize eq ADMIN_PAGE_SIZE2}selected="selected"{/if}><?php echo ADMIN_PAGE_SIZE2;?></option>
+				<option value="<?php echo ADMIN_PAGE_SIZE3;?>" {if $param.pageSize eq ADMIN_PAGE_SIZE3}selected="selected"{/if}><?php echo ADMIN_PAGE_SIZE3;?></option>
+				<option value="<?php echo ADMIN_PAGE_SIZE4;?>" {if $param.pageSize eq ADMIN_PAGE_SIZE4}selected="selected"{/if}><?php echo ADMIN_PAGE_SIZE4;?></option>
+			</select>
+			<span>&nbsp;&nbsp;{lang v="PAGE_TOTAL_COUNT" p="$totalCount"}</span>
+		</div>
+		
+		<div class="pagination" rel="ticketorderpage" totalCount="{$totalCount}" numPerPage="{$param.pageSize}" pageNumShown="10" currentPage="{$param.pageNum}"></div>
+
+	</div>
+</div>

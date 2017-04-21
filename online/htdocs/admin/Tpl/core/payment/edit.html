@@ -1,0 +1,104 @@
+<h2 class="contentTitle">{lang v="EDIT"}{$data.name}</h2>
+<form action="{$formaction}" method="post" class="pageForm required-validate" onsubmit="return validateCallback(this, navTabAjaxDone)">
+<div class="pageContent">
+<div class="pageFormContent" layoutH="97">		
+
+			<table class="formtable">					
+			<tr>					
+				<td class="item_title">支付接口名称：</td>
+				<td class="item_input">
+					{$data.name}
+					<input type="hidden" value="{$data.name}" name="name" />
+				</td>					
+			</tr>
+			<tr>					
+				<td class="item_title">{lang v="CLASS_NAME"}：</td>
+				<td class="item_input">
+					{$data.class_name}
+					<input type="hidden" value="{$data.class_name}" name="class_name" />
+				</td>					
+			</tr>
+
+			<tr>
+				<td class="item_title">{lang v="IS_EFFECT"}:</td>
+				<td class="item_input">
+					<select name="is_effect" class="combox">
+						<option value="1" {if $vo.is_effect eq 1}selected="selected"{/if}>{lang v="IS_EFFECT_1"}</option>
+						<option value="0" {if $vo.is_effect eq 0}selected="selected"{/if}>{lang v="IS_EFFECT_0"}</option>
+					</select>
+				</td>
+			</tr>
+			
+
+			{if $data.bank eq 0}
+			<tr>
+				<td class="item_title">图标:</td>
+				<td class="item_input">
+					{function name="load_keimg" p="logo" v=$vo.logo}
+					<div class="blank"></div>
+					<label class="tip">建议尺寸 180x40</label>
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="item_title">{lang v="SORT"}:</td>
+				<td class="item_input">
+					<input type="text" class="textInput digits" name="sort" value="{$vo.sort}" />
+				</td>
+			</tr>
+			{/if}
+			
+
+			{if $data.config}
+				<tr>
+					<td class="item_title">{lang v="CONFIG_INFO"}:</td>
+					<td class="item_input">
+						<table style="border:none;">
+						{foreach from=$data.config key=config_name  item=config}
+						<tr>
+						<td style="border:none;">
+							<span class="cfg_title">{$config.SHOW_TITLE}:</span>
+						</td>
+						<td style="border:none;">
+							<span class="cfg_content">
+							
+							{if $config.INPUT_TYPE eq 0}
+							<input type="text" class="textInput" name="config[{$config_name}]"  value="{$config.VALUE}" />
+							{elseif $config.INPUT_TYPE eq 2}
+							<input type="password" class="textInput" name="config[{$config_name}]" value="{$config.VALUE}" />
+							{elseif $config.INPUT_TYPE eq 1}
+							<select name="config[{$config_name}]" class="combox"  >
+								{foreach from=$config.VALUES item=val}
+									<option value="{$val.VALUE}"  {if $config.VALUE eq $val.VALUE}selected="selected"{/if}>  {$val.SHOW_TITLE} </option>
+								{/foreach}
+							</select>
+							{else}
+							{foreach from=$config.VALUES item=val}
+							<label style="width:300px;"><input type="checkbox" name="config[{$config_name}][{$val.VALUE}]" value="{$val.VALUE}" {if $config.VALUE[$val.VALUE] eq $val.VALUE}checked="checked"{/if} /> {$val.SHOW_TITLE} </label>
+							<br />
+							{/foreach}
+							{/if}
+							</span>
+						</td>
+						</tr>
+						{/foreach}
+						</table>
+					</td>
+				</tr>
+			{/if}
+			
+		
+			
+			</table>
+					
+	</div>
+	<div class="formBar">
+		<ul>
+			<input type="hidden" value="{$vo.id}" name="id" />
+			<input type="hidden" name="bank" value="{$data.bank}" />
+			<li><div class="buttonActive"><div class="buttonContent"><button type="submit">{lang v="SAVE"}</button></div></div></li>
+			<li><div class="button"><div class="buttonContent"><button class="close" type="button">{lang v="CLOSE"}</button></div></div></li>
+		</ul>
+	</div>
+</div>
+</form>

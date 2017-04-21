@@ -1,0 +1,59 @@
+<?php
+	$this->_var['pagecss'][] = TMPL_REAL."/css/style.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/weebox.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/help.css";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.bgiframe.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.weebox.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.pngfix.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/lazyload.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/script.js";
+	$this->_var['cpagejs'][] = TMPL_REAL."/js/script.js";
+?>
+{include file="inc/header.html"} 
+<div class="blank"></div>
+{include file="inc/ur_here.html"}
+<div class="blank"></div>
+<div class="wrap">
+	<div class="help_cate">
+		<div class="cate_title">帮助信息索引</div>
+		<ul>
+			{foreach from=$help_list item=help_cate}
+			<li {if $current_cate.id eq $help_cate.id} class="current"{/if}>				
+				<a href="{$help_cate.url}">{$help_cate.name}</a>				
+			</li>
+			{/foreach}
+		</ul>
+	</div>
+	<div class="help_main">
+		<div class="current_cate_title">{$current_cate.name}</div>
+		{foreach from=$current_cate.list item=help_item name=help_page_list}
+			{if $help_item.id eq $current_id}
+				<div class="help_row">
+					<div class="title_row">
+					<span class="open"></span> 
+					<i class="iter">{$smarty.foreach.help_page_list.iteration}.</i>
+					<a href="javascript:void(0);" title="{$help_item.name}">{$help_item.name}</a>
+					</div>
+					{if $help_item.content}					
+					<div class="help_content">
+						<div class="arrow"></div>
+						<div>
+						{$help_item.content}
+						</div>
+					</div>
+					{/if}
+				</div>
+			{else}
+				<div class="help_row">
+					<div class="title_row">
+					<span class="close"></span> 
+					<i class="iter">{$smarty.foreach.help_page_list.iteration}.</i>
+					<a href="{$help_item.url}" {if $help_item.blank eq 1}target="_blank"{/if} title="{$help_item.name}">{$help_item.name}</a>
+					</div>
+				</div>
+			{/if}
+		{/foreach}
+	</div>
+</div>
+<div class="blank15"></div><div class="blank15"></div>
+{include file="inc/footer.html"} 

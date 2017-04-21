@@ -1,0 +1,240 @@
+<div class="blank20"></div>
+<div style="width:780px">
+    <div class="three_cols clearfix">
+        <div class="col_1">
+            <dl class="clearfix com_saf_num">
+                <dt class="lel_l">
+                满意度：
+                <span class="comment_num f_yh">{$count_data.satify}%</span>
+                <!-- (已有{$count_data.review_total}点评) -->
+                <input type="hidden" value="100" id="levelAll">
+                </dt>
+                <dd class="lel_l">
+                    <div class="blank"></div>
+                    <div class="blank"></div>
+                    <ul class="score_all">
+                        <li>
+                            <dl class="clearfix">
+                                <dt>满意</dt>
+                                <dd>
+                                    <span class="num_per">
+                                        <em style="width: {$satis_count.star_type_3.satis_percent}px;"></em>
+                                    </span>
+                                    <label class="score_num">{$satis_count.star_type_3.count}</label>
+                                </dd>
+                                <input type="hidden" class="level_someone" value="95">
+                            </dl>
+                        </li>
+                        <li>
+                            <dl class="clearfix">
+                                <dt>一般</dt>
+                                <dd>
+                                    <span class="num_per">
+                                        <em style="width: {$satis_count.star_type_2.satis_percent}px;"></em>
+                                    </span>
+                                    <label class="score_num">{$satis_count.star_type_2.count}</label>
+                                </dd>
+                                <input type="hidden" class="level_someone" value="4">
+                            </dl>
+                        </li>
+                        <li>
+                            <dl class="clearfix">
+                                <dt>不满意</dt>
+                                <dd>
+                                    <span class="num_per">
+                                        <em style="width: {$satis_count.star_type_1.satis_percent}px;"></em>
+                                    </span>
+                                    <label class="score_num">{$satis_count.star_type_1.count}</label>
+                                </dd>
+                                <input type="hidden" class="level_someone" value="3">
+                            </dl>
+                        </li>
+                    </ul>
+                </dd>
+            </dl>
+
+        </div>
+        <div class="col_2">
+            <div class="blank"></div>
+        </div> 
+        <div class="col_3">
+            <div class="rep_comment">
+                <p>出游归来后可点评产品</p>
+                <p class="btn">
+                    <a href="#review_form_box">发表点评</a>
+                </p>
+                <!-- <p>已有<em>{$count_data.review_total}</em>人点评</p></div>     -->								
+        </div>
+    </div>
+    <div class="blank"></div>
+    <!--点评筛选菜单-->
+    <ul class="fliter_comment clearfix">
+            <li><span class="remarkSwitch current" onclick="$.param_review(this)" param_type="args_star" param_data="0">全部点评<em>（{$count_data.review_total}）</em></span></li>
+            <li><span class="remarkSwitch" param_type="args_star" param_data="3" onclick="$.param_review(this)">满意<em>（{$satis_count.star_type_3.count}）</em></span></li>
+            <li><span class="remarkSwitch" param_type="args_star" param_data="2"  onclick="$.param_review(this)">一般<em>（{$satis_count.star_type_2.count}）</em></span></li>
+            <li><span class="remarkSwitch" param_type="args_star" param_data="1"  onclick="$.param_review(this)">不满意<em>（{$satis_count.star_type_1.count}）</em></span></li>
+            <li class="filter_by_pic ">
+                    <input type="checkbox" param_type="args_pic" param_data="0" onclick="$.param_review(this)"> <label for="fliterByPic">有照片</label>
+            </li>
+    </ul>
+    <div class="blank"></div>
+    <!--没有点评数据-->
+    <div class="no_comment_to_rep"></div>
+    <div class="blank"></div>
+    <!--有点评数据的模块-->
+    <ul class="comment_lists">
+        
+    </ul>
+    <div id="review_page" class="pager_box"  style="text-align: center;">
+        
+    </div>
+    <div class="blank"></div>
+    <div class="blank15"></div>
+    <input type="hidden" class="review_list_ajax_url" name="review_list_ajax_url" value="{$review_list_ajax_url}"/>
+    <!--点评发布表单-->
+    <div id="review_form_box">
+         <form id="review_form" action="index.php" method="post" enctype="multipart/form-data">
+        <div class="review_form_box pub_box" style="padding:0px;">
+            <div class="form_title">发表点评</div>
+                <p class="dp_bar">
+                    <span class="title"><span class="em">* </span>总体评价：</span>
+                    <span>
+                            <span class="starsBar">
+                                    <span class="frontBk_red">
+                                                    <input type="hidden" value="0" name="dp_point" class="f-input" error_tips="请为选择一个评分">
+                                            </span>
+                                    </span>
+                            </span>
+                    <span class="score_tips" id="score_tips"><span>点击星星为商家打分，最高5颗星</span></span>
+                </p>
+                {foreach from=$group_point item=row}
+                    <p class="dp_bar dp_sub_bar" id="group_{$row.id}">
+                          <span class="title"><span class="em">* </span>{$row.name}：</span>
+                                  <span class="data_bar">
+                                        <span class="data_bar_width">
+                                        <input type="hidden" value="0" name="dp_point_group[{$row.id}]" class="f-input" error_tips="请为{$row.name}打分"/>
+                                        </span>          	
+                                  </span>
+                                  <span class="data_bar_tags"></span>
+                    </p>
+                {/foreach}
+                <div class="dp_bar">
+                    <div class="title_box f_l"><span><span class="em">* </span>内容：</span></div>
+                    <div class="data_contetn f_l">
+                        <textarea name="content" class="f-input"  maxlength="1000" placeholder="回复游记评论(1000字以内)" error_tips="点评内容不能为空"></textarea>
+                    </div>
+                </div>
+                <div class="blank"></div>
+               
+                    <div class="dp_pic">
+
+                            <div class="blank_w_80">&nbsp;</div>
+                            <div class="upload_btn_item"><a id="spanButtonPlaceHolder" href="javascript:void(0);" onclick="">晒照片</a></div>
+                            <div class="pic_list"></div>
+                            <span class="pic_num"><em>0</em>/5</span>
+
+                    </div>
+                    <div class="hide">
+                        <div class="fieldset flash" id="fsUploadProgress">
+
+                        </div>
+                        <div id="divStatus">0 个文件已上传</div>
+                        <div>
+                                <span id="spanButtonPlaceHolder"></span>
+                                <input id="btnCancel" type="button" value="取消所有上传" onclick="swfu.cancelQueue();" disabled="disabled" style="margin-left: 2px; font-size: 8pt; height: 29px;" />
+                        </div>
+                    </div>
+                
+                <div class="blank"></div>
+                <div class="review_act">
+                    <input type="hidden" name="ajax_url" value="{$review_save_ajax_url}"/>
+                </div>
+                <div class="send_dp_btn"><a href="javascript:void(0)" class="send_review_btn">发布点评</a></div>
+        </div>
+    </form>
+    </div>
+    <div class="blank"></div>
+</div>
+<div class="blank20"></div>
+<script type="text/JavaScript" src="{$TMPL}/js/review.js"></script>
+
+<!-- SWFUPLOAD-->
+<link rel="stylesheet" href="{$TMPL}/css/swf.css">
+<script src="{$TMPL}/js/swf/swfupload.js"></script>
+<script src="{$TMPL}/js/swf/handlers.js"></script>
+<script src="{$TMPL}/js/swf/swfupload.queue.js"></script>
+<script src="{$TMPL}/js/swf/fileprogress.js"></script>
+
+<script type="text/javascript">
+    //全局变量
+        var IMG_COUNT = 0;
+        var swfu;
+        var session_id = "{$es_session_id}";
+        window.onload = function() {
+                var settings = {
+                        flash_url : "{$APP_ROOT}/swfupload.swf",
+                        upload_url: "{url r="upload#review"}",
+                        post_params: {"FANWE_SESSID" : session_id,"dir":"review"},
+                        file_size_limit : "100 MB",
+                        file_types : "*.*",
+                        file_types_description : "All Files",
+                        file_upload_limit : 0,  //配置上传个数
+                        file_queue_limit : 5,
+                        custom_settings : {
+                                progressTarget : "fsUploadProgress",
+                                cancelButtonId : "btnCancel"
+                        },
+                        debug: false,
+
+                        // Button settings
+                        button_width: "60",
+                        button_height: "25",
+                        button_placeholder_id: "spanButtonPlaceHolder",
+                        button_image_url : "{$TMPL}/images/upload_btn_img.gif",
+
+                        file_queued_handler : fileQueued,
+                        file_queue_error_handler : fileQueueError,
+                        file_dialog_complete_handler : fileDialogComplete, //当文件选取对话框关闭后触发的事件处理函数
+                        upload_start_handler : uploadStart, //开始上传文件前触发的事件处理函数
+                        upload_progress_handler : uploadProgress,
+                        upload_error_handler : uploadError,
+                        upload_success_handler : swf_uploadSuccess, //文件上传成功后触发的事件处理函数
+                        upload_complete_handler : uploadComplete,
+                        queue_complete_handler : queueComplete
+                };
+
+                swfu = new SWFUpload(settings);
+
+                //SWF 上传图片成功
+                function swf_uploadSuccess(file, serverData) {
+                       var progress = new FileProgress(file, this.customSettings.progressTarget);
+                                progress.setComplete();
+                                progress.setStatus("上传成功");
+                                progress.toggleCancel(false);
+                       var img_obj = eval('('+serverData+')');
+                       if(img_obj.error == -1){
+                           return false;
+                       }
+                       //保存图片
+                       var ajax_url = "{url r="review#ajax_save_img"}";
+                       var img_html = '<a href="javascript:void(0);" onclick="$.Del_img(this)"><img src="'+img_obj.web_url+'" /><input type="hidden" name="img_list[]" value="'+img_obj.url+'"/><span class="del_img">删除</span></a>';
+                       $(".dp_pic .pic_list").append(img_html);
+                       IMG_COUNT++;
+                       $(".dp_pic .pic_num em").html(IMG_COUNT);
+                       if(IMG_COUNT==5){
+                           swfu.setButtonDisabled(true);
+                       }
+                 }
+        
+        function fileQueued(file) {
+
+            this.customSettings.queue = this.customSettings.queue || new Array();
+            //while (this.customSettings.queue.length > 0) {
+             //   this.cancelUpload(this.customSettings.queue.pop(), false);
+           // }
+            this.customSettings.queue.push(file.id);
+             
+        }
+                 
+     };
+</script>

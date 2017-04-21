@@ -1,0 +1,67 @@
+<script type="text/javascript">
+function settable(t)
+{
+	t = $("textarea[name='sql']").val()+t;
+	$("textarea[name='sql']").val(t);	
+}
+</script>
+<form id="pagerForm" method="post" action="#rel#">
+</form>
+<h2 class="contentTitle">{lang v="SQL_OP"}</h2>
+<div class="pageFormContent" layoutH="60">
+	<form rel="pagerForm" onsubmit="return navTabSearch(this);" action="{$formaction}" method="post">
+	<fieldset>
+		<legend>{lang v="SQL_OP_TITLE"}</legend>
+		<div class="pd10">
+		<table>
+			<tr>
+				<td>
+					<textarea  name="sql" class="textInput" style="height:200px; width:500px; min-width: 500px; max-width:500px; min-height:200px; max-height:200px;">{$sql}</textarea>
+				</td>
+				<td>					
+					<div style="display:block; margin:10px; overflow:auto; width:200px; height:200px; border:solid 1px #CCC; line-height:21px; background:#FFF;">
+					<ul class="tree treeFolder collapse">
+						{foreach from=$tables item=table}
+						<li><a href="javascript:void(0);"  ondblclick="settable('{$table}')">{$table}</a></li>
+						{/foreach}
+					</ul>
+					</div>					
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+				<div class="buttonActive"><div class="buttonContent"><button type="submit">{lang v="EXCUTE_SQL"}</button></div></div>
+				</td>
+			</tr>
+		</table>
+		</div>
+	</fieldset>
+	</form>
+	
+	{if $dataset}
+	<fieldset>
+		<legend>{$dataset.runtime}</legend>
+		
+
+	</fieldset>
+	<div class="blank"></div>
+		<table class="table" width="100%" >
+		<thead>
+			<tr>
+				{foreach from=$dataset.cols item=col}
+				<th>{$col}</th>
+				{/foreach}
+			</tr>
+		</thead>
+		<tbody>		
+			{foreach from=$dataset.rows item=row}
+			<tr>
+					{foreach from=$row item=row_item}
+					<td>{$row_item}</td>		
+					{/foreach}		
+			</tr>
+			{/foreach}	
+		</tbody>
+		</table>
+	{/if}
+</div>

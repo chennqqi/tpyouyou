@@ -1,0 +1,153 @@
+<form id="pagerForm" method="post" action="#rel#">
+	<input type="hidden" name="pageNum" value="{$param.pageNum}" />
+	<input type="hidden" name="numPerPage" value="{$param.pageSize}" />
+	<input type="hidden" name="orderField" value="{$param.orderField}" />
+	<input type="hidden" name="orderDirection" value="{$param.orderDirection}" />
+</form>
+<div class="pageHeader" style="overflow:auto; height:55px;">
+	<form rel="pagerForm" onsubmit="return navTabSearch(this);" action="{$formaction}" method="post">
+	<div class="searchBar">
+		<div class="pageFormContent cf" >
+			<div class="searchtableRow">
+				
+				<table>
+					<tr>
+						<td>
+						用户名：
+						</td>
+						<td>
+						<input type="text" name="user_name" value="{$param.user_name}"/>
+						</td>
+						
+						<td>
+						Email：
+						</td>
+						<td>
+						<input type="text" name="email" value="{$param.email}"/>
+						</td>
+						
+						<td>
+						手机号：
+						</td>
+						<td>
+						<input type="text" name="mobile" value="{$param.mobile}"/>
+						</td>
+						
+						<td>
+						会员组：
+						</td>
+						<td>
+						<select name="group_id" class="combox">
+							<option value="0">全部</option>
+							{foreach from=$user_group item=group}
+							<option value="{$group.id}" {if $group.id eq $param.group_id}selected="selected"{/if}>{$group.name}</option>
+							{/foreach}
+						</select>
+						</td>
+						
+						<td>
+						会员等级：
+						</td>
+						<td>
+						<select name="level_id" class="combox">
+							<option value="0">全部</option>
+							{foreach from=$user_level item=level}
+							<option value="{$level.id}" {if $level.id eq $param.level_id}selected="selected"{/if}>{$level.name}</option>
+							{/foreach}
+						</select>
+						</td>
+						
+						<td>
+						<div class="buttonActive"><div class="buttonContent"><button type="submit">{lang v="SEARCH"}</button></div></div>
+						</td>
+						<td>
+							<a href="{$exporturl}" title="确定搜索结果导出成csv吗？" target="dwzExport" class="buttonActive"><span>导出搜索结果</span></a>	
+						</td>
+					</tr>
+				</table>
+				
+			</div>
+
+			
+			
+			
+		</div>
+
+	</div>
+	</form>
+</div>
+
+<div class="pageContent">
+	<div class="panelBar">
+		<ul class="toolBar">
+			<li><a title="{lang v="ADD"}会员" rel="user_addpage" target="navTab"  href="{$addurl}" class="add"><span>{lang v="ADD"}</span></a></li>
+			<li><a title="{lang v="CONFIRM_DELETE"}" target="selectedTodo" rel="id" postType="string" href="{$delurl}" class="delete"><span>{lang v="DEL"}</span></a></li>
+		</ul>
+	</div>
+	<table class="table" width="100%" layoutH="143" >
+		<thead>
+		<tr>
+				<th width="22"><input type="checkbox" group="id" class="checkboxCtrl"></th>
+				<th  width="50" orderField="id" {if $param.orderField eq 'id'} class="{$param.orderDirection}"{/if}>{lang v="ID"}</th>
+				<th width="100">会员名</th>
+				<th>Email</th>
+				<th width="100">手机号</th>
+				<th  width="90" orderField="money" {if $param.orderField eq 'money'} class="{$param.orderDirection}"{/if}>余额</th>
+				<th  width="80" orderField="score" {if $param.orderField eq 'score'} class="{$param.orderDirection}"{/if}>积分</th>
+				<th width="80">会员组</th>
+				<th width="80">会员等级</th>
+				<th width="150"  orderField="create_time" {if $param.orderField eq 'create_time'} class="{$param.orderDirection}"{/if}>注册时间</th>
+				<th>注册地</th>
+				<th width="150"  orderField="login_time" {if $param.orderField eq 'login_time'} class="{$param.orderDirection}"{/if}>最后登录时间</th>
+				<th width="80">最后登录IP</th>
+				<th width="80"  orderField="is_temp" {if $param.orderField eq 'is_temp'} class="{$param.orderDirection}"{/if}>自动注册</th>
+				<th width="50"  orderField="is_effect" {if $param.orderField eq 'is_effect'} class="{$param.orderDirection}"{/if}>状态</th>
+				<th width="80"  orderField="is_verify" {if $param.orderField eq 'is_verify'} class="{$param.orderDirection}"{/if}>验证通过</th>
+				<th width="180">{lang v="TAG_LANG_OPERATE"}</th>
+			</tr>
+		</thead>
+		<tbody>
+		
+			{foreach from=$list item=item}
+			<tr  rel="{$item.id}">
+				<td><input name="id" value="{$item.id}" type="checkbox"></td>
+				<td>{$item.id}</td>
+				<td>{$item.user_name}</td>
+				<td>{$item.email}</td>
+				<td>{$item.mobile}</td>
+				<td>{$item.format_money}</td>
+				<td>{$item.score}</td>
+				<td>{$item.group_name}</td>
+				<td>{$item.level_name}</td>
+				<td>{$item.create_time}</td>
+				<td>{$item.regist_city}</td>
+				<td>{$item.login_time}</td>
+				<td>{$item.login_ip}</td>
+				<td>{if $item.is_temp eq 1}是{else}否{/if}</td>
+				<td><a href="{$seteffecturl}&id={$item.id}&is_effect={$item.is_effect}" target="ajaxTodo" class="{if $item.is_effect eq 1}btnSelect{else}btnDel{/if}">{$item.is_effect_show}</a></td>
+				<td>{if $item.is_verify eq 1}是{else}否{/if}</td>
+				<td>
+					<a title="{lang v="CONFIRM_DELETE"}" target="ajaxTodo" href="{$delurl}&id={$item.id}" class="btnDel">{lang v="DEL"}</a>
+					<a title="{lang v="EDIT"}会员{$item.user_name}" rel="user_editpage_{$item.id}" target="navTab" href="{$editurl}&id={$item.id}"  class="btnEdit">{lang v="EDIT"}</a>
+					<a title="会员{$item.user_name}帐户管理" rel="user_account_page" target="navTab" href="{$accounturl}&id={$item.id}"  class="btnAssign">帐户管理</a>
+				</td>
+			</tr>
+			{/foreach}
+		</tbody>
+	</table>
+	<div class="panelBar">
+		<div class="pages">
+			<span>{lang v="DISPLAY_PAGE_SIZE"}</span>
+			<select class="combox" name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value})">
+				<option value="<?php echo ADMIN_PAGE_SIZE1;?>" {if $param.pageSize eq ADMIN_PAGE_SIZE1}selected="selected"{/if} ><?php echo ADMIN_PAGE_SIZE1;?></option>
+				<option value="<?php echo ADMIN_PAGE_SIZE2;?>" {if $param.pageSize eq ADMIN_PAGE_SIZE2}selected="selected"{/if}><?php echo ADMIN_PAGE_SIZE2;?></option>
+				<option value="<?php echo ADMIN_PAGE_SIZE3;?>" {if $param.pageSize eq ADMIN_PAGE_SIZE3}selected="selected"{/if}><?php echo ADMIN_PAGE_SIZE3;?></option>
+				<option value="<?php echo ADMIN_PAGE_SIZE4;?>" {if $param.pageSize eq ADMIN_PAGE_SIZE4}selected="selected"{/if}><?php echo ADMIN_PAGE_SIZE4;?></option>
+			</select>
+			<span>&nbsp;&nbsp;{lang v="PAGE_TOTAL_COUNT" p="$totalCount"}</span>
+		</div>
+		
+		<div class="pagination" targetType="navTab" totalCount="{$totalCount}" numPerPage="{$param.pageSize}" pageNumShown="10" currentPage="{$param.pageNum}"></div>
+
+	</div>
+</div>

@@ -1,0 +1,139 @@
+<h2 class="contentTitle">会员设置</h2>
+<form action="{$formaction}" method="post" class="pageForm required-validate" onsubmit="return validateCallback(this, navTabAjaxDone)">
+<div class="pageContent">
+<div class="pageFormContent" layoutH="97">		
+
+			<table class="formtable">				
+			<tr>
+				<td class="item_title">会员注册手机验证:</td>
+				<td class="item_input">
+					<select name="USER_MOBILE_VERIFY" class="combox">
+						<option value="0" {if $user_conf.USER_MOBILE_VERIFY eq 0}selected="selected"{/if}>否</option>
+						<option value="1" {if $user_conf.USER_MOBILE_VERIFY eq 1}selected="selected"{/if}>是</option>
+					</select>
+					<label class="tip"></label>
+				</td>
+			</tr>
+			<tr>
+				<td class="item_title">会员注册邮箱验证:</td>
+				<td class="item_input">
+					<select name="USER_EMAIL_VERIFY" class="combox">
+						<option value="0" {if $user_conf.USER_EMAIL_VERIFY eq 0}selected="selected"{/if}>否</option>
+						<option value="1" {if $user_conf.USER_EMAIL_VERIFY eq 1}selected="selected"{/if}>是</option>
+					</select>
+					<label class="tip"></label>
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="item_title">会员同IP注册时间:</td>
+				<td class="item_input">
+					<input type="text" class="required textInput number"   maxlength="20" name="USER_REGIST_IP_SPAN" value="{$user_conf.USER_REGIST_IP_SPAN}">
+					<label class="tip"> 秒 </label>
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="item_title">开启会员提现:</td>
+				<td class="item_input">
+					<select name="USER_ALLOW_DEPOSIT" class="combox">
+						<option value="0" {if $user_conf.USER_ALLOW_DEPOSIT eq 0}selected="selected"{/if}>关闭</option>
+						<option value="1" {if $user_conf.USER_ALLOW_DEPOSIT eq 1}selected="selected"{/if}>开启</option>
+					</select>
+					<label class="tip"></label>
+				</td>
+			</tr>
+
+			<tr>
+				<td class="item_title">会员注册获现金:</td>
+				<td class="item_input">
+					<input type="text" class="required textInput number"   maxlength="20" name="USER_REG_MONEY" value="{$user_conf.USER_REG_MONEY}">
+					<label class="tip"> 元 </label>
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="item_title">会员注册获积分:</td>
+				<td class="item_input">
+					<input type="text" class="required textInput digits"   maxlength="20" name="USER_REG_SCORE" value="{$user_conf.USER_REG_SCORE}">
+					<label class="tip"> </label>
+				</td>
+			</tr>
+
+			<tr>
+				<td class="item_title">会员注册获经验:</td>
+				<td class="item_input">
+					<input type="text" class="required textInput digits"   maxlength="20" name="USER_REG_EXP" value="{$user_conf.USER_REG_EXP}">
+					<label class="tip"> </label>
+				</td>
+			</tr>
+			{if $voucher_list}
+			<tr>
+				<td class="item_title">会员注册获代金券:</td>
+				<td class="item_input">
+					<select name="USER_REG_VOUCHER" class="combox">
+						<option value="0">不发放</option>
+						{foreach from=$voucher_list item=voucher}
+						<option value="{$voucher.id}" {if $user_conf.USER_REG_VOUCHER eq $voucher.id}selected="selected"{/if}>{$voucher.voucher_name}</option>
+						{/foreach}
+					</select>
+					<label class="tip"></label>
+				</td>
+			</tr>
+			{/if}
+			<tr>
+				<td class="item_title">动态瀑布流加载次数:</td>
+				<td class="item_input">
+					<input type="text" class="required textInput digits"   maxlength="20" name="USER_ACTIVE_PAGE_LOAD_GOUNT" value="{$user_conf.USER_ACTIVE_PAGE_LOAD_GOUNT}">
+					<label class="tip"> </label>
+				</td>
+			</tr>
+            <tr>
+				<td class="item_title">动态瀑布流加载条数:</td>
+				<td class="item_input">
+					<input type="text" class="required textInput digits"   maxlength="20" name="USER_ACTIVE_PAGE_ITEM_COUNT" value="{$user_conf.USER_ACTIVE_PAGE_ITEM_COUNT}">
+					<label class="tip"> </label>
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="item_title">每日登录奖励:</td>
+				<td class="item_input">
+					<input type="text" class="required textInput number"   maxlength="20" name="USER_LOGIN_MONEY" value="{$user_conf.USER_LOGIN_MONEY}"> <label class="tip">元</label>
+					<label class="tip"> </label>
+				</td>
+			</tr>
+			<tr>
+				<td class="item_title">每日登录奖励:</td>
+				<td class="item_input">
+					<input type="text" class="required textInput digits"   maxlength="20" name="USER_LOGIN_SCORE" value="{$user_conf.USER_LOGIN_SCORE}"> <label class="tip">积分</label>
+					<label class="tip"> </label>
+				</td>
+			</tr>
+			<tr>
+				<td class="item_title">每日登录奖励:</td>
+				<td class="item_input">
+					<input type="text" class="required textInput digits"   maxlength="20" name="USER_LOGIN_POINT" value="{$user_conf.USER_LOGIN_POINT}"> <label class="tip">经验</label>
+					<label class="tip"> </label>
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="item_title">会员注册协议:</td>
+				<td class="item_input">
+					<textarea name="USER_REG_LICENSE" class="ketext" style="width:680px;height:250px;visibility:hidden;">{$user_conf.USER_REG_LICENSE}</textarea>							
+							
+					<label class="tip"> </label>
+				</td>
+			</tr>
+			</table>
+					
+	</div>
+	<div class="formBar">
+		<ul>
+			<li><div class="buttonActive"><div class="buttonContent"><button type="submit">{lang v="SAVE"}</button></div></div></li>
+			<li><div class="button"><div class="buttonContent"><button class="close" type="button">{lang v="CLOSE"}</button></div></div></li>
+		</ul>
+	</div>
+</div>
+</form>

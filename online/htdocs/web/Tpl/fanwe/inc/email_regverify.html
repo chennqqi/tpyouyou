@@ -1,0 +1,33 @@
+<div class="regist_form">				
+			
+					<div class="field message_tip ">
+							<span class="field_title"></span>
+							<span class="field_content">
+							<label>
+							{$message}				
+							</label>			
+							</span>
+							<span class="field_tip"></span>
+					</div>
+					{if $gocheck_url}
+					<div class="blank"></div>
+					
+					<div class="field">
+							<span class="field_title"></span>
+							<span class="field_content">
+							<a href="{$gocheck_url}" target="_blank" class="long_btn">立即去验证邮件</a>
+							</span>
+							<span class="field_tip"></span>
+					</div>
+					{/if}
+					<div class="blank"></div>
+					
+					<div class="field">
+							<span class="field_title"></span>
+							<span class="field_content">
+							<a href="{url r="user#resend_mail" p="un=$user.user_name"}"  class="long_btn">没有收到邮件？再次发送</a>
+							</span>
+							<span class="field_tip"></span>
+					</div>
+
+</div>

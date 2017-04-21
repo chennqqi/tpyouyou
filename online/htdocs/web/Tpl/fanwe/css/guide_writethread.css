@@ -1,0 +1,584 @@
+.wrap .container{
+    width: 1000px;
+}
+.container .guide_title_tip i{
+    display: block;
+    width: 34px;
+    height: 34px;
+    background:url('../images/guide_icon.gif');
+    background-position: 0 -526px;
+	float:left;
+}
+.container .guide_title_tip label{
+	display: block;
+	font-size: 22px;
+	height: 36px;
+	line-height: 36px;
+	padding-left: 10px;
+	float:left;
+}
+.container .guide_title_tip span{
+	font-size: 15px;
+	color: #999999;
+	height: 36px;
+	line-height: 36px;
+	padding-left: 12px;
+	float:left;
+}
+.tit_box  label{
+	display: block;
+	float: left;
+	font-size: 25px;
+	height: 40px;
+	line-height: 40px;
+        width: 130px;
+}
+.tit_box .tit_item{
+    float: left;
+    width: 870px;
+    text-align: left;
+}
+.input_item{
+	height: 40px;
+	width: 748px;
+	background-color: #f2f9fd;
+	border: 1px solid #dedede;
+        float: left;
+}
+.input_item input{
+	border: none;
+	height: 38px;
+	background-color: #f2f9fd;
+	padding-left: 10px;
+	width: 630px;
+        _width: 600px;
+        color: #666;
+}
+.input_item span{
+	color: #999999;
+	display: inline-block;
+	padding-left: 10px;
+}
+.input_item span i{
+	font-style: normal;
+}
+.btn_checkbox_item a{
+    float: left;
+    font-size: 14px;
+    padding: 0 24px;
+    height: 36px;
+    display: block;
+    text-decoration: none;
+    line-height: 36px;
+    color: #fff;
+    font-weight: bolder;
+    border-bottom: 4px solid #CECECE;
+    cursor: pointer;
+}
+.btn_checkbox_item span{
+    float: left;
+    font-size: 30px;
+    padding: 0 24px;
+    height: 40px;
+    display: block;
+    text-decoration: none;
+    line-height: 40px;
+    color: #ccc;
+    font-weight: bolder;
+}
+.btn_checkbox_item a:hover{
+    border-bottom: 4px solid #8F8F8F
+}
+.btn_checkbox_item a.cur{
+    border-bottom: 4px solid #8F8F8F
+}
+.btn_checkbox_item .gn{background: #2C98D4;}
+.btn_checkbox_item .cj{background: #00bda9;}
+.btn_checkbox_item .gt{background: #FF954F;}
+.btn_checkbox_item .zz{background: #C068FC;}
+.btn_checkbox_item .zb{background: #FA93F6;}
+.btn_checkbox_item .zj{background: #FF8B8B;}
+
+.guide_day_item{
+    border-bottom: 1px solid #dedede
+}
+.guide_day_item .t_day{
+    width: 110px;
+    text-align: center;
+    float: left;
+    margin: 0px 20px 0 0;
+}
+
+.t_day .day_num{
+    font-size: 20px;
+    font-family: Microsoft YaHei;
+    line-height: 36px;
+}
+.day_num span{
+    font-size: 36px;
+}
+.t_day .day_date{
+    margin-bottom: 6px;
+}
+.day_date input{
+    border: 0;
+    font-size: 14px;
+    color: #666;
+    width: 108px;
+    _width: 108px;
+    text-align: center;
+    padding-bottom: 4px;
+    color: #666;
+}
+.t_edit{
+    background:url("../images/guide_icon.gif");
+    background-position: 0 -458px;
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    margin: 0 2px;
+}
+.t_delete{
+    background:url("../images/guide_icon.gif");
+    background-position: -29px -458px;
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    margin: 0 2px;
+}
+.t_day_box{
+    float: left;
+    width: 870px;
+    overflow: hidden;
+}
+.t_day_box .write_box{
+    width: 870px;
+    overflow: hidden;
+}
+.poi_box {
+    padding: 15px 120px 0 0;
+	width: 750px;
+	overflow: hidden;
+	margin-bottom: 10px;
+}
+.poi_dot {
+    width: 100px;
+    height: 110px;
+    text-align: center;
+    float: left;
+    position: relative;
+    cursor: pointer;
+    background: url("../images/guide_icon.gif") no-repeat;
+    margin: 0 40px 10px 0;
+    color: #333;
+}
+.poi_dot .arr_r{
+position: absolute;
+width: 40px;
+right: -40px;
+top: 40px;
+color: #999;
+}
+.add_poi{
+    background-position: 0 -224px;
+}
+.default_poi{
+    background-position: 0 -116px;
+}
+.default_poi.hover{
+	background-position:0 2px;
+}
+.default_poi.on{
+	background-position:0 2px;
+}
+
+.link_poi{
+    width: 50px;
+    height: 110px;
+    background: url("../images/guide_icon.gif");
+    background-position: 0 -336px;
+}
+.photo_null i{
+    display: inline-block;
+    float: left;
+    width: 75px;
+    height: 75px;
+    background: url("../images/guide_icon.gif");
+    background-position: 0 -574px;
+}
+.photo_null span{
+    height: 75px;
+    line-height: 75px;
+    margin-bottom: 10px;
+    display: inline-block;
+    float: left;
+    padding-left: 10px;
+}
+.textarea_item{
+    width: 748px;
+    background-color: #f2f9fd;
+    border: 1px solid #dedede;
+    float: left;
+    height: 90px;
+    position: relative;
+}
+.textarea_item textarea{
+    margin: 2px;
+    width: 742px;
+    height: 59px;
+    border: none;
+    background-color: #f2f9fd;
+    resize: none;
+    color: #666;
+}
+.textarea_item span{
+    position: absolute;
+    right: 15px;
+    bottom: 3px;
+    color: #999999;
+}
+.textarea_item span i{
+    font-style: normal;
+}
+
+/*添加拍摄地址*/
+.poi_popup{
+    background: #FFF;
+    border: 1px solid #D0D0D0;
+    box-shadow: 0 0 3px 0 #CCC;
+    padding: 25px 30px;
+    width: 340px;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    z-index: 500;
+    margin-left: -200px;
+    margin-top: -165px;
+    display: none;
+    top: 450px; 
+    _position: absolute; 
+    _top: expression(eval(document.documentElement.scrollTop) +  450);
+}
+.poi_popup.on{
+    display: block;
+}
+.poi_popup .close{
+    display: inline-block;
+    height: 32px;
+    overflow: hidden;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 32px;
+    font-family: Microsoft YaHei;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 32px;
+    text-align: center;
+    color: #686868;
+}
+
+.poi_popup .addr_title{
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+.poi_popup .poi{
+    float: left;
+background: #9c0;
+color: #fff;
+height: 24px;
+line-height: 24px;
+padding: 0px 25px 0px 8px;
+margin: 0 10px 10px 0;
+position: relative;
+white-space: nowrap;
+}
+.poi_popup .poi a{
+    width: 14px;
+    height: 24px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: block;
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 23px;
+}
+.poi_popup .add_input{
+    width: 100%;
+    float: left;
+    margin-bottom: 10px;
+}
+.poi_popup .poi_address{
+    padding: 10px 0 0 10px;
+    border: 1px solid #cfcfcf;
+    overflow-y: scroll;
+    max-height: 90px;
+    _height: 90px;
+    height: 90px;
+}
+.address_save_box{
+	text-align: right;
+}
+.address_save_box a{
+	display: inline-block;
+	height: 30px;
+	width: 50px;
+	text-align: center;
+	line-height: 30px;
+	background-color: oldlace;
+	font-size: 14px;
+	font-weight: bold;
+	text-decoration: none;
+}
+.address_save_box a:hover{
+	color:#666;
+	text-decoration: none;
+}
+/*END添加拍摄地点*/
+
+
+/*修改拍摄地址*/
+.poi_popup_edit{
+    background: #FFF;
+    border: 1px solid #D0D0D0;
+    box-shadow: 0 0 3px 0 #CCC;
+    padding: 25px 30px;
+    width: 340px;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    z-index: 9;
+    margin-left: -200px;
+    margin-top: -165px;
+    display: none;
+}
+.poi_popup_edit.on{
+    display: block;
+}
+.poi_popup_edit .close{
+    display: inline-block;
+    height: 32px;
+    overflow: hidden;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 32px;
+    font-family: Microsoft YaHei;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 32px;
+    text-align: center;
+    color: #686868;
+}
+
+.poi_popup_edit .addr_title{
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+.poi_popup_edit .poi{
+    float: left;
+background: #9c0;
+color: #fff;
+height: 24px;
+line-height: 24px;
+padding: 0px 25px 0px 8px;
+margin: 0 10px 10px 0;
+position: relative;
+white-space: nowrap;
+}
+.poi_popup_edit .poi a{
+    width: 14px;
+    height: 24px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: block;
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 23px;
+}
+.poi_popup_edit .add_input{
+    width: 100%;
+    float: left;
+    margin-bottom: 10px;
+}
+.poi_popup_edit .poi_address{
+    padding: 10px 0 0 10px;
+    border: 1px solid #cfcfcf;
+    overflow-y: scroll;
+    max-height: 90px;
+    _height: 90px;
+    height: 90px;
+}
+.address_edit_box{
+	text-align: right;
+}
+.address_edit_box a{
+	display: inline-block;
+	height: 30px;
+	width: 50px;
+	text-align: center;
+	line-height: 30px;
+	background-color: oldlace;
+	font-size: 14px;
+	font-weight: bold;
+	text-decoration: none;
+}
+.address_edit_box a:hover{
+	color:#666;
+	text-decoration: none;
+}
+/*END修改拍摄地址*/
+
+.default_poi .spot_area_name{
+	margin-top: 50px;
+        width: 90px;
+    padding: 0 5px;
+    height: 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.default_poi .spot_gallery_num{
+	margin-top: 8px;
+}
+.default_poi .spot_action{
+	margin-top: 3px;
+	display:none;
+}
+.spot_action a{
+	background:url("../images/guide_icon.gif");
+	display:inline-block;
+	width:20px;
+	height:20px;
+}
+
+.spot_action .edit_spot{
+background-position: 0 -495px;
+}
+.spot_action .del_spot{
+background-position: -19px -495px;
+}
+.add_pic_btn{
+    font-size: 16px;
+    color: #2da1e7;
+    font-weight: bold;
+    display: inline-block;
+    height: 75px;
+    line-height: 75px;
+}
+.add_pic_popup{
+    display: none;
+    background: #FFF;
+    border: 1px solid #D0D0D0;
+    box-shadow: 0 0 3px 0 #CCC;
+    padding: 25px 30px;
+    width: 406px;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    z-index: 500;
+    margin-left: -200px;
+    margin-top: -165px;
+    top: 240px; 
+    _position: absolute; 
+    _top: expression(eval(document.documentElement.scrollTop) +  450);
+}
+.add_pic_popup.on{
+    display: block;
+}
+
+.photo_content{
+    display: none;
+}
+
+.photo_content.on{
+    display: block;
+}
+
+.add_pic_popup .close{
+    display: inline-block;
+    height: 32px;
+    overflow: hidden;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 32px;
+    font-family: Microsoft YaHei;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 32px;
+    text-align: center;
+    color: #686868;
+}
+.photo_html_box{
+    display: none;
+}
+ .photo_item{
+    width: 162px;
+    text-align: right;
+    margin: 0 10px 10px 0;
+}
+ .photo_item .img_box{
+    display: block;
+    width: 160px;
+    border: 1px solid #e4e4e4;
+    margin-bottom: 5px;
+}
+ .photo_item .img_box img{
+    display: block;
+    width: 160px;
+    height: 88px;
+}
+
+.add_img_a_btn{
+    display: block;
+    height: 96px;
+    line-height: 96px;
+}
+
+
+.add_day_btn_box .add_day_btn {
+    display: block;
+    width: 105px;
+    height: 36px;
+    background: url(../images/add_day_btn.gif) no-repeat;
+}
+.guide_save_item{
+    height: 120px;
+    background-color: #f7f7f7;
+    text-align: center;
+}
+.guide_save_item .send_guide_btn{
+    display: inline-block;
+    height: 42px;
+    width: 128px;
+    line-height: 42px;
+    font-size: 20px;
+    background-color: #2da1e7;
+    color: #fff;
+    margin-top: 43px;
+}
+
+.guide_save_item .save_draft_btn{
+    font-size: 16px;
+    color: #2da1e7;
+}
+
+.guide_save_item .again_guide_btn{
+    display: inline-block;
+    height: 42px;
+    width: 128px;
+    line-height: 42px;
+    font-size: 20px;
+    background-color: #2da1e7;
+    color: #fff;
+    margin-top: 43px;
+}

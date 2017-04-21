@@ -1,0 +1,54 @@
+<form action="{$formaction}" method="post" class="pageForm required-validate" onsubmit="return validateCallback(this, SpotNewInsuranceCallBack)">
+<div class="pageContent">
+	<div class="pageFormContent" layoutH="57">
+		
+		<table class="formtable">			
+			<tr>					
+				<td class="item_title">{lang v="INSURANCE_NAME"}：</td>
+				<td class="item_input">
+					<input type="text" class="required textInput valid " name="name">
+					<label class="tip"></label>
+				</td>			
+			</tr>
+			
+			<tr>	
+				<td class="item_title">{lang v="INSURANCE_PRICE"}：</td>
+				<td class="item_input">
+					<input type="text" class="required textInput valid number"  name="price">
+					<label class="tip">元</label>
+				</td>					
+			</tr>
+			
+			<tr>
+				<td class="item_title">{lang v="INSURANCE_FILE"}:</td>
+				<td class="item_input">					
+				{function name="load_kefile" p1="insurance_file" p2=""}
+				<label class="tip">可以上传doc,docx,pdf格式文档</label>
+				</td>
+			</tr>
+			
+			<tr>					
+				<td class="item_title">{lang v="INSURANCE_BRIEF"}：</td>
+				<td class="item_input">
+					<textarea class="textarea" name="insurance_brief" style="width:300px;height:100px;"></textarea>
+					<label class="tip"></label>
+				</td>					
+			</tr>
+			<tr>					
+				<td class="item_title">{lang v="INSURANCE_INFO"}：</td>
+				<td class="item_input">
+					<textarea name="insurance_info" class="ketext" style="width:500px;height:250px;visibility:hidden;"></textarea>							
+					<label class="tip"></label>
+				</td>					
+			</tr>
+		</table>
+			
+	</div>
+	<div class="formBar">
+		<ul>
+			<li><div class="buttonActive"><div class="buttonContent"><button type="submit">{lang v="SAVE"}</button></div></div></li>
+			<li><div class="button"><div class="buttonContent"><button class="close" type="button">{lang v="CLOSE"}</button></div></div></li>
+		</ul>
+	</div>
+</div>
+</form>

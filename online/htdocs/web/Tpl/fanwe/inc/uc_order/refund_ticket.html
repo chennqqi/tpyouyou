@@ -1,0 +1,124 @@
+<div class="blank"></div>
+{if $can_refund_appoint eq 1}
+<div class="clearfix" style="color:red;font-weight: bolder;border: 1px solid #fdcc7c;padding:10px;background-color: #fffcf3;">
+	所有门票只允许退改签一次，请谨慎操作！
+</div>
+<div class="blank"></div>
+{/if}
+{if $order.is_divide eq 1 && $order.is_delivery eq 0}
+<!--个人票 -->
+<table class="uc_table uc_ordertable" style="text-align:center;">
+	<tbody>
+		<tr>
+			<th width="200">门票名称</th>	
+			<th>门票类型</th>
+			<th>验证码</th>
+			<th>过期时间</th>
+			<th>状态</th>
+			<th width="80">操作</th>
+		</tr>
+		<tr>
+		</tr>
+		{foreach from="$tickets" item="item" key=key}
+		<tr>
+			{if $key eq 0}
+			<td rowspan="{$order.sale_count}">
+				&lt;{$order.ticket_name}&gt;{$ticket_info.name_brief}
+			</td>
+			<td rowspan="{$order.sale_count}">电子票、个人票</td>
+			{/if}
+			<td>
+				{$item.verify_code}
+			</td>
+			<td>
+				{$item.end_time_format}
+			</td>
+			<td >
+				{if $item.item_status_type_0 neq ''}
+				{$item.item_status_type_0}
+				{/if}
+				{if $item.item_status_type_1 neq ''}
+				{$item.item_status_type_1}
+				{/if}
+				{if $item.item_status_type_2 neq ''}
+				{$item.item_status_type_2}
+				{/if}
+				{if $item.item_status_type_3 neq ''}
+				{$item.item_status_type_3}
+				{/if}
+			</td>
+			<td class="op">
+				{if $item.op_status_0 eq 1}
+				<a href="{url x="uc_order#refund" p="id=$order.id"}" class="j_refund">退票</a>
+				{/if}
+				{if $item.op_status_1 eq 1}
+				<a href="{url x="uc_order#appoint" p="id=$order.id"}" class="j_appoint">改签</a>
+				{/if}
+				
+			</td>
+		</tr>
+		{/foreach}
+	</tbody>
+</table>
+{else}
+<!--团体票 -->
+<table class="uc_table uc_ordertable" style="text-align:center;">
+	<tbody>
+		<tr>
+			<th width="220">门票名称</th>
+			<th>门票类型</th>
+			{if $order.is_delivery eq 0}
+			<th>验证码</th>
+			{/if}
+			<th>数量</th>
+			<th>已退</th>
+			<th>状态</th>
+			<th>操作</th>
+		</tr>
+		{foreach from="$tickets" item="item" key=key}
+		<tr>
+			<td>
+				&lt;{$order.ticket_name}&gt;{$ticket_info.name_brief}
+			</td>
+			<td>{if $order.is_delivery eq 0}电子票{else}实体票{/if}、{if $order.is_divide eq 1}个人票{else}团体票{/if}</td>
+			{if $order.is_delivery eq 0}
+			<td>
+				{$item.verify_code}
+			</td>
+			{/if}
+			<td>
+				{$order.sale_count}
+			</td>
+			<td>
+				{$order.refund_count}
+			</td>
+			
+			<td >
+				{if $item.item_status_type_0 neq ''}
+				{$item.item_status_type_0}
+				{/if}
+				{if $item.item_status_type_1 neq ''}
+				{$item.item_status_type_1}
+				{/if}
+				{if $item.item_status_type_2 neq ''}
+				{$item.item_status_type_2}
+				{/if}
+				{if $item.item_status_type_3 neq ''}
+				{$item.item_status_type_3}
+				{/if}
+			</td>
+			<td class="op">
+				{if $item.op_status_0 eq 1}
+				<a href="{url x="uc_order#refund" p="id=$order.id"}" class="j_refund">退票</a>
+				{/if}
+				{if $item.op_status_1 eq 1}
+				<a href="{url x="uc_order#appoint" p="id=$order.id"}" class="j_appoint">改签</a>
+				{/if}
+				
+			</td>
+		</tr>
+		{/foreach}
+	</tbody>
+</table>
+
+{/if}

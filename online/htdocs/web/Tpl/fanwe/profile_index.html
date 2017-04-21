@@ -1,0 +1,186 @@
+<?php
+
+	$this->_var['pagecss'][] = TMPL_REAL."/css/style.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/weebox.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/profile_index.css";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.bgiframe.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.weebox.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.pngfix.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/lazyload.js";
+
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.ui.core.js";	
+    $this->_var['pagejs'][] = TMPL_REAL."/js/jquery.ui.datepicker.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/load_datepicker_birthday.js";
+	$this->_var['cpagejs'][] = TMPL_REAL."/js/load_datepicker_birthday.js";
+
+	$this->_var['pagejs'][] = TMPL_REAL."/js/script.js";
+	$this->_var['cpagejs'][] = TMPL_REAL."/js/script.js";
+	
+	$this->_var['pagejs'][] = TMPL_REAL."/js/profile_index.js";
+	$this->_var['cpagejs'][] = TMPL_REAL."/js/profile_index.js";
+
+	
+
+	$this->_var['pagecss'][] = TMPL_REAL."/css/user_common.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/jquery-ui.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/datepicker.css";
+
+	
+?>
+{include file="inc/header.html"} 
+<script type="text/javascript" src="./public/region_city.js"></script>
+<div class="wrap uc_box">
+	<div class="uc_menu">
+		{include file="inc/uc_menu.html"}
+	</div>
+	<div class="uc_main">
+		{insert name="load_uc_common_header"}
+		<div class="box_top">个人资料</div>
+		<div class="box_main">
+			<form action="{url r="profile#saveuser"}" id="profile_form" method="post">
+			<table class="user_modify">
+				<tr>
+					<td class="title">用户名：</td>
+					<td class="content">						
+						{$user.user_name}&nbsp;&nbsp;&nbsp;&nbsp;
+						{if $user.is_temp eq 1}
+						<a href="{url r="profile#modify_username"}" rel="设置用户名" class="modify">修改用户名</a>
+						{/if}
+					</td>
+				</tr>
+				<tr>
+					<td class="title">邮箱：</td>
+					<td class="content">
+						{if $user.email}
+						{$user.email}&nbsp;&nbsp;&nbsp;&nbsp;<a href="{url r="profile#modify_email"}" rel="设置邮箱" class="modify">修改</a>
+						{else}	
+						未设置 &nbsp;&nbsp;&nbsp;&nbsp;<a href="{url r="profile#modify_email"}" rel="设置邮箱" class="modify">立即设置</a>
+						{/if}
+					</td>
+				</tr>
+				<tr>
+					<td class="title">手机：</td>
+					<td class="content">
+						{if $user.mobile}
+						{$user.mobile}&nbsp;&nbsp;&nbsp;&nbsp;<a href="{url r="profile#modify_mobile"}" rel="设置手机号" class="modify">修改</a>
+						{else}	
+						未设置 &nbsp;&nbsp;&nbsp;&nbsp;<a href="{url r="profile#modify_mobile"}" rel="设置手机号" class="modify">立即设置</a>
+						{/if}
+					</td>
+				</tr>
+				<tr>
+					<td class="title">推荐人：</td>
+					<td class="content">
+						{if $user.pid_user}
+						{$user.pid_user}
+						{else}
+						无
+						{/if}
+					</td>
+				</tr>
+				<tr>
+					<td class="title">原密码：</td>
+					<td class="content">
+						<input type="password" holder="修改密码需输入原始密码" class="ipt" name="user_pwd" value="" />
+						<span class="field_tip"></span>
+					</td>
+				</tr>
+				<tr>
+					<td class="title">新密码：</td>
+					<td class="content">
+						<input type="password" holder="请输入要修改的新密码，不修改请留空" class="ipt" name="new_pwd" value="" />
+						<span class="field_tip"></span>
+					</td>
+				</tr>
+				<tr>
+					<td class="title">确认密码：</td>
+					<td class="content">
+						<input type="password" holder="请输入要确认的新密码，不修改请留空" class="ipt" name="cfm_new_pwd" value="" />
+						<span class="field_tip"></span>
+					</td>
+				</tr>
+				<tr>
+					<td class="title">真实姓名：</td>
+					<td class="content">
+						<input type="text" class="ipt" name="truename" value="{$user.truename}" />
+					</td>
+				</tr>
+				<tr>
+					<td class="title">性别：</td>
+					<td class="content">
+						<select name="sex">
+							<option value="-1" {if $user.sex eq -1}selected="selected"{/if}>未知</option>
+							<option value="0" {if $user.sex eq 0}selected="selected"{/if}>女</option>
+							<option value="1" {if $user.sex eq 1}selected="selected"{/if}>男</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td class="title">生日：</td>
+					<td class="content">
+						<input type="text" style="width:100px;" name="birthday" value="{if $user.birthday neq 0}{$user.birthday}{/if}" class="ipt uc_datepicker" />
+					</td>
+				</tr>
+				<tr>
+					<td class="title">证件类型：</td>
+					<td class="content">
+						<select name="paper_type">		
+						<option {if $user.paper_type eq 1}selected="selected"{/if} value="1">身份证</option>		
+						<option {if $user.paper_type eq 2}selected="selected"{/if} value="2">护照</option>		
+						<option {if $user.paper_type eq 3}selected="selected"{/if} value="3">军官证</option>			
+						<option {if $user.paper_type eq 4}selected="selected"{/if} value="4">港澳通行证</option>	
+						<option {if $user.paper_type eq 5}selected="selected"{/if} value="5">台胞证</option>			
+						<option {if $user.paper_type eq 6}selected="selected"{/if} value="6">其他</option>			
+					</select>
+					</td>
+				</tr>
+				<tr>
+					<td class="title">证件编号：</td>
+					<td class="content">
+						<input type="text" class="ipt" name="paper_sn" value="{$user.paper_sn}" />
+					</td>
+				</tr>
+				<tr>
+					<td class="title">所在地：</td>
+					<td class="content">
+						
+						<select name="province_id" class="dialog_city f_l" id="J_region_province" onchange="setcity(this,'#J_region_city',{$user.city_id});">
+			        		<option value="0">请选择</option>
+			        		{foreach from="$province_list" item="province"}
+							<option value="{$province.id}" {if $province.id eq $user.province_id}selected="selected"{/if}>{$province.py_first} {$province.name}</option>
+							{/foreach}
+			        	</select>
+			            <select name="city_id" class="dialog_city f_l" id="J_region_city">
+			            </select>
+						<script type="text/javascript">
+							load_region_city('#J_region_province','#J_region_city',{$user.city_id});
+						</script>
+						
+					</td>
+				</tr>
+				<tr>
+					<td class="title">详细地址：</td>
+					<td class="content">
+						<input type="text" class="ipt" name="address" value="{$user.address}" />
+					</td>
+				</tr>
+				<tr>
+					<td class="title">邮编：</td>
+					<td class="content">
+						<input type="text" class="ipt" name="zip_code" value="{$user.zip_code}" />
+					</td>
+				</tr>
+				<tr>
+					<td colspan=2 >
+						<input type="submit" style="display:none" />
+						<div class="long_btn" id="save_profile">保存</div>
+					</td>
+				</tr>
+			</table>
+			</form>
+		</div>
+		
+	</div>
+</div>
+ <div class="blank15"></div>
+{include file="inc/footer.html"} 

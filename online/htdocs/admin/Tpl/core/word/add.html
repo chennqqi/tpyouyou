@@ -1,0 +1,72 @@
+<h2 class="contentTitle">{lang v="ADD"}{lang v="WORD"}</h2>
+<form action="{$formaction}" method="post" class="pageForm required-validate" onsubmit="return validateCallback(this, navTabAjaxDone)">
+<div class="pageContent">
+<div class="pageFormContent" layoutH="97">		
+
+			<table class="formtable">				
+			<tr>
+				<td class="item_title">{lang v="WORD"}:</td>
+				<td class="item_input">
+					可批量添加，一行一个
+				</td>
+                                
+			</tr>
+                        <tr>
+                            <td class="item_title">&nbsp;</td>
+				<td class="item_input">
+                                    <textarea class="required textInput valid" name="words" rows="8" style="width: 500px;"></textarea>
+					<label class="tip"></label>
+				</td>
+			</tr>
+                         <tr>
+                            <td class="item_title">类型：</td>
+				<td class="item_input">
+                                   <select name="type" onchange="replaceToggle(this);">
+                                       <option value="1">禁用</option>
+                                       <option value="2">替换</option>
+                                   </select>
+				</td>
+			</tr>
+                        <tr>
+                            <td class="item_title">&nbsp;</td>
+				<td class="item_input">
+                                    禁用：无法提交含禁用词汇的分享，提示（内容中含有非法词语，返回编辑）</br></br>替换：发布时，分享里含有替换词的话，会使用后台设置好的词汇替换
+				</td>
+			</tr>
+                        <tr id="replaceTr"   style="display:none;">
+                            <td class="item_title">替换为：</td>
+                            <td class="item_input">
+                                <input type="text" class="textinput" name="replacement" value="***">
+                            </td>
+                        </tr>
+                        <tr id="replaceTr"  style="">
+                            <td class="item_title">分类：</td>
+                            <td class="item_input">
+                                <select id="cid" name="cid" class="combox required valid">
+                                    {foreach from=$word_cate item=cate_item}
+                                        <option value="{$cate_item.id}">{$cate_item.name}</option>
+                                    {/foreach}
+                                </select>
+                                <label class="tip"></label>
+                            </td>
+                        </tr>
+			</table>
+					
+	</div>
+	<div class="formBar">
+		<ul>
+			<li><div class="buttonActive"><div class="buttonContent"><button type="submit">{lang v="SAVE"}</button></div></div></li>
+			<li><div class="button"><div class="buttonContent"><button class="close" type="button">{lang v="CLOSE"}</button></div></div></li>
+		</ul>
+	</div>
+</div>
+</form>
+<script type="text/javascript">
+function replaceToggle(obj)
+{
+	if(obj.value == 2)
+		$("#replaceTr").show();
+	else
+		$("#replaceTr").hide();
+}
+</script>

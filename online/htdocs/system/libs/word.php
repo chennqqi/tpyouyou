@@ -1,0 +1,28 @@
+<?php
+class word
+{
+    function start()
+    {   
+        ob_start();
+        echo '<html xmlns:o="urn:schemas-microsoft-com:office:office"
+        xmlns:w="urn:schemas-microsoft-com:office:word"
+        xmlns="http://www.w3.org/TR/REC-html40">';
+        header("Content-Disposition: attachment; filename=test.doc"); 
+    }
+    function save($path)
+    {
+
+        echo "</html>";
+        $data = ob_get_contents();
+        ob_end_clean();
+
+        $this->wirtefile ($path,$data);
+    }
+
+    function wirtefile ($fn,$data)
+    {
+        $fp=fopen($fn,"wb");
+        fwrite($fp,$data);
+        fclose($fp);
+    }
+}

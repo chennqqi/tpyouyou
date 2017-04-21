@@ -1,0 +1,20 @@
+<div class="citys">
+	<span py="" {if $has_place eq 0}class="current"{/if}>全部</span>
+	{foreach from=$spot_place item="place" name=places}
+	{if $smarty.foreach.places.index lt 12}
+	<span py="{$place.py}" {if $place.selected eq 1}class="current"{/if}>{$place.name}</span>
+	{/if}
+	{/foreach}
+</div>
+<div class="spots_list">
+	{foreach from="$tag_spots" item="item" name="tag_sp"}
+	<div class="item" {if $smarty.foreach.tag_sp.iteration mod 4 eq 0}style="margin-right:0"{/if}>
+		<div class="thumb"><a href="{$item.url}"><img src="{function name="get_spec_image" v=$item.image w=184 h=128 g=1}" /></a></div>
+		<div class="tit"><a href="{$item.url}">{$item.name}</a></div>
+		<div class="price">
+			<div class="current_price f_l"><em>&yen;</em>{function name="format_price_to_display" v="$item.ticket_price"}</div>
+			{if $item.tickets.0.save_pirce gt 0}<div class="save_price  f_l">{function name="format_price_to_display" v="$item.tickets.0.save_pirce"}</div>{/if}
+		</div>
+	</div>
+	{/foreach}
+</div>

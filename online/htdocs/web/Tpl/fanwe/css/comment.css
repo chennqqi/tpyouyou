@@ -1,0 +1,141 @@
+.commented_num {
+    text-align: right;
+    font-family: Microsoft YaHei;
+    height: 13px;
+    padding: 27px 10px 30px 0;
+    font-size: 13px;
+}
+.comment_content {
+    border-bottom: 1px dotted #EBEBEB;
+    width: 100%;
+    position: relative;
+    color: #333;
+    padding-top: 20px;
+    overflow: hidden;
+}
+.comment_portait{
+    width:50px;
+    float:left;
+    margin-left:-100%;
+    text-align: center;
+}
+.comment_portait a img{
+    width:50px;
+    height:50px;
+}
+.comment_info {
+    float: left;
+    width: 100%;
+    min-height: 1px;
+}
+.comment_info .floor_info {
+    margin-left: 75px;
+}
+.comment_info .floor_info .floor_info_p {
+    font-size: 14px;
+    line-height: 16px;
+    margin-bottom: 15px;
+}
+.comment_info .floor_info p {
+    min-height: 20px;
+}
+.comment_info .floor_info a {
+    color: #007ed9;
+    font-weight: bold;
+}
+.comment_info .floor_num {
+    color: #999;
+    position: absolute;
+    right: 0px;
+    top: 20px;
+    font-size: 12px;
+    margin-right: 10px;
+}
+.comment_info .floor_content {
+    background: #FAFAFA;
+    width: 88%;
+    padding: 20px 15px 10px 15px;
+    margin-left: 0px;
+}
+.comment_info .inner_floor_content {
+    width: 96%;
+    padding-left: 20px;
+    word-break: break-all;
+    word-wrap: break-word;
+    font-size: 12px;
+    background: url(../images/guide/left-qoute.png) no-repeat left top;
+}
+.comment_info .inner_floor_content blockquote {
+    margin: 0;
+    padding-right: 20px;
+    color: #737373;
+    line-height: 20px;
+    background: url(../images/guide/right-qoute.png) no-repeat right bottom;
+}
+.inner_floor_content .quote_info {
+    margin-top: 10px;
+    color: #B3B3B3;
+}
+.comment_content .form_head {
+    height: 24px;
+    line-height: 24px;
+    margin-top: 40px;
+    font-size: 16px;
+    font-weight: bold;
+}
+.comment_content .editor {
+    width: 100%;
+    height: 140px;
+    background: #ecf7fd;
+    margin-bottom: 5px;
+}
+.comment_content .editor textarea {
+    margin: 2px;
+    width: 80%;
+    height: 128px;
+}
+.comment_content .reply_submit {
+    margin-top: 8px;
+    margin-bottom: 40px;
+    width: 70px;
+    height: 29px;
+    text-align: center;
+    border: 0;
+    cursor: pointer;
+    vertical-align: middle;
+    color: white;
+    font-weight: bold;
+    line-height: 29px;
+    background: url(../images/guide/reply-btn.png) no-repeat left center;
+}
+.comment_form_box .form_head{
+    height: 24px;
+    line-height: 24px;
+    margin-top: 40px;
+    font-size: 16px;
+    font-weight: bold;
+}
+.comment_form_box .comment_editor{
+    width:100%;
+    height:140px;
+    margin-bottom:5px;
+}
+.comment_form_box .comment_editor textarea{
+    margin: 2px;
+    width: 98%;
+    height: 128px;
+}
+.comment_form_box .reply_submit{
+    margin-top: 8px;
+    margin-bottom: 40px;
+    width: 70px;
+    height: 29px;
+    text-align: center;
+    border: 0;
+    cursor: pointer;
+    vertical-align: middle;
+    color: white;
+    font-weight: bold;
+    line-height: 29px;
+    background:url(../images/guide/reply-btn.png) no-repeat left center;
+}

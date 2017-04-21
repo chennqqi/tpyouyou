@@ -1,0 +1,76 @@
+<form id="pagerForm" method="post" action="#rel#">
+	<input type="hidden" name="pageNum" value="{$param.pageNum}" />
+	<input type="hidden" name="numPerPage" value="{$param.pageSize}" />
+	<input type="hidden" name="orderField" value="{$param.orderField}" />
+	<input type="hidden" name="orderDirection" value="{$param.orderDirection}" />
+</form>
+<form rel="pagerForm" onsubmit="return navTabSearch(this);" action="{$formaction}" method="post"></form>
+<div class="pageHeader">
+	
+	<div class="searchBar">
+		<div class="pageFormContent cf" >
+			<div class="searchtableRow">				
+				<table>
+					<tr>
+						<td>
+						第三方登录接口列表
+						</td>
+					</tr>
+				</table>
+				
+			</div>		
+			
+		</div>
+
+	</div>
+
+</div>
+
+<div class="pageContent">
+	<table class="table" width="100%" layoutH="142">
+		<thead>
+		<tr>
+				<th>接口名称</th>
+				<th  width="80">安装</th>
+				<th  width="80">微博接口</th>
+				<th width="250">{lang v="TAG_LANG_OPERATE"}</th>
+			</tr>
+		</thead>
+		<tbody>
+		
+			{foreach from=$api_list item=item}
+			<tr>
+				<td>{$item.name}</td>
+
+				<td>
+					{if $item.installed eq 1}
+					已安装
+					{else}
+					未安装
+					{/if}
+				</td>
+				
+				<td>
+					{if $item.is_weibo eq 1}
+					{lang v="YES"}
+					{else}
+					{lang v="NO"}
+					{/if}
+				</td>
+				
+				<td>
+				
+						{if $item.installed eq 0}
+						<a title="安装{$item.name}" target="navTab" rel="install_api_login_page" href="{$installurl}&class_name={$item.class_name}" >{lang v="INSTALL"}</a>
+						{else}
+							<a href="{$uninstallurl}&id={$item.id}" target="ajaxTodo" title="确定要卸载吗？"  class="btnDel">{lang v="UNINSTALL"}</a>
+							<a href="{$editurl}&id={$item.id}"  target="navTab" rel="edit_api_login_page_{$item.id}"  class="btnEdit">{lang v="EDIT"}{$item.name}</a>							
+							
+						{/if}
+				</td>
+			</tr>
+			{/foreach}
+		</tbody>
+	</table>
+	
+</div>

@@ -1,0 +1,258 @@
+<?php
+	$this->_var['pagecss'][] = TMPL_REAL."/css/style.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/weebox.css";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.bgiframe.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.weebox.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.pngfix.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/lazyload.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/script.js";
+	$this->_var['cpagejs'][] = TMPL_REAL."/js/script.js";
+	
+	$this->_var['pagejs'][] = TMPL_REAL."/js/tourline_tourlist.js";
+    $this->_var['pagecss'][] = TMPL_REAL."/css/tourline_tourlist.css";
+?>
+{include file="inc/header.html"}
+{include file="inc/ur_here.html"}
+<script type="text/javascript">
+	var multi_day_url='{$multi_day_url}';
+</script>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$pagecss"}" />
+<script type="text/javascript" src="{function name="parse_script" v="$pagejs"}"></script>
+<div class="wrap">
+			<div class="f_l left_side">
+				<!--左测筛选列表-->
+				<div class="place_choose">
+					{foreach from=$filter_list item=f_item}
+					<div class="place_tit">
+						<a href="{$f_item.url}">
+							{$f_item.name}
+							<span>({$f_item.count})</span>
+						</a>
+						<span class="p_button"></span>
+					</div>
+					<div class="place_con {if $f_item.name eq $param.tag} cur {/if}">
+						{foreach from=$f_item.sub_list item=sub_item}
+							<a href="{$sub_item.url}" {if $sub_item.act eq 1}class="current"{/if} title="{$sub_item.name}({$sub_item.count})"><span>{function name=msubstr v=$sub_item.name a=0 b=3}({$sub_item.count})</span></a>
+						{/foreach}
+					</div>
+					{/foreach}
+				</div>
+				<!--左测筛选列表end-->
+				
+				<!--左测点评-->
+				{insert name="side_review" p="3"}
+				<!--左测点评end-->
+				<!--销量排行榜-->
+				{include file="inc/tourline/topsale.html"}
+				<!--
+				<div class="adver">
+					<a href="#"><img src="./images/adver1.jpg"></a>
+				</div>
+				<div class="adver">
+					<a href="#"><img src="./images/adver2.jpg"></a>
+				</div>
+				-->
+			</div>	
+			<div class="recommend">
+				{foreach from=$recommend_tourline item=rtour_item}
+				<dl class="recommend_pic">
+						<dt><a href="{$rtour_item.url}"><img src="{$rtour_item.image}"></a></dt>
+						<dd><a href="{$rtour_item.url}" target="_blank">{function name=msubstr v=$rtour_item.name a=0 b=12}</a></dd>
+						<dd class="recommend_price">￥<em>{$rtour_item.price}</em> 起</dd>	
+				</dl>
+				{/foreach}
+				<div class="satisfaction">
+					<span class="satisfaction1">综合满意度：</span>
+					<span class="satisfaction2">{if $situation.satify_avg} {$situation.satify_avg} {else}0{/if}%</span>
+					<span class="satisfaction3">已服务出游：<em>{if $situation.sale_sum} {$situation.sale_sum} {else} 0{/if}</em>人次</span>
+					<span class="satisfaction4">已有点评数：<em>{if $situation.review_total_sum} {$situation.review_total_sum} {else}0{/if}</em>条</span>			
+				</div>
+			</div>
+			
+			<div class="travel_choose">
+				<h3>{$current_name}</h3>
+				<div class="travel_choose_box">
+					<div class="travel_choose_classify ">
+						<p>产品类型：</p>
+						<div class="main_div">
+							{foreach from=$tourline_type item=ty_item }
+							<a href="{$ty_item.url}" {if $ty_item.t_type eq $param['t_type']}class="cur"{/if}>{$ty_item.name}</a>
+							{/foreach}
+						</div>
+					</div>
+					<div class="travel_choose_classify day_choose">
+						<p>行程天数：</p>
+						<div class="main_div" >
+							<div class="radio_d day_rad clearfix">
+								<a href="{$all_day_url}" {if $param.t_day eq 0 } class="cur" {/if}>全部</a>
+								{foreach from=$tourline_day item=day_item name=day_item}
+								<a href="{$day_item.url}" {if $day_item.act eq 1}class="cur"{/if}>{$day_item.name}{if $smarty.foreach.day_item.last}以上{else}天{/if}</a>
+								{/foreach}
+							</div>
+							<div class="multi_d day_mul clearfix">
+								<div class="multi_main clearfix">
+									{foreach from=$tourline_day item=day_item name=day_item}
+										<input class="day_input" type="checkbox" value="{$day_item.name}" {if $day_item.act eq 1}checked=checked{/if} >
+										<label class="">{$day_item.name}{if $smarty.foreach.day_item.last}以上{else}天{/if}</label>
+									{/foreach}
+								</div>
+								<div class="multi_bottom clearfix">
+									<form action="{$multi_day_url}" method="get" name="multi_day" id="multi_day_form" class="getform">
+									<input type="hidden" name="t_day" value="" />
+									<button id="day_do" class="multi_do" type="submit">确定</button>
+									<a href="javascript:void(0);" class="multi_close day_close">取消</a>
+									</form>
+								</div>
+							</div>		
+						</div>
+						<a href="javascript:void(0);" class="more_choose day_mone">+多选</a>
+					</div>
+					{if $tourline_jdian}
+					<div class="travel_choose_classify noborder jd_choose">
+						<p>包含景点：</p>
+						<div class="main_div">
+							<div class="radio_d jd_rad clearfix">
+								<a href="{$jd_quanbu_url}">全部</a>
+								{foreach from=$tourline_jdian item=jd_item name=jd_item}
+								<a href="{$jd_item.url}" {if $jd_item.act eq 1}class="cur"{/if} >{$jd_item.name}</a>
+								{/foreach}
+							</div>
+							<div class="multi_d jd_mul">
+								<div class="multi_main clearfix" >
+									{foreach from=$tourline_jdian item=jd_item name=jd_item}
+										<input class="multi_input" type="checkbox" value="{$jd_item.py}" {if $jd_item.act eq 1}checked=checked{/if} >
+										<label class="">{$jd_item.name}</label>
+									{/foreach}
+								</div>
+								<div class="multi_bottom clearfix">
+									<form action="{$multi_jd_url}" method="get" name="multi_jd" id="multi_jd_form" class="getform">
+									<input type="hidden" name="p_py" value="" />
+									<button id="jd_do" class="multi_do" type="submit">确定</button>
+									<a href="javascript:void(0);" class="multi_close jd_close">取消</a>
+									</form>
+								</div>
+							</div>
+							
+								
+						</div>
+						<a href="#" class="more_choose jd_mone">+多选</a>
+					</div>
+					{/if}
+					<!--
+					<div class="travel_choose_classify">
+						<p>产品特色：</p>
+						<div>
+							<a href="#">全部</a>
+							<a href="#">深圳</a>
+							<a href="#">厦门</a>
+							
+							<a href="#">深圳</a>
+							<a href="#">厦门</a>
+							<a href="#">长沙</a>			
+						</div>
+						<a href="#" class="more_choose">+多选</a>
+					</div> -->
+					
+					
+					
+					<div class="ftbox">
+						<div class="sort">
+							<a href="{$status_url.0}" {if $status eq 0}class="current"{/if}>默认排序</a>
+							<a href="{$status_url.1}" class="{if $status eq 1}current{/if} ord ord_{$status_1}">销量</a>
+							<a href="{$status_url.2}" class="{if $status eq 2}current{/if} ord ord_{$status_2}">价格</a>
+							<a href="{$status_url.3}" class="{if $status eq 3}current{/if} ord ord_{$status_3}">好评</a>
+						</div>
+						<div class="price " id="J_price">
+							<form action="{$price_range_url}" name="price_from" method="get" id="J_price_form" class="getform">
+							<span>价格区间</span>
+							<input type="text" name="min_price" value="{$min_price}" />
+							<span style="color:#D3D3D3">-</span>
+							<input type="text" name="max_price" value="{$max_price}" />
+							<div class="opbox">
+								<a href="javascript:void(0);" id="ClearPrice">清空价格</a>
+								<button id="confirm_btn" type="submit">确定</button>
+							</div>
+							</form>
+						</div>
+						<div class="good_t f_l" >
+							<input class="select_input" type="checkbox"  name="is_hot" {if $param.is_hot eq 1}checked=checked{/if} onchange="location.href='{$hot_url}'" >
+							<label class="select_label">推荐</label>
+							<input class="select_input" type="checkbox" name="is_recommend" {if $param.is_recommend eq 1}checked=checked{/if} onchange="location.href='{$recommend_url}'" >
+							<label class="select_label">热卖</label>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+			
+			
+			
+			<div class="travel_list">
+				{foreach from=$tourline_list item=tour_item}
+				<div class="travel_list_info">
+					<a href="{$tour_item.url}"><img src="{function name="get_spec_image" v=$tour_item.image w=160 h=90 g=1}"></a>
+					<div class="travel_content">
+						<span><a href="{$tour_item.url}">{function name=msubstr v=$tour_item.name a=0 b=30}</a></span>
+						<ul>
+							<li><span>行程天数：<em>{$tour_item.tour_total_day}天</em></span><span>出发城市：<em>{$tour_item.start_city_name}</em></span></li>
+							<li><span>行程编号：<em>{$tour_item.id}</em></span><span class="travel_content_satisfy">满意度：<em>{$tour_item.format_satify}%</em></span></li>
+							<li class="travel_content_detail">{function name=msubstr v=$tour_item.brief a=0 b=30}</li>
+						</ul>
+					</div>
+					<div class="return_money">
+						<span class="return_money_up"><em>{$tour_item.price}</em>元起</span>
+						{if $tour_item.is_review_return eq 1 && $tour_item.review_return_money gt 0}
+							<span class="dpj">
+								<span class="dpj_title">点评奖金</span>
+								<span class="dpj_val">{$tour_item.review_return_money}元</span>
+							</span>
+						{/if}
+						{if $tour_item.is_tuan eq 1}
+							<div class="tuan_box" style="">
+								{if $tour_item.tuan_is_pre eq 1 }
+									<span class="tuan_con">团预告</span>
+								{else}
+									<span class="tuan_con">团</span>
+								{/if}
+							</div>
+                    	{/if}
+					</div>
+				</div>
+				{/foreach}
+				<div class="page">		  
+				 {$pages}
+				</div>
+				
+			</div>
+			
+			
+			
+			<!--<div class="scenic">
+				<h3>香港景点大全</h3> 
+				<a href="#" class="scenic_num">查看所有香港278个景点</a>
+				
+				<a href="#"><img src="./images/scenic1.jpg" width="120" height="120"></a>
+				<a href="#"><img src="./images/scenic2.jpg" width="120" height="120"></a>
+				<a href="#"><img src="./images/scenic4.jpg" width="120" height="120"></a>
+				<a href="#"><img src="./images/scenic5.jpg" width="120" height="120" ></a>
+				<a href="#"><img src="./images/scenic3.jpg" width="120" height="120"></a>
+				
+			</div>
+			<div class="trave_notes">
+				<h3>香港游记</h3>
+				<ul>
+					<li class=""><span class="f_l mark">1</span><a href="#">毕业旅行说走就走，嗨香港偶们来了</a><em><strong>300</strong>点击</em></li>
+					<li class="trave_notes2"><a href="#">美丽的香港、澳门3日游</a><em><strong>300</strong>点击</em></li>
+					<li class="trave_notes3"><a href="#">美丽的香港、澳门3日游</a><em><strong>300</strong>点击</em></li>
+					<li class="trave_notes4"><a href="#">魅力香港，南丫岛</a><em><strong>300</strong>点击</em></li>
+					<li class="trave_notes5"><a href="#">毕业旅行说走就走，嗨香港偶们来了</a><em><strong>300</strong>点击</em></li>
+					<li class="trave_notes6"><a href="#">美丽的香港、澳门3日游</a><em><strong>300</strong>点击</em></li>
+					<li class="trave_notes7"><a href="#">四月上海飞香港，购物为主，顺带游玩</a><em><strong>300</strong>点击</em></li>
+					<li class="trave_notes8"><a href="#">魅力香港，南丫岛</a><em><strong>300</strong>点击</em></li>
+					<li class="trave_notes9"><a href="#">毕业季的旅行</a><em><strong>300</strong>点击</em></li>
+					<li class="trave_notes10"><a href="#">四月上海飞香港，购物为主，顺带游玩</a><em><strong>300</strong>点击</em></li>
+				</ul>
+			</div>-->
+</div>
+<div class="blank20"></div>
+{include file="inc/footer.html"}
