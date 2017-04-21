@@ -7,6 +7,6 @@ define("SITE_DOMAIN",get_domain());
 define("MAX_DYNAMIC_CACHE_SIZE",1000);  //动态缓存最数量
 define("MAPTYPE","baidumap"); // baidumap[百度]   map[谷歌]
 define("FULLTEXT_PREFIX","fanwe_");
-define("IS_DEBUG",0);
-define("SHOW_DEBUG",0);
+define("IS_DEBUG",1);
+define("SHOW_DEBUG",1);
 ?>
