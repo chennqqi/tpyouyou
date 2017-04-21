@@ -5,6 +5,7 @@ db/
 online/htdocs/1/
 online/htdocs/public/adv/
 online/htdocs/public/attachments/
+online/htdocs/public/db_config.php
 online/htdocs/public/images/
 online/htdocs/public/logs/
 online/htdocs/public/runtime/
