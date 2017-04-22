@@ -9,7 +9,6 @@ define("USER_PAGE_SIZE",20); //会员中心的记录分页量
  */
 class User{
 	
-	
 	/**
 	 * 提供任意一手机或邮箱，进行注册
 	 * @param unknown_type $mobile

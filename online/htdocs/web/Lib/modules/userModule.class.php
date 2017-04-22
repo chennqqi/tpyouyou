@@ -40,7 +40,6 @@ class userModule extends BaseModule
 		$GLOBALS['tmpl']->display("user_login.html",$cache_id);
 	}
 	
-	
 	public function dologin()
 	{
 		$ajax = intval($_REQUEST['ajax']);
@@ -73,7 +72,7 @@ class userModule extends BaseModule
 			else
 			{
 				$GLOBALS['db']->query("update ".DB_PREFIX."user set cookie_key ='',cookie_expire =0 where id = ".$GLOBALS['user']['id']);				
-			}			
+			}
 			showSuccess($result['message'],$ajax,get_gopreview(),0,$result['script']);
 		}
 		elseif($result['status']==1)
@@ -88,7 +87,6 @@ class userModule extends BaseModule
 			showErr($result['message'],$ajax);
 		}
 	}
-	
 	
 	public function logout()
 	{

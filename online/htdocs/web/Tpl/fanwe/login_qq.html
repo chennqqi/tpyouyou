@@ -12,6 +12,7 @@ $this->_var['pagejs'][] = TMPL_REAL."/js/user_login.js";
 <meta name="keywords" content="{$site_keyword}" />
 <meta name="description" content="{$site_description}" />
 <script type="text/javascript" src="{$TMPL}/js/jquery.min.js"></script>
+<script type="text/javascript" src="//qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js" data-appid="101391679" data-redirecturi="http://www.uu-club.com/" charset="utf-8"></script>
 <?php
 $this->_var['pagecss'][] = TMPL_REAL."/css/style.css";
 $this->_var['pagecss'][] = TMPL_REAL."/css/weebox.css";
@@ -26,6 +27,7 @@ if(app_conf("APP_MSG_SENDER_OPEN")==1)
 $this->_var['pagejs'][] = TMPL_REAL."/js/msg_sender.js";
 $this->_var['cpagejs'][] = TMPL_REAL."/js/msg_sender.js";
 }
+$this->_var['pagejs'][] = TMPL_REAL."/js/login/qq.js";
 ?>
 
 <link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$pagecss"}" />
@@ -50,10 +52,10 @@ var DEAL_MSG_URL = '{url r="cron#deal_msg_list"}';
 
 <div class="user_login_logo_row wrap">
 <a class="link" href="{$APP_ROOT}/">
-    <?php
-                                $this->_var['logo_image'] = app_conf("SITE_LOGO");
-                        ?>
-        {function name="load_page_png" v=$logo_image}
+<?php
+  $this->_var['logo_image'] = app_conf("SITE_LOGO");
+?>
+{function name="load_page_png" v=$logo_image}
 </a>
 
 </div>
@@ -100,41 +102,5 @@ var DEAL_MSG_URL = '{url r="cron#deal_msg_list"}';
 </div>
 </form>
 
-<script type="text/javascript" src="//qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js" data-appid="101391679" data-redirecturi="http://www.uu-club.com/" charset="utf-8"></script>
-
-<script type="text/javascript">
-//从页面收集OpenAPI必要的参数。get_user_info不需要输入参数，因此paras中没有参数
-var paras = {};
-
-//用JS SDK调用OpenAPI
-QC.api("get_user_info", paras)
-    //指定接口访问成功的接收函数，s为成功返回Response对象
-    .success(function(s){
-        //成功回调，通过s.data获取OpenAPI的返回数据
-        console.log('s data', s.data)
-        alert("获取用户信息成功！当前用户昵称为："+s.data.nickname);
-    })
-    //指定接口访问失败的接收函数，f为失败返回Response对象
-    .error(function(f){
-        //失败回调
-        alert("获取用户信息失败！");
-    })
-    //指定接口完成请求后的接收函数，c为完成请求返回Response对象
-    .complete(function(c){
-        //完成请求回调
-        alert("获取用户信息完成！");
-    });
-
-console.log('qc login check', QC.Login.check())
-
-if (QC.Login.check()) {
-	QC.Login.getMe(function(openId, accessToken){
-    console.log('openid is', openId)
-    console.log('accessToken', accessToken)
-    
-	})
-}
-
-</script>
 <!-- 登录主区域 -->
 {include file="inc/footer.html"}
