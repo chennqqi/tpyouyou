@@ -28,6 +28,29 @@ class loginModule extends BaseModule
 		}
 		$GLOBALS['tmpl']->display("login_qq.html",$cache_id);
 	}
+
+	public function check()
+	{
+		$ajax = intval($_REQUEST['ajax']);
+		$user_openid = strim($_REQUEST['openid']);
+		$user_accesstoken = strim($_REQUEST['accesstoken']);
+		// $save_user = intval($_REQUEST['save_user']);
+		$result = Loginqq::do_check($user_openid, $user_accesstoken);
+		if($result['status']==1)
+		{
+			//保存cookie
+			$cookie_key = md5(NOW_TIME.serialize($GLOBALS['user']));
+			$cookie_expire = NOW_TIME+14*24*3600;
+			$GLOBALS['db']->query("update ".DB_PREFIX."user set cookie_key ='".$cookie_key."',cookie_expire = ".$cookie_expire." where id = ".$GLOBALS['user']['id']);
+			es_cookie::set("fanwetour_user_cookie", $cookie_key,$cookie_expire);
+
+			showSuccess($result['message'],$ajax,get_gopreview(),0,$result['script']);
+		}
+		else
+		{
+			showErr($result['message'],$ajax);
+		}
+	}
 	
 }
 ?>

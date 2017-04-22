@@ -243,25 +243,6 @@ class User{
 				return array("status"=>1);
 			}
 		}
-		/*
-		if($fieldname=="user_name")
-		{
-			preg_match("/[\W]+/", $fieldvalue,$matches);
-			if($matches)
-			{
-				return array("status"=>0,"info"=>"用户名只能是数字字母下划线");
-			}
-			$rs = $GLOBALS['db']->getOne("select count(*) from ".DB_PREFIX."user where user_name = '".$fieldvalue."' and id <> ".$uid);
-			if($rs>0)
-			{
-				return array("status"=>0,"info"=>"用户名已存在");
-			}
-			else
-			{
-				return array("status"=>1);
-			}
-		}
-		*/
 		
 		if($fieldname=='user_name')
 		{
@@ -965,66 +946,93 @@ class User{
 	/**
 	 * 获取配送地址
 	 */
-	public static function get_consignee($id){
+	public static function get_consignee($id)
+	{
 		$condition = " user_id = ".$GLOBALS['user']['id']." and id=".$id;
 		return $GLOBALS['db']->getRow("select * from ".DB_PREFIX."user_consignee where ".$condition);
 	}
         
-        /**
-         * 获取用户id为索引的头像数组
-         * @param int or array $user_ids 用户编号可以单个ID 或者 ID 数组
-         * @param int $img_w 所需要的头像宽度
-         * @param int $img_h 所需要的头像高度
-         * @return array(
-         *                  '1'=>array(
-         *                                  'avatar'=>'xxxxx50_50.jpg.',
-         *                                  'img'=>'<img src="http://xxxx.50_50.jpg"/>',
-         *                          ),
-         *              );  二维数组
-         */
-        
-        public static function get_user_avatar($user_ids,$img_w=50,$img_h=50){
-            $avatar_list = array();
-            $condition = ' WHERE ';
-            if(empty($user_ids)){
-                return ;
-            }
-            if(is_numeric($user_ids)){
-                $condition.=" id =".$user_ids;
-            }else{
-                $condition.=" id in(".implode(",",$user_ids).")";
-            }
-            $user_list = $GLOBALS['db']->getAll("SELECT * FROM ".DB_PREFIX."user ".$condition);
-            $f_user_data = array();
-            foreach($user_list as $k=>$v){
-                $img_temp = get_spec_image($v['avatar'],$img_w,$img_h,1);
-                $f_user_data[$v['id']]['avatar'] = get_spec_image($v['avatar'],$img_w,$img_h,1);
-                $f_user_data[$v['id']]['img'] = '<img class="GUID" uid="'.$v['id'].'" src="'.$img_temp.'" style="width:'.$img_w.';height:'.$img_h.';"/>';
-            }
-            return $f_user_data;
-        }
-        /**
-         * 获取用户信息，可以为一个用户或者多个用户
-         * @param type $user_ids 数字或id数组
-         * @return array 
-         */
-        public static function get_user_info($user_ids){
-            $condition = ' WHERE ';
-            if(is_numeric($user_ids)){
-                $condition.=" id =".$user_ids;
-                $data = $GLOBALS['db']->getRow("SELECT * FROM ".DB_PREFIX."user ".$condition);
-                $result = $data;
-            }else{
-                $condition.=" id in(".implode(",",$user_ids).")";
-                $data = $GLOBALS['db']->getAll("SELECT * FROM ".DB_PREFIX."user ".$condition);
-                $f_user_data = array();
-                foreach($data as $k=>$v){
-                    $f_user_data[$v['id']] = $v;
-                }
-                $result = $f_user_data;
-            }
+  /**
+   * 获取用户id为索引的头像数组
+   * @param int or array $user_ids 用户编号可以单个ID 或者 ID 数组
+   * @param int $img_w 所需要的头像宽度
+   * @param int $img_h 所需要的头像高度
+   * @return array(
+   *                  '1'=>array(
+   *                                  'avatar'=>'xxxxx50_50.jpg.',
+   *                                  'img'=>'<img src="http://xxxx.50_50.jpg"/>',
+   *                          ),
+   *              );  二维数组
+   */
+  public static function get_user_avatar($user_ids,$img_w=50,$img_h=50)
+  {
+      $avatar_list = array();
+      $condition = ' WHERE ';
+      if(empty($user_ids)){
+          return ;
+      }
+      if(is_numeric($user_ids)){
+          $condition.=" id =".$user_ids;
+      }else{
+          $condition.=" id in(".implode(",",$user_ids).")";
+      }
+      $user_list = $GLOBALS['db']->getAll("SELECT * FROM ".DB_PREFIX."user ".$condition);
+      $f_user_data = array();
+      foreach($user_list as $k=>$v){
+          $img_temp = get_spec_image($v['avatar'],$img_w,$img_h,1);
+          $f_user_data[$v['id']]['avatar'] = get_spec_image($v['avatar'],$img_w,$img_h,1);
+          $f_user_data[$v['id']]['img'] = '<img class="GUID" uid="'.$v['id'].'" src="'.$img_temp.'" style="width:'.$img_w.';height:'.$img_h.';"/>';
+      }
+      return $f_user_data;
+  }
+  /**
+   * 获取用户信息，可以为一个用户或者多个用户
+   * @param type $user_ids 数字或id数组
+   * @return array 
+   */
+  public static function get_user_info($user_ids){
+      $condition = ' WHERE ';
+      if(is_numeric($user_ids)){
+          $condition.=" id =".$user_ids;
+          $data = $GLOBALS['db']->getRow("SELECT * FROM ".DB_PREFIX."user ".$condition);
+          $result = $data;
+      }else{
+          $condition.=" id in(".implode(",",$user_ids).")";
+          $data = $GLOBALS['db']->getAll("SELECT * FROM ".DB_PREFIX."user ".$condition);
+          $f_user_data = array();
+          foreach($data as $k=>$v){
+              $f_user_data[$v['id']] = $v;
+          }
+          $result = $f_user_data;
+      }
 
-            return $result;
-        }
+      return $result;
+  }
+
+  /**
+   * 查询用户 qq信息
+   * @param string $user_name_email_mobile
+   * @param string $user_pwd
+   * 返回 result(status,message,extra)extra表示为同步登录的一些信息
+   * status: 0 第一次使用qq登录本平台未关联帐号 1已经关联帐号， 直接跳转
+   */
+  public static function checkqq($user_openid)
+  {
+  	$user = $GLOBALS['db']->getRow("select * from ".DB_PREFIX."user_qq where (openid = '".$user_openid."')  limit 1");
+  	if($user)
+  	{
+			$result['status'] = 1;
+			$result['message'] = "会员未通过验证";
+			$result['user'] = $user;
+  		
+  	}
+  	else
+  	{
+  		$result['status'] = 0;
+  		$result['message'] = "会员不存在";
+  		$result['user'] = $user;
+  	}
+  	return $result;
+  }
 }
 ?>

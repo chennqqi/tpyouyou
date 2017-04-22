@@ -9,7 +9,6 @@
 
 // 前后台加载的系统配置文件
 
-
 // 加载数据库中的配置与数据库配置
 if(file_exists(APP_ROOT_PATH.'public/db_config.php'))
 {
@@ -40,8 +39,6 @@ elseif(is_array($db_conf))
 $config = array_merge($db_conf,$version,$timezone);
 else
 $config = array_merge($version,$timezone);
-
-
 
 return $config;
 ?>
