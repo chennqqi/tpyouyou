@@ -172,7 +172,6 @@ class drop_navModule extends AuthModule
 		
 		$GLOBALS['tmpl']->display("core/drop_nav/edit.html");
 	}
-
 	
 	public function update() {
 		$ajax = intval($_REQUEST['ajax']);

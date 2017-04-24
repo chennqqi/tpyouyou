@@ -3,3 +3,10 @@ qq登录
 新用户登录， 需要录入手机号
 
 老用户， 查询是否与user表关联
+
+短信模块：
+  库system/sms  -- 目前能用的士smsbao_sms.php
+  程序中调用通过system/utils/es_sms.php封装好的方法来使用
+  web/lib/modules/cornModule.class.php中deal_msg_list()来实现业务队列中的群发
+
+  例子： User::send_getpwd_mobile($user); 就是user.php中直接使用封装好的短信接口的例子

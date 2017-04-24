@@ -64,40 +64,37 @@ var DEAL_MSG_URL = '{url r="cron#deal_msg_list"}';
 <form name="login_form" id="page_login_form" type="post" action="{url r="user#dologin"}">
 <div class="user_login_page">
 	<div class="user_login_main">
-		<div class="user_login_box">
-			<ul>
-				<li>qqq快速登ss录</li>
-				<li class="regist_link"><a href="{url r="user#regist"}">免费注册</a></li>
-			</ul>
-			<div class="box_main">
-					<div class="user_key_row">
-					<input type="text" class="user_key ui-textbox" name="user_key" holder="请输入邮箱/手机/用户名" />				
-					</div>	
-					<div class="user_pwd_row">
-					<input type="password" class="user_pwd ui-textbox" name="user_pwd" holder="请输入密码" />
-					</div>	
-					<div class="user_verify_row">
-					<input type="text" class="user_verify ui-textbox" name="user_verify" holder="验证码" />
-					<span id="page_login_verify">{insert name="verifyimg"}</span>
-					</div>
-					<div class="user_login_row">
-						<a href="javascript:void(0);" class="login_btn" id="page_login_btn">登录</a>
-						<input type="submit" style="display:none;" />
-					</div>
-					<div class="more_login" style="width: 272px;padding-top: 15px;">
-						<span>联合登录:</span><span id="qqLoginBtn" style="width: 100px;display: block;height: 20px;background: black;"></span>
-					</div>
-					<div class="user_info_row">
-					<input type="checkbox" value="1" name="save_user"  class="save_user_info" />
-					<label>保存登录信息，两周内免登录</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<a href="{url r="user#getpwd"}">忘记密码</a>
-					</div>	
-					<div class="user_info_row">
-					{insert name="load_api" type="0"}
-					</div>		
-			</div>
-			<div class="box_foot"></div>
+	<div class="user_login_box">
+		<ul>
+			<li>关联已有账号</li>
+			<li class="regist_link"><a href="{url r="user#regist"}">跳过这一步</a></li>
+		</ul>
+		<div class="box_main">
+				<div class="user_key_row">
+				<input type="text" class="user_key ui-textbox" name="user_key" holder="请输入已有账号的邮箱/手机/用户名" />				
+				</div>	
+				<div class="user_pwd_row">
+				<input type="password" class="user_pwd ui-textbox" name="user_pwd" holder="请输入密码" />
+				</div>	
+				<div class="user_verify_row">
+				<input type="text" class="user_verify ui-textbox" name="user_verify" holder="验证码" />
+				<span id="page_login_verify">{insert name="verifyimg"}</span>
+				</div>
+				<div class="user_login_row">
+					<a href="javascript:void(0);" class="login_btn" id="page_login_btn">确定</a>
+					<input type="submit" style="display:none;" />
+				</div>
+				<div class="user_info_row">
+				<input type="checkbox" value="1" name="save_user"  class="save_user_info" />
+				<label>保存登录信息，两周内免登录</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<a href="{url r="user#getpwd"}">忘记密码</a>
+				</div>	
+				<div class="user_info_row">
+				{insert name="load_api" type="0"}
+				</div>		
 		</div>
+		<div class="box_foot"></div>
+	</div>
 	</div>
 </div>
 </form>

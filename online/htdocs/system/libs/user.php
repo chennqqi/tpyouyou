@@ -1016,21 +1016,29 @@ class User{
    * 返回 result(status,message,extra)extra表示为同步登录的一些信息
    * status: 0 第一次使用qq登录本平台未关联帐号 1已经关联帐号， 直接跳转
    */
-  public static function checkqq($user_openid)
+  public static function checkqq($user_openid,$user_nickname,$user_figureurl,$user_accesstoken)
   {
-  	$user = $GLOBALS['db']->getRow("select * from ".DB_PREFIX."user_qq where (openid = '".$user_openid."')  limit 1");
-  	if($user)
+  	// status 1 已经与以前账号关联， 2 第一次使用qq登录本平台，询问其是否关联已有账号 如果没有已有账号则需要注册
+  	$openid = $GLOBALS['db']->getRow("select * from ".DB_PREFIX."user_qq where (openid = '".$user_openid."')  limit 1");
+  	$result = array();
+  	if($openid)
   	{
 			$result['status'] = 1;
-			$result['message'] = "会员未通过验证";
-			$result['user'] = $user;
-  		
+			$result['message'] = "会员已存在";
+			$result['user'] = $user_qq;
   	}
   	else
   	{
-  		$result['status'] = 0;
-  		$result['message'] = "会员不存在";
-  		$result['user'] = $user;
+  		$user_qq = array();
+  		$user_qq['openid'] = $user_openid;
+  		$user_qq['accesstoken'] = $user_accesstoken;
+  		$user_qq['nickname'] = $user_nickname;
+  		$user_qq['figureurl'] = $user_figureurl;
+  		// 更新数据
+  		$user_qq_new = $GLOBALS['db']->autoExecute(DB_PREFIX."user_qq",$user_qq,"INSERT");
+  		$result['status'] = 2;
+  		$result['message'] = "会员新创建";
+  		$result['user'] = $user_qq_new;
   	}
   	return $result;
   }
