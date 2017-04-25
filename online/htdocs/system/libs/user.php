@@ -386,8 +386,19 @@ class User{
 		$GLOBALS['db']->query("update ".DB_PREFIX."user set is_daily_login = 1 where id = ".$user['id']." and (FROM_UNIXTIME(login_time,'%Y %D %M')<>FROM_UNIXTIME(".NOW_TIME.",'%Y %D %M'))");		
 		$GLOBALS['db']->query("update ".DB_PREFIX."user set login_ip = '".CLIENT_IP."',login_time= ".NOW_TIME." where id = ".$user['id']);		
 		User::user_level_locate($user['id']);	
-		$GLOBALS['user'] = $user;	
 		es_session::start();
+		$GLOBALS['user'] = $user;
+		$login_info = array();
+		$login_type = es_session::get("login_type");
+
+		if ($login_type == 'qq') {
+			$login_info[] = 'qq';
+			$login_info[] =  es_session::get("qq_name");
+			$login_info[] =  es_session::get("qq_img");
+		} else {
+		  $login_info[] = 'normal';
+		}
+		$GLOBALS['login_info'] = $login_info;
 		es_session::set("fanwetour_user_".app_conf("AUTH_KEY"), $GLOBALS['user']);
 		es_session::close();
 	}
@@ -495,8 +506,6 @@ class User{
 		if($GLOBALS['user']&&$GLOBALS['user']['id']==$user_id)
 		$GLOBALS['user']['level_id'] = intval($user_level['id']);
 	}
-	
-
 	
 	/**
 	 * 前台获取已登录的用户数据
@@ -652,17 +661,17 @@ class User{
         	//$domain = app_conf("PUBLIC_DOMAIN_ROOT")==''?SITE_DOMAIN.APP_ROOT:app_conf("PUBLIC_DOMAIN_ROOT");
         	//$weibo['img'] = str_replace("./public/images/",$domain."/public/images/",$weibo['img']);
 		}
-        $weibo['content'] = $content." ".$url;
-        
-        $api_list = $GLOBALS['db']->getAll("select * from ".DB_PREFIX."api_login");
-        foreach($api_list as $k=>$v)
-        {
-        	$c_name = $v['class_name']."_api";
-        	$file = APP_ROOT_PATH."system/api_login/".$c_name.".php";
-        	require_once $file;
-        	$c_object = new $c_name($v);
-        	$c_object->send_message($weibo);
-        }
+    $weibo['content'] = $content." ".$url;
+    
+    $api_list = $GLOBALS['db']->getAll("select * from ".DB_PREFIX."api_login");
+    foreach($api_list as $k=>$v)
+    {
+    	$c_name = $v['class_name']."_api";
+    	$file = APP_ROOT_PATH."system/api_login/".$c_name.".php";
+    	require_once $file;
+    	$c_object = new $c_name($v);
+    	$c_object->send_message($weibo);
+    }
 	}
 	
 	
@@ -1017,13 +1026,19 @@ class User{
   public static function checkqq($user_openid,$user_nickname,$user_figureurl,$user_accesstoken)
   {
   	// status 1 已经与以前账号关联，0 第一次使用qq登录本平台，询问其是否关联已有账号 如果没有已有账号则需要注册
-  	$openid = $GLOBALS['db']->getRow("select * from ".DB_PREFIX."user_qq where (openid = '".$user_openid."')  limit 1");
+  	$qq = $GLOBALS['db']->getRow("select * from ".DB_PREFIX."user_qq where (openid = '".$user_openid."')  limit 1");
   	$result = array();
-  	if($openid)
+  	if($qq && $qq->user_id)
   	{
-			$result['status'] = 1;
-			$result['message'] = "会员已存在";
+			$result['status'] = 2;
+			$result['message'] = "会员已存在, 并且已经关联user";
 			$result['user'] = $user_qq;
+  	}
+  	elseif ($qq && !$qq->user_id)
+  	{
+  		$result['status'] = 1;
+  		$result['message'] = "会员已存在, 但是没有关联user";
+  		$result['user'] = $qq;
   	}
   	else
   	{
@@ -1032,7 +1047,7 @@ class User{
   		$user_qq['accesstoken'] = $user_accesstoken;
   		$user_qq['nickname'] = $user_nickname;
   		$user_qq['figureurl'] = $user_figureurl;
-  		// 更新数据
+  		// 插入数据
   		$user_qq_new = $GLOBALS['db']->autoExecute(DB_PREFIX."user_qq",$user_qq,"INSERT");
   		$result['status'] = 0;
   		$result['message'] = "会员新创建";

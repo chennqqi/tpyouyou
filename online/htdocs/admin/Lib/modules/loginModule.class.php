@@ -54,11 +54,7 @@ class loginModule extends BaseModule
 
 		$GLOBALS['tmpl']->display("core/login/index.html");
 
-	}	
-
-	
-
-	
+	}		
 
 	//登录函数
 

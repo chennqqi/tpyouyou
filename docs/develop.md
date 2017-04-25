@@ -11,4 +11,4 @@ qq登录
 接入qq js_sdk（完成）
 qq登录成功后与网站帐号关联
 
-User::send_getqq_mobile()来想
+User::send_getqq_mobile()来

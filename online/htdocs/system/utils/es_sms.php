@@ -12,7 +12,7 @@ class sms_sender
 	var $sms;
 	
 	public function __construct()
-    { 	
+  { 	
 		$sms_info = $GLOBALS['db']->getRow("select * from ".DB_PREFIX."sms where is_effect = 1");
 		if($sms_info)
 		{
@@ -23,9 +23,8 @@ class sms_sender
 			$sms_class = $sms_info['class_name']."_sms";
 			$this->sms = new $sms_class($sms_info);
 		}
-    }
+  }
     
-	
 	public function sendSms($mobiles,$content,$sendTime='')
 	{
 		if(!is_array($mobiles))

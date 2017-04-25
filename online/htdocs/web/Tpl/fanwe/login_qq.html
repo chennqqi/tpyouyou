@@ -60,15 +60,16 @@ var DEAL_MSG_URL = '{url r="cron#deal_msg_list"}';
 
 </div>
 <div class="blank"></div>
-<!-- 登录主区域 -->
-<form name="login_form" id="page_login_form" type="post" action="{url r="user#dologin"}">
+<!-- qq登录关联主区域 -->
+<form name="login_form" id="page_login_form" type="post" action="{url r="login#dorel"}">
 <div class="user_login_page">
 	<div class="user_login_main">
 	<div class="user_login_box">
-		<ul>
-			<li>关联已有账号</li>
-			<li class="regist_link"><a href="{url r="user#regist"}">跳过这一步</a></li>
-		</ul>
+		<h3 style="padding: 10px;
+    background: skyblue;
+    color: white;
+    border-radius: 5px;
+    margin-bottom: 7px;">关联已有账号</h3>
 		<div class="box_main">
 				<div class="user_key_row">
 				<input type="text" class="user_key ui-textbox" name="user_key" holder="请输入已有账号的邮箱/手机/用户名" />				
@@ -88,10 +89,10 @@ var DEAL_MSG_URL = '{url r="cron#deal_msg_list"}';
 				<input type="checkbox" value="1" name="save_user"  class="save_user_info" />
 				<label>保存登录信息，两周内免登录</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				<a href="{url r="user#getpwd"}">忘记密码</a>
-				</div>	
+				</div>
 				<div class="user_info_row">
 				{insert name="load_api" type="0"}
-				</div>		
+				</div>
 		</div>
 		<div class="box_foot"></div>
 	</div>
