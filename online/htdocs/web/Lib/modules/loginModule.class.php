@@ -36,24 +36,20 @@ class loginModule extends BaseModule
 		$user_nickname = strim($_POST['nickname']);
 		$user_figureurl = strim($_POST['figureurl']);
 		$user_accesstoken = strim($_POST['accesstoken']);
-		// $save_user = intval($_REQUEST['save_user']);
 		$result = User::checkqq($user_openid, $user_nickname,$user_figureurl, $user_accesstoken);
-		// if($result['status']==1)
-		// {
-		// 	//保存cookie
-		// 	$cookie_key = md5(NOW_TIME.serialize($GLOBALS['user']));
-		// 	$cookie_expire = NOW_TIME+14*24*3600;
-		// 	$GLOBALS['db']->query("update ".DB_PREFIX."user set cookie_key ='".$cookie_key."',cookie_expire = ".$cookie_expire." where id = ".$GLOBALS['user']['id']);
-		// 	es_cookie::set("fanwetour_user_cookie", $cookie_key,$cookie_expire);
-
-		// 	// showSuccess($result['message'],$ajax,get_gopreview(),0,$result['script']);
-		// 	return json($result);
-		// }
-		// else
-		// {
-		// 	// showErr($result['message'],$ajax);
-		// 	return json($result);
-		// }
+		if($result['status']==1)
+		{
+			//保存cookie,
+			$cookie_key = md5(NOW_TIME.serialize($GLOBALS['user']));
+			$cookie_expire = NOW_TIME+14*24*3600;
+			$GLOBALS['db']->query("update ".DB_PREFIX."user set cookie_key ='".$cookie_key."',cookie_expire = ".$cookie_expire." where id = ".$GLOBALS['user']['id']);
+			es_cookie::set("fanwetour_user_cookie", $cookie_key,$cookie_expire);
+		}
+		else
+		{
+			// showErr($result['message'],$ajax);
+			return json($result);
+		}
 		ajax_return($result);
 	}
 	

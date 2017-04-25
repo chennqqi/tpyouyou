@@ -1,0 +1,12 @@
+{
+    "name": "administrator/htdocs",
+    "authors": [
+        {
+            "name": "ZZR-china",
+            "email": "2467254599@qq.com"
+        }
+    ],
+    "require": {
+    	"monolog/monolog": "1.2.*"
+    }
+}

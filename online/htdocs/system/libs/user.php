@@ -41,7 +41,6 @@ class User{
 		$GLOBALS['db']->query("update ".DB_PREFIX."user_rebate set nickname = '".$nickname."' where from_uid = ".$user_id);
 	}
 	
-	
 	/**
 	 * 后台添加修改保存,$dataset表示为提交的数据集
 	 * 返回
@@ -76,7 +75,6 @@ class User{
 		$data['address'] = $dataset['address'];
 		$data['zip_code'] = $dataset['zip_code'] ;
 		$data['avatar'] = $dataset['avatar'];
-		
 	
 		if(!empty($data['user_pwd'])&&$data['user_pwd']!=$dataset['cfm_user_pwd'])
 		{
@@ -120,7 +118,6 @@ class User{
 			$result['message'] = "手机号已存在";
 			return $result;
 		}
-		
 		
 		if(empty($data['id']))
 		{
@@ -341,7 +338,7 @@ class User{
 			elseif($user['user_pwd'] != md5($user_pwd.$user['salt']))
 			{
 				$result['status'] = 3;
-				$result['message'] = "密码不配匹";
+				$result['message'] = "密码不匹配";
 				$result['user'] = $user;
 			}
 			else
@@ -1019,7 +1016,7 @@ class User{
    */
   public static function checkqq($user_openid,$user_nickname,$user_figureurl,$user_accesstoken)
   {
-  	// status 1 已经与以前账号关联， 2 第一次使用qq登录本平台，询问其是否关联已有账号 如果没有已有账号则需要注册
+  	// status 1 已经与以前账号关联，0 第一次使用qq登录本平台，询问其是否关联已有账号 如果没有已有账号则需要注册
   	$openid = $GLOBALS['db']->getRow("select * from ".DB_PREFIX."user_qq where (openid = '".$user_openid."')  limit 1");
   	$result = array();
   	if($openid)
@@ -1037,7 +1034,7 @@ class User{
   		$user_qq['figureurl'] = $user_figureurl;
   		// 更新数据
   		$user_qq_new = $GLOBALS['db']->autoExecute(DB_PREFIX."user_qq",$user_qq,"INSERT");
-  		$result['status'] = 2;
+  		$result['status'] = 0;
   		$result['message'] = "会员新创建";
   		$result['user'] = $user_qq_new;
   	}

@@ -29,7 +29,6 @@ $GLOBALS['tmpl']->assign("TMPL_REAL",APP_ROOT_PATH.APP_NAME."/Tpl/".app_conf("TE
 define("TMPL_REAL",APP_ROOT_PATH.APP_NAME."/Tpl/".app_conf("TEMPLATE"));
 //定义模板路径
 
-
 if(app_conf("URL_MODEL")==1)
 {	
 	$domain = get_host();
@@ -166,7 +165,6 @@ if(file_exists(APP_ROOT_PATH.APP_NAME.'/Lang/'.app_conf("SITE_LANG")."/".MODULE_
 $GLOBALS['tmpl']->assign("LANG",$lang);
 //end 定义当前语言包
 
-
 //引入用户类库
 require_once APP_ROOT_PATH."system/libs/user.php";
 $user = null;
@@ -189,7 +187,6 @@ else
 	if(intval(es_cookie::get("REFERRAL_USER"))>0)
 	$ref_pid = intval($GLOBALS['db']->getOne("select id from ".DB_PREFIX."user where id = ".intval(es_cookie::get("REFERRAL_USER"))));
 }
-
 
 //保存来路
 if(!es_cookie::get("referer_url"))

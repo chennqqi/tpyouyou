@@ -676,9 +676,7 @@ function global_run()
 		{
 			$msg_item = array();
 			User::send_message($GLOBALS['user']['id'], $v['msg_title'], $v['msg_content'],$v['id']);
-		}
-		
-		
+		}		
 	}	
 	
 	//删除购物车内超过60分钟的商品
@@ -718,7 +716,8 @@ function get_first_index($idx)
 function format_wee_err($msg){
 	return '<div class="wee_error_tip">'.$msg.'</div>';
 }
-  function GetIp(){
+
+function GetIp(){
   $realip = '';
   $unknown = 'unknown';
   if (isset($_SERVER)){
@@ -753,7 +752,7 @@ function format_wee_err($msg){
   return $realip;
 }
 
- function GetIpLookup($ip = ''){
+function GetIpLookup($ip = ''){
   if(empty($ip)){
     $ip = GetIp();
   }

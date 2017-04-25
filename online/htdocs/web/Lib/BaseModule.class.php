@@ -22,8 +22,6 @@ class BaseModule{
 
 	{
 
-		
-
 		if(intval(app_conf("SITE_STATUS"))==0)
 
 		{
@@ -249,8 +247,6 @@ class BaseModule{
 			$GLOBALS['fcache']->set("APP_DYNAMIC_CACHE_".MODULE_NAME."_".ACTION_NAME,$GLOBALS['dynamic_cache']);
 
 		}
-
-		
 
 		if(app_conf("PUBLIC_DOMAIN_ROOT")!='')
 
