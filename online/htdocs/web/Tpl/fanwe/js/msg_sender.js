@@ -13,6 +13,7 @@ function deal_sender_fun()
             global:false,
     		success:function(data)
     		{
+                console.log('send data', data);
     		    deal_sender = window.setInterval("deal_sender_fun()",send_span);
     			if(data.count!='0')
     			IS_RUN_CRON = 1;

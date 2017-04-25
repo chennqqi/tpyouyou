@@ -41,7 +41,7 @@ class cronModule extends BaseModule
 					//邮件
 					require_once APP_ROOT_PATH."system/utils/es_mail.php";
 					$mail = new mail_sender();
-			
+					
 					$mail->AddAddress($msg_item['dest']);
 					$mail->IsHTML($msg_item['is_html']); 				  // 设置邮件格式为 HTML
 					$mail->Subject = $msg_item['title'];   // 标题

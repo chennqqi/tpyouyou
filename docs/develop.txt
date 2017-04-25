@@ -9,4 +9,12 @@ qq登录
   程序中调用通过system/utils/es_sms.php封装好的方法来使用
   web/lib/modules/cornModule.class.php中deal_msg_list()来实现业务队列中的群发
 
-  例子： User::send_getpwd_mobile($user); 就是user.php中直接使用封装好的短信接口的例子
+  例子： User::send_getpwd_mobile($user); 就是user.php中直接使用封装好的短信接口的例子,如果为其他功能添加发送短信的功能可以仿照写
+  验证码保存在数据表中，要与发送的保持一致
+
+
+1. qq登录
+接入qq js_sdk（完成）
+qq登录成功后与网站帐号关联
+
+User::send_getqq_mobile()来想

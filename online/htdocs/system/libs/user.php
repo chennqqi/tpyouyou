@@ -990,7 +990,8 @@ class User{
    * @param type $user_ids 数字或id数组
    * @return array 
    */
-  public static function get_user_info($user_ids){
+  public static function get_user_info($user_ids)
+  {
       $condition = ' WHERE ';
       if(is_numeric($user_ids)){
           $condition.=" id =".$user_ids;
@@ -1014,7 +1015,7 @@ class User{
    * @param string $user_name_email_mobile
    * @param string $user_pwd
    * 返回 result(status,message,extra)extra表示为同步登录的一些信息
-   * status: 0 第一次使用qq登录本平台未关联帐号 1已经关联帐号， 直接跳转
+   * status: 0 第一次使用qq登录本平台未关联帐号 1 已经关联帐号， 直接跳转
    */
   public static function checkqq($user_openid,$user_nickname,$user_figureurl,$user_accesstoken)
   {
@@ -1041,6 +1042,29 @@ class User{
   		$result['user'] = $user_qq_new;
   	}
   	return $result;
+  }
+
+  /**
+   * 发送会员取回使用qq登录时的验证短信
+   * @param unknown_type $openid
+   */
+  public static function send_getqq_mobile($openid)
+  {
+  	$code = rand(100000, 999999);
+  	$code_time = NOW_TIME + 2*3600;
+  	$GLOBALS['db']->query("update ".DB_PREFIX."user_qq set rel_phone_code = '".$code."',rel_phone_code_time = ".$code_time." where openid = ".$openid);
+  		
+  	$tmpl = $GLOBALS['db']->getOne("select content from ".DB_PREFIX."msg_template where name = 'TPL_SMS_USER_GETPWD'");
+  	$verify['user_name'] = $user['user_name'];
+  	$verify['mobile'] = $user['mobile'];
+  	$verify['code'] = $code;
+  	$GLOBALS['tmpl']->assign("user",$verify);
+  	$sms_content = $GLOBALS['tmpl']->fetch("str:".$tmpl);
+  	$msg_data['dest'] = $user['mobile'];
+  	$msg_data['content'] = $sms_content;
+  	$msg_data['create_time'] = NOW_TIME;
+  	$msg_data['user_id'] = $user['id'];
+  	$GLOBALS['db']->autoExecute(DB_PREFIX."deal_msg_list",$msg_data); //插入
   }
 }
 ?>

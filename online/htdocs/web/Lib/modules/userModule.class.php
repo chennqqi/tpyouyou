@@ -766,8 +766,7 @@ class userModule extends BaseModule
 		}
 		else
 		{
-			
-			
+					
 			if($user['is_effect']==0)
 				showErr("会员被禁用",$ajax,url("user#getpwd"));
 			else
