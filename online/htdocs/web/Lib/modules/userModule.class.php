@@ -930,7 +930,6 @@ class userModule extends BaseModule
 	{
 		global_run();
 		$GLOBALS['tmpl']->assign("user",$GLOBALS['user']);
-		$GLOBALS['tmpl']->assign("login_info",$GLOBALS['login_info']);
 		$GLOBALS['tmpl']->jsonp_display("inc/user_tip.html");
 	}
 	

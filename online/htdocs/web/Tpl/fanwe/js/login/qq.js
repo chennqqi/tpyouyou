@@ -27,7 +27,7 @@ $(document).ready(function() {
             'nickname': user_info.nickname,
             'figureurl': user_info.figureurl_qq_2 || user_info.figureurl_qq_1
           }
-
+          
           $.ajax({
             url: actionurl,
             data: query,

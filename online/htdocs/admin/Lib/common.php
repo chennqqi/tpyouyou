@@ -74,7 +74,7 @@ function showSuccess($msg,$ajax=0,$jump='')
 			$result['forwardUrl'] = $jump;
 		}
 		header("Content-Type:text/html; charset=utf-8");
-        echo(json_encode($result));exit;
+    echo(json_encode($result));exit;
 	}
 	else
 	{

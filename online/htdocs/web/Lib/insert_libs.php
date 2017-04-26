@@ -17,6 +17,20 @@ function insert_current_city_name()
 function insert_user_tip()
 {
 	$GLOBALS['tmpl']->assign("user",$GLOBALS['user']);
+	$login_info = array();
+	es_session::start();
+	$login_type = es_session::get("login_type");
+	if ($login_type == 'qq') {
+		$qq_name =  es_session::get("qq_name");
+		$qq_img =  es_session::get("qq_img");
+		$login_info['login_type'] = 'qq';
+		$login_info['qq_name'] =  $qq_name;
+		$login_info['qq_img'] =  $qq_img;
+	} else {
+	  $login_info['login_type'] = 'normal';
+	}
+	$GLOBALS['tmpl']->assign("login_info",$login_info);
+	es_session::start();
 	return $GLOBALS['tmpl']->fetch("inc/user_tip.html");
 }
 
