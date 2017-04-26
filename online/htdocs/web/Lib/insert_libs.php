@@ -30,7 +30,7 @@ function insert_user_tip()
 	  $login_info['login_type'] = 'normal';
 	}
 	$GLOBALS['tmpl']->assign("login_info",$login_info);
-	es_session::start();
+	es_session::close();
 	return $GLOBALS['tmpl']->fetch("inc/user_tip.html");
 }
 

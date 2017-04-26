@@ -58,10 +58,6 @@ var DEAL_MSG_URL = '{url r="cron#deal_msg_list"}';
 {function name="load_page_png" v=$logo_image}
 </a>
 
-<?php
-var_dump($this->_var['login_info']);
-?>
-
 </div>
 <div class="blank"></div>
 <!-- qq登录关联主区域 -->
@@ -73,7 +69,8 @@ var_dump($this->_var['login_info']);
     background: skyblue;
     color: white;
     border-radius: 5px;
-    margin-bottom: 7px;">关联已有d账号</h3>
+    margin-bottom: 7px;" class="rel_h3">关联已有账号</h3>
+    <div class="go_index">正在跳转,请稍后</div>
 		<div class="box_main">
 				<div class="user_key_row">
 				<input type="text" class="user_key ui-textbox" name="user_key" holder="请输入已有账号的邮箱/手机/用户名" />				
@@ -91,8 +88,11 @@ var_dump($this->_var['login_info']);
 				</div>
 				<div class="user_info_row">
 				<input type="checkbox" value="1" name="save_user"  class="save_user_info" />
-				<label>保存登录信息，两周内免登录</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<a href="{url r="user#getpwd"}">忘记密码</a>
+				<label>两周内免登录</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<a href="{url r="user#getpwd"}">忘记密码?</a>
+				</div>
+				<div class="" style="width: 272px;margin: 0 auto;padding-top: 3px;">
+					还没有账号? <a style="color: crimson;" href="{url r="user#regist"}">点我注册</a>
 				</div>
 				<div class="user_info_row">
 				{insert name="load_api" type="0"}

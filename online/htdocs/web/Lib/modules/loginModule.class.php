@@ -43,6 +43,11 @@ class loginModule extends BaseModule
 		es_session::set("qq_name", $user_nickname);
 		es_session::set("login_type","qq");
 		es_session::close();
+		if ($result['status'] == 2) {
+			$user_qq = $result['user'];
+			$user_id = $user_qq['user_id'];
+			User::loginByUserId($user_id);
+		}
 		ajax_return($result);
 	}
 

@@ -1,3 +1,4 @@
+
 {if $user && ($login_info.login_type == 'normal' || $login_info.login_type == '') }
 <span>
 	<a href="{url r="user"}" style="font-weight:bold; color:#0088d2;">{$user.user_name}</a>{if $user.new_msg_count gt 0}&nbsp;&nbsp;<a href="{url r="user#msg"}" style="color:red;">新消息({$user.new_msg_count})</a>{/if}&nbsp;&nbsp;<a href="{url r="uc_order"}" target="_blank">我的订单</a> | <a href="{url r="user#logout"}">退出</a>

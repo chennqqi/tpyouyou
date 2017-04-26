@@ -345,7 +345,10 @@ class User{
 			{				
 				$result['script'] = $integrate_res['msg'];
 				$result['status'] = 4;
-				$result['message'] = "登录成功";						
+				$result['message'] = "登录成功";
+				es_session::start();			
+				es_session::set('login_type', 'normal');
+				es_session::close();	
 				User::do_login_save($user);
 				$result['user'] = $user;
 			}
@@ -1010,7 +1013,8 @@ class User{
    * @param string $user_name_email_mobile
    * @param string $user_pwd
    * 返回 result(status,message,extra)extra表示为同步登录的一些信息
-   * status: 0 第一次使用qq登录本平台未关联帐号 1 已经关联帐号， 直接跳转
+   * status: 0 第一次使用qq登录本平台未关联帐号 1 会员已存在, 但是没有关联user
+   * 2.会员已存在, 并且已经关联user
    */
   public static function checkqq($user_openid,$user_nickname,$user_figureurl,$user_accesstoken)
   {
@@ -1021,7 +1025,7 @@ class User{
   	{
 			$result['status'] = 2;
 			$result['message'] = "会员已存在, 并且已经关联user";
-			$result['user'] = $user_qq;
+			$result['user'] = $qq;
   	}
   	elseif ($qq && !$qq['user_id'])
   	{
@@ -1133,8 +1137,7 @@ class User{
   	}
   	return $result;
   }
-
-    /**
+  /**
      * 保存user_id到user_qq表里
      * @param string $user_id
      * @param string $user_openid
@@ -1146,7 +1149,6 @@ class User{
     	$qq = $GLOBALS['db']->getRow("select * from ".DB_PREFIX."user_qq where (openid = '".$user_openid."')  limit 1");
     	if (!$qq)
     	{
-
     		$result['status'] = 0;
     		$result['message'] = "失败,没有这个user_qq表";
     		$result['userqq'] = '';
@@ -1166,6 +1168,71 @@ class User{
     		$result['status'] = 2;
     		$result['message'] = "关联成功,直接跳转";
     		$result['userqq'] = $qq;
+    	}
+    	return $result;
+    }
+
+    /**
+     * 通过user_id保存user信息到global里
+     * @param string $user_id
+     * @param string $user_openid
+     * 返回 result(status,message,extra)extra表示为同步登录的一些信息
+     * status
+     */
+    
+    /**
+     * 通过userid直接保存信息登录
+     * @param string $user_name_email_mobile
+     * @param string $user_pwd
+     * 返回 result(status,message,extra)extra表示为同步登录的一些信息
+     * status:0不存在 1未通过验证 2会员被禁用 3密码不对 4成功
+     */
+    public static function loginByUserId($user_id)
+    {
+    	$user = $GLOBALS['db']->getRow("select * from ".DB_PREFIX."user where (id = '".$user_id."')  limit 1");
+    	$user_name = $user['user_name']?$user['user_name']:'';
+    	$integrate  = $GLOBALS['db']->getRow("select class_name from ".DB_PREFIX."integrate");
+    	if($integrate)
+    	{
+    		$directory = APP_ROOT_PATH."system/integrate/";
+    		$file = $directory.$integrate['class_name']."_integrate.php";
+    		if(file_exists($file))
+    		{
+    			require_once($file);
+    			$integrate_class = $integrate['class_name']."_integrate";
+    			$integrate_item = new $integrate_class;
+    			$integrate_res = $integrate_item->login($user_name,$user_pwd);
+    		}
+    	}
+
+    	if($user)
+    	{
+    		if($user['is_verify']==0)
+    		{
+    			$result['status'] = 1;
+    			$result['message'] = "会员未通过验证";
+    			$result['user'] = $user;
+    		}
+    		elseif($user['is_effect'] == 0)
+    		{
+    			$result['status'] = 2;
+    			$result['message'] = "会员被管理员禁用";
+    			$result['user'] = $user;
+    		}
+    		else
+    		{				
+    			$result['script'] = $integrate_res['msg'];
+    			$result['status'] = 4;
+    			$result['message'] = "登录成功";						
+    			User::do_login_save($user);
+    			$result['user'] = $user;
+    		}
+    	}
+    	else
+    	{
+    		$result['status'] = 0;
+    		$result['message'] = "会员不存在";
+    		$result['user'] = $user;
     	}
     	return $result;
     }

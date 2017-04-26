@@ -2,6 +2,13 @@ $(document).ready(function() {
   //从页面收集OpenAPI必要的参数。get_user_info不需要输入参数，因此paras中没有参数
   var paras = {};
 
+  var box_main = $('.box_main');
+  var rel_h3 = $('.rel_h3');
+  var go_index = $('.go_index');
+
+  box_main.hide();
+  rel_h3.hide();
+
   var user_info;
 
   //用JS SDK调用OpenAPI
@@ -38,9 +45,13 @@ $(document).ready(function() {
               console.log('obj 1')
               console.log('obj', obj)
               if (obj.status == 2) {
-                console.log('asd')
+                // console.log('status 2')
+                // window.history.go(-2)
                 window.location.href = './'
               }
+              go_index.hide();
+              box_main.show();
+              rel_h3.show();
             },
             fail: function(obj) {
               console.log('obj 2')
