@@ -55,8 +55,6 @@ class loginModule extends BaseModule
 		$save_user = intval($_REQUEST['save_user']);
 		es_session::start();
 		$verify = es_session::get("verify");
-		$user_figureurl = es_session::get("user_figureurl");
-		$user_nickname = es_session::get("user_nickname");
 		$user_openid = es_session::get("openid");
 		$login_type = es_session::get("login_type");
 		es_session::close();

@@ -45,8 +45,8 @@ class ChuanglanSmsApi {
 		global $chuanglan_config;
 		//查询参数
 		$postArr = array ( 
-		          'account' => $chuanglan_config['api_account'],
-		          'pswd' => $chuanglan_config['api_password'],
+        'account' => $chuanglan_config['api_account'],
+        'pswd' => $chuanglan_config['api_password'],
 		);
 		$result = $this->curlPost($chuanglan_config['api_balance_query_url'], $postArr);
 		return $result;

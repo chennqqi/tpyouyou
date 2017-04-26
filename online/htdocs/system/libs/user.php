@@ -358,70 +358,6 @@ class User{
 		}
 		return $result;
 	}
-
-
-	/**
-	 * 会员qq登录后关联帐号
-	 * @param string $user_name_email_mobile
-	 * @param string $user_pwd
-	 * 返回 result(status,message,extra)extra表示为同步登录的一些信息
-	 * status:0不存在 1未通过验证 2会员被禁用 3密码不对 4成功
-	 */
-	public static function do_rel($user_name_email_mobile,$user_pwd, $user_openid)
-	{
-		$user = $GLOBALS['db']->getRow("select * from ".DB_PREFIX."user where (user_name = '".$user_name_email_mobile."' or mobile = '".$user_name_email_mobile."' or email = '".$user_name_email_mobile."')  limit 1");
-		$user_name = $user['user_name']?$user['user_name']:$user_name_email_mobile;
-		$integrate  = $GLOBALS['db']->getRow("select class_name from ".DB_PREFIX."integrate");
-		if($integrate)
-		{
-			$directory = APP_ROOT_PATH."system/integrate/";
-			$file = $directory.$integrate['class_name']."_integrate.php";
-			if(file_exists($file))
-			{
-				require_once($file);
-				$integrate_class = $integrate['class_name']."_integrate";
-				$integrate_item = new $integrate_class;
-				$integrate_res = $integrate_item->login($user_name,$user_pwd);
-			}
-		}
-		$user = $GLOBALS['db']->getRow("select * from ".DB_PREFIX."user where (user_name = '".$user_name_email_mobile."' or mobile = '".$user_name_email_mobile."' or email = '".$user_name_email_mobile."')  limit 1");
-		if($user)
-		{
-			if($user['is_verify']==0)
-			{
-				$result['status'] = 1;
-				$result['message'] = "会员未通过验证";
-				$result['user'] = $user;
-			}
-			elseif($user['is_effect'] == 0)
-			{
-				$result['status'] = 2;
-				$result['message'] = "会员被管理员禁用";
-				$result['user'] = $user;
-			}
-			elseif($user['user_pwd'] != md5($user_pwd.$user['salt']))
-			{
-				$result['status'] = 3;
-				$result['message'] = "密码不匹配";
-				$result['user'] = $user;
-			}
-			else
-			{				
-				$result['script'] = $integrate_res['msg'];
-				$result['status'] = 4;
-				$result['message'] = "登录成功";						
-				User::do_login_save($user);
-				$result['user'] = $user;
-			}
-		}
-		else
-		{
-			$result['status'] = 0;
-			$result['message'] = "会员不存在";
-			$result['user'] = $user;
-		}
-		return $result;
-	}
 	
 	/**
 	 * 通过cookie中存放的识别码自动登录
@@ -1081,13 +1017,13 @@ class User{
   	// status 1 已经与以前账号关联，0 第一次使用qq登录本平台，询问其是否关联已有账号 如果没有已有账号则需要注册
   	$qq = $GLOBALS['db']->getRow("select * from ".DB_PREFIX."user_qq where (openid = '".$user_openid."')  limit 1");
   	$result = array();
-  	if($qq && $qq->user_id)
+  	if($qq && $qq['user_id'])
   	{
 			$result['status'] = 2;
 			$result['message'] = "会员已存在, 并且已经关联user";
 			$result['user'] = $user_qq;
   	}
-  	elseif ($qq && !$qq->user_id)
+  	elseif ($qq && !$qq['user_id'])
   	{
   		$result['status'] = 1;
   		$result['message'] = "会员已存在, 但是没有关联user";
@@ -1132,41 +1068,104 @@ class User{
   	$GLOBALS['db']->autoExecute(DB_PREFIX."deal_msg_list",$msg_data); //插入
   }
 
+
+  /**
+   * 会员qq登录后关联帐号
+   * @param string $user_name_email_mobile
+   * @param string $user_pwd
+   * 返回 result(status,message,extra)extra表示为同步登录的一些信息
+   * status:0不存在 1未通过验证 2会员被禁用 3密码不对 4成功
+   */
+  public static function do_rel($user_name_email_mobile,$user_pwd,$user_openid)
+  {
+  	$user = $GLOBALS['db']->getRow("select * from ".DB_PREFIX."user where (user_name = '".$user_name_email_mobile."' or mobile = '".$user_name_email_mobile."' or email = '".$user_name_email_mobile."')  limit 1");
+  	$user_name = $user['user_name']?$user['user_name']:$user_name_email_mobile;
+  	$integrate  = $GLOBALS['db']->getRow("select class_name from ".DB_PREFIX."integrate");
+  	if($integrate)
+  	{
+  		$directory = APP_ROOT_PATH."system/integrate/";
+  		$file = $directory.$integrate['class_name']."_integrate.php";
+  		if(file_exists($file))
+  		{
+  			require_once($file);
+  			$integrate_class = $integrate['class_name']."_integrate";
+  			$integrate_item = new $integrate_class;
+  			$integrate_res = $integrate_item->login($user_name,$user_pwd);
+  		}
+  	}
+  	$user = $GLOBALS['db']->getRow("select * from ".DB_PREFIX."user where (user_name = '".$user_name_email_mobile."' or mobile = '".$user_name_email_mobile."' or email = '".$user_name_email_mobile."')  limit 1");
+  	if($user)
+  	{
+  		if($user['is_verify']==0)
+  		{
+  			$result['status'] = 1;
+  			$result['message'] = "会员未通过验证";
+  			$result['user'] = $user;
+  		}
+  		elseif($user['is_effect'] == 0)
+  		{
+  			$result['status'] = 2;
+  			$result['message'] = "会员被管理员禁用";
+  			$result['user'] = $user;
+  		}
+  		elseif($user['user_pwd'] != md5($user_pwd.$user['salt']))
+  		{
+  			$result['status'] = 3;
+  			$result['message'] = "密码不匹配";
+  			$result['user'] = $user;
+  		}
+  		else
+  		{				
+  			$result['script'] = $integrate_res['msg'];
+  			$result['status'] = 4;
+  			$result['message'] = "登录成功";
+  			$user_id = $user['id'];	
+  			User::do_rel_save($user_id, $user_openid);
+  			User::do_login_save($user);
+  			$result['user'] = $user;
+  		}
+  	}
+  	else
+  	{
+  		$result['status'] = 0;
+  		$result['message'] = "会员不存在";
+  		$result['user'] = $user;
+  	}
+  	return $result;
+  }
+
     /**
      * 保存user_id到user_qq表里
      * @param string $user_id
      * @param string $user_openid
      * 返回 result(status,message,extra)extra表示为同步登录的一些信息
-     * status: 0 失败没有这个user_qq表 1 已经有user_id，不能绑定多个 2 关联成功关联帐号 直接跳转
+     * status: 0 失败没有这个user_qq表 1 已经有user_id，不能绑定多个 2 关联成功,直接跳转
      */
-    public static function checkqq($user_id,$user_openid)
+    public static function do_rel_save($user_id,$user_openid)
     {
     	$qq = $GLOBALS['db']->getRow("select * from ".DB_PREFIX."user_qq where (openid = '".$user_openid."')  limit 1");
-    	$result = array();
-    	if($qq && $qq->user_id)
+    	if (!$qq)
     	{
-  			$result['status'] = 2;
-  			$result['message'] = "会员已存在, 并且已经关联user";
-  			$result['user'] = $user_qq;
+
+    		$result['status'] = 0;
+    		$result['message'] = "失败,没有这个user_qq表";
+    		$result['userqq'] = '';
     	}
-    	elseif ($qq && !$qq->user_id)
+    	elseif($qq && $qq->user_id)
     	{
-    		$result['status'] = 1;
-    		$result['message'] = "会员已存在, 但是没有关联user";
-    		$result['user'] = $qq;
+  			$result['status'] = 1;
+  			$result['message'] = "已经关联user";
+  			$result['userqq'] = $user_qq;
     	}
     	else
     	{
-    		$user_qq = array();
-    		$user_qq['openid'] = $user_openid;
-    		$user_qq['accesstoken'] = $user_accesstoken;
-    		$user_qq['nickname'] = $user_nickname;
-    		$user_qq['figureurl'] = $user_figureurl;
-    		// 插入数据
-    		$user_qq_new = $GLOBALS['db']->autoExecute(DB_PREFIX."user_qq",$user_qq,"INSERT");
-    		$result['status'] = 0;
-    		$result['message'] = "会员新创建";
-    		$result['user'] = $user_qq_new;
+    	  $data = array();
+    		$data['user_id'] = $user_id;
+    		// 更新数据
+    		$GLOBALS['db']->autoExecute(DB_PREFIX."user_qq",$data,"UPDATE","openid='".$user_openid."'","SILENT");
+    		$result['status'] = 2;
+    		$result['message'] = "关联成功,直接跳转";
+    		$result['userqq'] = $qq;
     	}
     	return $result;
     }

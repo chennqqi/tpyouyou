@@ -27,7 +27,7 @@ $(document).ready(function() {
             'nickname': user_info.nickname,
             'figureurl': user_info.figureurl_qq_2 || user_info.figureurl_qq_1
           }
-          
+
           $.ajax({
             url: actionurl,
             data: query,
@@ -37,6 +37,10 @@ $(document).ready(function() {
             success: function(obj) {
               console.log('obj 1')
               console.log('obj', obj)
+              if (obj.status == 2) {
+                console.log('asd')
+                window.location.href = './'
+              }
             },
             fail: function(obj) {
               console.log('obj 2')
