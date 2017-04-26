@@ -1,0 +1,7 @@
+website account
+后台登入地址： https://zz.253.com/site/login.html
+账号 ： 13817326906
+密码： a123456
+api account
+验证码接口账号： N3192596
+验证码接口密码： uvMFPgpelka250
