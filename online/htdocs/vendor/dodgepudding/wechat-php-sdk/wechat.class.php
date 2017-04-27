@@ -1233,7 +1233,6 @@ class Wechat
 		return false;
 	}
 
-
 	/**
 	 * 获取JsApi使用签名
 	 * @param string $url 网页的URL，自动处理#及其后面部分

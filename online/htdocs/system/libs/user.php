@@ -1041,7 +1041,7 @@ class User{
   		$user_qq['nickname'] = $user_nickname;
   		$user_qq['figureurl'] = $user_figureurl;
   		// 插入数据
-  		$user_qq_new = $GLOBALS['db']->autoExecute(DB_PREFIX."user_qq",$user_qq,"INSERT");
+  		$user_qq_new = $GLOBALS['db']->autoExecute(DB_PREFIX."user_qq",$user_qq,"INSERT","","SILENT");
   		$result['status'] = 0;
   		$result['message'] = "会员新创建";
   		$result['user'] = $user_qq_new;
@@ -1142,11 +1142,12 @@ class User{
      * @param string $user_id
      * @param string $user_openid
      * 返回 result(status,message,extra)extra表示为同步登录的一些信息
-     * status: 0 失败没有这个user_qq表 1 已经有user_id，不能绑定多个 2 关联成功,直接跳转
+     * status: 0 失败没有这个user_qq表 1 已经有user_id，不能绑定多个 2 这个帐号已经被别的qq关联 3.关联成功,直接跳转
      */
     public static function do_rel_save($user_id,$user_openid)
     {
     	$qq = $GLOBALS['db']->getRow("select * from ".DB_PREFIX."user_qq where (openid = '".$user_openid."')  limit 1");
+    	$user = $GLOBALS['db']->getRow("select * from ".DB_PREFIX."user_qq where (user_id = '".$user_id."')  limit 1");
     	if (!$qq)
     	{
     		$result['status'] = 0;
@@ -1159,26 +1160,24 @@ class User{
   			$result['message'] = "已经关联user";
   			$result['userqq'] = $user_qq;
     	}
+    	elseif($user)
+    	{
+    		$result['status'] = 2;
+    		$result['message'] = "这个帐号已经被别的qq关联";
+    		$result['userqq'] = $user_qq;
+    	}
     	else
     	{
     	  $data = array();
     		$data['user_id'] = $user_id;
     		// 更新数据
     		$GLOBALS['db']->autoExecute(DB_PREFIX."user_qq",$data,"UPDATE","openid='".$user_openid."'","SILENT");
-    		$result['status'] = 2;
+    		$result['status'] = 3;
     		$result['message'] = "关联成功,直接跳转";
     		$result['userqq'] = $qq;
     	}
     	return $result;
     }
-
-    /**
-     * 通过user_id保存user信息到global里
-     * @param string $user_id
-     * @param string $user_openid
-     * 返回 result(status,message,extra)extra表示为同步登录的一些信息
-     * status
-     */
     
     /**
      * 通过userid直接保存信息登录

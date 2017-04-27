@@ -48,10 +48,11 @@ $(document).ready(function() {
                 // console.log('status 2')
                 // window.history.go(-2)
                 window.location.href = './'
+              } else {
+                go_index.hide();
+                box_main.show();
+                rel_h3.show();
               }
-              go_index.hide();
-              box_main.show();
-              rel_h3.show();
             },
             fail: function(obj) {
               console.log('obj 2')
