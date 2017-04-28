@@ -36,19 +36,115 @@ class loginModule extends BaseModule
 		$user_nickname = strim($_POST['nickname']);
 		$user_figureurl = strim($_POST['figureurl']);
 		$user_accesstoken = strim($_POST['accesstoken']);
-		$result = User::checkqq($user_openid, $user_nickname,$user_figureurl, $user_accesstoken);
+		$checkresult = User::checkqq($user_openid, $user_nickname,$user_figureurl, $user_accesstoken);
 		es_session::start();
 		es_session::set("openid", $user_openid);
 		es_session::set("qq_img", $user_figureurl);
 		es_session::set("qq_name", $user_nickname);
 		es_session::set("login_type","qq");
 		es_session::close();
-		if ($result['status'] == 2) {
-			$user_qq = $result['user'];
+		if ($checkresult['status'] == 2) {
+			$user_qq = $checkresult['user'];
 			$user_id = $user_qq['user_id'];
 			User::loginByUserId($user_id);
+		  ajax_return(array("status"=>1,"info"=>"恭喜您！登录成功","jump"=>get_gopreview()));
+		} elseif ($result['status'] == 1 || $result['status'] == 0) {
+			$qquser = $this->qq_auto_user($user_openid);
+			if ($qquser['status'] == 1) {
+				$user = $qquser['user'];
+				$relresult = User::do_rel($user['user_name'],$user['user_pwd'],$user_openid);
+				ajax_return(array("status"=>2,"info"=>"第一次使用qq登录本平台，登录成功","jump"=>get_gopreview())); 
+			} else {
+				ajax_return(array("status"=>3,"info"=>"登录失败","jump"=>get_gopreview()));
+			}
 		}
-		ajax_return($result);
+	}
+
+	/**
+	 * 将qq登录后自动创建user信息， 并将userid保存在对应的user_qq中
+	 * @param string $openid
+	 * 返回 @param array (status,info,jump,user)
+	 * array("status"=>1,"info"=>"恭喜您！注册成功","jump"=>get_gopreview(), 'user'=>$user_data);
+	 * status: 0 失败 1 创建成功
+	 */
+	public function qq_auto_user($openid)
+	{
+		$user_name = 'qq_'.$openid;
+		$user_pwd  = '123';
+
+		$ck = User::checkfield("user_name", $user_name);		
+		if($ck['status']==0)
+		{
+			return array("status"=>0,"info"=>$ck['info'],"field"=>"user_name");
+		}
+
+		//会员注册时通知uc添加用户
+		$integrate  = $GLOBALS['db']->getRow("select class_name from ".DB_PREFIX."integrate");
+		if($integrate)
+		{
+			$directory = APP_ROOT_PATH."system/integrate/";
+			$file = $directory.$integrate['class_name']."_integrate.php";
+			if(file_exists($file))
+			{
+				require_once($file);
+				$integrate_class = $integrate['class_name']."_integrate";
+				$integrate_item = new $integrate_class;
+				$ck = $integrate_item->add_user($user_name,$user_pwd,$email);
+				if($ck['status']==0)
+				{
+					return array("status"=>0,"info"=>$ck['info'],"field"=>$ck['field']);
+				}
+			}
+		}
+		
+		$user_data = array();
+		$user_data['user_name'] = $user_name;
+		
+		$user_data['salt'] = USER_SALT;
+		$user_data['user_pwd'] = md5($user_pwd.$user_data['salt']);
+		$user_data['is_effect'] = 1;
+		$user_data['create_time'] = NOW_TIME;
+		$user_data['integrate_id'] = intval($ck['data']);
+		
+		$user_data['source'] = empty($GLOBALS['ref'])?"native":$GLOBALS['ref'];  //来路
+		$user_data['pid'] = intval($GLOBALS['ref_pid']); //推荐人
+		$user_data['nickname'] = $user_data['user_name'];
+		$user_data['regist_ip'] = CLIENT_IP;
+		require_once APP_ROOT_PATH."system/libs/city.php";
+		$user_data['regist_city'] = City::locate_city_name(CLIENT_IP);
+		$GLOBALS['db']->autoExecute(DB_PREFIX."user",$user_data,"INSERT","","SILENT");
+		if($GLOBALS['db']->error()=="")
+		{
+			$user_id = $GLOBALS['db']->insert_id();
+			$user_data['id'] = $user_id;
+			//发放注册奖劢
+			if(app_conf("USER_REG_MONEY")>0)
+			{
+				USER::modify_account($user_id, 1, app_conf("USER_REG_MONEY"), "注册获赠现金");
+			}
+			if(app_conf("USER_REG_SCORE")>0)
+			{
+				USER::modify_account($user_id, 2, app_conf("USER_REG_SCORE"), "注册获赠积分");
+			}
+			if(app_conf("USER_REG_EXP")>0)
+			{
+				USER::modify_account($user_id, 3, app_conf("USER_REG_EXP"), "注册获赠经验");
+			}
+			if(app_conf("USER_REG_VOUCHER")>0)
+			{
+				require_once APP_ROOT_PATH."system/libs/voucher.php";
+				$voucher_data = Voucher::gen(app_conf("USER_REG_VOUCHER"), $user_data);
+				if($voucher_data['status'])
+				USER::modify_account($user_id, 4, $voucher_data['data']['money'], "注册获赠代金券");
+			}
+			User::user_level_locate($user_id);
+
+			return array("status"=>1,"info"=>"恭喜您！注册成功","jump"=>get_gopreview(), 'user'=>$user_data);
+		}
+		else
+		{
+			return array("status"=>0,"info"=>"服务器繁忙，请重试","field"=>"","jump"=>"");
+		}
 	}
 
 	public function dorel()

@@ -44,14 +44,13 @@ $(document).ready(function() {
             success: function(obj) {
               console.log('obj 1')
               console.log('obj', obj)
-              if (obj.status == 2) {
-                // console.log('status 2')
-                // window.history.go(-2)
+              if (obj.status !== 3) {
+                // const jump = obj.jump ? obj.jump : './'
                 window.location.href = './'
               } else {
-                go_index.hide();
-                box_main.show();
-                rel_h3.show();
+                // go_index.hide();
+                // box_main.show();
+                // rel_h3.show();
               }
             },
             fail: function(obj) {

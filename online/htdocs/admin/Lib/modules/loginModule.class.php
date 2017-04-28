@@ -26,8 +26,6 @@ class loginModule extends BaseModule
 
 	{			
 
-			
-
 		//验证是否已登录
 
 		//管理员的SESSION
@@ -37,7 +35,6 @@ class loginModule extends BaseModule
 		$adm_name = $adm_session['adm_name'];
 
 		$adm_id = intval($adm_session['adm_id']);
-
 		
 
 		if($adm_id != 0)

@@ -351,7 +351,6 @@ class userModule extends BaseModule
 			ajax_return(array("status"=>0,"info"=>"服务器繁忙，请重试","field"=>"","jump"=>""));
 		}
 		
-		
 	}
 	
 	//会员验证

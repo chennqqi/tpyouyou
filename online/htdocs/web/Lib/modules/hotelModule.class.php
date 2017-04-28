@@ -20,8 +20,8 @@ class hotelModule extends BaseModule
 
 	public function index()
 	{
-            $ipInfos = GetIpLookup('112.233.52.210'); //baidu.com IP地址
-            $GLOBALS['tmpl']->assign("ipInfos",$ipInfos);
+    $ipInfos = GetIpLookup('112.233.52.210'); //baidu.com IP地址
+    $GLOBALS['tmpl']->assign("ipInfos",$ipInfos);
 		global_run();
 		$GLOBALS['tmpl']->caching = true;
 		$GLOBALS['tmpl']->cache_lifetime = 600;  //首页缓存10分钟

@@ -10,7 +10,8 @@
 class App{		
 	private $module_obj;
 	//网站项目构造
-	public function __construct(){
+	public function __construct()
+	{
 		$GLOBALS['module']=filter_ma_request($GLOBALS['module']);
 		$GLOBALS['action']=filter_ma_request($GLOBALS['action']);	
 		$module_name = $GLOBALS['module']."Module";
