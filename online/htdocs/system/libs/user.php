@@ -1230,99 +1230,126 @@ class User{
     	return $result;
     }
 
+  /**
+   * 第三方登录后自动创建user信息，并将userid保存在对应的user_qq、user_wx .etc中
+   * @param string $openid 第三方登录的openid
+   * @param string $type 第三方登录的类型 qq, wx, weibo
+   * 返回 @param array (status,info,jump,user)
+   * array("status"=>1,"info"=>"恭喜您！注册成功","jump"=>get_gopreview(), 'user'=>$user_data);
+   * status: 0 失败 1 创建成功
+   */
+  public static function login_auto_user($openid, $type)
+  {
+  	$user_name = $type.'_'.$openid;
+  	$user_pwd  = '123';
 
-    /**
-     * 第三方登录后自动创建user信息，并将userid保存在对应的user_qq、user_wx .etc中
-     * @param string $openid 第三方登录的openid
-     * @param string $type 第三方登录的类型 qq, wx, weibo
-     * 返回 @param array (status,info,jump,user)
-     * array("status"=>1,"info"=>"恭喜您！注册成功","jump"=>get_gopreview(), 'user'=>$user_data);
-     * status: 0 失败 1 创建成功
-     */
-    public function login_auto_user($openid, $type)
-    {
-    	$user_name = $type.$openid;
-    	$user_pwd  = '123';
+  	$ck = User::checkfield("user_name", $user_name);		
+  	if($ck['status']==0)
+  	{
+  		$user = $GLOBALS['db']->getRow("select * from ".DB_PREFIX."user where user_name = '".$user_name."'");
+  		$user_id = $user['id'];
+  		$relres = User::login_auto_rel($user_id, $openid, $type);
+  		if ($relres) {
+	  		return array(
+	  			"status"=> 1,
+	  			"info"=> $ck['info'],
+	  			"user"=> $user);
+  		}else{
+  			return array(
+	  			"status"=> 0,
+	  			"info"=> $ck['info'],
+	  			"field"=>"user_name"
+	  		);
+  		}
+  	}
 
-    	$ck = User::checkfield("user_name", $user_name);		
-    	if($ck['status']==0)
-    	{
-    		return array("status"=>0,"info"=>$ck['info'],"field"=>"user_name");
-    	}
+  	//会员注册时通知uc添加用户
+  	$integrate  = $GLOBALS['db']->getRow("select class_name from ".DB_PREFIX."integrate");
+  	if($integrate)
+  	{
+  		$directory = APP_ROOT_PATH."system/integrate/";
+  		$file = $directory.$integrate['class_name']."_integrate.php";
+  		if(file_exists($file))
+  		{
+  			require_once($file);
+  			$integrate_class = $integrate['class_name']."_integrate";
+  			$integrate_item = new $integrate_class;
+  			$ck = $integrate_item->add_user($user_name,$user_pwd,$email);
+  			if($ck['status']==0)
+  			{
+  				return array("status"=>0,"info"=>$ck['info'],"field"=>$ck['field']);
+  			}
+  		}
+  	}
+  	
+  	$user_data = array();
+  	$user_data['user_name'] = $user_name;
+  	$user_data['salt'] = "";
+  	$user_data['user_pwd'] = md5($user_pwd.$user_data['salt']);
+  	$user_data['is_effect'] = 1;
+  	$user_data['create_time'] = NOW_TIME;
+  	$user_data['integrate_id'] = intval($ck['data']);
+  	$user_data['source'] = empty($GLOBALS['ref'])?"native":$GLOBALS['ref'];  //来路
+  	$user_data['pid'] = 0; //推荐人
+  	$user_data['nickname'] = $user_data['user_name'];
+  	$ip = CLIENT_IP ? CLIENT_IP : '0.0.0.0';
+  	$user_data['regist_ip'] = $ip;
+  	// require_once APP_ROOT_PATH."system/libs/city.php";
+  	$user_data['regist_city'] = '上海市';
+  	$GLOBALS['db']->autoExecute(DB_PREFIX."user",$user_data,"INSERT","","SILENT");
+  	if($GLOBALS['db']->error()=="")
+  	{
+  		$user_id = $GLOBALS['db']->insert_id();
+  		$user_data['id'] = $user_id;
+  		//发放注册奖劢
+  		if(app_conf("USER_REG_MONEY")>0)
+  		{
+  			USER::modify_account($user_id, 1, app_conf("USER_REG_MONEY"), "注册获赠现金");
+  		}
+  		if(app_conf("USER_REG_SCORE")>0)
+  		{
+  			USER::modify_account($user_id, 2, app_conf("USER_REG_SCORE"), "注册获赠积分");
+  		}
+  		if(app_conf("USER_REG_EXP")>0)
+  		{
+  			USER::modify_account($user_id, 3, app_conf("USER_REG_EXP"), "注册获赠经验");
+  		}
+  		if(app_conf("USER_REG_VOUCHER")>0)
+  		{
+  			require_once APP_ROOT_PATH."system/libs/voucher.php";
+  			$voucher_data = Voucher::gen(app_conf("USER_REG_VOUCHER"), $user_data);
+  			if($voucher_data['status'])
+  			USER::modify_account($user_id, 4, $voucher_data['data']['money'], "注册获赠代金券");
+  		}
+  		User::user_level_locate($user_id);
+  		$update = array('user_id'=> $user_id);
+  		User::login_auto_rel($user_id, $openid, $type);
+  		if($GLOBALS['db']->error() != '') {
+  			return array('status'=>0, 'info'=>'服务器繁忙，请重试');
+  		}
+  		return array('status'=>1, 'info'=>'恭喜您！注册成功', 'user'=>$user_data);
+  	}
+  	else
+  	{
+  		return array("status"=>0,"info"=>"服务器繁忙，请重试","field"=>"");
+  	}
+  }
 
-    	//会员注册时通知uc添加用户
-    	$integrate  = $GLOBALS['db']->getRow("select class_name from ".DB_PREFIX."integrate");
-    	if($integrate)
-    	{
-    		$directory = APP_ROOT_PATH."system/integrate/";
-    		$file = $directory.$integrate['class_name']."_integrate.php";
-    		if(file_exists($file))
-    		{
-    			require_once($file);
-    			$integrate_class = $integrate['class_name']."_integrate";
-    			$integrate_item = new $integrate_class;
-    			$ck = $integrate_item->add_user($user_name,$user_pwd,$email);
-    			if($ck['status']==0)
-    			{
-    				return array("status"=>0,"info"=>$ck['info'],"field"=>$ck['field']);
-    			}
-    		}
-    	}
-    	
-    	$user_data = array();
-    	$user_data['user_name'] = $user_name;
-    	
-    	$user_data['salt'] = USER_SALT;
-    	$user_data['user_pwd'] = md5($user_pwd.$user_data['salt']);
-    	$user_data['is_effect'] = 1;
-    	$user_data['create_time'] = NOW_TIME;
-    	$user_data['integrate_id'] = intval($ck['data']);
-    	
-    	$user_data['source'] = empty($GLOBALS['ref'])?"native":$GLOBALS['ref'];  //来路
-    	$user_data['pid'] = intval($GLOBALS['ref_pid']); //推荐人
-    	$user_data['nickname'] = $user_data['user_name'];
-    	$user_data['regist_ip'] = CLIENT_IP;
-    	require_once APP_ROOT_PATH."system/libs/city.php";
-    	$user_data['regist_city'] = City::locate_city_name(CLIENT_IP);
-    	$GLOBALS['db']->autoExecute(DB_PREFIX."user",$user_data,"INSERT","","SILENT");
-    	if($GLOBALS['db']->error()=="")
-    	{
-    		$user_id = $GLOBALS['db']->insert_id();
-    		$user_data['id'] = $user_id;
-    		//发放注册奖劢
-    		if(app_conf("USER_REG_MONEY")>0)
-    		{
-    			USER::modify_account($user_id, 1, app_conf("USER_REG_MONEY"), "注册获赠现金");
-    		}
-    		if(app_conf("USER_REG_SCORE")>0)
-    		{
-    			USER::modify_account($user_id, 2, app_conf("USER_REG_SCORE"), "注册获赠积分");
-    		}
-    		if(app_conf("USER_REG_EXP")>0)
-    		{
-    			USER::modify_account($user_id, 3, app_conf("USER_REG_EXP"), "注册获赠经验");
-    		}
-    		if(app_conf("USER_REG_VOUCHER")>0)
-    		{
-    			require_once APP_ROOT_PATH."system/libs/voucher.php";
-    			$voucher_data = Voucher::gen(app_conf("USER_REG_VOUCHER"), $user_data);
-    			if($voucher_data['status'])
-    			USER::modify_account($user_id, 4, $voucher_data['data']['money'], "注册获赠代金券");
-    		}
-    		User::user_level_locate($user_id);
-
-    		$update = array('user_id'=>$user_id);
-    		$GLOBALS['db']->autoExecute(DB_PREFIX.'user_'.$type, $update, 'UPDATE', 'openid='.$openid, 'SILENT');
-    		
-    		if($GLOBALS['db']->error() != '') {
-    			return array('status'=>0, 'info'=>'服务器繁忙，请重试', 'field'=>'', 'jump'=>'');
-    		}
-    		return array('status'=>1, 'info'=>'恭喜您！注册成功', 'jump'=>get_gopreview(), 'user'=>$user_data);
-    	}
-    	else
-    	{
-    		return array("status"=>0,"info"=>"服务器繁忙，请重试","field"=>"","jump"=>"");
-    	}
-    }
+  /**
+   * 将userid保存在对应的user_qq、user_wx .etc中
+   * @param string $openid 第三方登录的openid
+   * @param string $type 第三方登录的类型 qq, wx, weibo
+   * 返回 @param Boolean (false, true)
+   */
+  public static function login_auto_rel($user_id, $openid, $type)
+  {
+		$update = array('user_id'=> $user_id);
+		$GLOBALS['db']->autoExecute(DB_PREFIX.'user_'.$type, $update, 'UPDATE', 'openid='.$openid, 'SILENT');
+		if($GLOBALS['db']->error() != '') {
+			return false;
+		}
+		return true;
+  	
+  }
 }
 ?>

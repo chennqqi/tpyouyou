@@ -7,7 +7,6 @@
 // | Author: 同创网络(778251855@qq.com)
 // +----------------------------------------------------------------------
 
-
 class accountModule extends BaseModule
 {
 	public function index()

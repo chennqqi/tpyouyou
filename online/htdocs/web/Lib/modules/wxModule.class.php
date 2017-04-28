@@ -85,47 +85,67 @@ class wxModule extends BaseModule
     $qr = $weObj->getQRCode(NOW_TIME,$type=0,$expire=1800);
     $pic = $weObj->getQRUrl($qr['ticket']);
     $pic1 = preg_replace('/([^:])[\/\\\\]{2,}/','$1/',$pic);
-    // ajax_return(array('qr'=>$pic1));
     echo "<img src='".$pic."'></img>";
   }
 
+  /**
+   * 将用户扫码或者关注后登录网站,如果是微信第一次登录， 会创建相应的信息
+   * @param string $openid
+   * @param array $userinfo
+   * 返回 result(user_id)
+   */
   public function login($openid, $userinfo)
   {
 		global_run();
 		$user_wx = $GLOBALS['db']->getRow("select * from ".DB_PREFIX."user_wx where (openid  = '".$openid."') limit 1");
+		$result = array();
 		if (!$user_wx) {
-			$this->regist($openid, $userinfo);
+			$user_wx = $this->saveinfo($userinfo);
 		}
+		$user_id = $user_wx->user_id;
+		if (!$user_id) {
+			$login_data = User::login_auto_user($openid, 'wx');
+		}
+
+		if (!$login_data) {
+			$result['status'] = 0;
+			$result['message'] = 'fail';
+		} elseif ($login_data && $login_data['user']) {
+      $user_id = $login_data['user']->id;
+      $result['status'] = 0;
+      $result['message'] = 'success';
+      $result['user_id'] = $user_id;
+		}
+
+		// ajax_return($result);
+		return 1;
   }
 
   /**
-   * 将用户wx信息保存在user_wx中， 并创建相关联的user
-   * @param string $openid
+   * 将用户wx信息保存在user_wx中
    * @param array $userinfo
-   * 返回 result(status,info)
-   * status: 0 此openid已经被占用 1 创建成功
+   * 返回 result(user)
    */
-  public function regist($openid, $userinfo)
+  public function saveinfo($userinfo)
   {
   	global_run();
+  	$openid = $userinfo['openid'];
   	$user_wx = $GLOBALS['db']->getRow("select * from ".DB_PREFIX."user_wx where (openid  = '".$openid."') limit 1");
-  	$result = array();
-  	if ($user_wx) {
-  		$result['status'] = 0;
-  		$result['info'] = '此微信用户已经注册';
+  	if (!$user_wx) {
+	  	$userdata = array();
+	  	$userdata['openid'] = $userinfo['openid'];
+	  	$userdata['nickname'] = $userinfo['nickname'];
+	  	$userdata['sex'] = $userinfo['sex'];
+	  	$userdata['language'] = $userinfo['language'];
+	  	$userdata['city'] = $userinfo['city'];
+	  	$userdata['province'] = $userinfo['province'];
+	  	$userdata['country'] = $userinfo['country'];
+	  	$userdata['headimgurl'] = $userinfo['headimgurl'];
+	  	$userdata['subscribe_time'] = $userinfo['subscribe_time'];
+	  	$user_wx = $GLOBALS['db']->autoExecute(DB_PREFIX.'user_wx',$userdata,'INSERT','','SILENT');
+	  	$user_wx['user_id'] = $user_wx['id'];
   	}
-  	$userdata = array();
-  	$userdata['openid'] = $userinfo['openid'];
-  	$userdata['nickname'] = $userinfo['nickname'];
-  	$userdata['sex'] = $userinfo['sex'];
-  	$userdata['language'] = $userinfo['language'];
-  	$userdata['city'] = $userinfo['city'];
-  	$userdata['province'] = $userinfo['province'];
-  	$userdata['country'] = $userinfo['country'];
-  	$userdata['headimgurl'] = $userinfo['headimgurl'];
-  	$userdata['subscribe_time'] = $userinfo['subscribe_time'];
-  	$user_wx_new = $GLOBALS['db']->autoExecute(DB_PREFIX.'user_wx',$userdata,'INSERT','','SILENT');
-  	User::login_auto_user($openid, 'wx')
+  	return $user_wx;
   }
 
 }
