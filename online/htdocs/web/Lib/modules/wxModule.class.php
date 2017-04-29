@@ -62,19 +62,22 @@ class wxModule extends BaseModule
 		$event = $weObj->getRev()->getRevEvent();
 		$sceneId = $weObj->getRev()->getRevSceneId();
 		$sceneId = $sceneId ? $sceneId : '';
+		$login = false;
 		switch($event['event']) {
 			case Wechat::EVENT_SUBSCRIBE:
+			    $login = true;
 					$weObj->text("欢迎关注!".$sceneId)->reply();
-					$this->login($openid, $userinfo, $sceneId);
-					exit;
 					break;
 			case Wechat::EVENT_SCAN:
+			    $login = true;
 			    $weObj->text("正在登录,请稍等".$sceneId)->reply();
-			    $this->login($openid, $userinfo, $sceneId);
-			    exit;
 					break;
 			default:
 					$weObj->text("1".$event['event']."2")->reply();
+   	}
+   	if ($login) {
+   		$result = $this->login($openid, $userinfo, $sceneId);
+   		return $result;
    	}
   }
 
@@ -83,18 +86,18 @@ class wxModule extends BaseModule
     $weObj = $this->wx;
     $scene_id = strim($_GET['scene_id']);
     $show = strim($_GET['show']);
-    if (intval($scene_id) < intval(NOW_TIME)) {
-    	ajax_return(array('status'=> 0,'err'=> 'no past time'));
-    	exit;
-    }
-    $qr = $weObj->getQRCode($scene_id,$type=0,$expire=1800);
+    // if (intval($scene_id) < intval(NOW_TIME)) {
+    // 	ajax_return(array('status'=> 0,'err'=> 'no past time'));
+    // 	exit;
+    // }
+    $qr = $weObj->getQRCode($scene_id, 0, 1800);
     $pic = $weObj->getQRUrl($qr['ticket']);
     // $pic1 = preg_replace('/([^:])[\/\\\\]{2,}/','$1/',$pic);
     if ($show == "1") {
       echo "<img src='".$pic."'></img>";
       exit;
     }
-    ajax_return(array('pic'=>$pic, 'status'=>1));
+    ajax_return(array('pic'=>$pic, 'status'=>1, 'sceneid'=>$scene_id, 'qr'=>$qr));
     exit;
   }
   /**
@@ -103,9 +106,11 @@ class wxModule extends BaseModule
    */
   public function qr() 
   {
-  	global_run();
-  	$GLOBALS['tmpl']->caching = true;
-  	$GLOBALS['tmpl']->cache_lifetime = 600;  //关于用会登录页的缓存
+		init_app_page();
+		$GLOBALS['tmpl']->assign("site_name","微信登录 - ".app_conf("SITE_NAME"));
+		$GLOBALS['tmpl']->assign("site_keyword","微信登录,".app_conf("SITE_KEYWORD"));
+		$GLOBALS['tmpl']->assign("site_description","微信登录,".app_conf("SITE_DESCRIPTION"));
+  	
   	$GLOBALS['tmpl']->display("wx_qr.html");
   }
 
@@ -144,8 +149,8 @@ class wxModule extends BaseModule
       $result['message'] = 'success';
       $result['user_id'] = $user_id;
 		}
-		updateLogin($openid, $sceneid);
-		exit;
+		$update = $this->updateLogin($openid, $sceneid);
+		return $update;
   }
 
   /**
@@ -181,12 +186,14 @@ class wxModule extends BaseModule
    */
   public function updateLogin($openid, $sceneid)
   {
-    $update = array('login_time'=>$sceneid);
+  	$sceneid = intval($sceneid);
     $uniq = $GLOBALS['db']->getOne("select login_time from ".DB_PREFIX."user_wx where (login_time  = ".$sceneid.") limit 1");
     if ($uniq) {
     	return false;
     }
-    $GLOBALS['db']->autoExecute(DB_PREFIX.'user_wx',$userdata,'UPDATE','openid='."'".$openid."'",'SILENT');
+    $update = array('login_time'=>$sceneid);
+    $GLOBALS['db']->autoExecute(DB_PREFIX.'user_wx',$update,'UPDATE','openid='."'".$openid."'",'SILENT');
+    // var_dump($GLOBALS['db']->affected_rows());
     if ($GLOBALS['db']->affected_rows() == 0) {
     	return false;
     }
@@ -202,37 +209,38 @@ class wxModule extends BaseModule
   {
   	$time = $_POST['time'];
 	  $sceneid = $_POST['sceneid'];
-	  // $sceneid = '111';
-	  header('Access-Control-Allow-Origin:*');
+	  // header('Access-Control-Allow-Origin:*');
   	if (empty($_POST['time']) || empty($sceneid)) {
-  		echo 'fail';
+  		echo 'fail'.$time."asd".$sceneid;
   	  exit();
   	}
 	  set_time_limit(0);// 无限请求超时时间
 	  usleep($_POST['time']);// 等待时间
 	  $result = array();
+
     $user_wx = $GLOBALS['db']->getRow("select * from ".DB_PREFIX."user_wx where (login_time  = ".$sceneid.") limit 1");
     if($user_wx && $user_wx['user_id']){
-    	$result['stauts'] = 1;
+    	$result['status'] = 1;
     	$result['msg'] = 'success';
     	$result['user'] = $user_wx;
     	$result['user_id'] = $user_wx['user_id'];
       echo json_encode($result);
       exit();
     } elseif ($user_wx && !$user_wx['user_id']) {
-  		$result['stauts'] = 0;
+  		$result['status'] = 2;
   		$result['msg'] = 'no user id';
   		$result['user'] = $user_wx;
   	  echo json_encode($result);
   	  exit();
     } else {
-  		$result['stauts'] = 0;
+  		$result['status'] = 0;
   		$result['msg'] = 'no user wx';
   		$result['count'] = $count;
   	  echo json_encode($result);
-      sleep(3);
+      sleep(5);
       exit;
     }
+	  
   }
 
 }

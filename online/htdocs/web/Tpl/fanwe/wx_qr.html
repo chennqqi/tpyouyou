@@ -1,0 +1,75 @@
+<?php
+$this->_var['pagecss'][] = TMPL_REAL."/css/user_login.css";
+$this->_var['pagejs'][] = TMPL_REAL."/js/user_login.js";
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="Generator" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{if $page_title neq ''}{$page_title} - {/if}{$site_name} - {$site_title}</title>
+<meta name="keywords" content="{$site_keyword}" />
+<meta name="description" content="{$site_description}" />
+<script type="text/javascript" src="{$TMPL}/js/jquery.min.js"></script>
+<?php
+$this->_var['pagecss'][] = TMPL_REAL."/css/style.css";
+$this->_var['pagecss'][] = TMPL_REAL."/css/weebox.css";
+$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.bgiframe.js";
+$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.weebox.js";
+$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.pngfix.js";
+$this->_var['pagejs'][] = TMPL_REAL."/js/lazyload.js";
+$this->_var['pagejs'][] = TMPL_REAL."/js/script.js";
+$this->_var['cpagejs'][] = TMPL_REAL."/js/script.js";
+if(app_conf("APP_MSG_SENDER_OPEN")==1)
+{
+$this->_var['pagejs'][] = TMPL_REAL."/js/msg_sender.js";
+$this->_var['cpagejs'][] = TMPL_REAL."/js/msg_sender.js";
+}
+$this->_var['pagejs'][] = TMPL_REAL."/js/login/wx.js";
+?>
+
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$pagecss"}" />
+<script type="text/javascript">
+var APP_ROOT = '{$APP_ROOT}';
+var LOADER_IMG = '{$TMPL}/images/lazy_loading.gif';
+var ERROR_IMG = '{$TMPL}/images/image_err.gif';
+var send_span = {function name="app_conf" v="SEND_SPAN"}000;
+{if app_conf("APP_MSG_SENDER_OPEN") eq 1 and $CRON_COUNT gt 0}
+var IS_RUN_CRON = 1;
+{else}
+var IS_RUN_CRON = 0;
+{/if}
+var DEAL_MSG_URL = '{url r="cron#deal_msg_list"}';
+var WX_QR_URL = '{url r="wx#loginqr"}';
+var WX_Long_Ajax = '{url r="wx#longajax"}';
+</script>
+{include file="inc/define_js_url.html"}
+<script type="text/javascript" src="{$APP_ROOT}/public/runtime/<?php echo  APP_NAME;?>/lang.js"></script>
+<script type="text/javascript" src="{function name="parse_script" v="$pagejs" c="$cpagejs"}"></script>
+
+<style type="text/css">
+	.login_img {
+		width: 100%;
+    text-align: center;
+    padding-top: 50px;
+	}
+	.login_img p {
+		font-size: 20px;
+		font-weight: 600;
+		padding: 20px;
+	}
+	.login_img img {
+		width: 430px;
+		height: 430px;
+	}
+</style>
+
+</head>
+<body>	
+<!--wx登录关联主区域 -->
+<div class="login_img">
+  <p>请扫描下方二维码</p>
+	<img  id="wxQr" src="">
+</div>
+
