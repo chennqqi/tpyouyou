@@ -1244,7 +1244,7 @@ class User{
   	$user_pwd  = '123';
 
   	$ck = User::checkfield("user_name", $user_name);		
-  	if($ck['status']==0)
+  	if($ck['status'] == 0)
   	{
   		$user = $GLOBALS['db']->getRow("select * from ".DB_PREFIX."user where user_name = '".$user_name."'");
   		$user_id = $user['id'];
@@ -1258,7 +1258,8 @@ class User{
   			return array(
 	  			"status"=> 0,
 	  			"info"=> $ck['info'],
-	  			"field"=>"user_name"
+	  			"field"=>"user_name",
+	  			"rel"=>"$relres"
 	  		);
   		}
   	}
@@ -1343,12 +1344,12 @@ class User{
    */
   public static function login_auto_rel($user_id, $openid, $type)
   {
-		$update = array('user_id'=> $user_id);
-		$GLOBALS['db']->autoExecute(DB_PREFIX.'user_'.$type, $update, 'UPDATE', 'openid='.$openid, 'SILENT');
-		if($GLOBALS['db']->error() != '') {
-			return false;
+		$update = array('user_id'=>$user_id);
+		$GLOBALS['db']->autoExecute(DB_PREFIX.'user_'.$type,$update,'UPDATE','openid='."'".$openid."'");
+		if($GLOBALS['db']->affected_rows()) {
+		  return true;
 		}
-		return true;
+		return false;
   	
   }
 }

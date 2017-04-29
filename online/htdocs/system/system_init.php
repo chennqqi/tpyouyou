@@ -43,4 +43,5 @@ require "common.php";
 require "defines.php";  //引入系统常量
 
 require APP_ROOT_PATH."license";
+
 ?>
