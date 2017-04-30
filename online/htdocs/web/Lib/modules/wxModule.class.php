@@ -66,11 +66,13 @@ class wxModule extends BaseModule
 		switch($event['event']) {
 			case Wechat::EVENT_SUBSCRIBE:
 			    $login = true;
-					$weObj->text("欢迎关注!".$sceneId)->reply();
+          $sub = "感谢您的关注，我们会为您推荐经典的旅游线路，带给您一个丰富多彩的旅游假期。
+您也可以来电咨询：021-64753853或者添加公司微信：uuclub4008881583，我们会有专业人员为您解答。";
+					$weObj->text($sub)->reply();
 					break;
 			case Wechat::EVENT_SCAN:
 			    $login = true;
-			    $weObj->text("正在登录,请稍等".$sceneId)->reply();
+			    $weObj->text("正在为您登录悠游旅游网,请稍等")->reply();
 					break;
 			default:
 					$weObj->text("1".$event['event']."2")->reply();
@@ -240,7 +242,23 @@ class wxModule extends BaseModule
       sleep(5);
       exit;
     }
-	  
+  }
+
+  /**
+   * 通过user_id实现微信登录
+   * 返回 result(user)
+   */
+  public function userlogin()
+  {
+  	$user_id = strim($_POST['user_id']);
+  	$user_wx = $GLOBALS['db']->getRow("select * from ".DB_PREFIX."user_wx where (user_id  = ".$user_id.") limit 1");
+  	es_session::start();
+  	es_session::set("wx_name", $user_wx['nickname']);
+  	es_session::set("wx_img", $user_wx['headimgurl']);
+  	es_session::set("login_type","wx");
+  	es_session::close();
+		User::loginByUserId($user_id);
+	  ajax_return(array("status"=>1,"info"=>"恭喜您！登录成功","jump"=>get_gopreview()));
   }
 
 }

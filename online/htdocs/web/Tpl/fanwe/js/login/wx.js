@@ -4,10 +4,35 @@ $(document).ready(function() {
   var timestamp_str = timestamp.substring(3, 12)
   console.log('time', timestamp_str)
   var status = 0
+  var user_id = null
   
   var interval = setInterval(function () {
     if (status === 1) {
       clearInterval(interval)
+      $.ajax({
+        url: WX_Login_Url,
+        data: {
+          user_id: user_id
+        },
+        dataType: "json",
+        type: "POST",
+        global: false,
+        success: function(obj) {
+          console.log('login obj', obj)
+          if (obj.status === 1) {
+            console.log('登录')
+            // window.location.href = obj.jump
+            window.location.href = './'
+          } else {
+            console.log('登录失败， 请刷新页面')
+          }
+        },
+        fail: function(obj) {
+          console.log('login obj 2')
+          console.log('login obj', obj)
+          console.log('登录失败， 请刷新页面')
+        }
+      });
       return
     }
     longPolling()
@@ -57,13 +82,14 @@ $(document).ready(function() {
           console.log('data type', typeof data.status)
           console.log('data conf', data.status === 1)
           if (data.status === 0) {
-            console.log('123 goon')
+            console.log('fail still ajax')
           } else if (data.status === 1) {
             status = data.status
-            alert(data)
+            user_id = data.user_id
+            console.log('do login')
           } else if (data.status === 2) {
             status = data.status
-            alert(data)
+            console.log('登录失败， 请刷新页面')
           }
           
         }

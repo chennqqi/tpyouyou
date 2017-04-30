@@ -5,8 +5,11 @@
 </span>
 {elseif ($user && ($login_info.login_type == 'qq'))}
 <span>
-  
 	<a href="{url r="user"}" style="font-weight:bold; color:#0088d2;"><img style="width: 24px;vertical-align: middle;padding-right: 8px;" src="{$login_info.qq_img}">qq昵称: {$login_info.qq_name}</a>{if $user.new_msg_count gt 0}&nbsp;&nbsp;<a href="{url r="user#msg"}" style="color:red;">新消息({$user.new_msg_count})</a>{/if}&nbsp;&nbsp;<a href="{url r="uc_order"}" target="_blank">我的订单</a> | <a href="{url r="user#logout"}">退出</a>
+</span>
+{elseif ($user && ($login_info.login_type == 'wx'))}
+<span>
+	<a href="{url r="user"}" style="font-weight:bold; color:#0088d2;"><img style="width: 24px;vertical-align: middle;padding-right: 8px;" src="{$login_info.wx_img}">微信昵称: {$login_info.wx_name}</a>{if $user.new_msg_count gt 0}&nbsp;&nbsp;<a href="{url r="user#msg"}" style="color:red;">新消息({$user.new_msg_count})</a>{/if}&nbsp;&nbsp;<a href="{url r="uc_order"}" target="_blank">我的订单</a> | <a href="{url r="user#logout"}">退出</a>
 </span>
 {else}
 <span>

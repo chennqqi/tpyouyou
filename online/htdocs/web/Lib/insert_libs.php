@@ -26,6 +26,12 @@ function insert_user_tip()
 		$login_info['login_type'] = 'qq';
 		$login_info['qq_name'] =  $qq_name;
 		$login_info['qq_img'] =  $qq_img;
+	} elseif ($login_type == 'wx') {
+		$wx_name =  es_session::get("wx_name");
+		$wx_img =  es_session::get("wx_img");
+		$login_info['login_type'] = 'wx';
+		$login_info['wx_name'] =  $wx_name;
+		$login_info['wx_img'] =  $wx_img;
 	} else {
 	  $login_info['login_type'] = 'normal';
 	}
