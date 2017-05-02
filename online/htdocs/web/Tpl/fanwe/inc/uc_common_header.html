@@ -2,7 +2,19 @@
 	{include file="inc/uc_avatar.html"}
 	
 	<div class="uc_info">
-		<span class="uc_user_name">{$user.user_name}</span> <span class="hello">您好</span><span class="uc_group">{$user.group_name}</span>
+		<span class="uc_user_name">
+		{if $user && ($login_info.login_type == 'normal' || $login_info.login_type == '') }
+		  {$user.user_name}
+		{elseif ($user && ($login_info.login_type == 'qq'))}
+		  {$login_info.qq_name}
+		{elseif ($user && ($login_info.login_type == 'wx'))}
+		  {$login_info.wx_name}
+		{else}
+		 {$user.user_name}
+		{/if}
+		</span>
+		<span class="hello">您好</span>
+		<span class="uc_group">{$user.group_name}</span>
 		<div class="uc_account">
 			<div class="uc_userlevel">
 				<span class="level_title">会员等级：</span><span class="level_name">{$user.level_name}	</span>
@@ -14,11 +26,8 @@
 				<span>代金券：<i>&yen;{$user.voucher_money_format}</i> &nbsp;&nbsp;&nbsp;&nbsp; <a href="{url r="account#voucher"}">去领取</a></span>
 				<span>积分：<i>{$user.score}</i>  &nbsp;&nbsp;&nbsp;&nbsp;<a href="{url r="account#score"}">积分详情</a></span>
 			</div>
-		
-		
-		</div>
-	
+		</div>	
 	</div>
-	
+
 </div>
 <div class="blank15"></div>

@@ -5,8 +5,14 @@ $(document).ready(function() {
   console.log('time', timestamp_str)
   var status = 0
   var user_id = null
+  var wxCount = 180
   
   var interval = setInterval(function () {
+    wxCount--
+    if (wxCount < 0) {
+      clearInterval(interval)
+      alert('登录超时!')
+    }
     if (status === 1) {
       clearInterval(interval)
       $.ajax({
@@ -36,7 +42,7 @@ $(document).ready(function() {
       return
     }
     longPolling()
-  }, 3000)
+  }, 2000)
 
   $.ajax({
     url: WX_QR_URL,
@@ -47,7 +53,6 @@ $(document).ready(function() {
     type: "GET",
     global: false,
     success: function(obj) {
-      // wxqr.attr('src')
       console.log('obj', obj)
       if (obj.status == 1) {
         wxqr.attr('src', obj.pic)

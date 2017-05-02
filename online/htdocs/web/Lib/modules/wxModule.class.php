@@ -13,9 +13,9 @@ class wxModule extends BaseModule
 	public function __construct($options = '', $wx = '')
 	{
 		$options = array(
-			'token'=>'test', //填写你设定的key
-			'appid'=>'wxd62a2af068f0693a', //填写高级调用功能的app id, 请在微信开发模式后台查询
-			'appsecret'=>'c40eb5ab81add3be6502f6b7f7d1d5dd' //填写高级调用功能的密钥
+			'token'=>'62vLSgm6gjE3zMEKNQ3J', //填写你设定的key
+			'appid'=>'wx3d25a1f51ac18d48', //填写高级调用功能的app id, 请在微信开发模式后台查询
+			'appsecret'=>'1577fa485c19c1b4eb78ad3143a257f6' //填写高级调用功能的密钥
     );
     $this->options = $options;
     $this->wx = new WX($this->options);
@@ -37,13 +37,13 @@ class wxModule extends BaseModule
     $weObj = $this->wx;
 		$weObj->valid();//明文或兼容模式可以在接口验证通过后注释此句，但加密模式一定不能注释，否则会验证失败
 		//设置菜单
-		// $newmenu =  array(
-		// 		"button"=>
-		// 			array(
-		// 				array('type'=>'view','name'=>'我要搜索','url'=>'http://www.uu-club.com')
-		// 			)
-		// );
-		// $result = $weObj->createMenu($newmenu);
+		$newmenu =  array(
+				"button"=>
+					array(
+            array('type'=>'view','name'=>'微官网','url'=>'http://uuclub.kuaizhan.com')
+					)
+		);
+		$result = $weObj->createMenu($newmenu);
 		$type = $weObj->getRev()->getRevType();
 		$openid = $weObj->getRev()->getRevFrom();
 		$userinfo =$weObj->getUserInfo($openid);
@@ -239,7 +239,7 @@ class wxModule extends BaseModule
   		$result['msg'] = 'no user wx';
   		$result['count'] = $count;
   	  echo json_encode($result);
-      sleep(5);
+      sleep(3);
       exit;
     }
   }
@@ -257,8 +257,8 @@ class wxModule extends BaseModule
   	es_session::set("wx_img", $user_wx['headimgurl']);
   	es_session::set("login_type","wx");
   	es_session::close();
-		User::loginByUserId($user_id);
-	  ajax_return(array("status"=>1,"info"=>"恭喜您！登录成功","jump"=>get_gopreview()));
+		$result = User::loginByUserId($user_id);
+	  ajax_return(array("status"=>1,"info"=>"恭喜您！登录成功","jump"=>get_gopreview(),"result"=>$result));
   }
 
 }
