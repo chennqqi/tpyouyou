@@ -14,10 +14,6 @@
 
 // +----------------------------------------------------------------------
 
-
-
-
-
 class indexModule extends BaseModule
 
 {
@@ -67,7 +63,7 @@ class indexModule extends BaseModule
 
 		$cache_id  = md5(MODULE_NAME.ACTION_NAME.$GLOBALS['city']['py']);	
 
-                load_auto_cache("word_cache");
+    load_auto_cache("word_cache");
 
 		if (!$GLOBALS['tmpl']->is_cached('index.html', $cache_id))
 

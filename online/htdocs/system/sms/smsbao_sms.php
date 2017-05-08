@@ -58,7 +58,6 @@ class smsbao_sms implements sms
 			$mobile_number = implode(",",$mobile_number);
 		}
 		$sms = new transport();
-				
 				$params = array(
 					"u"=>$this->sms['user_name'],
 					"p"=>md5($this->sms['password']),
@@ -75,8 +74,8 @@ class smsbao_sms implements sms
 				}
 				else
 				{
-							$result['status'] = 0;
-							$result['msg'] = $this->statusStr[$code];
+					$result['status'] = 0;
+					$result['msg'] = $this->statusStr[$code];
 				}
 		return $result;
 	}

@@ -8,6 +8,8 @@ $this->_var['pagecss'][] = TMPL_REAL."/css/image_slider.css";
 
 $this->_var['pagecss'][] = TMPL_REAL."/css/index.css";
 
+$this->_var['cpagejs'][] = TMPL_REAL."/js/jquery-1.9.1.js";
+
 $this->_var['pagejs'][] = TMPL_REAL."/js/jquery.bgiframe.js";
 
 $this->_var['pagejs'][] = TMPL_REAL."/js/jquery.weebox.js";
@@ -20,7 +22,6 @@ $this->_var['pagejs'][] = TMPL_REAL."/js/script.js";
 
 $this->_var['cpagejs'][] = TMPL_REAL."/js/script.js";
 
-$this->_var['cpagejs'][] = TMPL_REAL."/js/jquery-1.9.1.js";
 
 $this->_var['pagejs'][] = TMPL_REAL."/js/image_slider.js";
 
@@ -34,13 +35,13 @@ $this->_var['cpagejs'][] = TMPL_REAL."/js/index_slider.js";
 
 {include file="inc/header.html"}
 
-<link href="/web/Tpl/fanwe/css/css1.css" rel="stylesheet" type="text/css"/>
+<link href="{$TMPL}/css/css1.css" rel="stylesheet" type="text/css"/>
 
-<link href="/web/Tpl/fanwe/css/index1.css" rel="stylesheet" type="text/css"/>
+<link href="{$TMPL}/css/index1.css" rel="stylesheet" type="text/css"/>
 
-<link href="/web/Tpl/fanwe/css/jquery-ui.css" rel="stylesheet" type="text/css"/>
+<link href="{$TMPL}/css/jquery-ui.css" rel="stylesheet" type="text/css"/>
 
-<script src="/web/Tpl/fanwe/js/jquery-ui.js"></script>
+<script src="{$TMPL}/js/jquery-ui.js"></script>
 
 <div class="wrap">
 
@@ -14805,7 +14806,7 @@ A2张家界、天门山玻璃栈道、黄龙洞、凤凰
 
 </script>
 
-<div id="cityWrap" style="left: 830px;">
+<div id="cityWrap" style="left: 830px;display: none;">
 
     <div class="title">
 
