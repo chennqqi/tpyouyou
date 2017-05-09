@@ -84,7 +84,6 @@ class userModule extends AuthModule
 		$limit = (($page-1)*$param['pageSize']).",".$param['pageSize'];
 		$param['pageNum'] = $page;
 		
-		
 		//排序
 		if(isset($_REQUEST['orderField']))
 			$param['orderField'] = strim($_REQUEST['orderField']);
@@ -110,7 +109,9 @@ class userModule extends AuthModule
 			$list[$k]['is_effect_show'] = lang("IS_EFFECT_".$v['is_effect']);
 			$list[$k]['level_name'] = $user_level[$v['level_id']]?$user_level[$v['level_id']]['name']:"未知";
 			$list[$k]['group_name'] = $user_group[$v['group_id']]?$user_group[$v['group_id']]['name']:"未知";
-			$list[$k]['format_money'] =format_price(format_price_to_display($list[$k]['money'])); 
+			$list[$k]['format_money'] =format_price(format_price_to_display($list[$k]['money']));
+			$list[$k]['wx_name'] = $GLOBALS['db']->getRow("select nickname from ".DB_PREFIX."user_wx where user_id=".$list[$k]['id'])['nickname'];
+			$list[$k]['qq_name'] = $GLOBALS['db']->getRow("select nickname from ".DB_PREFIX."user_qq where user_id=".$list[$k]['id'])['nickname'];;
 		}
 
 		$GLOBALS['tmpl']->assign('list',$list);
@@ -337,8 +338,6 @@ class userModule extends AuthModule
 
 	}
 	
-	
-
 	
 	
 	public function add()

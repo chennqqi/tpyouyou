@@ -66,8 +66,10 @@ class wxModule extends BaseModule
 		switch($event['event']) {
 			case Wechat::EVENT_SUBSCRIBE:
 			    $login = true;
-          $sub = "感谢您的关注，我们会为您推荐经典的旅游线路，带给您一个丰富多彩的旅游假期。
-您也可以来电咨询：021-64753853或者添加公司微信：uuclub4008881583，我们会有专业人员为您解答。";
+          $sub = "您好，感谢你关注颢栊假期。\n
+我们会在每周五为您推送优质的出境旅游路线，为您的旅游出行提供多样化的选择。/::)\n
+查看更多旅游线路请登录我们的官网：www.uu-club.com\n
+或者手机端输入：\nuuclub.kuaizhan.com查看。";
 					$weObj->text($sub)->reply();
 					break;
 			case Wechat::EVENT_SCAN:
@@ -75,7 +77,7 @@ class wxModule extends BaseModule
 			    $weObj->text("正在为您登录悠游旅游网,请稍等")->reply();
 					break;
 			default:
-					$weObj->text("1".$event['event']."2")->reply();
+          break;
    	}
    	if ($login) {
    		$result = $this->login($openid, $userinfo, $sceneId);

@@ -64,13 +64,8 @@
 							<a href="{$exporturl}" title="确定搜索结果导出成csv吗？" target="dwzExport" class="buttonActive"><span>导出搜索结果</span></a>	
 						</td>
 					</tr>
-				</table>
-				
+				</table>		
 			</div>
-
-			
-			
-			
 		</div>
 
 	</div>
@@ -92,6 +87,8 @@
 				<th width="100">会员名</th>
 				<th>Email</th>
 				<th width="100">手机号</th>
+				<th width="80">微信名</th>
+				<th width="80">qq名</th>
 				<th  width="90" orderField="money" {if $param.orderField eq 'money'} class="{$param.orderDirection}"{/if}>余额</th>
 				<th  width="80" orderField="score" {if $param.orderField eq 'score'} class="{$param.orderDirection}"{/if}>积分</th>
 				<th width="80">会员组</th>
@@ -107,7 +104,6 @@
 			</tr>
 		</thead>
 		<tbody>
-		
 			{foreach from=$list item=item}
 			<tr  rel="{$item.id}">
 				<td><input name="id" value="{$item.id}" type="checkbox"></td>
@@ -115,6 +111,8 @@
 				<td>{$item.user_name}</td>
 				<td>{$item.email}</td>
 				<td>{$item.mobile}</td>
+				<td>{$item.wx_name}</td>
+				<td>{$item.qq_name}</td>
 				<td>{$item.format_money}</td>
 				<td>{$item.score}</td>
 				<td>{$item.group_name}</td>
