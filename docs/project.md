@@ -1,5 +1,3 @@
-
-
 短信模块：
   库system/sms  -- 目前能用的士smsbao_sms.php
   程序中调用通过system/utils/es_sms.php封装好的方法来使用
