@@ -15,7 +15,7 @@ class userModule extends BaseModule
 		set_gopreview();
 		global_run();
 		init_app_page();	
-		$GLOBALS['tmpl']->display("index_new.html");
+		$GLOBALS['tmpl']->display("test_index.html");
 	}
 }
 

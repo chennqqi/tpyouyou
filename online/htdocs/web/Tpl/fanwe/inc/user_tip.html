@@ -1,3 +1,30 @@
+<style type="text/css">
+.third-list {
+	float: left;
+  height: 24px;
+  font-size: 0;
+  padding-top: 2px;
+  margin: 0;
+}
+
+.third-list .third-icon {
+	  margin-right: 10px;
+    position: relative;
+    width: 22px;
+    height: 22px;
+    display: inline-block;
+}
+
+.third-list .third-icon-qq {
+  background: url('http://optlg7gb6.bkt.clouddn.com/qq_login_icon.png') no-repeat;
+   background-size: contain;
+}
+
+.third-list .third-icon-wx {
+	background: url('http://optlg7gb6.bkt.clouddn.com/wx_login_icon.png') no-repeat;
+	 background-size: contain;
+}
+</style>
 
 {if $user && ($login_info.login_type == 'normal' || $login_info.login_type == '') }
 <span>
@@ -12,7 +39,25 @@
 	<a href="{url r="user"}" style="font-weight:bold; color:#0088d2;"><img style="width: 24px;vertical-align: middle;padding-right: 8px;" src="{$login_info.wx_img}">微信昵称: {$login_info.wx_name}</a>{if $user.new_msg_count gt 0}&nbsp;&nbsp;<a href="{url r="user#msg"}" style="color:red;">新消息({$user.new_msg_count})</a>{/if}&nbsp;&nbsp;<a href="{url r="uc_order"}" target="_blank">我的订单</a> | <a href="{url r="user#logout"}">退出</a>
 </span>
 {else}
+<div class="third-list clearfix">
+    <a href="#" id="mainqqLoginBtn" target="_blank" class="fl third-icon third-icon-qq" title="QQ账号登录"></a>
+    <a href="http://www.uu-club.com/index.php?ctl=wx&act=qr" target="_blank" class="fl third-icon third-icon-wx" title="微信账号登录"></a>
+</div>
+
 <span>
-	<a href="http://www.uu-club.com/index.php?ctl=user&act=login" target="_blank">登录</a>  	|  <a href="{url r="user#regist"}" target="_blank">注册</a> &nbsp;&nbsp;<a href="{url r="uc_order"}" target="_blank">我的订单</a>
+ <a href="http://www.uu-club.com/index.php?ctl=user&act=login" target="_blank">登录</a>  	|  <a href="{url r="user#regist"}" target="_blank">注册</a> &nbsp;&nbsp;<a href="{url r="uc_order"}" target="_blank">我的订单</a>
 </span>	
 {/if}
+
+<script type="text/javascript" src="//qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js" data-appid="101391679" data-redirecturi="http://www.uu-club.com/" charset="utf-8"></script>
+<script type="text/javascript">
+    // QC.Login({
+    //    btnId:"qqLoginBtn"    //插入按钮的节点id
+    // });
+    $('#mainqqLoginBtn').click(function () {
+	    QC.Login.showPopup({
+	       appId:"101391679",
+	       redirectURI: "http://www.uu-club.com/index.php?ctl=login&act=qq"
+	    });    	
+    })
+</script>
