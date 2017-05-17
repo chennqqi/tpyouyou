@@ -30,7 +30,13 @@ return array(
 						array("name"=>"门票订单","module"=>"spot_order","action"=>"index"),
 						//array("name"=>"出票记录","module"=>"ticket_list","action"=>"index"),
 						array("name"=>"待处理订单","module"=>"spot_order","action"=>"new_index"),
-				)			
+				),
+				'酒店管理'	=>	array(
+						array("name"=>"销售中的景点门票","module"=>"ticket","action"=>"index"),
+						array("name"=>"审核中的景点门票","module"=>"ticket_supplier","action"=>"index"),
+						array("name"=>"门票订单","module"=>"spot_order","action"=>"index"),
+						array("name"=>"待处理订单","module"=>"spot_order","action"=>"new_index"),
+				)		
 		),
 		'商家设置'=>array(
 				'资料管理'	=>	array(

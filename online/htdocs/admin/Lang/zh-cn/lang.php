@@ -714,8 +714,6 @@ return array(
 
 		
 
-		
-
 		//分页
 
 		'DISPLAY_PAGE_SIZE'	=>	'每页显示记录数：',

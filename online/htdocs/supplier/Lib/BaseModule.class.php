@@ -55,7 +55,6 @@ class AuthModule extends BaseModule{
 			$this->check_auth();
 		}
 		
-		
 		/**
 		 * 验证检限
 		 * 已登录时验证用户权限, Index模块下的所有函数无需权限验证
