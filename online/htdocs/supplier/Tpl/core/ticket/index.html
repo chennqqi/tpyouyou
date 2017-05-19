@@ -73,14 +73,8 @@ function blursort(dom,id)
 						</td>
 					</tr>
 				</table>
-				
-			</div>
-
-			
-			
-			
+			</div>			
 		</div>
-
 	</div>
 	</form>
 </div>
@@ -93,7 +87,7 @@ function blursort(dom,id)
 	</div>
 	<table class="table" width="100%" layoutH="140">
 		<thead>
-		<tr>
+		  <tr>
 				<th width="22"><input type="checkbox" group="id" class="checkboxCtrl"></th>
 				<th  width="50" orderField="id" {if $param.orderField eq 'id'} class="{$param.orderDirection}"{/if}>{lang v="ID"}</th>
 				<th>{lang v="SPOT_NAME"}</th>
@@ -105,7 +99,6 @@ function blursort(dom,id)
 			</tr>
 		</thead>
 		<tbody>
-		
 			{foreach from=$list item=item}
 			<tr  rel="{$item.id}">
 				<td><input name="id" value="{$item.id}" type="checkbox"></td>
@@ -133,8 +126,6 @@ function blursort(dom,id)
 			</select>
 			<span>&nbsp;&nbsp;{lang v="PAGE_TOTAL_COUNT" p="$totalCount"}</span>
 		</div>
-		
 		<div class="pagination" targetType="navTab" totalCount="{$totalCount}" numPerPage="{$param.pageSize}" pageNumShown="10" currentPage="{$param.pageNum}"></div>
-
 	</div>
 </div>

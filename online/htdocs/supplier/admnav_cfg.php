@@ -15,6 +15,9 @@ return array(
 				),
 				'门票验证'	=>	array(
 						array("name"=>"门票验证","module"=>"ticket","action"=>"verify")
+				),
+				'酒店验证'	=>	array(
+						array("name"=>"酒店验证","module"=>"ticket","action"=>"verify")
 				)
 		),
 		'旅游产品管理'=>array(

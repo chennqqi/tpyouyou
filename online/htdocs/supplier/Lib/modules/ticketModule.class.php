@@ -189,7 +189,6 @@ class ticketModule extends AuthModule{
 		$data['y_point'] = strim($_REQUEST['ypoint']);
 		$data['create_time'] = NOW_TIME;
 		
-		
 		if(isset($_REQUEST['tickets'])){
 			
 			$data['has_ticket'] = 1;
@@ -228,7 +227,6 @@ class ticketModule extends AuthModule{
 			//错误提示
 			showErr(lang("INSERT_FAILED")."<br />".$GLOBALS['db']->error(),$ajax);
 		}	
-
 	}
 	
 	public function edit() {		
@@ -477,7 +475,6 @@ class ticketModule extends AuthModule{
 					$id = intval($_REQUEST['id']);
 					if ($id == 0){
 						ticket_order_format($order);
-							
 						$GLOBALS['tmpl']->assign("use_verify_code_url",admin_url("ticket#verify",array('id'=>$order['id'],"ajax"=>1,'verify_code'=>$verify_code)));
 						$order['verify_time_format'] = to_date($order['verify_time']);
 						$GLOBALS['tmpl']->assign("order",$order);
