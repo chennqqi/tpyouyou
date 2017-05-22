@@ -7,7 +7,6 @@
 // | Author: 同创网络(778251855@qq.com)
 // +----------------------------------------------------------------------
 
-
 class indexModule extends AuthModule
 {
 	public function index()
@@ -79,8 +78,7 @@ class indexModule extends AuthModule
 		$GLOBALS['tmpl']->assign("dochangeurl",admin_url("index#do_change_password",array("ajax"=>1)));
 		$GLOBALS['tmpl']->display("core/index/change_password.html");
 	}
-	
-	
+
 	public function do_change_password()
 	{
 		$ajax = intval($_REQUEST['ajax']);
@@ -107,7 +105,5 @@ class indexModule extends AuthModule
 		showSuccess(lang("CHANGE_SUCCESS"),$ajax);	
 	
 	}
-	
-
 }
 ?>

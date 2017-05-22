@@ -35,11 +35,17 @@ return array(
 						array("name"=>"待处理订单","module"=>"spot_order","action"=>"new_index"),
 				),
 				'酒店管理'	=>	array(
-						array("name"=>"销售中的景点门票","module"=>"ticket","action"=>"index"),
-						array("name"=>"审核中的景点门票","module"=>"ticket_supplier","action"=>"index"),
-						array("name"=>"门票订单","module"=>"spot_order","action"=>"index"),
+						array("name"=>"销售中的酒店客房","module"=>"ticket","action"=>"index"),
+						array("name"=>"审核中的酒店客房","module"=>"ticket_supplier","action"=>"index"),
+						array("name"=>"酒店订单","module"=>"spot_order","action"=>"index"),
 						array("name"=>"待处理订单","module"=>"spot_order","action"=>"new_index"),
-				)		
+				),
+				'邮轮管理'	=>	array(
+						array("name"=>"销售中的邮轮仓位","module"=>"ticket","action"=>"index"),
+						array("name"=>"审核中的邮轮仓位","module"=>"ticket_supplier","action"=>"index"),
+						array("name"=>"邮轮订单","module"=>"spot_order","action"=>"index"),
+						array("name"=>"待处理订单","module"=>"spot_order","action"=>"new_index"),
+				)
 		),
 		'商家设置'=>array(
 				'资料管理'	=>	array(

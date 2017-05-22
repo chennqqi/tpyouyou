@@ -12,7 +12,6 @@ class loginModule extends BaseModule
 {
 	public function index()
 	{
-
 		//验证是否已登录
 		//管理员的SESSION
 		$adm_session = es_session::get(md5(app_conf("AUTH_KEY")."supplier"));

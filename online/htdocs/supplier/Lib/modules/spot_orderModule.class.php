@@ -27,7 +27,6 @@ class spot_orderModule extends AuthModule
 			$param['is_new'] = 0;
 		}
 				
-	
 		//订单号
 		if(isset($_REQUEST['sn']))
 			$sn = strim($_REQUEST['sn']);
@@ -38,8 +37,7 @@ class spot_orderModule extends AuthModule
 		{
 			$condition.=" and t.sn = '".$sn."' ";
 		}
-	
-	
+		
 		//门票ID
 		if(isset($_REQUEST['ticket_id']))
 			$ticket_id = strim($_REQUEST['ticket_id']);

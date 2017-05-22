@@ -16,7 +16,6 @@ class ticket_supplierModule extends AuthModule{
 			$condition.=" and name = '".$name_key."' ";
 		}
 		
-		
 		if(isset($_REQUEST['spot_cate']))
 			$spot_cate_key = strim($_REQUEST['spot_cate']);
 		else
