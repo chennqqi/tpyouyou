@@ -61,5 +61,4 @@ if(file_exists(APP_ROOT_PATH.APP_NAME.'/Lang/'.app_conf("SITE_LANG")."/".MODULE_
 $GLOBALS['tmpl']->assign("LANG",$lang);
 //end 定义当前语言包
 
-
 ?>

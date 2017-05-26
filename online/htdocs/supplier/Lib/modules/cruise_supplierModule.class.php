@@ -1,16 +1,16 @@
 <?php
 
-class tourline_supplierModule extends AuthModule
+class cruise_supplierModule extends AuthModule
 
 {
 
     function index() {
 
-    	$param = array();		
+      $param = array();		
 
-		//条件
+		  //条件
 
-		$condition = " supplier_id =  ".$this->supplier_id."";
+		  $condition = " supplier_id =  ".$this->supplier_id."";
 
 		if(isset($_REQUEST['name']))
 
@@ -944,8 +944,6 @@ class tourline_supplierModule extends AuthModule
 		}
 
 	}
-
-	
 
 }
 

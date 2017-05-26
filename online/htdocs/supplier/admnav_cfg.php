@@ -41,10 +41,10 @@ return array(
 						array("name"=>"待处理订单","module"=>"spot_order","action"=>"new_index"),
 				),
 				'邮轮管理'	=>	array(
-						array("name"=>"销售中的邮轮仓位","module"=>"ticket","action"=>"index"),
-						array("name"=>"审核中的邮轮仓位","module"=>"ticket_supplier","action"=>"index"),
-						array("name"=>"邮轮订单","module"=>"spot_order","action"=>"index"),
-						array("name"=>"待处理订单","module"=>"spot_order","action"=>"new_index"),
+						array("name"=>"销售中的邮轮仓位","module"=>"cruise","action"=>"index"),
+						array("name"=>"审核中的邮轮仓位","module"=>"cruise_supplier","action"=>"index"),
+						array("name"=>"邮轮订单","module"=>"cruise_order","action"=>"index"),
+						array("name"=>"待处理订单","module"=>"cruise_order","action"=>"new_index"),
 				)
 		),
 		'商家设置'=>array(

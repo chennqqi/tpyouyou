@@ -88,7 +88,6 @@ class freightModule extends AuthModule{
    		}
    		
    		
-   		
    		foreach($freight_data as $v)
    		{
    			$data=array();

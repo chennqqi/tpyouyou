@@ -53,8 +53,7 @@ class tour_place_tagModule extends AuthModule{
 	
 		$list = $GLOBALS['db']->getAll("select * from ".DB_PREFIX."tour_place_tag where ".$condition."  order by ".$param['orderField']." ".$param["orderDirection"]." limit ".$limit);
 		$totalCount = $GLOBALS['db']->getOne("select count(*) from ".DB_PREFIX."tour_place_tag where ".$condition);
-	
-	
+			
 		$GLOBALS['tmpl']->assign('list',$list);
 		$GLOBALS['tmpl']->assign('totalCount',$totalCount);
 		$GLOBALS['tmpl']->assign('param',$param);

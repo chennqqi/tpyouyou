@@ -15,7 +15,6 @@
 function get_tourline_list($start_city=0,$areas="",$places="",$belong_citys="",$tags="",$conditions="",$order="",$limit='0,20'){
 
 	$condition = " is_effect=1 and ( (is_tuan=1 and tuan_end_time < ".NOW_TIME." and tuan_end_time >0) <> true) and ((is_tuan=1 and tuan_is_pre=0 and tuan_begin_time >".NOW_TIME.") <> true) ";
-
 	
 
 	if($start_city >0 && $belong_citys!="")
@@ -1501,8 +1500,6 @@ function save_tourline_order_log($order_id,$log_info,$is_supplier)
  */
 
 function tourline_order_format(&$order){
-
-
 
 	$order['total_price_format'] = format_price(format_price_to_display($order['total_price']));//如果预付\r\nadult_sale_price*adult_count+child_sale_price*child_count\r\n应付总额\r\nadult_sale_price*adult_count+child_sale_price*child_count\r\n+(adult_count+child_count)*insurance_price+visae_price+visa_count*visa_priceP'
 
@@ -3011,7 +3008,6 @@ function tourline_auto_refund_amount($order,$is_supplier)
 {
 
 
-
 	$is_refund = intval($order['is_refund']);//是否支持退，改
 
 	if ($is_refund == 0) return false;//不支持退款;
@@ -3019,16 +3015,6 @@ function tourline_auto_refund_amount($order,$is_supplier)
 
 
 	$is_expire_refund = intval($order['is_expire_refund']);//是否允许过期退款
-
-
-
-
-
-
-
-
-
-
 
 }
 
@@ -3039,8 +3025,6 @@ function tourline_auto_refund_amount($order,$is_supplier)
 function get_tourline_sale_list($tourline_id,$limit){
 
 	$sql_count = "SELECT count(*) FROM ".DB_PREFIX."tourline_order WHERE tourline_id=".$tourline_id." AND pay_status = 1 and order_status <> 4";
-
-	
 
 	$rs_count = $GLOBALS['db']->getOne($sql_count);
 
@@ -3056,23 +3040,11 @@ function get_tourline_sale_list($tourline_id,$limit){
 
 		$list = $GLOBALS['db']->getAll($sql);
 
-		/*
-
-		foreach($list as $k=>$v){	
-
-		}
-
-		*/
-
 	}
 
 	return array("rs_count"=>$rs_count,"list"=>$list);
 
 }
-
-
-
-
 
 /**
 

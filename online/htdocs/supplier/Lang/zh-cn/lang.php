@@ -33,13 +33,7 @@ return array(
 		'LOGIN_SUCCESS'	=>	'登录成功',
 
 		'ADM_NAME_ERROR'	=>	'非法的用户名',
-
-
-
 		
-
-		
-
 		//后台管理框架语言
 
 		'HOME'	=>	'首页',
