@@ -1,7 +1,15 @@
 <script type="text/javascript">
 var UPDATE_SUCCESS = '{lang v="UPDATE_SUCCESS"}';
 var UPDATE_FAILED = '{lang v="UPDATE_FAILED"}';
-
+function setsort(dom,id)
+{
+	var html = "<input type='text' value='"+$.trim($(dom).html())+"' class='textInput' style='width:40px;' onblur='blursort(this,"+id+");' />";	
+	var parent = $(dom).parent();
+	$(parent).html(html);
+	var ipt = $(parent).find("input");	
+	$(ipt).focus();
+	$(ipt).select();		
+}
 function blursort(dom,id)
 {
 	var newsort = $.trim($(dom).val());
@@ -23,6 +31,7 @@ function blursort(dom,id)
 			}
 		}
 	});
+	
 }
 
 </script>
@@ -47,12 +56,21 @@ function blursort(dom,id)
 						<input type="text" name="name" value="{$param.name}"/>
 						</td>
 						<td>
+						商户名：
+						</td>
+						<td>
+						<input type="text" name="supplier_name" value="{$param.supplier_name}"/>
+						</td>
+						<td>
 						<div class="buttonActive"><div class="buttonContent"><button type="submit">{lang v="SEARCH"}</button></div></div>
 						</td>
 					</tr>
 				</table>
-			</div>			
+				
+			</div>
+			
 		</div>
+
 	</div>
 	</form>
 </div>
@@ -60,33 +78,43 @@ function blursort(dom,id)
 <div class="pageContent">
 	<div class="panelBar">
 		<ul class="toolBar">
-			<li><a title="新增酒店" target="navTab" rel="hotel_add" href="{$addurl}" class="add"><span>{lang v="ADD"}</span></a></li>
+			<li><a title="{lang v="CONFIRM_DELETE"}" target="selectedTodo" rel="id" postType="string" href="{$delurl}" class="delete"><span>{lang v="DEL"}</span></a></li>
 		</ul>
 	</div>
 	<table class="table" width="100%" layoutH="140">
 		<thead>
-		  <tr>
+		<tr>
 				<th width="22"><input type="checkbox" group="id" class="checkboxCtrl"></th>
 				<th  width="50" orderField="id" {if $param.orderField eq 'id'} class="{$param.orderDirection}"{/if}>{lang v="ID"}</th>
-				<th>酒店名</th>
-				<th width="60">酒店星级</th>
+				<th width="150">{lang v="SUPPLIER"}</th>
+				<th>{lang v="SPOT_NAME"}</th>
+				<th width="100">原景点门票编号</th>
+				<th width="60">{lang v="SPOT_LEVEl"}</th>
 				<th width="220">详细地址</th>
-				<th width="100">最低消费</th>
+				<th width="100">{lang v="HAS_TICKET"}</th>
+				<th width="100">门票价格</th>
+				<th width="130">{lang v="CREATE_TIME"}</th>
 				<th width="100">{lang v="TAG_LANG_OPERATE"}</th>
 			</tr>
 		</thead>
 		<tbody>
+		
 			{foreach from=$list item=item}
 			<tr  rel="{$item.id}">
 				<td><input name="id" value="{$item.id}" type="checkbox"></td>
 				<td>{$item.id}</td>
+				<td>{$item.supplier_name}</td>
 				<td>{$item.name}</td>
+				<td>{$item.rel_id}</td>
 				<td>{$item.level_format}</td>
 				<td title="{$item.address}">{$item.address}</td>
 				<td>{if $item.has_ticket eq 0}无{else}有{/if}</td>
 				<td>{$item.ticket_price_format}起</td>
+				<td>{$item.create_time_format}</td>
 				<td>
-					<a title="{lang v="EDIT"}{lang v="NAME"}{$item.name}" rel="spot_editpage_{$item.id}" target="navTab" href="{$editurl}&id={$item.id}"  class="btnEdit">{lang v="EDIT"}</a>
+					<a title="{lang v="CONFIRM_DELETE"}" target="ajaxTodo" href="{$delurl}&id={$item.id}" class="btnDel">{lang v="DEL"}</a>
+					<a title="{lang v="PUBLISH"}{lang v="NAME"}{$item.name}" rel="spot_publishpage_{$item.id}" target="navTab" href="{$editurl}&id={$item.id}"  class="btnEdit">{lang v="PUBLISH"}</a>
+					<a title="预览" href="{$item.preview_url}" class="btnLook" target="_blank">预览</a>
 				</td>
 			</tr>
 			{/foreach}

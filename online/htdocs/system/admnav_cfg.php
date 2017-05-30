@@ -26,18 +26,17 @@ return array(
 						array("name"=>"门票订单","module"=>"spot_order","action"=>"index"),
 						array("name"=>"商家提交","module"=>"spot_supplier","action"=>"index"),
 				),
-				/*
 				'酒店管理'	=>	array(
 						array("name"=>"酒店","module"=>"hotel","action"=>"index"),
 						array("name"=>"酒店订单","module"=>"hotel_order","action"=>"index"),
-						array("name"=>"商家提交","module"=>"hotel_supplier","action"=>"index"),				
-				),*/
+						array("name"=>"商家提交","module"=>"hotel_supplier","action"=>"index"),
+				),
 				'团购管理'	=>	array(
 						array("name"=>"团购列表","module"=>"tuan","action"=>"index"),
 						array("name"=>"团购分类","module"=>"tuan_cate","action"=>"index"),
 				),
 				'订单管理'	=>	array(
-						array("name"=>"所有订单","module"=>"order","action"=>"index"),						
+						array("name"=>"所有订单","module"=>"order","action"=>"index")
 				),				
 		),
 		'会员管理'=>array(
@@ -166,6 +165,6 @@ return array(
                                                 
                                 ),
 		)
-		
 );
+
 ?>

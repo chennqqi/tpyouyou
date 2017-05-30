@@ -1,12 +1,12 @@
 <script type="text/javascript" src="{$TMPL}/core/include/js/spot.js"></script>
-<h2 class="contentTitle">{lang v="ADD"}{lang v="NAME"}</h2>
+<h2 class="contentTitle">{lang v="EDIT"}{lang v="NAME"}</h2>
 <form action="{$formaction}" method="post" class="pageForm required-validate" onsubmit="return validateCallback(this, navTabAjaxDone)">
 <div class="pageContent">
 	<div class="pageFormContent" layouth="97">		
 		<div class="tabs">
 			<div class="tabsHeader">
 				<div class="tabsHeaderContent">
-					<ul>
+					<ul>					
 						<li class="selected"><a href="javascript:void(0)"><span>景点设置</span></a></li>
 						<li><a href="javascript:void(0)"><span>相关内容</span></a></li>
 						<li><a href="javascript:void(0)"><span>景点相册</span></a></li>
@@ -22,15 +22,15 @@
 					<tr>
 						<td class="item_title">{lang v="SPOT_NAME"}:</td>
 						<td class="item_input">
-							<input type="text" class="required textInput valid"  minlength="2"  name="name">
+							<input type="text" class="required textInput valid"  value="{$vo.name}" name="name">
 							<label class="tip"></label>
 						</td>
 					</tr>
-
+					
 					<tr>
 						<td class="item_title">{lang v="SPOT_CATE"}:</td>
 						<td class="item_input">
-							<input class="required" size="80" name="tour_cate.cate_name" lookupSend="tour_cate_data"  type="text"  readonly="true"  />
+							<input class="required" size="80" name="tour_cate.cate_name" lookupSend="tour_cate_data"  type="text"  readonly="true" value="{$vo.cate_match_row}" />
 							<a class="btnLook" href="{$searchcateurl}" lookupGroupSelect="tour_cate">{lang v="SELECT_SPOT_CATE"}</a>
 						</td>
 					</tr>
@@ -38,8 +38,8 @@
 					<tr>
 						<td class="item_title">允许显示的{lang v="CITY"}:</td>
 						<td class="item_input">
-							<input name="tour_city.py"  lookupSend="tour_city_data" type="hidden"/>
-							<input class="required" size="80" name="tour_city.name" lookupSend="tour_city_data"  type="text"  readonly="true"  />
+							<input name="tour_city.py"  lookupSend="tour_city_data" type="hidden" value="{$vo.city_match}" />
+							<input class="required" size="80" name="tour_city.name" lookupSend="tour_city_data"  type="text"  readonly="true" value="{$vo.city_match_row}"  />
 							<a class="btnLook" href="{$searchcityurl}" lookupGroupSelect="tour_city">{lang v="SELECT_TOUR_CITY"}</a>
 						</td>
 					</tr>	
@@ -47,8 +47,8 @@
 					<tr>
 						<td class="item_title">{lang v="TOUR_AREA"}:</td>
 						<td class="item_input">
-							<input name="tour_area.py"  lookupSend="tour_area_data" type="hidden"/>
-							<input class="required" size="80" name="tour_area.name" lookupSend="tour_area_data"  type="text"  readonly="true"  />
+							<input name="tour_area.py"  lookupSend="tour_area_data" type="hidden"  value="{$vo.area_match}"/>
+							<input class="required" size="80" name="tour_area.name" lookupSend="tour_area_data"  type="text"  readonly="true"  value="{$vo.area_match_row}"  />
 							<a class="btnLook" href="{$searchareaurl}" lookupGroupSelect="tour_area">{lang v="SELECT_TOUR_AREA"}</a>
 						</td>
 					</tr>
@@ -56,8 +56,8 @@
 					<tr>
 						<td class="item_title">{lang v="TOUR_PLACE"}:</td>
 						<td class="item_input">	
-							<input name="tour_place.py"  lookupSend="tour_place_data" type="hidden"/>				
-							<input class="required" size="80" name="tour_place.name" lookupSend="tour_place_data"  type="text" readonly="true" />
+							<input name="tour_place.py"  lookupSend="tour_place_data" type="hidden" value="{$vo.place_match}" />				
+							<input class="required" size="80" name="tour_place.name" lookupSend="tour_place_data"  type="text" readonly="true" value="{$vo.place_match_row}"  />
 							<a class="btnLook" href="{$searchplaceurl}" lookupGroupSelect="tour_place">{lang v="SELECT_TOUR_PLACE"}</a>
 						</td>
 					</tr>
@@ -65,7 +65,7 @@
 					<tr>
 						<td class="item_title">{lang v="TOUR_PLACE_TAG"}:</td>
 						<td class="item_input">					
-							<input  size="80" name="tour_place_tag.tag_name" lookupSend="tour_place_tag_data"  type="text"  />
+							<input  size="80" name="tour_place_tag.tag_name" lookupSend="tour_place_tag_data"  type="text"  value="{$vo.tag_match_row}" />
 							<a class="btnLook" href="{$searchtagurl}" lookupGroupSelect="tour_place_tag">{lang v="SELECT_TOUR_PLACE_TAG"}</a>
 						</td>
 					</tr>
@@ -74,12 +74,12 @@
 						<td class="item_title">{lang v="SPOT_LEVEl"}:</td>
 						<td class="item_input">
 							<select name="spot_level" class="combox">
-								<option value="0">{lang v="EMPTY_SELECT"}</option>
-								<option value="1">{lang v="SPOT_LEVEl_1"}</option>
-								<option value="2">{lang v="SPOT_LEVEl_2"}</option>
-								<option value="3">{lang v="SPOT_LEVEl_3"}</option>
-								<option value="4">{lang v="SPOT_LEVEl_4"}</option>
-								<option value="5">{lang v="SPOT_LEVEl_5"}</option>
+								<option value="0" {if $vo.spot_level eq 0}selected="selected"{/if}>{lang v="EMPTY_SELECT"}</option>
+								<option value="1" {if $vo.spot_level eq 1}selected="selected"{/if}>{lang v="SPOT_LEVEl_1"}</option>
+								<option value="2" {if $vo.spot_level eq 2}selected="selected"{/if}>{lang v="SPOT_LEVEl_2"}</option>
+								<option value="3" {if $vo.spot_level eq 3}selected="selected"{/if}>{lang v="SPOT_LEVEl_3"}</option>
+								<option value="4" {if $vo.spot_level eq 4}selected="selected"{/if}>{lang v="SPOT_LEVEl_4"}</option>
+								<option value="5" {if $vo.spot_level eq 5}selected="selected"{/if}>{lang v="SPOT_LEVEl_5"}</option>
 							</select>
 						</td>
 					</tr>
@@ -87,15 +87,16 @@
 					<tr>
 						<td class="item_title">简介:</td>
 						<td class="item_input">
-							<textarea name="brief" cols="80" rows="4" class="textInput"></textarea>
+							<textarea name="brief" cols="80" rows="4" class="textInput">{$vo.brief}</textarea>
 							<label class="tip"></label>
 						</td>
 					</tr>
 					
+					
 					<tr>
 						<td class="item_title">内容:</td>
 						<td class="item_input">
-							<textarea name="description" class="ketext" style="width:680px;height:400px;visibility:hidden;"></textarea>	
+							<textarea name="description" class="ketext" style="width:680px;height:400px;visibility:hidden;">{$vo.description}</textarea>	
 							<label class="tip"></label>
 						</td>
 					</tr>
@@ -104,13 +105,13 @@
 					<tr>
 						<td class="item_title">预订须知:</td>
 						<td class="item_input">
-							<textarea name="appointment_desc"class="ketext" style="width:680px;height:400px;visibility:hidden;"></textarea>
+							<textarea name="appointment_desc" class="ketext" style="width:680px;height:400px;visibility:hidden;">{$vo.appointment_desc}</textarea>
 							<label class="tip"></label>
 						</td>
 					</tr>
 					
 					
-				
+					
 					</table>
 				</div>
 				
@@ -194,13 +195,13 @@
 						<tr>
 							<td class="item_title">详细地址:</td>
 							<td class="item_input">
-								<input type="text" class="textInput" size="80" name="address" value="">
+								<input type="text" class="textInput"  size="80" name="address" value="{$vo.address}">
 							</td>
-						</tr>
+						</tr>	
 						<tr>
 							<td class="item_title">地图定位:</td>
 							<td class="item_input">
-								{function name="load_kemap"}
+								{function name="load_kemap" x="$vo.x_point" y="$vo.y_point"}
 							</td>
 						</tr>	
 					</table>
@@ -228,7 +229,23 @@
 										</tr>
 									</thead>
 									<tbody>
-										
+										{foreach from=$tickets item="ticket"}
+										<tr>
+											<td>
+												{$ticket.name}<input type="hidden" name="tickets[]" value="{$ticket.ticket_data}">
+											</td>
+											<td align="center">{$ticket.origin_price}</td>
+											<td align="center">{$ticket.current_price}</td>
+											<td align="center">{$ticket.sale_price}</td>
+											<td align="center">{if $ticket.paper_must eq 1}是{else}否{/if}</td>
+											<td align="center">{if $ticket.is_tuan eq 1}是{else}否{/if}</td>
+											<td align="center">{if $ticket.is_effect eq 1}有效{else}无效{/if}</td>
+											<td align="center">
+												<a href="javascript:void(0)" class="edit_ticket">编辑</a>&nbsp;
+												<a href="javascript:void(0)" class="remove_ticket">删除</a>
+											</td>
+										</tr>
+										{/foreach}
 									</tbody>
 								</table>
 							</div>
@@ -238,7 +255,8 @@
 					</table>
 				</div>
 			</div>
-						
+			
+			
 			 <div class="tabsFooter">
 				<div class="tabsFooterContent"></div>
 			</div>
@@ -246,6 +264,7 @@
 	</div>
 	<div class="formBar">
 		<ul>
+			<input type="hidden" name="id" value="{$vo.id}" />
 			<li><div class="buttonActive"><div class="buttonContent"><button type="submit">{lang v="SAVE"}</button></div></div></li>
 			<li><div class="button"><div class="buttonContent"><button class="close" type="button">{lang v="CLOSE"}</button></div></div></li>
 		</ul>

@@ -15,9 +15,6 @@ return array(
 				),
 				'门票验证'	=>	array(
 						array("name"=>"门票验证","module"=>"ticket","action"=>"verify")
-				),
-				'酒店验证'	=>	array(
-						array("name"=>"酒店验证","module"=>"ticket","action"=>"verify")
 				)
 		),
 		'旅游产品管理'=>array(
@@ -35,10 +32,10 @@ return array(
 						array("name"=>"待处理订单","module"=>"spot_order","action"=>"new_index"),
 				),
 				'酒店管理'	=>	array(
-						array("name"=>"销售中的酒店客房","module"=>"ticket","action"=>"index"),
-						array("name"=>"审核中的酒店客房","module"=>"ticket_supplier","action"=>"index"),
-						array("name"=>"酒店订单","module"=>"spot_order","action"=>"index"),
-						array("name"=>"待处理订单","module"=>"spot_order","action"=>"new_index"),
+						array("name"=>"销售中的酒店","module"=>"hotel","action"=>"index"),
+						array("name"=>"审核中的酒店","module"=>"hotel_supplier","action"=>"index"),
+						array("name"=>"酒店订单","module"=>"hotel_room_order","action"=>"index"),
+						array("name"=>"待处理订单","module"=>"hotel_room_order","action"=>"new_index"),
 				),
 				'邮轮管理'	=>	array(
 						array("name"=>"销售中的邮轮仓位","module"=>"cruise","action"=>"index"),

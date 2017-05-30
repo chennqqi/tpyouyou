@@ -6,12 +6,14 @@
 		<div class="tabs">
 			<div class="tabsHeader">
 				<div class="tabsHeaderContent">
-					<ul>
+					<ul>					
 						<li class="selected"><a href="javascript:void(0)"><span>景点设置</span></a></li>
 						<li><a href="javascript:void(0)"><span>相关内容</span></a></li>
 						<li><a href="javascript:void(0)"><span>景点相册</span></a></li>
 						<li><a href="javascript:void(0)"><span>地图定位</span></a></li>
 						<li><a href="javascript:void(0)"><span>门票设置</span></a></li>
+						<li><a href="javascript:void(0)"><span>SEO设置</span></a></li>
+						<li><a href="javascript:void(0)"><span>广告设置</span></a></li>
 					</ul>
 				</div>
 			</div>
@@ -22,11 +24,24 @@
 					<tr>
 						<td class="item_title">{lang v="SPOT_NAME"}:</td>
 						<td class="item_input">
-							<input type="text" class="required textInput valid"  minlength="2"  name="name">
+							<input type="text" class="required textInput valid" minlength="2" name="name">
 							<label class="tip"></label>
 						</td>
 					</tr>
-
+					
+					
+					
+					<tr>
+						<td class="item_title">{lang v="SUPPIER"}:</td>
+						<td class="item_input">
+							<input name="supplier.id" type="hidden"/>
+							<input class="required" size="20" name="supplier.user_name" type="text"  readonly="true"  />
+							<a class="btnLook" href="{$searchsupplierurl}" lookupGroupSelect="supplier" mask="true" rel="dlg_supplier">{lang v="SELECT_SUPPLIER"}</a>
+							<label class="tip"></label>
+						</td>
+					</tr>
+					
+					
 					<tr>
 						<td class="item_title">{lang v="SPOT_CATE"}:</td>
 						<td class="item_input">
@@ -39,8 +54,9 @@
 						<td class="item_title">允许显示的{lang v="CITY"}:</td>
 						<td class="item_input">
 							<input name="tour_city.py"  lookupSend="tour_city_data" type="hidden"/>
-							<input class="required" size="80" name="tour_city.name" lookupSend="tour_city_data"  type="text"  readonly="true"  />
+							<input size="80" name="tour_city.name" lookupSend="tour_city_data"  type="text"  readonly="true"  />
 							<a class="btnLook" href="{$searchcityurl}" lookupGroupSelect="tour_city">{lang v="SELECT_TOUR_CITY"}</a>
+							<label><input name="show_all_city" type="checkbox" value="1" />全国显示</label>
 						</td>
 					</tr>	
 					
@@ -85,6 +101,24 @@
 					</tr>
 					
 					<tr>
+						<td class="item_title">显示成交记录:</td>
+						<td class="item_input">
+							<select name="show_sale_list" class="combox">
+								<option value="0" >否</option>
+								<option value="1" selected="selected" >是</option>
+							</select>
+						</td>
+					</tr>
+					
+					<tr>
+						<td class="item_title">匹配游记的关键词:</td>
+						<td class="item_input">
+							<input type="text" class="textInput" size="80" name="tour_guide_key" />
+							<label class="tip">多个请用英文逗号 , 隔开</label>
+						</td>
+					</tr>
+					
+					<tr>
 						<td class="item_title">简介:</td>
 						<td class="item_input">
 							<textarea name="brief" cols="80" rows="4" class="textInput"></textarea>
@@ -92,6 +126,7 @@
 						</td>
 					</tr>
 					
+										
 					<tr>
 						<td class="item_title">内容:</td>
 						<td class="item_input">
@@ -99,7 +134,6 @@
 							<label class="tip"></label>
 						</td>
 					</tr>
-					
 					
 					<tr>
 						<td class="item_title">预订须知:</td>
@@ -109,8 +143,15 @@
 						</td>
 					</tr>
 					
+					<tr>
+						<td class="item_title">{lang v="SORT"}:</td>
+						<td class="item_input">
+							<input type="text" class="textInput digits"   maxlength="10" name="sort" value="{$sort}">
+							<label class="tip"></label>
+						</td>
+					</tr>	
 					
-				
+					
 					</table>
 				</div>
 				
@@ -121,7 +162,7 @@
 							<td colspan="2" class="item_input">
 								<div style="padding:10px">此处<span style="font-weight:bolder;color:red;">内容名</span>如若不设置，前台将不会显示相应内容</div>
 							</td>
-						</tr>
+						</tr
 						<tr>
 							<td class="item_title">内容名一:</td>
 							<td class="item_input">
@@ -176,6 +217,7 @@
 					</table>
 				</div>
 				
+				
 				<!--相册-->
 				<div>
 					<table class="formtable">
@@ -206,6 +248,8 @@
 					</table>
 				</div>
 				
+				
+				
 				<!--门票设置-->
 				<div>
 					<table class="formtable">			
@@ -221,6 +265,7 @@
 											<th width="100">原价</th>
 											<th width="100">现价</th>
 											<th width="100">销售价</th>
+											<th width="60">排序</th>
 											<th width="100">必须证件号</th>
 											<th width="50">团购</th>
 											<th width="50">状态</th>
@@ -237,8 +282,83 @@
 					</tr>	
 					</table>
 				</div>
-			</div>
+				
+				<!--SEO设置-->
+				<div>
+					<table class="formtable">			
+					<tr>
+						<td class="item_title">SEO标题:</td>
+						<td class="item_input">
+							<textarea type="text" class="textInput" cols="80" rows="4" name="seo_title"></textarea>
+							<label class="tip"></label>
+						</td>
+					</tr>
+					<tr>
+						<td class="item_title">SEO关键词:</td>
+						<td class="item_input">
+							<textarea class="textInput" cols="80" rows="4" name="seo_keywords"></textarea>
+							<label class="tip"></label>
+						</td>
+					</tr>
+					<tr>
+						<td class="item_title">SEO内容:</td>
+						<td class="item_input">
+							<textarea class="textInput" cols="80" rows="4" class="textInput" name="seo_description"></textarea>
+							<label class="tip"></label>
+						</td>
+					</tr>
+					</table>
+				</div>
+				
+				<!--广告设置-->
+				<div>
+					<table class="formtable">
+						<tr>
+							<td class="item_title">广告名一:</td>
+							<td class="item_input">
+								<input type="text" class="textInput" name="adv1_name" value="">
+							</td>
+						</tr>		
+						<tr>
+							<td class="item_title">广告图一:</td>
+							<td class="item_input">
+								{function name="load_keadvimg" n="adv1_image" v=""}
+							</td>
+						</tr>
 						
+						<tr>
+							<td class="item_title">广告图一连接:</td>
+							<td class="item_input">
+								<input type="text" class="textInput valid url" name="adv1_url" value="">
+							</td>
+						</tr>
+						<tr><td colspan="2" class="item_title"></td></tr>
+						<tr>
+							<td class="item_title">广告名二:</td>
+							<td class="item_input">
+								<input type="text" class="textInput" name="adv2_name" value="">
+							</td>
+						</tr>
+						<tr>
+							<td class="item_title">广告图二:</td>
+							<td class="item_input">
+								{function name="load_keadvimg" n="adv2_image" v=""}
+							</td>
+						</tr>
+						<tr>
+							<td class="item_title">广告图二连接:</td>
+							<td class="item_input">
+								<input type="text" class="textInput valid url" name="adv2_url" value="">
+							</td>
+						</tr>
+					
+					</table>
+				</div>
+				
+				
+			</div>
+			
+			
 			 <div class="tabsFooter">
 				<div class="tabsFooterContent"></div>
 			</div>

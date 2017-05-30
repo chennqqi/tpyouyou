@@ -1,6 +1,6 @@
 <?php
 
-class ticketModule extends AuthModule{
+class hotelModule extends AuthModule{
 
    function index() {
     	$param = array();		
@@ -20,11 +20,6 @@ class ticketModule extends AuthModule{
 		if(isset($_REQUEST['has_ticket']) && strim($_REQUEST['has_ticket'])!="")
 			$has_ticket = intval($_REQUEST['has_ticket']);
 		
-		$param['has_ticket'] = $has_ticket;
-		if($has_ticket !=3)
-		{
-			$condition .=" and has_ticket=$has_ticket ";
-		}	
 		
 		if(isset($_REQUEST['spot_cate']))
 			$spot_cate_key = strim($_REQUEST['spot_cate']);
@@ -69,17 +64,7 @@ class ticketModule extends AuthModule{
 		
 		$totalCount = $GLOBALS['db']->getOne("select count(id) from ".DB_PREFIX."spot where ".$condition);
 		if($totalCount){
-			$list = $GLOBALS['db']->getAll("select * from ".DB_PREFIX."spot where ".$condition."  order by ".$param['orderField']." ".$param["orderDirection"]." limit ".$limit);
-			foreach ($list as $k=>$v){
-				if($v['spot_level'] >0)
-					$list[$k]['level_format'] = lang("SPOT_LEVEl_".$v['spot_level']);
-				else
-					$list[$k]['level_format'] = "无";
-				
-				$list[$k]['ticket_price_format'] = format_price(format_price_to_display($v['ticket_price']));
-				$supplier_ids[] = $v['supplier_id'];
-			}
-			
+			$list = $GLOBALS['db']->getAll("select * from ".DB_PREFIX."hotel where ".$condition."  order by ".$param['orderField']." ".$param["orderDirection"]." limit ".$limit);
 		}
 		$GLOBALS['tmpl']->assign('list',$list);
 		$GLOBALS['tmpl']->assign('totalCount',$totalCount);
@@ -88,16 +73,16 @@ class ticketModule extends AuthModule{
 		$spot_cate = $GLOBALS['db']->getAll("select id,name from ".DB_PREFIX."spot_cate ORDER BY sort DESC,id ASC");
 		$GLOBALS['tmpl']->assign('spot_cate',$spot_cate);
 		
-		$GLOBALS['tmpl']->assign("formaction",admin_url("ticket"));
-		$GLOBALS['tmpl']->assign("setsorturl",admin_url("ticket#set_sort",array("ajax"=>1)));		
-		$GLOBALS['tmpl']->assign("editurl",admin_url("ticket#edit"));
-		$GLOBALS['tmpl']->assign("addurl",admin_url("ticket#add"));
-		$GLOBALS['tmpl']->display("core/ticket/index.html");
+		$GLOBALS['tmpl']->assign("formaction",admin_url("hotel"));
+		$GLOBALS['tmpl']->assign("setsorturl",admin_url("hotel#set_sort",array("ajax"=>1)));
+		$GLOBALS['tmpl']->assign("editurl",admin_url("hotel#edit"));
+		$GLOBALS['tmpl']->assign("addurl",admin_url("hotel#add"));
+		$GLOBALS['tmpl']->display("core/hotel/index.html");
     }
     
     public function add()
 	{	
-		$sort = $GLOBALS['db']->getOne("select max(sort) from ".DB_PREFIX."spot")+1;	
+		$sort = $GLOBALS['db']->getOne("select max(sort) from ".DB_PREFIX."hotel_room")+1;	
 		$GLOBALS['tmpl']->assign("sort",$sort);
 		$GLOBALS['tmpl']->assign("searchcityurl",admin_url("tour_city#search_city"),array("ajax"=>1));
 		$GLOBALS['tmpl']->assign("searchareaurl",admin_url("tour_area#search_area"),array("ajax"=>1));
@@ -105,21 +90,17 @@ class ticketModule extends AuthModule{
 		$GLOBALS['tmpl']->assign("searchcateurl",admin_url("spot_cate#search_cate"),array("ajax"=>1));
 		$GLOBALS['tmpl']->assign("searchplaceurl",admin_url("tour_place#search_place"),array("ajax"=>1));
 
-		$GLOBALS['tmpl']->assign("addtickets",admin_url("spot_ticket#add"),array("ajax"=>1));
-    	$GLOBALS['tmpl']->assign("edittickets",admin_url("spot_ticket#edit",array("ajax"=>1)));
-		$GLOBALS['tmpl']->assign("formaction",admin_url("ticket#insert",array("ajax"=>1)));
-		$GLOBALS['tmpl']->display("core/ticket/add.html");
+		$GLOBALS['tmpl']->assign("addhotelroom",admin_url("hotel_room#add"),array("ajax"=>1));
+    	$GLOBALS['tmpl']->assign("edithotelroom",admin_url("hotel_room#edit",array("ajax"=>1)));
+		$GLOBALS['tmpl']->assign("formaction",admin_url("hotel#insert",array("ajax"=>1)));
+		$GLOBALS['tmpl']->display("core/hotel/add.html");
 	}
 	
 	public function insert() {
 		$ajax = intval($_REQUEST['ajax']);
 		if(!check_empty("name"))
 		{
-			showErr(lang("SPOT_CATE_NAME_EMPTY"),$ajax);
-		}
-		if(!check_empty("tour_cate_cate_name"))
-		{
-			showErr("请选择景点分类",$ajax);
+			showErr("请输入名称",$ajax);
 		}
 		if(!check_empty("tour_city_name"))
 		{
@@ -141,16 +122,13 @@ class ticketModule extends AuthModule{
 		$data['name'] = strim($_REQUEST['name']);
 		$data['supplier_name'] = $this->supplier_name;
 		$data['supplier_id'] = $this->supplier_id;
-		if(isset($_REQUEST['spot_img'])){
-			$data['image'] = format_domain_to_relative(strim($_REQUEST['spot_img'][0]));
-			$data['image_list'] = serialize($_REQUEST['spot_img']);
+		if(isset($_REQUEST['hotel_img'])){
+			$data['image'] = format_domain_to_relative(strim($_REQUEST['hotel_img'][0]));
+			$data['image_list'] = serialize($_REQUEST['hotel_img']);
 		}
 		else{
 			$data['image'] ="";
 		}
-		
-		$data['cate_match'] = str_to_unicode_string_depart(strim($_REQUEST['tour_cate_cate_name']));
-		$data['cate_match_row'] = strim($_REQUEST['tour_cate_cate_name']);
 		
 		$data['city_match'] = format_fulltext_key(strim($_REQUEST['tour_city_py']));
 		$data['city_match_row'] = strim($_REQUEST['tour_city_name']);
@@ -160,25 +138,11 @@ class ticketModule extends AuthModule{
 		
 		$data['place_match'] = format_fulltext_key(strim($_REQUEST['tour_place_py']));
 		$data['place_match_row'] = strim($_REQUEST['tour_place_name']);
-		
-		$data['tag'] = $data['tag_match'] = str_to_unicode_string_depart(strim($_REQUEST['tour_place_tag_tag_name']));
-		$data['tag_match_row'] = strim($_REQUEST['tour_place_tag_tag_name']);
-		
-		$data['spot_level'] = intval($_REQUEST["spot_level"]);
+
+		$data['star_level'] = intval($_REQUEST["star_level"]);
 		
 		$data['brief'] = strim($_REQUEST["brief"]);
-		$data['appointment_desc'] = format_domain_to_relative(btrim($_REQUEST["appointment_desc"]));
 		$data['description'] = format_domain_to_relative(btrim($_REQUEST['description']));
-		
-		$data['spot_desc_1_name'] = strim($_REQUEST['spot_desc_1_name']);
-		$data['spot_desc_2_name'] = strim($_REQUEST['spot_desc_2_name']);
-		$data['spot_desc_3_name'] = strim($_REQUEST['spot_desc_3_name']);
-		$data['spot_desc_4_name'] = strim($_REQUEST['spot_desc_4_name']);
-		
-		$data['spot_desc_1'] = format_domain_to_relative(btrim($_REQUEST['spot_desc_1']));
-		$data['spot_desc_2'] = format_domain_to_relative(btrim($_REQUEST['spot_desc_2']));
-		$data['spot_desc_3'] = format_domain_to_relative(btrim($_REQUEST['spot_desc_3']));
-		$data['spot_desc_4'] = format_domain_to_relative(btrim($_REQUEST['spot_desc_4']));
 
 		$data['address'] = strim($_REQUEST['address']);
 		$data['x_point'] = strim($_REQUEST['xpoint']);
@@ -186,10 +150,7 @@ class ticketModule extends AuthModule{
 		$data['create_time'] = NOW_TIME;
 		
 		if(isset($_REQUEST['tickets'])){
-			
-			$data['has_ticket'] = 1;
-			$data['ticket_price'] = false;
-			
+						
 			foreach($_REQUEST['tickets'] as $k=>$v){
 				$v = unserialize(base64_decode($v));
 				
@@ -202,23 +163,23 @@ class ticketModule extends AuthModule{
 				
 				$_REQUEST['tickets'][$k] = base64_encode(serialize($v));
 				
-				if($data['ticket_price'] == false || $data['ticket_price'] > intval($v['sale_price'])){
+				if($data['price'] == false || $data['price'] > intval($v['sale_price'])){
 					
-					$data['ticket_price'] = $v['sale_price'];
+					$data['price'] = $v['sale_price'];
 				}
 			}
 			
-			$data['ticket_list'] = serialize($_REQUEST['tickets']);
+			$data['room_list'] = serialize($_REQUEST['tickets']);
 			
-			$data['ticket_price'] = format_price_to_db($data['ticket_price']);
+			$data['price'] = format_price_to_db($data['price']);
 		}
 		
 		// 更新数据
 		$log_info = $data['name'];
-		$GLOBALS['db']->autoExecute(DB_PREFIX."spot_supplier",$data,"INSERT","","SILENT");
+		$GLOBALS['db']->autoExecute(DB_PREFIX."hotel_supplier",$data,"INSERT","","SILENT");
 		if ($GLOBALS['db']->error()=="") {
 			//成功提示
-			showSuccess(lang("INSERT_SUCCESS"),$ajax,admin_url("ticket_supplier#index"));
+			showSuccess(lang("INSERT_SUCCESS"),$ajax,admin_url("hotel_supplier#index"));
 		} else {
 			//错误提示
 			showErr(lang("INSERT_FAILED")."<br />".$GLOBALS['db']->error(),$ajax);

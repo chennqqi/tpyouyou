@@ -122,7 +122,7 @@ function set_gopreview()
 function app_redirect_preview()
 {
 	app_redirect(get_gopreview());
-}	
+}
 
 //显示语言
 // lang($key,p1,p2......) 用于格式化 sprintf %s
@@ -150,7 +150,6 @@ function lang($key)
 	else
 	return $key;
 }
-
 
 /**
  * 获得查询次数以及查询时间
@@ -254,9 +253,7 @@ function admin_url($route="index",$param=array())
 		}
 		if(substr($url,-1,1)=='&'||substr($url,-1,1)=='?') $url = substr($url,0,-1);
 		return $url;
-
 }
-
 
 //后台日志记录
 function save_log($msg,$status)
@@ -346,9 +343,7 @@ function format_ids_str_key($idstr)
 	}
 	else
 		return false;
-
 }
-
 
 function load_keimg($name,$value)
 {

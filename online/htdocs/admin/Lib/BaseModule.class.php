@@ -55,7 +55,6 @@ class AuthModule extends BaseModule{
 			$this->check_auth();
 		}
 		
-		
 		/**
 		 * 验证检限
 		 * 已登录时验证用户权限, Index模块下的所有函数无需权限验证
@@ -79,9 +78,7 @@ class AuthModule extends BaseModule{
 				$is_navClick = intval($_REQUEST['_']);
 			else
 				$is_navClick = 0;
-		
-			
-		
+				
 			if($adm_id == 0&&$is_auth==0)
 			{
 				if($ajax == 0&&$is_navClick==0)

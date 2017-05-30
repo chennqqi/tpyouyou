@@ -1,5 +1,5 @@
 <script type="text/javascript" src="{$TMPL}/core/include/js/spot.js"></script>
-<h2 class="contentTitle">{lang v="ADD"}{lang v="NAME"}</h2>
+<h2 class="contentTitle">新增酒店</h2>
 <form action="{$formaction}" method="post" class="pageForm required-validate" onsubmit="return validateCallback(this, navTabAjaxDone)">
 <div class="pageContent">
 	<div class="pageFormContent" layouth="97">		
@@ -7,20 +7,19 @@
 			<div class="tabsHeader">
 				<div class="tabsHeaderContent">
 					<ul>
-						<li class="selected"><a href="javascript:void(0)"><span>景点设置</span></a></li>
-						<li><a href="javascript:void(0)"><span>相关内容</span></a></li>
-						<li><a href="javascript:void(0)"><span>景点相册</span></a></li>
+						<li class="selected"><a href="javascript:void(0)"><span>酒店设置</span></a></li>
+						<li><a href="javascript:void(0)"><span>酒店相册</span></a></li>
 						<li><a href="javascript:void(0)"><span>地图定位</span></a></li>
-						<li><a href="javascript:void(0)"><span>门票设置</span></a></li>
+						<li><a href="javascript:void(0)"><span>房型设置</span></a></li>
 					</ul>
 				</div>
 			</div>
 			<div class="tabsContent cf" >
-				<!--景点设置-->
+				<!--酒店设置-->
 				<div>
 					<table class="formtable">			
 					<tr>
-						<td class="item_title">{lang v="SPOT_NAME"}:</td>
+						<td class="item_title">酒店名:</td>
 						<td class="item_input">
 							<input type="text" class="required textInput valid"  minlength="2"  name="name">
 							<label class="tip"></label>
@@ -28,13 +27,13 @@
 					</tr>
 
 					<tr>
-						<td class="item_title">{lang v="SPOT_CATE"}:</td>
+						<td class="item_title">开业时间:</td>
 						<td class="item_input">
-							<input class="required" size="80" name="tour_cate.cate_name" lookupSend="tour_cate_data"  type="text"  readonly="true"  />
-							<a class="btnLook" href="{$searchcateurl}" lookupGroupSelect="tour_cate">{lang v="SELECT_SPOT_CATE"}</a>
+							<input type="text" class="required textInput valid"  minlength="2"  name="name">
+							<label class="tip"></label>
 						</td>
 					</tr>
-				
+
 					<tr>
 						<td class="item_title">允许显示的{lang v="CITY"}:</td>
 						<td class="item_input">
@@ -42,7 +41,7 @@
 							<input class="required" size="80" name="tour_city.name" lookupSend="tour_city_data"  type="text"  readonly="true"  />
 							<a class="btnLook" href="{$searchcityurl}" lookupGroupSelect="tour_city">{lang v="SELECT_TOUR_CITY"}</a>
 						</td>
-					</tr>	
+					</tr>
 					
 					<tr>
 						<td class="item_title">{lang v="TOUR_AREA"}:</td>
@@ -63,23 +62,17 @@
 					</tr>
 					
 					<tr>
-						<td class="item_title">{lang v="TOUR_PLACE_TAG"}:</td>
-						<td class="item_input">					
-							<input  size="80" name="tour_place_tag.tag_name" lookupSend="tour_place_tag_data"  type="text"  />
-							<a class="btnLook" href="{$searchtagurl}" lookupGroupSelect="tour_place_tag">{lang v="SELECT_TOUR_PLACE_TAG"}</a>
-						</td>
-					</tr>
-					
-					<tr>
-						<td class="item_title">{lang v="SPOT_LEVEl"}:</td>
+						<td class="item_title">酒店星级:</td>
 						<td class="item_input">
-							<select name="spot_level" class="combox">
-								<option value="0">{lang v="EMPTY_SELECT"}</option>
-								<option value="1">{lang v="SPOT_LEVEl_1"}</option>
-								<option value="2">{lang v="SPOT_LEVEl_2"}</option>
-								<option value="3">{lang v="SPOT_LEVEl_3"}</option>
-								<option value="4">{lang v="SPOT_LEVEl_4"}</option>
-								<option value="5">{lang v="SPOT_LEVEl_5"}</option>
+							<select name="star_level" class="combox">
+								<option value="0">未选择</option>
+								<option value="1">一星</option>
+								<option value="2">二星</option>
+								<option value="3">三星</option>
+								<option value="4">四星</option>
+								<option value="5">五星</option>
+								<option value="5">六星</option>
+								<option value="5">七星</option>
 							</select>
 						</td>
 					</tr>
@@ -100,22 +93,11 @@
 						</td>
 					</tr>
 					
-					
-					<tr>
-						<td class="item_title">预订须知:</td>
-						<td class="item_input">
-							<textarea name="appointment_desc"class="ketext" style="width:680px;height:400px;visibility:hidden;"></textarea>
-							<label class="tip"></label>
-						</td>
-					</tr>
-					
-					
-				
 					</table>
 				</div>
 				
 				<!--相关内容-->
-				<div>
+<!-- 				<div>
 					<table class="formtable">
 						<tr>
 							<td colspan="2" class="item_input">
@@ -174,7 +156,7 @@
 							</td>
 						</tr>
 					</table>
-				</div>
+				</div> -->
 				
 				<!--相册-->
 				<div>
@@ -182,7 +164,7 @@
 						<tr>
 							<td class="item_title">{lang v="SPOT_IMAGE"}:</td>
 							<td class="item_input">
-								{function name="load_mukeimg" p1="spot_img" p2=$image_list}
+								{function name="load_mukeimg" p1="hotel_img" p2=$image_list}
 							</td>
 						</tr>	
 					</table>
@@ -206,23 +188,22 @@
 					</table>
 				</div>
 				
-				<!--门票设置-->
+				<!--房型设置-->
 				<div>
-					<table class="formtable">			
+					<table class="formtable">
 					<tr>
-						<td class="item_title">{lang v="NAME"}:</td>
-						<td class="item_input" id="tickets" editurl="{$edittickets}">
-							<a class="button" href="{$addtickets}" target="dialog" title="{lang v="ADD_TICKETS"}" width="800" height="480" mask="true"  rel="dlg_tickets"><span>{lang v="ADD_TICKETS"}</span></a>
+						<td class="item_title">酒店房型:</td>
+						<td class="item_input" id="tickets" editurl="{$edithotelroom}">
+							<a class="button" href="{$addhotelroom}" target="dialog" title="添加房型" width="800" height="480" mask="true"  rel="dlg_tickets"><span>添加房型</span></a>
 							<div >
 								<table class="list nowrap " width="100%" style="clear: both;">
 									<thead>
 										<tr>
-											<th>门票</th>
+											<th>房型</th>
 											<th width="100">原价</th>
 											<th width="100">现价</th>
 											<th width="100">销售价</th>
 											<th width="100">必须证件号</th>
-											<th width="50">团购</th>
 											<th width="50">状态</th>
 											<th width="100">操作</th>
 										</tr>
@@ -238,7 +219,6 @@
 					</table>
 				</div>
 			</div>
-						
 			 <div class="tabsFooter">
 				<div class="tabsFooterContent"></div>
 			</div>

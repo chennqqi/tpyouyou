@@ -852,8 +852,6 @@ function ticket_order_refund($id,$is_supplier,$refuse_reason='',$refund_amount_i
 	return $res;
 }
 
-
-
 /**
  * 订单作废 操作
  * 订单状态(流程)1.新订单 2.确认通过 3.已完成 4.作废
@@ -1039,9 +1037,6 @@ function ticket_auto_refund_amount($order,$is_supplier)
 			//实体票未发货时，自动退款?
 			
 		}
-		
-		
-		
 	}
 	
 }
@@ -1177,7 +1172,6 @@ function ticket_order_complete($id,$is_supplier)
 			}else{
 				save_ticket_order_log($id,'完成订单时，发现用户id不存',1);
 			}
-	
 			save_ticket_order_log($id,'完成订单',$is_supplier);
 	
 			return true;
