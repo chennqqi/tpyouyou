@@ -2,8 +2,8 @@
 
 class spotModule extends AuthModule
 {
-    function index() {
-    	$param = array();		
+  function index() {
+  	$param = array();		
 		//条件
 		$condition = " 1 = 1 ";
 		if(isset($_REQUEST['name']))
@@ -186,7 +186,6 @@ class spotModule extends AuthModule
 		$GLOBALS['tmpl']->assign("formaction",admin_url("spot#insert",array("ajax"=>1)));
 		$GLOBALS['tmpl']->display("core/spot/add.html");
 	}
-	
 	
 	
 	public function insert() {
@@ -1521,7 +1520,6 @@ where ".$condition;
 				showErr("添加发送队列失败",$ajax);
 			}
 		}
-	
 		//订单支付成功，发邮件
 		if ($send_type == 2){
 			if (send_order_mail($order_info,2) == 1){

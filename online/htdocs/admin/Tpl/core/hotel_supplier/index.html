@@ -88,32 +88,27 @@ function blursort(dom,id)
 				<th  width="50" orderField="id" {if $param.orderField eq 'id'} class="{$param.orderDirection}"{/if}>{lang v="ID"}</th>
 				<th width="150">{lang v="SUPPLIER"}</th>
 				<th>{lang v="SPOT_NAME"}</th>
-				<th width="100">原景点门票编号</th>
 				<th width="60">{lang v="SPOT_LEVEl"}</th>
 				<th width="220">详细地址</th>
-				<th width="100">{lang v="HAS_TICKET"}</th>
 				<th width="100">门票价格</th>
 				<th width="130">{lang v="CREATE_TIME"}</th>
 				<th width="100">{lang v="TAG_LANG_OPERATE"}</th>
 			</tr>
 		</thead>
 		<tbody>
-		
 			{foreach from=$list item=item}
 			<tr  rel="{$item.id}">
 				<td><input name="id" value="{$item.id}" type="checkbox"></td>
 				<td>{$item.id}</td>
 				<td>{$item.supplier_name}</td>
 				<td>{$item.name}</td>
-				<td>{$item.rel_id}</td>
-				<td>{$item.level_format}</td>
+				<td>{$item.star_level}</td>
 				<td title="{$item.address}">{$item.address}</td>
-				<td>{if $item.has_ticket eq 0}无{else}有{/if}</td>
-				<td>{$item.ticket_price_format}起</td>
+				<td>{$item.price}元起</td>
 				<td>{$item.create_time_format}</td>
 				<td>
 					<a title="{lang v="CONFIRM_DELETE"}" target="ajaxTodo" href="{$delurl}&id={$item.id}" class="btnDel">{lang v="DEL"}</a>
-					<a title="{lang v="PUBLISH"}{lang v="NAME"}{$item.name}" rel="spot_publishpage_{$item.id}" target="navTab" href="{$editurl}&id={$item.id}"  class="btnEdit">{lang v="PUBLISH"}</a>
+					<a title="{lang v="PUBLISH"}{lang v="NAME"}{$item.name}" rel="hotel_publishpage_{$item.id}" target="navTab" href="{$editurl}&id={$item.id}"  class="btnEdit">{lang v="PUBLISH"}</a>
 					<a title="预览" href="{$item.preview_url}" class="btnLook" target="_blank">预览</a>
 				</td>
 			</tr>

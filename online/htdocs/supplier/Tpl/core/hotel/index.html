@@ -37,7 +37,6 @@ function blursort(dom,id)
 	<div class="searchBar">
 		<div class="pageFormContent cf" >
 			<div class="searchtableRow">
-				
 				<table>
 					<tr>
 						<td>
@@ -81,10 +80,9 @@ function blursort(dom,id)
 				<td><input name="id" value="{$item.id}" type="checkbox"></td>
 				<td>{$item.id}</td>
 				<td>{$item.name}</td>
-				<td>{$item.level_format}</td>
+				<td>{$item.star_level}</td>
 				<td title="{$item.address}">{$item.address}</td>
-				<td>{if $item.has_ticket eq 0}无{else}有{/if}</td>
-				<td>{$item.ticket_price_format}起</td>
+				<td>{$item.price}起</td>
 				<td>
 					<a title="{lang v="EDIT"}{lang v="NAME"}{$item.name}" rel="spot_editpage_{$item.id}" target="navTab" href="{$editurl}&id={$item.id}"  class="btnEdit">{lang v="EDIT"}</a>
 				</td>

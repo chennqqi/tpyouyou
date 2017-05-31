@@ -46,7 +46,6 @@ class hotel_supplierModule extends AuthModule{
 		$limit = (($page-1)*$param['pageSize']).",".$param['pageSize'];
 		$param['pageNum'] = $page;
 		
-		
 		//排序
 		if(isset($_REQUEST['orderField']))
 			$param['orderField'] = strim($_REQUEST['orderField']);
@@ -103,28 +102,25 @@ class hotel_supplierModule extends AuthModule{
 		$vo['area_match'] = unformat_fulltext_key($vo['area_match']);
 		$vo['place_match'] = unformat_fulltext_key($vo['place_match']);
 		
-		$GLOBALS['tmpl']->assign ( 'vo', $vo );
-		
+		$GLOBALS['tmpl']->assign ( 'vo', $vo );		
 		//相册
 		if($vo['image_list']!=""){
 			$image_list = unserialize($vo['image_list']);
 			$GLOBALS['tmpl']->assign ( 'image_list', $image_list );
 		}
-		
 		//门票
-		if($vo['ticket_list']!=""){
-			$ttickets = unserialize($vo['ticket_list']);
+		if($vo['room_list']!=""){
+			$ttickets = unserialize($vo['room_list']);
 			foreach($ttickets as $k=>$v){
 				$tickets[$k] = unserialize(base64_decode($v));
 				$tickets[$k]['ticket_data'] = $v;
 			}
-			
 			$GLOBALS['tmpl']->assign ( 'tickets', $tickets );
 		}
 		
-		$GLOBALS['tmpl']->assign("addtickets",admin_url("spot_ticket#add"),array("ajax"=>1));
-    	$GLOBALS['tmpl']->assign("edittickets",admin_url("spot_ticket#edit",array("ajax"=>1)));
-		$GLOBALS['tmpl']->assign("formaction",admin_url("ticket_supplier#update",array("ajax"=>1)));
+		$GLOBALS['tmpl']->assign("addhotelroom",admin_url("hotel_room#add"),array("ajax"=>1));
+    $GLOBALS['tmpl']->assign("edithotelroom",admin_url("hotel_room#edit",array("ajax"=>1)));
+		$GLOBALS['tmpl']->assign("formaction",admin_url("hotel_supplier#update",array("ajax"=>1)));
 		
     $GLOBALS['tmpl']->display("core/hotel_supplier/edit.html");
   }
@@ -136,17 +132,13 @@ class hotel_supplierModule extends AuthModule{
 		{
 			showErr(lang("SPOT_CATE_NAME_EMPTY"),$ajax);
 		}
-		if(!check_empty("tour_cate_cate_name"))
+		if(!check_empty("tel"))
 		{
-			showErr("请选择景点分类",$ajax);
+			showErr("请输入电话号码",$ajax);
 		}
 		if(!check_empty("tour_city_name"))
 		{
 			showErr("请选择城市",$ajax);
-		}
-		if(!check_empty("tour_area_name"))
-		{
-			showErr("请选择大区域",$ajax);
 		}
 		if(!check_empty("description"))
 		{
@@ -174,40 +166,22 @@ class hotel_supplierModule extends AuthModule{
 		$data['city_match'] = format_fulltext_key(strim($_REQUEST['tour_city_py']));
 		$data['city_match_row'] = strim($_REQUEST['tour_city_name']);
 		
-		$data['area_match'] = format_fulltext_key(strim($_REQUEST['tour_area_py']));
-		$data['area_match_row'] = strim($_REQUEST['tour_area_name']);
-		
-		$data['place_match'] = format_fulltext_key(strim($_REQUEST['tour_place_py']));
-		$data['place_match_row'] = strim($_REQUEST['tour_place_name']);
-		
 		$data['tag'] = $data['tag_match'] = str_to_unicode_string_depart(strim($_REQUEST['tour_place_tag_tag_name']));
 		$data['tag_match_row'] = strim($_REQUEST['tour_place_tag_tag_name']);
 		
-		$data['spot_level'] = intval($_REQUEST["spot_level"]);
+		$data['star_level'] = intval($_REQUEST["star_level"]);
+		$data['tel'] = intval($_REQUEST["tel"]);
 		
 		$data['brief'] = strim($_REQUEST["brief"]);
 		$data['appointment_desc'] = format_domain_to_relative(btrim($_REQUEST["appointment_desc"]));
 		$data['description'] = format_domain_to_relative(btrim($_REQUEST['description']));
 		
-		$data['spot_desc_1_name'] = strim($_REQUEST['spot_desc_1_name']);
-		$data['spot_desc_2_name'] = strim($_REQUEST['spot_desc_2_name']);
-		$data['spot_desc_3_name'] = strim($_REQUEST['spot_desc_3_name']);
-		$data['spot_desc_4_name'] = strim($_REQUEST['spot_desc_4_name']);
-		
-		$data['spot_desc_1'] = format_domain_to_relative(btrim($_REQUEST['spot_desc_1']));
-		$data['spot_desc_2'] = format_domain_to_relative(btrim($_REQUEST['spot_desc_2']));
-		$data['spot_desc_3'] = format_domain_to_relative(btrim($_REQUEST['spot_desc_3']));
-		$data['spot_desc_4'] = format_domain_to_relative(btrim($_REQUEST['spot_desc_4']));
-
 		$data['address'] = strim($_REQUEST['address']);
 		$data['x_point'] = strim($_REQUEST['xpoint']);
 		$data['y_point'] = strim($_REQUEST['ypoint']);
 		$data['create_time'] = NOW_TIME;
 		
 		if(isset($_REQUEST['tickets'])){
-			
-			$data['has_ticket'] = 1;
-			$data['ticket_price'] = false;
 			
 			foreach($_REQUEST['tickets'] as $k=>$v){
 				$v = unserialize(base64_decode($v));
@@ -221,24 +195,21 @@ class hotel_supplierModule extends AuthModule{
 				
 				$_REQUEST['tickets'][$k] = base64_encode(serialize($v));
 				
-				if($data['ticket_price'] == false || $data['ticket_price'] > intval($v['sale_price'])){
-					
-					$data['ticket_price'] = $v['sale_price'];
+				if($data['price'] == false || $data['price'] > intval($v['sale_price'])){
+					$data['price'] = $v['sale_price'];
 				}
 			}
-			
-			$data['ticket_list'] = serialize($_REQUEST['tickets']);
-			
-			$data['ticket_price'] = format_price_to_db($data['ticket_price']);
+						
+			$data['room_list'] = serialize($_REQUEST['tickets']);
+			$data['price'] = format_price_to_db($data['price']);
 		}		
 		
 		// 更新数据
-		$data['rel_id'] = intval($_REQUEST["rel_id"]);
-		$GLOBALS['db']->autoExecute(DB_PREFIX."spot_supplier",$data,"UPDATE"," supplier_id=".$this->supplier_id ." and id=".$id,"SILENT");
+		$GLOBALS['db']->autoExecute(DB_PREFIX."hotel_supplier",$data,"UPDATE"," supplier_id=".$this->supplier_id ." and id=".$id,"SILENT");
 		
 		if ($GLOBALS['db']->error()=="") {
 			//成功提示
-			showSuccess("编辑成功，等待审核",$ajax);
+			showSuccess("审核酒店编辑成功，等待审核",$ajax);
 		} else {
 			//错误提示
 			showErr(lang("UPDATE_FAILED")."<br />".$GLOBALS['db']->error(),$ajax);

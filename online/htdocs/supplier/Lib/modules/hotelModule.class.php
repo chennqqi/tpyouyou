@@ -2,8 +2,8 @@
 
 class hotelModule extends AuthModule{
 
-   function index() {
-    	$param = array();		
+  function index() {
+    $param = array();		
 		//条件
 		$condition = " supplier_id =  ".$this->supplier_id;
 		if(isset($_REQUEST['name']))
@@ -80,8 +80,7 @@ class hotelModule extends AuthModule{
 		$GLOBALS['tmpl']->display("core/hotel/index.html");
     }
     
-    public function add()
-	{	
+  public function add() {
 		$sort = $GLOBALS['db']->getOne("select max(sort) from ".DB_PREFIX."hotel_room")+1;	
 		$GLOBALS['tmpl']->assign("sort",$sort);
 		$GLOBALS['tmpl']->assign("searchcityurl",admin_url("tour_city#search_city"),array("ajax"=>1));
@@ -95,20 +94,20 @@ class hotelModule extends AuthModule{
 		$GLOBALS['tmpl']->assign("formaction",admin_url("hotel#insert",array("ajax"=>1)));
 		$GLOBALS['tmpl']->display("core/hotel/add.html");
 	}
-	
+
 	public function insert() {
 		$ajax = intval($_REQUEST['ajax']);
 		if(!check_empty("name"))
 		{
 			showErr("请输入名称",$ajax);
 		}
+		if(!check_empty("tel"))
+		{
+			showErr("请输入酒店联系电话",$ajax);
+		}
 		if(!check_empty("tour_city_name"))
 		{
 			showErr("请选择城市",$ajax);
-		}
-		if(!check_empty("tour_area_name"))
-		{
-			showErr("请选择大区域",$ajax);
 		}
 		if(!check_empty("description"))
 		{
@@ -129,17 +128,12 @@ class hotelModule extends AuthModule{
 		else{
 			$data['image'] ="";
 		}
-		
 		$data['city_match'] = format_fulltext_key(strim($_REQUEST['tour_city_py']));
 		$data['city_match_row'] = strim($_REQUEST['tour_city_name']);
-		
-		$data['area_match'] = format_fulltext_key(strim($_REQUEST['tour_area_py']));
-		$data['area_match_row'] = strim($_REQUEST['tour_area_name']);
-		
-		$data['place_match'] = format_fulltext_key(strim($_REQUEST['tour_place_py']));
-		$data['place_match_row'] = strim($_REQUEST['tour_place_name']);
 
 		$data['star_level'] = intval($_REQUEST["star_level"]);
+
+		$data['tel'] = intval($_REQUEST["tel"]);
 		
 		$data['brief'] = strim($_REQUEST["brief"]);
 		$data['description'] = format_domain_to_relative(btrim($_REQUEST['description']));
@@ -150,30 +144,23 @@ class hotelModule extends AuthModule{
 		$data['create_time'] = NOW_TIME;
 		
 		if(isset($_REQUEST['tickets'])){
-						
 			foreach($_REQUEST['tickets'] as $k=>$v){
 				$v = unserialize(base64_decode($v));
-				
 				$tuan_begin_time = 0;
 				$tuan_end_time = 0;
 				if(intval($v['is_tuan']) == 0){
 					$v['tuan_begin_time'] = "";
 					$v['tuan_end_time'] = "";
 				}
-				
 				$_REQUEST['tickets'][$k] = base64_encode(serialize($v));
 				
 				if($data['price'] == false || $data['price'] > intval($v['sale_price'])){
-					
 					$data['price'] = $v['sale_price'];
 				}
 			}
-			
 			$data['room_list'] = serialize($_REQUEST['tickets']);
-			
 			$data['price'] = format_price_to_db($data['price']);
 		}
-		
 		// 更新数据
 		$log_info = $data['name'];
 		$GLOBALS['db']->autoExecute(DB_PREFIX."hotel_supplier",$data,"INSERT","","SILENT");
@@ -185,8 +172,8 @@ class hotelModule extends AuthModule{
 			showErr(lang("INSERT_FAILED")."<br />".$GLOBALS['db']->error(),$ajax);
 		}	
 	}
-	
-	public function edit() {		
+
+	public function edit() {
 		$id = intval($_REQUEST ['id']);
 		$vo =$GLOBALS['db']->getRow("select * from ".DB_PREFIX."spot where id = ".$id." AND supplier_id=".$this->supplier_id);
 		if(!$vo){
@@ -273,7 +260,7 @@ class hotelModule extends AuthModule{
 		
 		$GLOBALS['tmpl']->display("core/ticket/edit.html");
 	}
-	
+
 	public function update() {
 		$ajax = intval($_REQUEST['ajax']);
 		if(!check_empty("name"))
@@ -393,9 +380,8 @@ class hotelModule extends AuthModule{
 			//错误提示
 			showErr(lang("UPDATE_FAILED")."<br />".$GLOBALS['db']->error(),$ajax);
 		}	
-
 	}
-	
+
 	/**
 	 * 验证消费券
 	 */

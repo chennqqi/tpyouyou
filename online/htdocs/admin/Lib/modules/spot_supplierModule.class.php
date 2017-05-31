@@ -1,7 +1,7 @@
 <?php
 class spot_supplierModule extends AuthModule {
 
-    function index() {
+  function index() {
     	$param = array();		
 		//条件
 		$condition = " 1 = 1 ";
@@ -99,8 +99,7 @@ class spot_supplierModule extends AuthModule {
 		$GLOBALS['tmpl']->display("core/spot_supplier/index.html");
     }
     
-     public function foreverdelete()
-	 {		
+  public function foreverdelete() {		
 		$ajax = intval($_REQUEST['ajax']);		
 		if (isset ( $_REQUEST ['id'] ))
 		{
@@ -127,7 +126,6 @@ class spot_supplierModule extends AuthModule {
 		{
 			showErr(lang("INVALID_OPERATION"),$ajax);
 		}
-
 	}
 	
 	public function edit() {		
@@ -200,7 +198,6 @@ class spot_supplierModule extends AuthModule {
 		
 		$GLOBALS['tmpl']->display("core/spot_supplier/edit.html");
 	}
-	
 	
 	public function update(){
 		$ajax = intval($_REQUEST['ajax']);

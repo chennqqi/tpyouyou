@@ -7,11 +7,10 @@
 			<div class="tabsHeader">
 				<div class="tabsHeaderContent">
 					<ul>					
-						<li class="selected"><a href="javascript:void(0)"><span>景点设置</span></a></li>
-						<li><a href="javascript:void(0)"><span>相关内容</span></a></li>
-						<li><a href="javascript:void(0)"><span>景点相册</span></a></li>
+						<li class="selected"><a href="javascript:void(0)"><span>酒店设置</span></a></li>
+						<li><a href="javascript:void(0)"><span>酒店相册</span></a></li>
 						<li><a href="javascript:void(0)"><span>地图定位</span></a></li>
-						<li><a href="javascript:void(0)"><span>门票设置</span></a></li>
+						<li><a href="javascript:void(0)"><span>房型设置</span></a></li>
 					</ul>
 				</div>
 			</div>
@@ -20,71 +19,46 @@
 				<div>
 					<table class="formtable">			
 					<tr>
-						<td class="item_title">{lang v="SPOT_NAME"}:</td>
+						<td class="item_title">酒店名:</td>
 						<td class="item_input">
 							<input type="text" class="required textInput valid"  value="{$vo.name}" name="name">
 							<label class="tip"></label>
 						</td>
 					</tr>
-					
-					
+
 					<tr>
-						<td class="item_title">{lang v="SPOT_CATE"}:</td>
+						<td class="item_title">联系电话:</td>
 						<td class="item_input">
-							<input class="required" size="80" name="tour_cate.cate_name" lookupSend="tour_cate_data"  type="text"  readonly="true" value="{$vo.cate_match_row}" />
-							<a class="btnLook" href="{$searchcateurl}" lookupGroupSelect="tour_cate">{lang v="SELECT_SPOT_CATE"}</a>
+							<input type="text" class="required textInput valid" value="{$vo.tel}"  minlength="2"  name="tel">
+							<label class="tip"></label>
 						</td>
 					</tr>
-				
+
 					<tr>
-						<td class="item_title">允许显示的{lang v="CITY"}:</td>
+						<td class="item_title">所在{lang v="CITY"}:</td>
 						<td class="item_input">
-							<input name="tour_city.py"  lookupSend="tour_city_data" type="hidden" value="{$vo.city_match}" />
-							<input class="required" size="80" name="tour_city.name" lookupSend="tour_city_data"  type="text"  readonly="true" value="{$vo.city_match_row}"  />
+							<input name="tour_city.py"  lookupSend="tour_city_data" type="hidden" value="{$vo.city_match}"/>
+							<input class="required" size="80" value="{$vo.city_match_row}" name="tour_city.name" lookupSend="tour_city_data"  type="text"  readonly="true"  />
 							<a class="btnLook" href="{$searchcityurl}" lookupGroupSelect="tour_city">{lang v="SELECT_TOUR_CITY"}</a>
 						</td>
-					</tr>	
+					</tr>
 					
 					<tr>
-						<td class="item_title">{lang v="TOUR_AREA"}:</td>
+						<td class="item_title">酒店星级:</td>
 						<td class="item_input">
-							<input name="tour_area.py"  lookupSend="tour_area_data" type="hidden"  value="{$vo.area_match}"/>
-							<input class="required" size="80" name="tour_area.name" lookupSend="tour_area_data"  type="text"  readonly="true"  value="{$vo.area_match_row}"  />
-							<a class="btnLook" href="{$searchareaurl}" lookupGroupSelect="tour_area">{lang v="SELECT_TOUR_AREA"}</a>
-						</td>
-					</tr>
-					
-					<tr>
-						<td class="item_title">{lang v="TOUR_PLACE"}:</td>
-						<td class="item_input">	
-							<input name="tour_place.py"  lookupSend="tour_place_data" type="hidden" value="{$vo.place_match}" />				
-							<input  size="80" name="tour_place.name" lookupSend="tour_place_data"  type="text" value="{$vo.place_match_row}"  />
-							<a class="btnLook" href="{$searchplaceurl}" lookupGroupSelect="tour_place">{lang v="SELECT_TOUR_PLACE"}</a>
-						</td>
-					</tr>
-					
-					<tr>
-						<td class="item_title">{lang v="TOUR_PLACE_TAG"}:</td>
-						<td class="item_input">					
-							<input  size="80" name="tour_place_tag.tag_name" lookupSend="tour_place_tag_data"  type="text"  value="{$vo.tag_match_row}" />
-							<a class="btnLook" href="{$searchtagurl}" lookupGroupSelect="tour_place_tag">{lang v="SELECT_TOUR_PLACE_TAG"}</a>
-						</td>
-					</tr>
-					
-					<tr>
-						<td class="item_title">{lang v="SPOT_LEVEl"}:</td>
-						<td class="item_input">
-							<select name="spot_level" class="combox">
-								<option value="0" {if $vo.spot_level eq 0}selected="selected"{/if}>{lang v="EMPTY_SELECT"}</option>
-								<option value="1" {if $vo.spot_level eq 1}selected="selected"{/if}>{lang v="SPOT_LEVEl_1"}</option>
-								<option value="2" {if $vo.spot_level eq 2}selected="selected"{/if}>{lang v="SPOT_LEVEl_2"}</option>
-								<option value="3" {if $vo.spot_level eq 3}selected="selected"{/if}>{lang v="SPOT_LEVEl_3"}</option>
-								<option value="4" {if $vo.spot_level eq 4}selected="selected"{/if}>{lang v="SPOT_LEVEl_4"}</option>
-								<option value="5" {if $vo.spot_level eq 5}selected="selected"{/if}>{lang v="SPOT_LEVEl_5"}</option>
+							<select name="star_level" class="combox">
+								<option value="0" {if $vo.star_level eq 0}selected="selected"{/if}>未选择</option>
+								<option value="1" {if $vo.star_level eq 1}selected="selected"{/if}>一星</option>
+								<option value="2" {if $vo.star_level eq 2}selected="selected"{/if}>二星</option>
+								<option value="3" {if $vo.star_level eq 3}selected="selected"{/if}>三星</option>
+								<option value="4" {if $vo.star_level eq 4}selected="selected"{/if}>四星</option>
+								<option value="5" {if $vo.star_level eq 5}selected="selected"{/if}>五星</option>
+								<option value="6" {if $vo.star_level eq 6}selected="selected"{/if}>六星</option>
+								<option value="7" {if $vo.star_level eq 7}selected="selected"{/if}>七星</option>
 							</select>
 						</td>
 					</tr>
-					
+									
 					<tr>
 						<td class="item_title">简介:</td>
 						<td class="item_input">
@@ -117,74 +91,11 @@
 					</table>
 				</div>
 				
-				
-				<!--相关内容-->
-				<div>
-					<table class="formtable">
-						<tr>
-							<td colspan="2" class="item_input">
-								<div style="padding:10px">此处<span style="font-weight:bolder;color:red;">内容名</span>如若不设置，前台将不会显示相应内容</div>
-							</td>
-						</tr>
-						<tr>
-							<td class="item_title">内容名一:</td>
-							<td class="item_input">
-								<input type="text" class="textInput" name="spot_desc_1_name" size="50" value="{$vo.spot_desc_1_name}" />
-							</td>
-						</tr>
-						<tr>
-							<td class="item_title">内容一:</td>
-							<td class="item_input">
-								<textarea name="spot_desc_1" class="ketext" style="width:680px;height:400px;visibility:hidden;">{$vo.spot_desc_1}</textarea>
-							</td>
-						</tr>	
-						<tr><td colspan="2" class="item_title"></td></tr>
-						<tr>
-							<td class="item_title">内容名二:</td>
-							<td class="item_input">
-								<input type="text" class="textInput" name="spot_desc_2_name" size="50" value="{$vo.spot_desc_2_name}" />
-							</td>
-						</tr>
-						<tr>
-							<td class="item_title">内容二:</td>
-							<td class="item_input">
-								<textarea name="spot_desc_2" class="ketext" style="width:680px;height:400px;visibility:hidden;">{$vo.spot_desc_2}</textarea>
-							</td>
-						</tr>
-						<tr><td colspan="2" class="item_title"></td></tr>
-						<tr>
-							<td class="item_title">内容名三:</td>
-							<td class="item_input">
-								<input type="text" class="textInput" name="spot_desc_3_name" size="50" value="{$vo.spot_desc_3_name}" />
-							</td>
-						</tr>
-						<tr>
-							<td class="item_title">内容三:</td>
-							<td class="item_input">
-								<textarea name="spot_desc_3" class="ketext" style="width:680px;height:400px;visibility:hidden;">{$vo.spot_desc_3}</textarea>
-							</td>
-						</tr>
-						<tr><td colspan="2" class="item_title"></td></tr>
-						<tr>
-							<td class="item_title">内容名四:</td>
-							<td class="item_input">
-								<input type="text" class="textInput" name="spot_desc_4_name" size="50" value="{$vo.spot_desc_4_name}" />
-							</td>
-						</tr>
-						<tr>
-							<td class="item_title">内容四:</td>
-							<td class="item_input">
-								<textarea name="spot_desc_4" class="ketext" style="width:680px;height:400px;visibility:hidden;">{$vo.spot_desc_4}</textarea>
-							</td>
-						</tr>
-					</table>
-				</div>
-				
 				<!--相册-->
 				<div>
 					<table class="formtable">
 						<tr>
-							<td class="item_title">{lang v="SPOT_IMAGE"}:</td>
+							<td class="item_title">酒店相册:</td>
 							<td class="item_input">
 								{function name="load_mukeimg" p1="spot_img" p2=$image_list}
 							</td>
@@ -212,21 +123,19 @@
 				
 				<!--门票设置-->
 				<div>
-					<table class="formtable">			
+					<table class="formtable">
 					<tr>
 						<td class="item_title">{lang v="NAME"}:</td>
-						<td class="item_input" id="tickets" editurl="{$edittickets}">
-							<a class="button" href="{$addtickets}" target="dialog" title="{lang v="ADD_TICKETS"}" width="800" height="480" mask="true"  rel="dlg_tickets"><span>{lang v="ADD_TICKETS"}</span></a>
-							<div >
+						<td class="item_input" id="tickets" editurl="{$edithotelroom}">
+							<a class="button" href="{$addhotelroom}" target="dialog" title="添加房型" width="800" height="480" mask="true"  rel="dlg_tickets"><span>添加房型</span></a>
+							<div>
 								<table class="list nowrap " width="100%" style="clear: both;">
 									<thead>
 										<tr>
-											<th>门票</th>
+											<th>房型</th>
 											<th width="100">原价</th>
 											<th width="100">现价</th>
 											<th width="100">销售价</th>
-											<th width="100">必须证件号</th>
-											<th width="50">团购</th>
 											<th width="50">状态</th>
 											<th width="100">操作</th>
 										</tr>
@@ -240,9 +149,6 @@
 											<td align="center">{$ticket.origin_price}</td>
 											<td align="center">{$ticket.current_price}</td>
 											<td align="center">{$ticket.sale_price}</td>
-											<td align="center">{if $ticket.paper_must eq 1}是{else}否{/if}</td>
-											<td align="center">{if $ticket.is_tuan eq 1}是{else}否{/if}</td>
-											<td align="center">{if $ticket.is_effect eq 1}有效{else}无效{/if}</td>
 											<td align="center">
 												<a href="javascript:void(0)" class="edit_ticket">编辑</a>&nbsp;
 												<a href="javascript:void(0)" class="remove_ticket">删除</a>
@@ -258,7 +164,6 @@
 					</table>
 				</div>
 			</div>
-			
 			
 			 <div class="tabsFooter">
 				<div class="tabsFooterContent"></div>

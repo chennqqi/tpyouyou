@@ -1,9 +1,7 @@
 <?php
 class tuanModule extends BaseModule {
-    
-    
-    public function index() {
         
+    public function index() {
         global_run();       
         init_app_page();
         if(isset($_GET['keyword'])){$this->search();exit();}
@@ -130,7 +128,6 @@ class tuanModule extends BaseModule {
         $GLOBALS['tmpl']->assign('arraytuan',$arraytuan);
         $GLOBALS['tmpl']->display("tuan_index.html"); 
     }
-    
     /**
      * 往期团购
      */

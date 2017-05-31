@@ -27,37 +27,19 @@
 					</tr>
 
 					<tr>
-						<td class="item_title">开业时间:</td>
+						<td class="item_title">联系电话:</td>
 						<td class="item_input">
-							<input type="text" class="required textInput valid"  minlength="2"  name="name">
+							<input type="text" class="required textInput valid"  minlength="2"  name="tel">
 							<label class="tip"></label>
 						</td>
 					</tr>
 
 					<tr>
-						<td class="item_title">允许显示的{lang v="CITY"}:</td>
+						<td class="item_title">所在{lang v="CITY"}:</td>
 						<td class="item_input">
 							<input name="tour_city.py"  lookupSend="tour_city_data" type="hidden"/>
 							<input class="required" size="80" name="tour_city.name" lookupSend="tour_city_data"  type="text"  readonly="true"  />
 							<a class="btnLook" href="{$searchcityurl}" lookupGroupSelect="tour_city">{lang v="SELECT_TOUR_CITY"}</a>
-						</td>
-					</tr>
-					
-					<tr>
-						<td class="item_title">{lang v="TOUR_AREA"}:</td>
-						<td class="item_input">
-							<input name="tour_area.py"  lookupSend="tour_area_data" type="hidden"/>
-							<input class="required" size="80" name="tour_area.name" lookupSend="tour_area_data"  type="text"  readonly="true"  />
-							<a class="btnLook" href="{$searchareaurl}" lookupGroupSelect="tour_area">{lang v="SELECT_TOUR_AREA"}</a>
-						</td>
-					</tr>
-					
-					<tr>
-						<td class="item_title">{lang v="TOUR_PLACE"}:</td>
-						<td class="item_input">	
-							<input name="tour_place.py"  lookupSend="tour_place_data" type="hidden"/>				
-							<input class="required" size="80" name="tour_place.name" lookupSend="tour_place_data"  type="text" readonly="true" />
-							<a class="btnLook" href="{$searchplaceurl}" lookupGroupSelect="tour_place">{lang v="SELECT_TOUR_PLACE"}</a>
 						</td>
 					</tr>
 					
@@ -71,8 +53,8 @@
 								<option value="3">三星</option>
 								<option value="4">四星</option>
 								<option value="5">五星</option>
-								<option value="5">六星</option>
-								<option value="5">七星</option>
+								<option value="6">六星</option>
+								<option value="7">七星</option>
 							</select>
 						</td>
 					</tr>
@@ -95,68 +77,6 @@
 					
 					</table>
 				</div>
-				
-				<!--相关内容-->
-<!-- 				<div>
-					<table class="formtable">
-						<tr>
-							<td colspan="2" class="item_input">
-								<div style="padding:10px">此处<span style="font-weight:bolder;color:red;">内容名</span>如若不设置，前台将不会显示相应内容</div>
-							</td>
-						</tr>
-						<tr>
-							<td class="item_title">内容名一:</td>
-							<td class="item_input">
-								<input type="text" class="textInput" name="spot_desc_1_name" size="50" value="{$vo.spot_desc_1_name}" />
-							</td>
-						</tr>
-						<tr>
-							<td class="item_title">内容一:</td>
-							<td class="item_input">
-								<textarea name="spot_desc_1" class="ketext" style="width:680px;height:400px;visibility:hidden;">{$vo.spot_desc_1}</textarea>
-							</td>
-						</tr>	
-						<tr><td colspan="2" class="item_title"></td></tr>
-						<tr>
-							<td class="item_title">内容名二:</td>
-							<td class="item_input">
-								<input type="text" class="textInput" name="spot_desc_2_name" size="50" value="{$vo.spot_desc_2_name}" />
-							</td>
-						</tr>
-						<tr>
-							<td class="item_title">内容二:</td>
-							<td class="item_input">
-								<textarea name="spot_desc_2" class="ketext" style="width:680px;height:400px;visibility:hidden;">{$vo.spot_desc_2}</textarea>
-							</td>
-						</tr>
-						<tr><td colspan="2" class="item_title"></td></tr>
-						<tr>
-							<td class="item_title">内容名三:</td>
-							<td class="item_input">
-								<input type="text" class="textInput" name="spot_desc_3_name" size="50" value="{$vo.spot_desc_3_name}" />
-							</td>
-						</tr>
-						<tr>
-							<td class="item_title">内容三:</td>
-							<td class="item_input">
-								<textarea name="spot_desc_3" class="ketext" style="width:680px;height:400px;visibility:hidden;">{$vo.spot_desc_3}</textarea>
-							</td>
-						</tr>
-						<tr><td colspan="2" class="item_title"></td></tr>
-						<tr>
-							<td class="item_title">内容名四:</td>
-							<td class="item_input">
-								<input type="text" class="textInput" name="spot_desc_4_name" size="50" value="{$vo.spot_desc_4_name}" />
-							</td>
-						</tr>
-						<tr>
-							<td class="item_title">内容四:</td>
-							<td class="item_input">
-								<textarea name="spot_desc_4" class="ketext" style="width:680px;height:400px;visibility:hidden;">{$vo.spot_desc_4}</textarea>
-							</td>
-						</tr>
-					</table>
-				</div> -->
 				
 				<!--相册-->
 				<div>
