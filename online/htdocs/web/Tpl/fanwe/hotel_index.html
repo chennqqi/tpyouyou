@@ -1,6 +1,7 @@
 <?php
 	$this->_var['pagecss'][] = TMPL_REAL."/css/style.css";
 	$this->_var['pagecss'][] = TMPL_REAL."/css/weebox.css";
+    $this->_var['pagecss'][] = TMPL_REAL."/css/hotel.css";
 	$this->_var['pagecss'][] = TMPL_REAL."/css/news.css";
 	$this->_var['pagecss'][] = TMPL_REAL."/css/comment.css";
 	$this->_var['pagejs'][] = TMPL_REAL."/js/lazyload.js";
@@ -8,6 +9,7 @@
 	$this->_var['cpagejs'][] = TMPL_REAL."/js/script.js";
 	$this->_var['pagejs'][] = TMPL_REAL."/js/ajax_pages.js";
 	$this->_var['cpagejs'][] = TMPL_REAL."/js/ajax_pages.js";
+    $this->_var['pagejs'][] = TMPL_REAL."/js/spot.js"
 ?>
 
 {include file="inc/header.html"}
@@ -65,10 +67,10 @@
             <div class="pic">
                 <!--内容列表(li数目可随意增减)-->
               <ul>
-    			<li><a href="http://www.ly.com/iflight/#refid=71653961"  target="_blank"> <img src="{$TMPL}/images/guoji.jpg" thumb="" alt="国际机票大促！" text="国际机票大促！" /></a></li>
-                <li><a href="http://www.ly.com/zhuanti/guoneiyouflowers#refid=71653961"  target="_blank"> <img src="{$TMPL}/images/shanghua605x300.jpg" thumb="" alt="赏花季" text="赏花季" /></a></li>
-                <li><a href="http://www.ly.com/zhuanti/guoneiyouspring#refid=71653961"  target="_blank"> <img src="{$TMPL}/images/150324_605x300.jpg" thumb="" alt="国内长线" text="国内长线" /></a></li>
-                <li><a href="http://www.ly.com/zhuanti/gnygourmet#refid=71653961"  target="_blank"> <img src="{$TMPL}/images/meishi605x300.jpg" thumb="" alt="美食之旅" text="美食之旅" /></a></li>
+    			<li><a href="http://www.uu-club.com/"  target="_blank"> <img src="{$TMPL}/images/guoji.jpg" thumb="" alt="国际机票大促！" text="国际机票大促！" /></a></li>
+                <li><a href="http://www.uu-club.com/"  target="_blank"> <img src="{$TMPL}/images/shanghua605x300.jpg" thumb="" alt="赏花季" text="赏花季" /></a></li>
+                <li><a href="http://www.uu-club.com/"  target="_blank"> <img src="{$TMPL}/images/150324_605x300.jpg" thumb="" alt="国内长线" text="国内长线" /></a></li>
+                <li><a href="http://www.uu-club.com/"  target="_blank"> <img src="{$TMPL}/images/meishi605x300.jpg" thumb="" alt="美食之旅" text="美食之旅" /></a></li>
               </ul>
             </div>
         </div>
@@ -802,6 +804,123 @@
                 </div>
           </div>
         </div>
+    </div>
+</div>
+
+<div class="wraphotel" style="margin-top: 24px;">
+    <div class="filter-box">
+        <div class="box">            
+        {if $tour_level}
+            <div class="item clearfix" style="border-bottom:none">
+                <div class="dt">酒店星级：</div>
+                <div class="db">
+                    <a href="{$all_level.filter_url}" {if $level_id eq ''}class="current"{/if}>{$all_level.name}</a>
+                    {foreach from="$tour_level" item="level"}
+                    <a href="{$level.filter_url}" {if $level.level eq $level_id}class="current"{/if}>{$level.name}</a>
+                    {/foreach}
+                </div>
+            </div>
+        {/if}
+        </div>
+        <div class="ftbox">
+            <div class="sort">
+                <a href="{$status_url.0}" {if $status eq 0}class="current"{/if}>默认排序</a>
+                <a href="{$status_url.1}" class="{if $status eq 1}current{/if} ord ord_{$status_1}">销量</a>
+                <a href="{$status_url.2}" class="{if $status eq 2}current{/if} ord ord_{$status_2}">价格</a>
+                <a href="{$status_url.3}" class="{if $status eq 3}current{/if} ord ord_{$status_3}">好评</a>
+            </div>
+            <div class="price " id="J_price">
+                <form action="{url x="spot#cat" p="$price_action_parm"}" method="post" id="J_price_form">
+                    <span>价格区间</span>
+                    <input type="text" name="min_price" value="{$min_price}" />
+                    <span style="color:#D3D3D3">-</span>
+                    <input type="text" name="max_price" value="{$max_price}" />
+                    <div class="opbox">
+                        <a href="javascript:void(0);" id="ClearPrice">清空价格</a>
+                        <button id="confirm_btn" type="submit">确定</button>
+                    </div>
+                </form>
+            </div>
+            
+            <div class="sort_page">
+                {$right_pages}
+            </div>
+        </div>
+    </div>
+    <div class="blank5"></div>
+    <div class="f_l" style="width: 100%;">
+        <div class="blank"></div>
+        <div class="spot_cat_list clearfix">
+          {foreach from="$spot_cat_list" item="item"}
+            <div class="item clearfix">
+                <div class="spot clearfix">
+                    <div class="thumb f_l">
+                        <a href="{$item.url}"><img src="{function name="get_spec_image" v=$item.image w=140 h=90 g=1}" /></a>
+                    </div>
+                    <div class="info f_l">
+                        <div class="hd">
+                            <a href="{$item.url}" class="tit f_l">{$item.name}</a>
+                            <span class="level f_l">{$item.star_level}星级酒店</span>
+                        </div>
+                        <div class="static">
+                            游客满意度：<span>{$item.satify}</span>%，游客点评<span>{$item.review_total}</span>条
+                        </div>
+                        <div class="address">
+                            地址：{$item.address}
+                          <!--   {if $item.x_point && $item.y_point}
+                            <a href="javascript:void(0);" onclick="view_map('{$item.x_point}','{$item.y_point}');" class="view_map">查看地图</a>
+                            {/if} -->
+                        </div>
+                    </div>
+                    <div class="opvi f_r">
+                        <div class="price">&yen;<em>{function name="format_price_to_display" v=$item.ticket_price}</em>起</div>
+                        <a href="{$item.url}" class="view">去看看</a>
+                    </div>
+                </div>
+                <div class="blank25"></div>
+                {if $item.list}
+                <div class="tickets">
+                    <div class="hd">
+                        <div class="tit f_l">房型名称</div>
+                        <div class="ori_price f_l">房型报价</div>
+                        <div class="cur_price f_l">{$LANG.SITE_PRICE}</div>
+                        <div class="pay f_l">支付方式</div>
+                        <div class="op f_r"></div>
+                    </div>
+                    {foreach from="$item.list" item="tk" name="tks"}
+                    <div class="tk clearfix" {if $smarty.foreach.tks.first} style="border-top:0"{/if}>
+                        <div class="tit f_l">
+                            <label>
+                            <a href="{$item.url}" title="&lt;{$tk.name}&gt;{$tk.name_brief}"><em>&lt;{$tk.name}&gt;</em>{$tk.name_brief}</a>
+                            </label>
+                            {if $tk.return_money > 0}
+                            <span class="return_price">
+                            {function name="format_price_to_display" v=$tk.return_money}</span>
+                            {/if}
+                        </div>
+                        <div class="ori_price f_l"><em class="u">&yen;</em><em class="p">{function name="format_price_to_display" v=$tk.origin_price}</em>起</div>
+                        <div class="cur_price f_l"><em class="u">&yen;</em><em class="p">{function name="format_price_to_display" v=$tk.current_price}</em>起</div>
+                        <div class="pay f_l">{if $tk.sale_price eq 0}线下支付{else}网上支付{/if}</div>
+                        <div class="op f_r">
+                            {if $tk.is_tuan eq 1}
+                            <a href="{url r="tuan#detail" p="did=$tk.tuan_id"}">团购</a>
+                            {else}
+                            <a href="{url r="hotel_order#index" p="id=$tk.id"}">预订</a>
+                            {/if}
+                        </div>
+                    </div>
+                    {/foreach}
+                </div>
+                {/if}
+            </div>
+          {/foreach}
+        </div>
+        <div class="page">        
+         {$pages}
+        </div>
+    </div>
+    <div class="w210 f_r">
+        {include file="inc/spot/topsale.html"}
     </div>
 </div>
 

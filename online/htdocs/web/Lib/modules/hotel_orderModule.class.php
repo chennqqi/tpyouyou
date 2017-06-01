@@ -1,6 +1,6 @@
 <?php
 
-class ticket_orderModule extends BaseModule{
+class hotel_orderModule extends BaseModule{
 
     function index() {
     	global_run();
@@ -22,7 +22,7 @@ class ticket_orderModule extends BaseModule{
     	if($id > 0){
     		$this->do_cart();
     		if($ajax == 0){
-    			app_redirect(url("ticket_order#index"));
+    			app_redirect(url("hotel_order#index"));
     		}
     	}
     	
@@ -65,7 +65,7 @@ class ticket_orderModule extends BaseModule{
     	}
     	
     	if(!$list){
-    		showErr("很抱歉，您查看的门票不存在，可能已过期或者被转移，暂时不能购买。");
+    		showErr("很抱歉，您查看的酒店客房不存在，可能已过期或者被转移，暂时不能购买。");
     	}
     	
     	$GLOBALS['tmpl']->assign("paper_must",$paper_must);
@@ -113,12 +113,12 @@ class ticket_orderModule extends BaseModule{
     	init_app_page();
     	//输出SEO元素
     	
-    	$GLOBALS['tmpl']->assign("site_name","景点门票预订 - ".app_conf("SITE_NAME"));
-		$GLOBALS['tmpl']->assign("site_keyword","景点门票预订,".app_conf("SITE_KEYWORD"));
-		$GLOBALS['tmpl']->assign("site_description","景点门票预订,".app_conf("SITE_DESCRIPTION"));
+    	$GLOBALS['tmpl']->assign("site_name","酒店房间预订 - ".app_conf("SITE_NAME"));
+		$GLOBALS['tmpl']->assign("site_keyword","酒店房间预订,".app_conf("SITE_KEYWORD"));
+		$GLOBALS['tmpl']->assign("site_description","酒店房间预订,".app_conf("SITE_DESCRIPTION"));
     	
     	
-    	$GLOBALS['tmpl']->display("ticket_order.html");
+    	$GLOBALS['tmpl']->display("hotel_order.html");
     }
     
     //添加到购物车
@@ -126,7 +126,7 @@ class ticket_orderModule extends BaseModule{
     	$id = intval($_REQUEST['id']);
     	$ajax = intval($_REQUEST['ajax']);
     	if($id > 0){
-    		require APP_ROOT_PATH . "system/libs/spot.php";
+    		require APP_ROOT_PATH . "system/libs/hotel.php";
     		$ticket = get_ticket($id);
     		
     		if($ticket){
@@ -146,8 +146,9 @@ class ticket_orderModule extends BaseModule{
     				showErr("购物车内只允许一种配送门票。",$ajax);
     			}
     				
-    			$data['ticket_id'] =$id;
-    			$data['ticket_name'] = $ticket['name'];
+    			$data['room_id'] =$id;
+                $data['room_name'] = $ticket['name'];
+    			$data['hotel_id'] = $ticket['hotel_id'];
     			$data['session_id'] = es_session::id();
     			$data['user_id'] = $GLOBALS['user']['id'];
     			$data['create_time'] = NOW_TIME;
@@ -164,8 +165,8 @@ class ticket_orderModule extends BaseModule{
     			$data['is_appoint_time'] = $ticket['is_appoint_time'];
     			$data['is_end_time'] = $ticket['is_end_time'];
     			
-    			if($GLOBALS['db']->getOne("SELECT count(*) FROM ".DB_PREFIX."ticket_cart WHERE ticket_id=".$id." and user_id= ".$GLOBALS['user']['id'])==0){
-    				$GLOBALS['db']->autoExecute(DB_PREFIX."ticket_cart",$data);
+    			if($GLOBALS['db']->getOne("SELECT count(*) FROM ".DB_PREFIX."hotel_room_cart WHERE room_id=".$id." and user_id= ".$GLOBALS['user']['id'])==0){
+    				$GLOBALS['db']->autoExecute(DB_PREFIX."hotel_room_cart",$data);
     				if($GLOBALS['db']->insert_id() == 0)
     					showErr("放入购物车失败。",$ajax);
     			}
@@ -192,12 +193,12 @@ class ticket_orderModule extends BaseModule{
     	
     	$result = array();
     	
-    	$sql = "SELECT tc.*,t.short_name,t.name_brief,t.min_buy,t.max_buy,t.is_divide," .
-    			"t.spot_id,t.end_time_day,t.end_time,t.paper_must, " .
-    			"t.is_buy_return,t.is_review_return,t.review_return_money,t.review_return_score,t.review_return_exp,t.order_status," .
-    			"s.image,s.name,s.appointment_desc,s.address,s.brief,t.pay_type FROM ".DB_PREFIX."ticket_cart tc " .
-    			"LEFT JOIN ".DB_PREFIX."ticket t ON t.id = tc.ticket_id  " .
-    			"LEFT JOIN ".DB_PREFIX."spot s ON s.id = t.spot_id " .
+    	$sql = "SELECT tc.*," .
+    			"t.hotel_id,t.end_time_day,t.end_time, " .
+    			"t.is_buy_return,t.is_review_return,t.review_return_money,t.review_return_score,t.review_return_exp," .
+    			"s.image,s.name,s.address,s.brief,t.pay_type FROM ".DB_PREFIX."hotel_room_cart tc " .
+    			"LEFT JOIN ".DB_PREFIX."hotel_room t ON t.id = tc.room_id  " .
+    			"LEFT JOIN ".DB_PREFIX."hotel s ON s.id = t.hotel_id " .
     			"WHERE (tc.user_id=".$user_id." OR tc.session_id='".$session_id."') ";
     	
     	$list = $GLOBALS['db']->getAll($sql);
@@ -223,22 +224,22 @@ class ticket_orderModule extends BaseModule{
 	    		}
 	    		$ticket_ids[] = $v['ticket_id'];
 	    	}
-	    	if($act == "submit" && count($ticket_ids)>0){
-	    		$tvoucher_promote = $GLOBALS['db']->getAll("SELECT * FROM ".DB_PREFIX."voucher_promote where voucher_rel_id in(".implode(",",$ticket_ids).") AND voucher_promote = 1 ");
-				$voucher_promote = array();
-				foreach($tvoucher_promote as $k=>$v){
-					if($v['voucher_promote_type'] == 1)
-						$voucher_promote['buy'][$v['voucher_rel_id']] = $v['voucher_type_id'];
-					if($v['voucher_promote_type'] == 2)
-						$voucher_promote['review'][$v['voucher_rel_id']] = $v['voucher_type_id'];
-				}
-				unset($tvoucher_promote);
-				foreach($list as $k=>$v){
-					$list[$k]['voucher'] = isset($voucher_promote['buy'][$v['ticket_id']]) ? intval($voucher_promote['buy'][$v['ticket_id']]) : 0; 
-					$list[$k]['review_voucher'] = intval($voucher_promote['review'][$v['ticket_id']]) ? isset($voucher_promote['review'][$v['ticket_id']]) : app_conf("REVIEW_VOUCHER"); 
-				}
+	   //  	if($act == "submit" && count($ticket_ids)>0){
+	   //  		$tvoucher_promote = $GLOBALS['db']->getAll("SELECT * FROM ".DB_PREFIX."voucher_promote where voucher_rel_id in (".implode(",",$ticket_ids)." ) AND voucher_promote = 1 ");
+				// $voucher_promote = array();
+				// foreach($tvoucher_promote as $k=>$v){
+				// 	if($v['voucher_promote_type'] == 1)
+				// 		$voucher_promote['buy'][$v['voucher_rel_id']] = $v['voucher_type_id'];
+				// 	if($v['voucher_promote_type'] == 2)
+				// 		$voucher_promote['review'][$v['voucher_rel_id']] = $v['voucher_type_id'];
+				// }
+				// unset($tvoucher_promote);
+				// foreach($list as $k=>$v){
+				// 	$list[$k]['voucher'] = isset($voucher_promote['buy'][$v['ticket_id']]) ? intval($voucher_promote['buy'][$v['ticket_id']]) : 0; 
+				// 	$list[$k]['review_voucher'] = intval($voucher_promote['review'][$v['ticket_id']]) ? isset($voucher_promote['review'][$v['ticket_id']]) : app_conf("REVIEW_VOUCHER"); 
+				// }
 				
-	    	}
+	   //  	}
 	    	$result["list"] = $list;
 	    	unset($list);
 	    	//工具商家获取配送
@@ -259,7 +260,6 @@ class ticket_orderModule extends BaseModule{
 	    		unset($tdeliver);
 	    		$result['deliver'] = $deliver;
 	    	}
-	    	
     	}
     	
     	$result['supplier'] = $supplier_ids;
@@ -281,7 +281,7 @@ class ticket_orderModule extends BaseModule{
 		
 		$session_id= es_session::id();
 		
-		$GLOBALS['db']->query("DELETE FROM ".DB_PREFIX."ticket_cart WHERE (user_id=".$GLOBALS['user']['id']." OR session_id='".$session_id."') and id=".$id." ");
+		$GLOBALS['db']->query("DELETE FROM ".DB_PREFIX."hotel_room_cart WHERE (user_id=".$GLOBALS['user']['id']." OR session_id='".$session_id."') and id=".$id." ");
 		
 		if($GLOBALS["db"]->affected_rows() > 0){
 			showSuccess("删除成功",1);
@@ -311,7 +311,7 @@ class ticket_orderModule extends BaseModule{
     	if(!$result['list']){
     		showErr("购物车内无数据",1);
     	}
-    	    	
+
     	//出游日期-过期日期数组
     	$end_time = $_POST['end_time'];
     	//购买数量数组
@@ -405,7 +405,6 @@ class ticket_orderModule extends BaseModule{
 			if($v['paper_must'] == 1){
 				$has_paper = true;
 			}
-			
     	}
     	
     	//验证代金券
@@ -497,9 +496,7 @@ class ticket_orderModule extends BaseModule{
     	$temp_tickets=array();
     	foreach($result['list'] as $k=>$v){
     		$order_data = array();
-    		$order_data['ticket_name'] = $v['ticket_name'];
-    		$order_data['short_name'] = $v['short_name'];
-    		$order_data['ticket_id'] = $v['ticket_id'];
+    		$order_data['hotel_id'] = $v['hotel_id'];
     		$order_data['order_confirm_type'] = $v['order_status'];
     		$order_data['user_id'] = $GLOBALS['user']['id'];
 	    	//1.新订单 2.已确认 3.已完成 4.作废
@@ -556,9 +553,8 @@ class ticket_orderModule extends BaseModule{
 		    	
 	    		$order_data['delivery_name'] = $delivery_name;
 		    	$order_data['delivery_mobile'] = $delivery_mobile;
-			}
-			else{
-				$order_data['delivery_status'] = -1;
+			}else{
+			  $order_data['delivery_status'] = -1;
 			}
 	    	
 	    	//应付金额
@@ -580,23 +576,15 @@ class ticket_orderModule extends BaseModule{
 				{
 					$order_data['end_time'] = to_timespan(to_date(NOW_TIME,"Y-m-d"),"Y-m-d") + $v['end_time_day']*24*3600  + 24*3600 - 1;	
 				}
-				
-    		}
-    		else{//需要预约
-    			$order_data['appoint_time'] =  $order_data['end_time'] = to_timespan($end_time[$v['id']],"Y-m-d") + 24*3600 - 1;
-    			
+    		}else{//需要预约
+    			$order_data['appoint_time'] =  $order_data['end_time'] = to_timespan($end_time[$v['id']],"Y-m-d") + 24*3600 - 1;	
     		}
 	    	
 	    	$order_data['appoint_name'] = $appoint_name;
 	    	$order_data['appoint_mobile'] = $appoint_mobile;
 	    	$order_data['appoint_email'] = $appoint_email;
-	    	if($v['paper_must'] == 1){
-	    		$order_data['paper_type'] = $paper_type;
-	    		$order_data['paper_sn'] = $paper_sn;
-	    	}
 	    	
 	    	$order_data['order_status'] = 1;
-	    	
 	    	
 	    	//代金券抵用金额
 	    	if($left_voucher_price > 0){
@@ -640,111 +628,49 @@ class ticket_orderModule extends BaseModule{
     		
     		$order_data['supplier_id'] = $v['supplier_id'];
     		
-    		
 	    	$order_data['is_divide'] = $v['is_divide'];
 	    	$order_data['order_memo'] = $order_memo;
 	    	
-	    	$order_data['spot_id'] = $v['spot_id'];//景点id
+	    	$order_data['hotel_id'] = $v['hotel_id'];//景点id
 	    	
 	    	$temp_tickets[$k]['order_id'] = 0;
 	    	
 	    	$kk=0;
-	    	do{
-	    		$temp_tickets[$k]['sn'] = $order_data['sn']= "T_".to_date(NOW_TIME,"Ymdhis").rand(10,99);
-	    		$GLOBALS['db']->autoExecute(DB_PREFIX."ticket_order",$order_data,"INSERT","","SILENT");
-	    		$temp_tickets[$k]['order_id'] = $GLOBALS['db']->insert_id();
-	    		$kk ++ ;
-	    	}while($temp_tickets[$k]['order_id']==0 && $k < 100);
+            $temp_tickets[$k]['sn'] = $order_data['sn']= "T_".to_date(NOW_TIME,"Ymdhis").rand(10,99);
+            $GLOBALS['db']->autoExecute(DB_PREFIX."hotel_room_order",$order_data,"INSERT","","SILENT");
+            $temp_tickets[$k]['order_id'] = $GLOBALS['db']->insert_id();
 	    	
-	    	if($temp_tickets[$k]['order_id'] == 0){
+	    	if($temp_tickets[$k]['order_id'] == 100){
 	    		$is_error = true;
-	    	}
-	    	else{
+	    	}else{
 	    		//======================下单成功将门票插入数据库 start====================
 	    		$order_item_data = array();
 	    		
-	    		$order_item_data['ticket_id'] = $v['ticket_id'];
-	    		$order_item_data['ticket_name'] = $v['ticket_name'];
+	    		$order_item_data['room_id'] = $v['room_id'];
+	    		$order_item_data['room_name'] = $v['name'];
 	    		$order_item_data['order_id'] = $temp_tickets[$k]['order_id'];
 	    		$order_item_data['user_id'] = $GLOBALS['user']['id'];
 	    		$order_item_data['supplier_id'] = $v['supplier_id'];
 	    		$order_item_data['is_appoint_time'] = $v['is_appoint_time'];
 	    		
-	    		if($v['is_appoint_time'] == 0){//免预约
-	    			$order_item_data['begin_time'] = NOW_TIME;
-	    			$order_item_data['appoint_time'] = 0;
-	    			
-	    			if($v['is_end_time'] == 0)//如果是按固定日期过期的话
-		    		{	
-		    			if($v["end_time"]==0)//无限时间
-		    				$order_item_data['end_time'] = 0;
-		    			else
-		    				$order_item_data['end_time'] = $v["end_time"] + 24*3600 - 1;	
-		    		}
-					else//如果是按购买之日起固定天数
-					{
-						$order_item_data['end_time'] = to_timespan(to_date(NOW_TIME,"Y-m-d"),"Y-m-d") + $v['end_time_day']*24*3600 -1;	
-					}
-					
-	    		}
-	    		else{//需要预约
-	    			$order_item_data['begin_time'] = to_timespan($end_time[$v['id']],"Y-m-d");
-	    			$order_item_data['appoint_time'] = $order_item_data['end_time'] = to_timespan($end_time[$v['id']],"Y-m-d") + 24*3600 - 1;
-	    			
-	    		}
-	    		
 	    		$order_item_data['supplier_id'] = $pickRadio[$v['supplier_id']];
-	    		$order_item_data['is_divide'] = $v['is_divide'];
-	    		
-	    		//0团体票  或者实体票只生成一张 
-	    		if($v['is_divide'] == 0 || $v['is_delivery'] == 1){
-	    			$insert_id = 0;
-	    			$kk=0;
-	    			do{
-	    				//非实体票生成序列号
-	    				if($order_data['is_delivery']==0)
-	    					$order_item_data['verify_code'] = rand(10000000,99999999);
-	    				$GLOBALS['db']->autoExecute(DB_PREFIX."ticket_order_item",$order_item_data,"INSERT","","SILENT");
-	    				$insert_id =$GLOBALS['db']->insert_id();
-	    				$kk++;
-	    			}while($insert_id == 0&&$kk<100);
-	    			
-	    			//下单失败
-	    			if($insert_id==0){
-	    				$is_error = true;
-	    			}
-	    			
-	    		}
-	    		else{
-	    			for($i=0;$i<$sale_count[$v['id']];$i++){
-	    				$insert_id = 0;
-	    				$kk=0;
-	    				do{
-	    					//非实体票生成序列号
-	    					if($order_data['is_delivery']==0)
-		    					$order_item_data['verify_code'] = rand(10000000,99999999);
-		    				$GLOBALS['db']->autoExecute(DB_PREFIX."ticket_order_item",$order_item_data,"INSERT","","SILENT");
-		    				$insert_id =$GLOBALS['db']->insert_id();
-		    			$kk++;
-	    				}while($insert_id == 0&&$kk<100);
-	    				
-	    				//下单失败
-		    			if($insert_id==0){
-		    				$is_error = true;
-		    			}
-	    			}
-	    		}
-		    	
+
+		    	$insert_id = 0;
+
+                $kk=0;
+                $order_item_data['verify_code'] = rand(10000000,99999999);
+                $GLOBALS['db']->autoExecute(DB_PREFIX."hotel_room_order_item",$order_item_data,"INSERT","","SILENT");
+                $insert_id =$GLOBALS['db']->insert_id();
+                //下单失败
+                if($insert_id==0){
+                    $is_error = true;
+                }
 		    	//======================下单成功将门票插入数据库 end====================
-	    		
-	    	}
-	    	
-	    	
+	    	}	    	
     	}
     	
-    	
     	if($is_error == false){
-    		require APP_ROOT_PATH . "system/libs/spot.php";
+    		require APP_ROOT_PATH . "system/libs/hotel.php";
     		$order_ids = array();
     		$pay_order_sn = array();
     		$no_pay_order_sn = array();
@@ -764,17 +690,8 @@ class ticket_orderModule extends BaseModule{
     			}
     		}
     		
-    		//更改代金券状态
-    		if(count($voucher) > 0){
-	    		$voucher_data['is_used'] = 1;
-	    		$voucher_data['use_otype'] = 2;
-	    		$voucher_data['use_oid'] = $order_ids[0];
-	    		$voucher_data['use_time'] = NOW_TIME;
-	    		$GLOBALS['db']->autoExecute(DB_PREFIX."voucher",$voucher_data,"UPDATE"," id in (".implode(",",$voucher).") and user_id ='".$GLOBALS['user']['id']."' ");
-    		}
-    		
     		//更新订单状态
-    		$GLOBALS['db']->query("DELETE FROM ".DB_PREFIX."ticket_cart WHERE (session_id= '".$session_id."' or user_id='".$GLOBALS['user']['id']."') ");
+    		$GLOBALS['db']->query("DELETE FROM ".DB_PREFIX."hotel_room_cart WHERE (session_id= '".$session_id."' or user_id='".$GLOBALS['user']['id']."') ");
     		
     		//保存地址
     		if($all_has_delivery && intval($_POST['user_consignee'])==0 && intval($_POST['save_delivery']) == 1){
@@ -787,7 +704,6 @@ class ticket_orderModule extends BaseModule{
     			$GLOBALS['db']->autoExecute(DB_PREFIX."user_consignee",$consignee_data,"INSERT","","SILENT");
     		}
     		
-    		
     		//发微博
     		if(intval($_POST['share_order']) == 1){
     			$has_send_weibo = array();
@@ -798,22 +714,20 @@ class ticket_orderModule extends BaseModule{
 	    				$has_send_weibo[$v['spot_id']] = 1;
 	    			}
 	    		}
-	    		
     		}
     		
-    		if(count($pay_order_sn) > 0)
-    			showSuccess("提交成功",1,url("transaction#done",array("ot"=>2,"sn"=>implode(",",$pay_order_sn))));
-    		else
-    			showSuccess("提交成功",1,url("transaction#pay",array("ot"=>2,"sn"=>implode(",",$no_pay_order_sn))));
-    	}
-    	else{
+    		// if(count($pay_order_sn) > 0)
+    		// 	showSuccess("提交成功",1,url("transaction#done",array("ot"=>2,"sn"=>implode(",",$pay_order_sn))));
+    		// else
+    		showSuccess("提交成功",1,url("transaction#pay",array("ot"=>5,"sn"=>implode(",",$no_pay_order_sn))));
+    	}else{
     		$order_ids = array();
     		foreach($temp_tickets as $kk=>$vv){
     			$order_ids[] = $vv['order_id'];
     		}
     		if(count($order_ids) > 0){
-	    		$GLOBALS['db']->query("DELETE FROM ".DB_PREFIX."ticket_order_item  WHERE order_id in (".implode(",",$order_ids).")");
-				$GLOBALS['db']->query("DELETE FROM ".DB_PREFIX."ticket_order  WHERE id in (".implode(",",$order_ids).")");
+	    		$GLOBALS['db']->query("DELETE FROM ".DB_PREFIX."hotel_room_order_item  WHERE order_id in (".implode(",",$order_ids).")");
+				$GLOBALS['db']->query("DELETE FROM ".DB_PREFIX."hotel_room_order  WHERE id in (".implode(",",$order_ids).")");
     		}
     		showErr("下单失败",1);
     	}

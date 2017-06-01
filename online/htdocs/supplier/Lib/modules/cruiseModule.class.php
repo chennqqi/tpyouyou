@@ -10,7 +10,7 @@ class cruiseModule extends AuthModule
 
 		//条件
 
-		$condition = " supplier_id =  ".$this->supplier_id." and is_effect=1 ";
+		$condition = " supplier_id =  ".$this->supplier_id." and is_effect=1 and is_cruise = 1";
 
 		if(isset($_REQUEST['name']))
 

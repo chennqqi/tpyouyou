@@ -14,8 +14,6 @@
 
 // +----------------------------------------------------------------------
 
-
-
 class BaseModule{
 
 	public function __construct()
@@ -29,7 +27,6 @@ class BaseModule{
 		$adm_id = intval($adm_session['id']);
           print_r($adm_id);
 	    
-
 		if(intval(app_conf("SITE_STATUS"))==0)
 
 		{

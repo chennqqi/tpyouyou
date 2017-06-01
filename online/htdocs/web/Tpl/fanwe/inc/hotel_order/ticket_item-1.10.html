@@ -1,0 +1,95 @@
+{foreach from="$list" item="item"}
+<div class="item" data-id="{$item.id}">
+	<a href="javascript:void(0);" class="remove_item" data-id="{$item.id}">删除</a>
+	<div class="pname">&lt;{$item.ticket_name}&gt;{$item.name_brief}<span style="color:#666;font-weight:normal;">（网上支付）</span></div>
+	<div class="tips">
+		<div class="t">预订须知</div>
+		<div class="bx">
+			<ul class="clearfix">
+					<li><strong>门票类型：</strong><span>电子票{if $item.is_delivery eq 1}、实体票{/if}</span></li>
+					<li><strong>预定方式：</strong><span>{if $item.pay_type eq 1}全款在线支付{elseif $item.pay_type eq 2}定金支付、到景点付全款{elseif $item.pay_type eq 3}到景点支付{/if}</span></li>
+                    <li><strong>入园方式：</strong><span>数字码换票{if $item.is_delivery eq 1}、实体票{/if}入园</span></li>
+                    <li><strong>退票说明：</strong><span>{if $item.is_appoint_time eq 0 && $item.is_refund eq 1}可退{elseif $item.is_appoint_time eq 1 && $item.is_refund eq 1}可退改{else}不可退{/if}{if $item.is_refund eq 1 && $item.refund_desc},{$item.refund_desc}{/if}</span></li>
+					<li><strong>门票有效期：</strong><span>
+						{if $item.is_appoint_time eq 0}<!--无需预约-->
+							{if $item.is_end_time eq 0}
+								{if $item.end_time gt 0}
+								{$item.end_time}过期
+								{else}
+								永不过期
+								{/if}
+							{else}
+								{if $item.end_time_day eq 0}
+								购买当天使用
+								{else}
+								购买之日起{$item.end_time_day}天后过期
+								{/if}
+							{/if}
+						{else}
+							出游日期当天使用
+						{/if}
+					</span></li>
+                    <li><strong>其他说明：</strong><span>{$item.brief}</span></li>
+				</ul>
+		</div>
+	</div>
+	
+	<div class="trav_date clearfix">
+		<div class="date-box f_l">
+			{if $item.is_appoint_time eq 1}
+			<div class="clearfix">
+				<div class="date-t f_l">出游日期：</div>
+				<label class="f_l" onclick="kuiDate({ isDayDisabled:[''],className:'doubledate',{if $item.max_date neq ''}maxDate:'{$item.max_date}',{/if}minDate:'{$MIN_DATE}',isDisabled: '0',target:this,callBack: function(){ doneCart(); } });" >   
+				<input type="text" class="date doubledate J_date"  name="end_time[{$item.id}]" readonly="readonly" autocomplete="off"/>
+				<span class="date_icon"></span>
+				</label>
+			</div>
+			<div class="clearfix" style="padding-left:50px;padding-top:5px">
+				<span class="err_structure hide" id="dateError" >
+                    <span class="error_notice">
+                        <i>请填写出游日期</i>
+                    </span>
+                </span>
+			</div>
+			{else}
+				<div class="clearfix">
+					<div class="date-t f_l">过期日期：</div>
+					<label class="f_l">   
+					<input type="text" class="date doubledate J_date"  name="end_time[{$item.id}]" readonly="readonly" autocomplete="off" value="{$item.end_time}" />
+					<span class="date_icon"></span>
+					</label>
+				</div>
+			{/if}
+         </div>
+		 <div class="select-number f_l">
+		 	<div class="number-t f_l">门票数量：</div>
+			<div class="change_num f_l" id="">
+				<span class="min actived"></span>
+				<input  type="text" class="trav_num" name="sale_count[{$item.id}]" limit="{if $item.min_buy eq 0}1{else}{$item.min_buy}{/if},{if $item.max_buy eq 0}5000{else}{$item.max_buy}{/if}" value="{$item.sale_count}" autocomplete="off" dataid="{$item.id}" />
+				<span class="plus actived"></span>
+            </div>
+		 </div>
+	</div>
+	
+	<div class="delivery-box clearfix">
+		<div class="dt f_l">配送信息</div>
+		<div class="bx f_l">
+			<p class="delivery_list">
+				<input type="radio" name="pickRadio[{$item.id}]" id="storePickRadio_0_{$item.id}" class="storePickRadio deliverInfoRadio" checked="checked" value="0">
+				<label for="storePickRadio_0_{$item.id}">
+					<span>（门票自取）</span>
+				</label>地址——景区检票处
+			</p>
+			{if $item.is_delivery}
+			<p class="delivery_list">
+				<input type="radio" name="pickRadio[{$item.id}]" id="storePickRadio_1_{$item.id}" class="storePickRadio deliverInfoRadio" value="1">
+				<label for="storePickRadio_1_{$item.id}">
+					<span>（快递配送）</span>
+				</label>地址统一在下方填写视您所在地址，2-5个工作日送达，以快递公司实际配送为准。
+			</p>
+			{/if}
+		</div>
+	</div>
+</div>
+{/foreach}
+<div class="blank15"></div>

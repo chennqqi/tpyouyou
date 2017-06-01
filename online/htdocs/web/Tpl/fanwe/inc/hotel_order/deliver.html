@@ -1,0 +1,95 @@
+{if $is_deliver eq 1}
+<div id="deliver_part" class="order_box hide">
+	<div class="blank15"></div>
+    	<h2>配送信息</h2>
+		<div class="routes_info">
+			<div class="fd_cont"> 
+			<dl class="fd_history clearfix" id="deliveryHistory">   
+				{foreach from="$consignee_list" item="consignee" name="consignee"}
+					<dd {if $consignee.is_default}class="cur"{/if}{if $smarty.foreach.consignee.iteration mod 3 eq 0}style="margin-right:0"{/if} province="{$consignee.province_id}" city="{$consignee.city_id}">
+						<span class="selected"></span>
+						收件人：{$consignee.delivery_name}<br>
+						地&nbsp;&nbsp;&nbsp;&nbsp;址：{$consignee.province_name}{$consignee.city_name}{$consignee.address}<br>
+						邮&nbsp;&nbsp;&nbsp;&nbsp;编：{$consignee.zip}<br>
+						电&nbsp;&nbsp;&nbsp;&nbsp;话：{$consignee.delivery_mobile}<br>
+						<input type="radio" name="user_consignee" value="{$consignee.id}" {if $consignee.is_default}checked="checked"{/if} style="display:none" />
+					</dd>
+				{/foreach}
+		    </dl> 
+			{if $consignee_list}
+			<div class="blank1"></div>
+			<label><input type="radio" name="user_consignee" value="0" id="J_add_delivery" />新增地址</label>
+			<div class="blank"></div>
+			{/if}
+        	<div class="fill_detail {if $consignee_list}hide{/if}" id="newAddressDetail"> 
+            	<dl class="clearfix ">
+                	<dt>收件人：<span class="em">*</span></dt>
+                    <dd>
+                    	<input type="text" name="delivery_name" id="deliveryName" class="txt_input" holder="请填写收件人姓名">
+                        <span class="err_structure delivery_err hide" id="deliveryNameError">
+                        	<span class="error_notice"><i></i></span>
+                        </span>
+                    </dd>
+                </dl>
+                <dl class="clearfix">
+                    <dt>邮寄地址：<span class="em">*</span></dt>
+                    <dd>
+                    	<script type="text/javascript" src="./public/region_city.js"></script>
+                    	<select name="province_id" class="dialog_city f_l" id="J_region_province" onchange="setcity(this,'#J_region_city',{$userinfo.city_id},function(){doneCart();});">
+                    		<option value="0">请选择</option>
+                    		{foreach from="$province_list" item="province"}
+							<option value="{$province.id}" {if $province.id eq $userinfo.province_id}selected="selected"{/if}>{$province.py_first} {$province.name}</option>
+							{/foreach}
+                    	</select>
+                        <select name="city_id" class="dialog_city f_l" id="J_region_city" onchange="doneCart();">
+                        </select>
+						<script type="text/javascript">
+							load_region_city('#J_region_province','#J_region_city',{$userinfo.city_id},function(){doneCart();});
+						</script>
+                        <span class="err_structure delivery_err hide" id="deliveryProvinceError">
+                        	<span class="error_notice">
+                            	<i></i>
+                            </span>
+                        </span>
+                        <div class="blank1"></div>
+                        <input type="text" name="address" id="deliveryAddress" class="txt_input" holder="请填写详细地址">
+                        <span class="err_structure delivery_err hide" id="deliveryAddrError">
+                            <span class="error_notice">
+                                <i></i>
+                            </span>
+                        </span>
+					</dd>
+                </dl>
+                <dl class="clearfix">
+                    <dt>邮政编码：<span class="em">*</span></dt>
+                    <dd>
+                        <input type="text" name="zip" id="deliveryCode" class="txt_input" holder="请填写邮政编码">
+                        <span class="err_structure delivery_err hide" id="deliveryCodeError">
+                            <span class="error_notice">
+                                <i></i>
+                            </span>
+                        </span>
+                    </dd>
+				</dl>
+                <dl class="clearfix">
+                    <dt>手机号码：<span class="em">*</span></dt>
+                    <dd>
+                        <input type="text" name="delivery_mobile" id="deliveryTel" class="txt_input" holder="请填写手机号码">
+                        <span class="err_structure delivery_err hide" id="deliveryTelError">
+                            <span class="error_notice">
+                                <i></i>
+                            </span>
+                        </span>
+                    </dd>
+                </dl>
+				<dl class="clearfix">
+                    <dt>保存地址：&nbsp;</dt>
+                    <dd>
+                        <input type="checkbox" name="save_delivery" value="1" checked="checked" />
+                    </dd>
+                </dl>
+			</div>
+       	</div>
+	</div>
+</div>
+{/if}

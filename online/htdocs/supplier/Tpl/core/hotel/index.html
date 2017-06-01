@@ -76,17 +76,17 @@ function blursort(dom,id)
 		</thead>
 		<tbody>
 			{foreach from=$list item=item}
-			<tr  rel="{$item.id}">
-				<td><input name="id" value="{$item.id}" type="checkbox"></td>
-				<td>{$item.id}</td>
-				<td>{$item.name}</td>
-				<td>{$item.star_level}</td>
-				<td title="{$item.address}">{$item.address}</td>
-				<td>{$item.price}起</td>
-				<td>
-					<a title="{lang v="EDIT"}{lang v="NAME"}{$item.name}" rel="spot_editpage_{$item.id}" target="navTab" href="{$editurl}&id={$item.id}"  class="btnEdit">{lang v="EDIT"}</a>
-				</td>
-			</tr>
+				<tr  rel="{$item.id}">
+					<td><input name="id" value="{$item.id}" type="checkbox"></td>
+					<td>{$item.id}</td>
+					<td>{$item.name}</td>
+					<td>{$item.star_level}星级</td>
+					<td title="{$item.address}">{$item.address}</td>
+					<td>{$item.price}起</td>
+					<td>
+						<a title="{lang v="EDIT"}酒店{$item.name}" rel="hotel_editpage_{$item.id}" target="navTab" href="{$editurl}&id={$item.id}"  class="btnEdit">{lang v="EDIT"}</a>
+					</td>
+				</tr>
 			{/foreach}
 		</tbody>
 	</table>

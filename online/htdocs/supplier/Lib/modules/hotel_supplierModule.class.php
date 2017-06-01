@@ -3,7 +3,7 @@
 class hotel_supplierModule extends AuthModule{
 
   function index() {
-    	$param = array();		
+    $param = array();		
 		//条件
 		$condition = " supplier_id = ".$this->supplier_id;
 		if(isset($_REQUEST['name']))

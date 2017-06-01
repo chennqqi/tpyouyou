@@ -132,13 +132,53 @@ class transactionModule extends BaseModule
 					$GLOBALS['tmpl']->assign("order_display",$order_display);
 				}
 			}
+		}elseif($order_type==5) //酒店订单
+		{
+			require APP_ROOT_PATH."system/libs/hotel.php";
+			$order_data = ticket_order_info($order_sn);
+			
+			if(empty($order_data))
+			{
+				app_redirect(url("index"));
+			}
+			elseif($order_data['order_status']==4)
+			{
+					showErr("订单：".$order_sn." 已作废了",0,url("uc_order#ticket_order"));
+			}
+			elseif($order_data['end_time'] < NOW_TIME && $order_data['end_time']  > 0 )
+			{
+				if(count($order_data['order_list'])>1)
+				{
+					$order_sn = "";
+					foreach($order_data['order_list'] as $k=>$v)
+					{
+						if($k==0)$order_sn.=$v['sn'];
+						else
+						$order_sn.=",".$v['sn'];
+						
+					}
+				}
+				showErr("订单：".$order_sn." 门票过期了",0,url("uc_order#ticket_order"));
+			}
+			else
+			{
+				if($order_data['pay_status']==1)
+				{					
+					app_redirect(url("transaction#done",array("sn"=>$order_sn,"ot"=>2))); //跳转到支付成功页面
+				}
+				else
+				{
+					$GLOBALS['tmpl']->assign("order_data",$order_data);
+					$GLOBALS['tmpl']->assign("subject","酒店订单&yen;".format_price_to_display($order_data['money'])."元");
+					$order_display = $GLOBALS['tmpl']->fetch("inc/order_display/order_display_2.html");
+					$GLOBALS['tmpl']->assign("order_display",$order_display);
+				}
+			}
+			//输出相应的订单显示
 		}
-		
-		
 		
 		$GLOBALS['tmpl']->display("transaction_pay.html");
 	}
-	
 	
 	
 	public function dopay()
@@ -217,6 +257,29 @@ class transactionModule extends BaseModule
 				app_redirect(url("index"));
 			}
 		}
+		if($order_type == 5){			
+			require APP_ROOT_PATH."system/libs/hotel.php";
+			$order_data = ticket_order_info($order_sn);			
+			if($order_data)
+			{
+				$order_data['url']=url("uc_order#ticket",array('id'=>$order_data['id']));
+				foreach($order_data['order_list'] as $k=>$v)
+				{
+					if($v['pay_status']==1)
+						$order_data['order_list'][$k]['url'] = url("uc_order#ticket",array('id'=>$v['id']));
+					else
+						$order_data['order_list'][$k]['url'] = url("transaction#pay",array('ot'=>2,"sn"=>$v['sn']));
+					$order_data['order_list'][$k]['money'] = format_price_to_display($v['total_price'] - $v['pay_amount']);
+					$order_data['order_list'][$k]['pay_amount'] = format_price_to_display($v['pay_amount']);
+				}
+				$GLOBALS['tmpl']->assign("order_data",$order_data);
+		    	$GLOBALS['tmpl']->display("transaction_orderpaysuccess_2.html");
+			}
+			else
+			{
+				app_redirect(url("index"));
+			}
+		}
 		if($order_type == 4){
 			$order_data = $GLOBALS['db']->getRow("select * from ".DB_PREFIX."user_incharge where order_sn = '".$order_sn."' and is_paid = 1 ");
 			if($order_data)
@@ -233,10 +296,10 @@ class transactionModule extends BaseModule
 		
 	}
 
-  	public  function order_save_success(){
-  		global_run();
+  public  function order_save_success(){
+    global_run();
 		init_app_page();
-  		$order_type = intval($_REQUEST['ot']);
+  	$order_type = intval($_REQUEST['ot']);
 		$order_sn = strim($_REQUEST['sn']);
 		
 		$order_data = $GLOBALS['db']->getRow("select a.id,a.sn,b.company_name,b.contact_mobile,b.contact_tel from ".DB_PREFIX."tourline_order as a left join ".DB_PREFIX."supplier as b on b.id=a.supplier_id where sn = '".$order_sn."'");

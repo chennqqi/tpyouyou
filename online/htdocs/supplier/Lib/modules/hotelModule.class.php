@@ -78,7 +78,7 @@ class hotelModule extends AuthModule{
 		$GLOBALS['tmpl']->assign("editurl",admin_url("hotel#edit"));
 		$GLOBALS['tmpl']->assign("addurl",admin_url("hotel#add"));
 		$GLOBALS['tmpl']->display("core/hotel/index.html");
-    }
+  }
     
   public function add() {
 		$sort = $GLOBALS['db']->getOne("select max(sort) from ".DB_PREFIX."hotel_room")+1;	
@@ -175,7 +175,7 @@ class hotelModule extends AuthModule{
 
 	public function edit() {
 		$id = intval($_REQUEST ['id']);
-		$vo =$GLOBALS['db']->getRow("select * from ".DB_PREFIX."spot where id = ".$id." AND supplier_id=".$this->supplier_id);
+		$vo =$GLOBALS['db']->getRow("select * from ".DB_PREFIX."hotel where id = ".$id." AND supplier_id=".$this->supplier_id);
 		if(!$vo){
 			showErr("不存在的数据",1);
 		}
@@ -196,7 +196,7 @@ class hotelModule extends AuthModule{
 		}
 		
 		//门票
-		$tickets = $GLOBALS['db']->getAll("select * from ".DB_PREFIX."ticket where spot_id = ".$vo['id']." ORDER BY sort DESC ");
+		$tickets = $GLOBALS['db']->getAll("select * from ".DB_PREFIX."hotel_room where hotel_id = ".$vo['id']." ORDER BY sort DESC ");
 		$tickets_ids = array();
 		foreach($tickets as $k=>$v){
 			$tickets[$k]['origin_price'] = format_price_to_display($v['origin_price']);
@@ -258,7 +258,7 @@ class hotelModule extends AuthModule{
 		
 		$GLOBALS['tmpl']->assign("formaction",admin_url("ticket#update",array("ajax"=>1)));
 		
-		$GLOBALS['tmpl']->display("core/ticket/edit.html");
+		$GLOBALS['tmpl']->display("core/hotel/edit.html");
 	}
 
 	public function update() {

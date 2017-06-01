@@ -2,8 +2,8 @@
 require APP_ROOT_PATH . "system/libs/spot.php";
 class spotModule extends BaseModule{
 
-    function index() {
-    	global_run();
+  function index() {
+    global_run();
 		$GLOBALS['tmpl']->caching = true;
 		$GLOBALS['tmpl']->cache_lifetime = 600;  //首页缓存10分钟
 		$cache_id  = md5(MODULE_NAME.ACTION_NAME.$GLOBALS['city']['id']);	
@@ -80,7 +80,6 @@ class spotModule extends BaseModule{
 					unset($spot_tags[$k]);
 				else
 					$spot_tags[$k]['areas']  = $areas;
-				
 			}
 			
 			if(count($spot_tags_arr) > 0)
@@ -118,21 +117,20 @@ class spotModule extends BaseModule{
 			$GLOBALS['tmpl']->assign("site_keyword","景点门票,".app_conf("SITE_KEYWORD"));
 			$GLOBALS['tmpl']->assign("site_description","景点门票,".app_conf("SITE_DESCRIPTION"));
 		}
-    	$GLOBALS['tmpl']->display("spot_index.html",$cache_id);
-    }
-    
-    /**
-     * 点选省份和测试切换景点
-     */
-    function tagspots(){
-    	$tag = strim($_POST['tag']);
-    	$area_py = strim($_POST['ppy']);
-    	if($area_py=="")
-    		return "";
-    	$place_py = strim($_POST['cpy']);
-    	$tour_place_list = load_auto_cache("tour_place_list");
-    	//获取该省份下所有的城市
-    	$spot_place = $tour_place_list['areas'][$area_py]['place'];
+    $GLOBALS['tmpl']->display("spot_index.html",$cache_id);
+  }
+  /*
+   * 点选省份和测试切换景点
+   */
+  function tagspots(){
+  	$tag = strim($_POST['tag']);
+  	$area_py = strim($_POST['ppy']);
+  	if($area_py=="")
+  		return "";
+  	$place_py = strim($_POST['cpy']);
+  	$tour_place_list = load_auto_cache("tour_place_list");
+  	//获取该省份下所有的城市
+  	$spot_place = $tour_place_list['areas'][$area_py]['place'];
 		$has_place = 0;
 		
 		foreach($spot_place as $k=>$v){
@@ -148,67 +146,62 @@ class spotModule extends BaseModule{
 		$GLOBALS['tmpl']->assign("has_place",$has_place);
 		$GLOBALS['tmpl']->assign("tag_spots",$tag_spots);
 		$GLOBALS['tmpl']->assign("spot_place",$spot_place);
-		
 			
 		echo $GLOBALS['tmpl']->fetch("inc/spot/spot_tags_spots.html");
-    }
+  }
     
-    private function gettagspots($tag,$area="",$place=""){
-    	
-    	if($tag=="" && $area=="" && $place==""){
-    		return "";
-    	}
-    	$result = get_spots_list("","",$area,$place,$tag," has_ticket = 1 ","","0,8");
-    	
-    	return $result['list'];
-    	
+  private function gettagspots($tag,$area="",$place=""){
+    if($tag=="" && $area=="" && $place==""){
+    	return "";
     }
+    $result = get_spots_list("","",$area,$place,$tag," has_ticket = 1 ","","0,8");
+
+    return $result['list']; 	
+  }
     
-    function cat(){
-    	global_run();
-    	$page=intval($_REQUEST['p']);
-    	if($page==0)
+  function cat(){
+    global_run();
+    $page=intval($_REQUEST['p']);
+    if($page==0)
     		$page=1;
     		
 		$pagesize = 5;
 		
-    	$filter_parm = array();
-    	$filter_parm['cate'] = $cate_id = intval($_GET['cate']);
-    	$filter_parm['area'] = $area = strim($_GET['area']);
-    	$filter_parm['place'] = $place = strim($_GET['place']);
-    	$filter_parm['tag'] = $tag = strim($_GET['tag']);
-    	$filter_parm['level'] = $level = intval($_GET['level']);
-    	$filter_parm['status'] = $status = intval($_GET['status']);
-    	$filter_parm['order'] = $order = intval($_GET['order']); //0 DESC  1 ASC
-    	$min_price = intval($_REQUEST['min_price']);
-    	$max_price = intval($_REQUEST['max_price']);
-    	if($min_price > $max_price && $max_price > 0)
-    	{
-    		$min_price = intval($_REQUEST['max_price']);
-    		$max_price = intval($_REQUEST['min_price']);
-    	}
+  	$filter_parm = array();
+  	$filter_parm['cate'] = $cate_id = intval($_GET['cate']);
+  	$filter_parm['area'] = $area = strim($_GET['area']);
+  	$filter_parm['place'] = $place = strim($_GET['place']);
+  	$filter_parm['tag'] = $tag = strim($_GET['tag']);
+  	$filter_parm['level'] = $level = intval($_GET['level']);
+  	$filter_parm['status'] = $status = intval($_GET['status']);
+  	$filter_parm['order'] = $order = intval($_GET['order']); //0 DESC  1 ASC
+  	$min_price = intval($_REQUEST['min_price']);
+  	$max_price = intval($_REQUEST['max_price']);
+  	if($min_price > $max_price && $max_price > 0)
+  	{
+  		$min_price = intval($_REQUEST['max_price']);
+  		$max_price = intval($_REQUEST['min_price']);
+  	}
     	
-    	$filter_parm['min_price'] = $min_price;
-    	$filter_parm['max_price'] = $max_price;
-    	if($min_price!=0 || $max_price!=0)
-    	{
-    		$filter_parm['price'] = $price = 0;
-    	}
-    	else{    	
-    		$filter_parm['price'] = $price = intval($_GET['price']);
-    	}
+  	$filter_parm['min_price'] = $min_price;
+  	$filter_parm['max_price'] = $max_price;
+  	if($min_price!=0 || $max_price!=0)
+  	{
+  		$filter_parm['price'] = $price = 0;
+  	}
+  	else{    	
+  		$filter_parm['price'] = $price = intval($_GET['price']);
+  	}
+  	
+  	$keyword = strim($_REQUEST['keyword']);
     	
-    	$keyword = strim($_REQUEST['keyword']);
-    	
-    	
-    	$spot_cate = load_auto_cache("spot_cate_list");
+    $spot_cate = load_auto_cache("spot_cate_list");
 		$tour_area_list = load_auto_cache("tour_area_list");
 		$tour_place_list = load_auto_cache("tour_place_list");
 		
 		//获取全国销量排行
 		$topsale_list = get_spots_top();
 		$GLOBALS['tmpl']->assign("topsale_list",$topsale_list);
-		
 		
 		//生成搜索连接
 		//组装分类搜索开始
@@ -413,7 +406,6 @@ class spotModule extends BaseModule{
 		$GLOBALS['tmpl']->assign("status_url",$status_url);
 		//组装排序结束
 		
-		
 		//注册当前地址
 		$ur_here[] = array("name"=>"景点列表","url"=>url("spot#cat"));
 		if($cate_id > 0){
@@ -520,9 +512,7 @@ class spotModule extends BaseModule{
 				$order_by = " satify $DESC_ASC sort ,DESC, id DESC ";
 				break;
 		}
-		
-		
-				
+						
 		$result = get_spots_list($spot_cate['list'][$cate_id]['name'],$GLOBALS['city']['py'],$area,$place,$tag,$conditions,$order_by,$limit);;
 		foreach($result['list'] as $k=>$v){
 			if($v["city_match_row"]){
@@ -543,20 +533,19 @@ class spotModule extends BaseModule{
 		$GLOBALS['tmpl']->assign('pages',$p);
 		
 		$right_page = new RightPage($result['rs_count'],$pagesize);
-	    $right_pages  =  $right_page->show();
-	   
-	    $GLOBALS['tmpl']->assign('right_pages',$right_pages);
+    $right_pages  =  $right_page->show();
+	  $GLOBALS['tmpl']->assign('right_pages',$right_pages);
 		
 		unset($result);
 		unset($spot_cate);
 		unset($tour_province_list);
-    	$GLOBALS['tmpl']->display("spot_cat.html");
-    }
-    
-    /**
-     * 详情
-     */
-    function view(){
+  	$GLOBALS['tmpl']->display("spot_cat.html");
+  }
+  
+  /*
+   * 详情
+   */
+  function view(){
     	global_run();
     	
     	$id = intval($_REQUEST['id']);
@@ -653,20 +642,20 @@ class spotModule extends BaseModule{
     	
     	$GLOBALS['tmpl']->assign("id",$id);
     	$GLOBALS['tmpl']->assign("sid",$sid);
-		$GLOBALS['tmpl']->assign("site_name",$seo_title." - 景点门票 - ".app_conf("SITE_NAME"));
-		$GLOBALS['tmpl']->assign("site_keyword",$seo_keywords.",".app_conf("SITE_KEYWORD"));
-		$GLOBALS['tmpl']->assign("site_description",$seo_description.",".app_conf("SITE_DESCRIPTION"));
+		  $GLOBALS['tmpl']->assign("site_name",$seo_title." - 景点门票 - ".app_conf("SITE_NAME"));
+		  $GLOBALS['tmpl']->assign("site_keyword",$seo_keywords.",".app_conf("SITE_KEYWORD"));
+		  $GLOBALS['tmpl']->assign("site_description",$seo_description.",".app_conf("SITE_DESCRIPTION"));
     	$GLOBALS['tmpl']->display("spot_view.html");
-    }
+  }
     
-    /**
-     * 成交记录
-     */
-    function ajax_sale_list(){
-    	$page=intval($_REQUEST['p']);
-    	$is_ajax =intval($_REQUEST['is_ajax']);
-    	if($page==0)
-    		$page=1;
+  /*
+   * 成交记录
+   */
+  function ajax_sale_list() {
+  	$page=intval($_REQUEST['p']);
+  	$is_ajax =intval($_REQUEST['is_ajax']);
+  	if($page==0)
+  		$page=1;
     		
 		$pagesize = 5;
 		$spotid = intval($_REQUEST['id']);
@@ -693,8 +682,6 @@ class spotModule extends BaseModule{
     	else{
     		return $result;
     	}
-    }
-    
-    
-}
+    }      
+  }
 ?>
