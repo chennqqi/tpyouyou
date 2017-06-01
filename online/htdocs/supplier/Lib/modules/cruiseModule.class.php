@@ -4,7 +4,7 @@ class cruiseModule extends AuthModule
 
 {
 
-   function index() {
+  function index() {
 
     $param = array();		
 
@@ -164,11 +164,11 @@ class cruiseModule extends AuthModule
 
 		$GLOBALS['tmpl']->assign('param',$param);
 
-		$GLOBALS['tmpl']->assign("formaction",admin_url("tourline"));
+		$GLOBALS['tmpl']->assign("formaction",admin_url("cruise"));
 
-		$GLOBALS['tmpl']->assign("setsorturl",admin_url("tourline#set_sort",array("ajax"=>1)));
+		$GLOBALS['tmpl']->assign("setsorturl",admin_url("cruise#set_sort",array("ajax"=>1)));
 
-		$GLOBALS['tmpl']->assign("delurl",admin_url("tourline#foreverdelete",array('ajax'=>1)));
+		$GLOBALS['tmpl']->assign("delurl",admin_url("cruise#foreverdelete",array('ajax'=>1)));
 
 		$GLOBALS['tmpl']->assign("searchstartcityurl",admin_url("tour_city#search_city_radio"),array("ajax"=>1));
 
@@ -178,7 +178,7 @@ class cruiseModule extends AuthModule
 
 		$GLOBALS['tmpl']->assign("addurl",admin_url("cruise#add"));
 
-		$GLOBALS['tmpl']->display("core/cruise/index.html");
+		$GLOBALS['tmpl']->display("core/tourline/index.html");
 
   }
 
@@ -218,23 +218,13 @@ class cruiseModule extends AuthModule
 
     	$GLOBALS['tmpl']->assign("edititem",admin_url("tourline_item#edit",array("ajax"=>1,"tourline_id"=>$vo['id'])));
 
-		
+		$GLOBALS['tmpl']->assign("formaction",admin_url("cruise#insert",array("ajax"=>1)));
 
-		$GLOBALS['tmpl']->assign("formaction",admin_url("tourline#insert",array("ajax"=>1)));
-
-		$GLOBALS['tmpl']->display("core/cruise/add.html");
+		$GLOBALS['tmpl']->display("core/tourline/add.html");
 
 	}
-
 	
-
-	
-
-	
-
 	public function insert() {
-
-		
 
 		$ajax = intval($_REQUEST['ajax']);
 
@@ -247,9 +237,6 @@ class cruiseModule extends AuthModule
 			showErr(lang("TOURLINE_NAME_EMPTY"),$ajax);
 
 		}
-
-		
-		
 
 		
 
@@ -337,7 +324,6 @@ class cruiseModule extends AuthModule
 
 		$data['tour_total_day'] = intval($_REQUEST['tour_total_day']);
 
-		
 
 		if(isset($_REQUEST['image'])){
 
@@ -411,7 +397,7 @@ class cruiseModule extends AuthModule
 
 		$data['appoint_desc'] = format_domain_to_relative(btrim($_REQUEST['appoint_desc']));
 
-		
+		$data['is_cruise'] = 1;
 
 		/*相关内容*/
 
@@ -430,10 +416,6 @@ class cruiseModule extends AuthModule
 		$data['tour_desc_3'] = format_domain_to_relative(btrim($_REQUEST['tour_desc_3']));
 
 		$data['tour_desc_4'] = format_domain_to_relative(btrim($_REQUEST['tour_desc_4']));
-
-
-
-	
 
 		/*时间价格数量*/
 
@@ -491,7 +473,6 @@ class cruiseModule extends AuthModule
 
 		}
 
-		
 
 		/*签证配置*/
 
@@ -555,7 +536,7 @@ class cruiseModule extends AuthModule
 
 			//成功提示
 
-			showSuccess("编辑成功，等待审核",$ajax,admin_url("tourline_supplier#index"));
+			showSuccess("编辑成功，等待审核",$ajax,admin_url("cruise_supplier#index"));
 
 		} else {
 
@@ -1367,7 +1348,6 @@ class cruiseModule extends AuthModule
 
 	}	
 
-	
 
 	//验证码标识使用
 

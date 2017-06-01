@@ -4,223 +4,213 @@ class cruise_supplierModule extends AuthModule
 
 {
 
-    function index() {
+  function index() {
 
-      $param = array();		
+	    $param = array();		
 
-		  //条件
+			//条件
 
-		  $condition = " supplier_id =  ".$this->supplier_id."";
+			$condition = " is_cruise = 1 and supplier_id =  ".$this->supplier_id."";
 
-		if(isset($_REQUEST['name']))
+			if(isset($_REQUEST['name']))
 
-			$name_key = strim($_REQUEST['name']);
+				$name_key = strim($_REQUEST['name']);
 
-		else
+			else
 
-			$name_key = "";
+				$name_key = "";
 
-		$param['name'] = $name_key;
+			$param['name'] = $name_key;
 
-		if($name_key!='')
-
-		{
-
-			$condition.=" and name like '%".$name_key."%' ";
-
-		}
-
-		
-
-    	if(isset($_REQUEST['start_city_city_id']))
-
-		{
-
-			$start_city_city_id = intval($_REQUEST['start_city_city_id']);
-
-			$start_city_name = strim($_REQUEST['start_city_name']);
-
-		}
-
-		else
-
-		{
-
-			$start_city_city_id = 0;
-
-			$start_city_name='';
-
-		}
-
-		$param['start_city_city_id'] = $start_city_city_id;
-
-		$param['start_city_name'] = $start_city_name;
-
-   	     if($start_city_city_id >0)
-
-		{
-
-			$condition.=" and city_id = ".$start_city_city_id." ";
-
-		}
-
-		
-
-    	if(isset($_REQUEST['tour_type']))
-
-			$tour_type = strim($_REQUEST['tour_type']);
-
-		else
-
-			$tour_type = 0;
-
-		$param['tour_type'] = $tour_type;
-
-		if($tour_type >0)
-
-		{
-
-			$condition.=" and tour_type = ".$tour_type." ";
-
-		}
-
-		
-
-		//分页
-
-		if(isset($_REQUEST['numPerPage']))
-
-		{			
-
-			$param['pageSize'] = intval($_REQUEST['numPerPage']);
-
-			if($param['pageSize'] <=0||$param['pageSize'] >200)
-
-				$param['pageSize'] = ADMIN_PAGE_SIZE;
-
-		}
-
-		else
-
-			$param['pageSize'] = ADMIN_PAGE_SIZE;
-
-			
-
-		if(isset($_REQUEST['pageNum']))
-
-			$page = intval($_REQUEST['pageNum']);
-
-		else
-
-			$page = 0;
-
-		if($page==0)
-
-			$page = 1;
-
-		$limit = (($page-1)*$param['pageSize']).",".$param['pageSize'];
-
-		$param['pageNum'] = $page;
-
-		
-
-		
-
-		//排序
-
-		if(isset($_REQUEST['orderField']))
-
-			$param['orderField'] = strim($_REQUEST['orderField']);
-
-		else
-
-			$param['orderField'] = "id";
-
-		
-
-		if(isset($_REQUEST['orderDirection']))
-
-			$param['orderDirection'] = strim($_REQUEST['orderDirection'])=="asc"?"asc":"desc";
-
-		else
-
-			$param['orderDirection'] = "desc";
-
-		
-
-		$totalCount = $GLOBALS['db']->getOne("select count(id) from ".DB_PREFIX."tourline_supplier where ".$condition);
-
-		if($totalCount)
-
-		{
-
-			$list = $GLOBALS['db']->getAll("select * from ".DB_PREFIX."tourline_supplier where ".$condition."  order by ".$param['orderField']." ".$param["orderDirection"]." limit ".$limit);
-
-			foreach($list as $k=>$v)
+			if($name_key!='')
 
 			{
 
-				$list[$k]['supplier_company']=$GLOBALS['db']->getOne("select company_name from ".DB_PREFIX."supplier where id=".$v['supplier_id']);
-
-				$list[$k]['city_name']=$GLOBALS['db']->getOne("select name from ".DB_PREFIX."tour_city where id=".$v['city_id']);
-
-				if($v['tour_type'] ==3)
-
-					$list[$k]['type_value']='自驾游';
-
-				elseif($v['tour_type'] ==2)
-
-					$list[$k]['type_value']='自助游';
-
-				else
-
-					$list[$k]['type_value']='跟团游';
-
-				
-
-				$list[$k]['preview_url'] = url("tours#view",array("sid"=>$v['id'],"preview"=>1));
+				$condition.=" and name like '%".$name_key."%' ";
 
 			}
 
-		}
+			
 
-		$GLOBALS['tmpl']->assign('list',$list);
+	    	if(isset($_REQUEST['start_city_city_id']))
 
-		$GLOBALS['tmpl']->assign('totalCount',$totalCount);
+			{
 
-		$GLOBALS['tmpl']->assign('param',$param);
+				$start_city_city_id = intval($_REQUEST['start_city_city_id']);
 
-		
+				$start_city_name = strim($_REQUEST['start_city_name']);
 
-		
+			}
 
-		$GLOBALS['tmpl']->assign("formaction",admin_url("tourline_supplier"));
+			else
 
-		$GLOBALS['tmpl']->assign("setsorturl",admin_url("tourline_supplier#set_sort",array("ajax"=>1)));
+			{
 
-		$GLOBALS['tmpl']->assign("delurl",admin_url("tourline_supplier#foreverdelete",array('ajax'=>1)));
+				$start_city_city_id = 0;
 
-		$GLOBALS['tmpl']->assign("searchstartcityurl",admin_url("tour_city#search_city_radio"),array("ajax"=>1));
+				$start_city_name='';
 
-    	$GLOBALS['tmpl']->assign("searchsupplierurl",admin_url("supplier#search_supplier",array("ajax"=>1)));
+			}
 
-		$GLOBALS['tmpl']->assign("editurl",admin_url("tourline_supplier#edit"));
+			$param['start_city_city_id'] = $start_city_city_id;
 
-		$GLOBALS['tmpl']->assign("addurl",admin_url("tourline#add"));
+			$param['start_city_name'] = $start_city_name;
 
-		$GLOBALS['tmpl']->display("core/tourline_supplier/index.html");
+	   	     if($start_city_city_id >0)
 
-    }
+			{
 
-    
+				$condition.=" and city_id = ".$start_city_city_id." ";
+
+			}
+
+			
+
+	    	if(isset($_REQUEST['tour_type']))
+
+				$tour_type = strim($_REQUEST['tour_type']);
+
+			else
+
+				$tour_type = 0;
+
+			$param['tour_type'] = $tour_type;
+
+			if($tour_type >0)
+
+			{
+
+				$condition.=" and tour_type = ".$tour_type." ";
+
+			}
+
+			
+
+			//分页
+
+			if(isset($_REQUEST['numPerPage']))
+
+			{			
+
+				$param['pageSize'] = intval($_REQUEST['numPerPage']);
+
+				if($param['pageSize'] <=0||$param['pageSize'] >200)
+
+					$param['pageSize'] = ADMIN_PAGE_SIZE;
+
+			}
+
+			else
+
+				$param['pageSize'] = ADMIN_PAGE_SIZE;
+
+				
+
+			if(isset($_REQUEST['pageNum']))
+
+				$page = intval($_REQUEST['pageNum']);
+
+			else
+
+				$page = 0;
+
+			if($page==0)
+
+				$page = 1;
+
+			$limit = (($page-1)*$param['pageSize']).",".$param['pageSize'];
+
+			$param['pageNum'] = $page;
+
+			
+
+			
+
+			//排序
+
+			if(isset($_REQUEST['orderField']))
+
+				$param['orderField'] = strim($_REQUEST['orderField']);
+
+			else
+
+				$param['orderField'] = "id";
+
+			
+
+			if(isset($_REQUEST['orderDirection']))
+
+				$param['orderDirection'] = strim($_REQUEST['orderDirection'])=="asc"?"asc":"desc";
+
+			else
+
+				$param['orderDirection'] = "desc";
+
+			
+
+			$totalCount = $GLOBALS['db']->getOne("select count(id) from ".DB_PREFIX."tourline_supplier where ".$condition);
+
+			if($totalCount)
+
+			{
+
+				$list = $GLOBALS['db']->getAll("select * from ".DB_PREFIX."tourline_supplier where ".$condition."  order by ".$param['orderField']." ".$param["orderDirection"]." limit ".$limit);
+
+				foreach($list as $k=>$v)
+
+				{
+
+					$list[$k]['supplier_company']=$GLOBALS['db']->getOne("select company_name from ".DB_PREFIX."supplier where id=".$v['supplier_id']);
+
+					$list[$k]['city_name']=$GLOBALS['db']->getOne("select name from ".DB_PREFIX."tour_city where id=".$v['city_id']);
+
+					if($v['tour_type'] ==3)
+
+						$list[$k]['type_value']='自驾游';
+
+					elseif($v['tour_type'] ==2)
+
+						$list[$k]['type_value']='自助游';
+
+					else
+
+						$list[$k]['type_value']='跟团游';
+
+
+					$list[$k]['preview_url'] = url("tours#view",array("sid"=>$v['id'],"preview"=>1));
+
+				}
+
+			}
+
+			$GLOBALS['tmpl']->assign('list',$list);
+
+			$GLOBALS['tmpl']->assign('totalCount',$totalCount);
+
+			$GLOBALS['tmpl']->assign('param',$param);
+
+			$GLOBALS['tmpl']->assign("formaction",admin_url("tourline_supplier"));
+
+			$GLOBALS['tmpl']->assign("setsorturl",admin_url("tourline_supplier#set_sort",array("ajax"=>1)));
+
+			$GLOBALS['tmpl']->assign("delurl",admin_url("tourline_supplier#foreverdelete",array('ajax'=>1)));
+
+			$GLOBALS['tmpl']->assign("searchstartcityurl",admin_url("tour_city#search_city_radio"),array("ajax"=>1));
+
+	    	$GLOBALS['tmpl']->assign("searchsupplierurl",admin_url("supplier#search_supplier",array("ajax"=>1)));
+
+			$GLOBALS['tmpl']->assign("editurl",admin_url("cruise_supplier#edit"));
+
+			$GLOBALS['tmpl']->assign("addurl",admin_url("cruise#add"));
+
+			$GLOBALS['tmpl']->display("core/tourline_supplier/index.html");
+  }
 
 	public function edit() {		
 
 		$id = intval($_REQUEST ['id']);
 
 		$vo =$GLOBALS['db']->getRow("select * from ".DB_PREFIX."tourline_supplier where id = ".$id);
-
-		
 
 		//city_name
 
@@ -328,8 +318,6 @@ class cruise_supplierModule extends AuthModule
 
 		$GLOBALS['tmpl']->assign ( 'tourline_items', $tourline_items );
 
-		
-
 		$GLOBALS['tmpl']->assign("searchstartcityurl",admin_url("tour_city#search_city_radio"),array("ajax"=>1));
 
 		$GLOBALS['tmpl']->assign("searchcityurl",admin_url("tour_city#search_city"),array("ajax"=>1));
@@ -348,30 +336,20 @@ class cruise_supplierModule extends AuthModule
 
     	$GLOBALS['tmpl']->assign("searchprovinceurl",admin_url("tour_province#search_province"),array("ajax"=>1));
 
-    	
-
     	$tuan_cates = $GLOBALS['db']->getAll("select id,name from ".DB_PREFIX."tuan_cate ORDER BY sort DESC");
 
     	$GLOBALS['tmpl']->assign("tuan_cates",$tuan_cates);
 
     	
-
 		$GLOBALS['tmpl']->assign("additem",admin_url("tourline_item#add",array("ajax"=>1,"tourline_id"=>$vo['rel_id'])));
 
     	$GLOBALS['tmpl']->assign("edititem",admin_url("tourline_item#edit",array("ajax"=>1,"tourline_id"=>$vo['rel_id'])));
 
-		
-
-		$GLOBALS['tmpl']->assign("formaction",admin_url("tourline_supplier#update",array("ajax"=>1)));
-
-		
+		$GLOBALS['tmpl']->assign("formaction",admin_url("cruise_supplier#update",array("ajax"=>1)));
 
 		$GLOBALS['tmpl']->display("core/tourline_supplier/edit.html");
 
 	}
-
-
-
 	
 
 	public function update() {
@@ -392,10 +370,6 @@ class cruise_supplierModule extends AuthModule
 
 		}
 
-		
-
-
-		
 
 		if(isset($_REQUEST['tourline_items']))
 
@@ -419,7 +393,6 @@ class cruise_supplierModule extends AuthModule
 
 	    		}
 
-				
 
 				if(strim($tourline_item['start_time'])=='1970-01-01' && intval($tourline_item['is_forever']) !=1 )
 
@@ -711,8 +684,6 @@ class cruise_supplierModule extends AuthModule
 
 		}
 
-
-
 	}
 
 	
@@ -842,9 +813,6 @@ class cruise_supplierModule extends AuthModule
 	}
 
 	
-
-	
-
 	public function foreverdelete()
 
 	 {		

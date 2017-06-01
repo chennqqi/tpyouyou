@@ -228,27 +228,21 @@ function update_spot_ticket($spot_id,$tuan_id){
 		return ;
 	if($spot_id==0 && $tuan_id >0){
 		
-		$spot_id = $GLOBALS['db']->getOne("SELECT spot_id FROM ".DB_PREFIX."ticket WHERE id = ".$tuan_id);
+		$spot_id = $GLOBALS['db']->getOne("SELECT hotel_id FROM ".DB_PREFIX."ticket WHERE id = ".$tuan_id);
 	}
 	if($spot_id==0)
 		return ;
 	//更新门票冗余信息
-	$spot_tickets = $GLOBALS['db']->getAll("SELECT * FROM ".DB_PREFIX."ticket WHERE spot_id = ".$spot_id." and is_effect =1  ORDER BY sort DESC  ");
+	$spot_tickets = $GLOBALS['db']->getAll("SELECT * FROM ".DB_PREFIX."hotel_room WHERE hotel_id = ".$spot_id." and is_effect =1  ORDER BY sort DESC  ");
 	
 	if($spot_tickets){
-		$spot_tickets_data['ticket_list'] = serialize($spot_tickets);
-		$spot_tickets_data['has_ticket'] = 1;
-		$spot_tickets_data['ticket_price'] = $GLOBALS['db']->getOne("SELECT min(current_price) FROM ".DB_PREFIX."ticket WHERE spot_id = ".$spot_id." and is_effect = 1 ORDER BY sort DESC ");
-		
-		$spot_sale_total = $GLOBALS['db']->getRow("SELECT sum(sale_total) as sale_total_sum,sum(sale_virtual_total) as sale_virtual_total_sum FROM ".DB_PREFIX."ticket WHERE spot_id = ".$spot_id." ");
-		$spot_tickets_data['sale_total']=$spot_sale_total['sale_total_sum']+$spot_sale_total['sale_virtual_total_sum'];
-		
-		$GLOBALS['db']->autoExecute(DB_PREFIX."spot",$spot_tickets_data,"UPDATE","id=".$spot_id,"SILENT");
+		$spot_tickets_data['room_list'] = serialize($spot_tickets);
+	
+		$GLOBALS['db']->autoExecute(DB_PREFIX."hotel",$spot_tickets_data,"UPDATE","id=".$spot_id,"SILENT");
 	}
 	else
 	{
-		$spot_tickets_data['ticket_list'] = '';
-		$spot_tickets_data['has_ticket'] = 0;
+		$spot_tickets_data['room_list'] = '';
 		$GLOBALS['db']->autoExecute(DB_PREFIX."spot",$spot_tickets_data,"UPDATE","id=".$spot_id,"SILENT");
 	}
 }

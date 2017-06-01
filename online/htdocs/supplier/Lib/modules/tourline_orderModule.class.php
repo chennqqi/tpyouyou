@@ -197,36 +197,18 @@ class tourline_orderModule extends AuthModule
 			$list = $GLOBALS['db']->getAll($sql);	
 
 			require_once APP_ROOT_PATH."system/libs/tourline.php";
-			
-			foreach($list as $k=>$v)
-			{
-				tourline_order_format($list[$k]);
-				//print_r($v);
-				
-				//print_r($list[$k]);
-				/*
-				$list[$k]['create_time_format'] = to_date($v['create_time']);
-				$list[$k]['total_price_format'] = format_price($v['total_price']);
-				$list[$k]['pay_amount_format'] = format_price($v['pay_amount']);
-				
-				//支付状态
-				if ($v['pay_status'] == 1){
-					$list[$k]['pay_status_format'] = '已支付';
-				}else{
-					$list[$k]['pay_status_format'] = '未支付';
+
+			// 去除邮轮订单
+			foreach ($list as $key => $value) {
+				$isC = $GLOBALS['db']->getOne("select is_cruise from ".DB_PREFIX."tourline where id =".$value['tourline_id']);
+				if ($isC != 1) {
+				  $lists[] = $value;
 				}
-				
-				//订单状态(流程)1.新订单 2.已确认 3.已完成 4.作废\r\n新订单：未确认（包含已付款）的都表示为新订单\r\n已确认：表示为商家或管理员查看，确认手动修改\r\n新订单、已确认均可申请退款，否则不可',
-				if ($v['order_status'] == 1){
-					$list[$k]['order_status_format'] = '新订单';
-				}else if ($v['order_status'] == 2){
-					$list[$k]['order_status_format'] = '已确认';
-				}else if ($v['order_status'] == 3){
-					$list[$k]['order_status_format'] = '作废';
-				}else {
-					$list[$k]['order_status_format'] = '未知';
-				}*/
-				
+			}
+			
+			foreach($lists as $k=>$v)
+			{
+				tourline_order_format($lists[$k]);
 			}
 		}
 		/*
@@ -241,7 +223,7 @@ class tourline_orderModule extends AuthModule
 		已退金额：refund_amount
 		*/
 		
-		$GLOBALS['tmpl']->assign('list',$list);
+		$GLOBALS['tmpl']->assign('list',$lists);
 		$GLOBALS['tmpl']->assign('totalCount',$totalCount);
 		$GLOBALS['tmpl']->assign('param',$param);
 		

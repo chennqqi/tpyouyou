@@ -2,17 +2,17 @@
 
 
 
-class tourline_supplierModule extends AuthModule
+class cruise_supplierModule extends AuthModule
 
 {
 
-    function index() {
+  function index() {
 
     	$param = array();		
 
 		//条件
 
-		$condition = " 1=1 and is_cruise !=1 ";
+		$condition = " 1=1 and is_cruise =1 ";
 
 		if(isset($_REQUEST['name']))
 
@@ -200,17 +200,17 @@ class tourline_supplierModule extends AuthModule
 
 		$GLOBALS['tmpl']->assign("formaction",admin_url("tourline_supplier"));
 
-		$GLOBALS['tmpl']->assign("setsorturl",admin_url("tourline_supplier#set_sort",array("ajax"=>1)));
+		$GLOBALS['tmpl']->assign("setsorturl",admin_url("cruise_supplier#set_sort",array("ajax"=>1)));
 
-		$GLOBALS['tmpl']->assign("delurl",admin_url("tourline_supplier#foreverdelete",array('ajax'=>1)));
+		$GLOBALS['tmpl']->assign("delurl",admin_url("cruise_supplier#foreverdelete",array('ajax'=>1)));
 
 		$GLOBALS['tmpl']->assign("searchstartcityurl",admin_url("tour_city#search_city_radio"),array("ajax"=>1));
 
     	$GLOBALS['tmpl']->assign("searchsupplierurl",admin_url("supplier#search_supplier",array("ajax"=>1)));
 
-		$GLOBALS['tmpl']->assign("editurl",admin_url("tourline_supplier#edit"));
+		$GLOBALS['tmpl']->assign("editurl",admin_url("cruise_supplier#edit"));
 
-		$GLOBALS['tmpl']->assign("addurl",admin_url("tourline#add"));
+		$GLOBALS['tmpl']->assign("addurl",admin_url("cruise#add"));
 
 		$GLOBALS['tmpl']->display("core/tourline_supplier/index.html");
 
@@ -377,8 +377,7 @@ class tourline_supplierModule extends AuthModule
     	$GLOBALS['tmpl']->assign("edititem",admin_url("tourline_item#edit",array("ajax"=>1,"tourline_id"=>$vo['rel_id'],"is_supplier_submit"=>1)));
 
 		
-
-		$GLOBALS['tmpl']->assign("formaction",admin_url("tourline_supplier#update",array("ajax"=>1)));
+		$GLOBALS['tmpl']->assign("formaction",admin_url("cruise_supplier#update",array("ajax"=>1)));
 
 		
 
@@ -409,8 +408,6 @@ class tourline_supplierModule extends AuthModule
 		}
 
 		
-		
-
 		if(!check_empty("start_city_city_id") || intval($_REQUEST['start_city_city_id']) == 0 )
 
 		{
@@ -455,7 +452,6 @@ class tourline_supplierModule extends AuthModule
 
 				$tourline_item=unserialize(urldecode($v));
 
-				
 
 				if( strim($tourline_item['start_time']) =='' && intval($tourline_item['is_forever']) !=1){
 
@@ -713,10 +709,8 @@ class tourline_supplierModule extends AuthModule
 
 		$data['visa_brief'] = format_domain_to_relative($_REQUEST["visa_brief"]);
 
+		$data['is_cruise'] = 1;
 		
-
-		
-
 		$log_info = $data['name'];
 
 		if($tourline_supplier['rel_id'] >0 )
@@ -1035,7 +1029,6 @@ class tourline_supplierModule extends AuthModule
 
 				}
 
-				
 
 				//删除商户提交的景点门票
 
@@ -1047,7 +1040,7 @@ class tourline_supplierModule extends AuthModule
 
 				save_log($log_info.lang("UPDATE_SUCCESS"),1);
 
-				showSuccess("审核成功",$ajax,admin_url("tourline#edit",array('id'=>$tourline_id)));
+				showSuccess("审核成功",$ajax,admin_url("cruise#edit",array('id'=>$tourline_id)));
 
 			}else{
 
@@ -1276,8 +1269,6 @@ class tourline_supplierModule extends AuthModule
 			
 
 		}
-
-		
 
 	}
 

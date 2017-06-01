@@ -25,9 +25,7 @@ class cruise_orderModule extends AuthModule
 			$param['is_new'] = 1;
 		}else{
 			$param['is_new'] = 0;
-		}
-		
-		
+		}		
 		
 		//订单号
 		if(isset($_REQUEST['sn']))
@@ -51,7 +49,6 @@ class cruise_orderModule extends AuthModule
 			$condition.=" and t.tourline_id = ".intval($tourline_id)." ";
 		}		
 		
-		
 		//预定人姓名
 		if(isset($_REQUEST['appoint_name']))
 			$appoint_name = strim($_REQUEST['appoint_name']);
@@ -61,7 +58,7 @@ class cruise_orderModule extends AuthModule
 		if($appoint_name!='')
 		{
 			$condition.=" and t.appoint_name = '".$appoint_name."' ";
-		}		
+		}
 		
 		//预定人手机
 		if(isset($_REQUEST['appoint_mobile']))
@@ -73,7 +70,7 @@ class cruise_orderModule extends AuthModule
 		{
 			$condition.=" and t.appoint_mobile = '".$appoint_mobile."' ";
 		}
-				
+		
 		//验证码
 		if(isset($_REQUEST['verify_code']))
 			$verify_code = strim($_REQUEST['verify_code']);
@@ -85,7 +82,6 @@ class cruise_orderModule extends AuthModule
 			$condition.=" and t.verify_code = '".$verify_code."' ";
 		}
 				
-		
 		//支付状态
 		$pay_status = -1;
 		if(isset($_REQUEST['pay_status']) && strim($_REQUEST['pay_status'])!="")
@@ -96,7 +92,6 @@ class cruise_orderModule extends AuthModule
 		{
 			$condition .=" and t.pay_status=$pay_status ";
 		}
-		
 		
 		//退款状态
 		$refund_status = -1;
@@ -118,7 +113,7 @@ class cruise_orderModule extends AuthModule
 		if($order_status !=0)
 		{
 			$condition .=" and t.order_status=$order_status ";
-		}	
+		}
 		
 		//是否验证
 		$is_verify = intval($_REQUEST['is_verify']);
@@ -139,7 +134,6 @@ class cruise_orderModule extends AuthModule
 		if(!empty($create_time_begin) && !empty($create_time_end))
 		{
 			$condition.=" and t.create_time >= '".to_timespan($create_time_begin)."' and t.create_time <='". (to_timespan($create_time_end) + 3600 * 24 - 1)."' ";
-		
 		}
 		
 		//出发时间
@@ -184,47 +178,26 @@ class cruise_orderModule extends AuthModule
 			$param['orderDirection'] = strim($_REQUEST['orderDirection'])=="asc"?"asc":"desc";
 		else
 			$param['orderDirection'] = "desc";
-		
-		
-				
+						
 		$totalCount = $GLOBALS['db']->getOne("select count(id) from ".DB_PREFIX."tourline_order t where ".$condition);
 		if($totalCount){
-			$sql = "select t.*,u.user_name,u.mobile,s.user_name as supplier_name  from ".DB_PREFIX."tourline_order t left outer join ".DB_PREFIX."user u on u.id = t.user_id left outer join ".DB_PREFIX."supplier s on s.id = t.supplier_id where ".$condition."  order by ".$param['orderField']." ".$param["orderDirection"]." limit ".$limit;
-			//echo $sql;
-			//die();
-			$list = $GLOBALS['db']->getAll($sql);	
+			$sql = "select t.*,u.user_name,u.mobile,s.user_name as supplier_name  from ".DB_PREFIX."tourline_order t left outer join ".DB_PREFIX."user u on u.id = t.user_id left outer join ".DB_PREFIX."supplier s on s.id = t.supplier_id where ".$condition." order by ".$param['orderField']." ".$param["orderDirection"]." limit ".$limit;
+
+			$list = $GLOBALS['db']->getAll($sql);
+
+			// 提取邮轮订单
+			foreach ($list as $key => $value) {
+				$isC = $GLOBALS['db']->getOne("select is_cruise from ".DB_PREFIX."tourline where id =".$value['tourline_id']);
+				if ($isC == 1) {
+				  $lists[] = $value;
+				}
+			}
 
 			require_once APP_ROOT_PATH."system/libs/tourline.php";
 			
-			foreach($list as $k=>$v)
+			foreach($lists as $k=>$v)
 			{
-				tourline_order_format($list[$k]);
-				//print_r($v);
-				
-				//print_r($list[$k]);
-				/*
-				$list[$k]['create_time_format'] = to_date($v['create_time']);
-				$list[$k]['total_price_format'] = format_price($v['total_price']);
-				$list[$k]['pay_amount_format'] = format_price($v['pay_amount']);
-				
-				//支付状态
-				if ($v['pay_status'] == 1){
-					$list[$k]['pay_status_format'] = '已支付';
-				}else{
-					$list[$k]['pay_status_format'] = '未支付';
-				}
-				
-				//订单状态(流程)1.新订单 2.已确认 3.已完成 4.作废\r\n新订单：未确认（包含已付款）的都表示为新订单\r\n已确认：表示为商家或管理员查看，确认手动修改\r\n新订单、已确认均可申请退款，否则不可',
-				if ($v['order_status'] == 1){
-					$list[$k]['order_status_format'] = '新订单';
-				}else if ($v['order_status'] == 2){
-					$list[$k]['order_status_format'] = '已确认';
-				}else if ($v['order_status'] == 3){
-					$list[$k]['order_status_format'] = '作废';
-				}else {
-					$list[$k]['order_status_format'] = '未知';
-				}*/
-				
+				tourline_order_format($lists[$k]);
 			}
 		}
 		/*
@@ -239,7 +212,7 @@ class cruise_orderModule extends AuthModule
 		已退金额：refund_amount
 		*/
 		
-		$GLOBALS['tmpl']->assign('list',$list);
+		$GLOBALS['tmpl']->assign('list',$lists);
 		$GLOBALS['tmpl']->assign('totalCount',$totalCount);
 		$GLOBALS['tmpl']->assign('param',$param);
 		
@@ -267,7 +240,6 @@ class cruise_orderModule extends AuthModule
 		}else{
 			$param['is_new'] = 0;
 		}
-		
 		
 		
 		//订单号
@@ -518,10 +490,7 @@ class cruise_orderModule extends AuthModule
     		}    		
     	}
     	$GLOBALS['tmpl']->assign('namelist',$namelist);    	
-    	
-    	
-    	
-    	
+    	    	
     	$GLOBALS['tmpl']->assign("orderlogurl",admin_url("tourline_order#order_log",array("ajax"=>1,id=>$id)));
     
     

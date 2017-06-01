@@ -1523,8 +1523,6 @@ function tourline_order_format(&$order){
 
 	$order['tourline_total_price_format'] = format_price(format_price_to_display($order['tourline_total_price']));//线路总价：adult_price*adult_count+child_price*child_count+(adult_count+child_count)*insurance_price+visa
 
-
-
 	$order['adult_price_format'] = format_price(format_price_to_display($order['adult_price']));
 
 	$order['adult_sale_price_format'] = format_price(format_price_to_display($order['adult_sale_price']));
@@ -1532,9 +1530,6 @@ function tourline_order_format(&$order){
 	$order['child_price_format'] = format_price(format_price_to_display($order['child_price']));
 
 	$order['child_sale_price_format'] = format_price(format_price_to_display($order['child_sale_price']));
-
-
-
 
 
 	$order['create_time_format'] = to_date($order['create_time']);

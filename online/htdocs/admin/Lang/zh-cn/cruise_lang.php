@@ -19,7 +19,5 @@ return array(
 	'TOURLINE_ORDER_CONFIRM_TYPE'	=>	'订单确认方式',
 	'TOURLINE_NAME_EMPTY'	=>	'名称不能为空',
 	'TOURLINE_SHORT_NAME_EMPTY'	=>	'短名称不能为空',
-	'CRUISE'	=>	'邮轮',
-	'CRUISE_NAME'	=>	'邮轮名称',
 );
 ?>

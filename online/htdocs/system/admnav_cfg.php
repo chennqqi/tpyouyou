@@ -31,6 +31,11 @@ return array(
 						// array("name"=>"酒店订单","module"=>"hotel_order","action"=>"index"),
 						array("name"=>"商家提交","module"=>"hotel_supplier","action"=>"index"),
 				),
+				'邮轮管理'	=>	array(
+						array("name"=>" 邮轮线路","module"=>"cruise","action"=>"index"),
+						array("name"=>"邮轮订单","module"=>"cruise_order","action"=>"index"),
+						array("name"=>"商家提交","module"=>"cruise_supplier","action"=>"index"),
+				),
 				'团购管理'	=>	array(
 						array("name"=>"团购列表","module"=>"tuan","action"=>"index"),
 						array("name"=>"团购分类","module"=>"tuan_cate","action"=>"index"),

@@ -1,8 +1,8 @@
 <?php
 
-class tourline_orderModule extends AuthModule
+class cruise_orderModule extends AuthModule
 {
-    function index() {
+  function index() {
     	$param = array();		
 		//条件
 		$condition = " 1 = 1 ";
@@ -182,22 +182,24 @@ class tourline_orderModule extends AuthModule
 			$sql = "select t.*,u.user_name,u.mobile,s.user_name as supplier_name  from ".DB_PREFIX."tourline_order t left outer join ".DB_PREFIX."user u on u.id = t.user_id left outer join ".DB_PREFIX."supplier s on s.id = t.supplier_id where ".$condition."  order by ".$param['orderField']." ".$param["orderDirection"]." limit ".$limit;
 			//echo $sql;
 			//die();
-			$ls = $GLOBALS['db']->getAll($sql);	
+			$list = $GLOBALS['db']->getAll($sql);	
+
 			// 提取邮轮订单
-			foreach ($ls as $key => $value) {
+			foreach ($list as $key => $value) {
 				$isC = $GLOBALS['db']->getOne("select is_cruise from ".DB_PREFIX."tourline where id =".$value['tourline_id']);
-				if ($isC != 1) {
-				  $list[] = $value;
+				if ($isC == 1) {
+				  $lists[] = $value;
 				}
 			}
 
 			require_once APP_ROOT_PATH."system/libs/tourline.php";
 			
-			foreach($list as $k=>$v)
+			foreach($lists as $k=>$v)
 			{
-				tourline_order_format($list[$k]);				
-				$list[$k]['tourline_url']=admin_url("tourline#edit",array("ajax"=>1,"id"=>$v['tourline_id']));
-				$list[$k]['user_url']=admin_url("user#index",array("ajax"=>1,"user_name"=>$v['user_name']));
+				tourline_order_format($lists[$k]);
+				
+				$lists[$k]['tourline_url']=admin_url("tourline#edit",array("ajax"=>1,"id"=>$v['tourline_id']));
+				$lists[$k]['user_url']=admin_url("user#index",array("ajax"=>1,"user_name"=>$v['user_name']));
 			}
 		}
 		/*
@@ -212,7 +214,7 @@ class tourline_orderModule extends AuthModule
 		已退金额：refund_amount
 		*/
 		
-		$GLOBALS['tmpl']->assign('list',$list);
+		$GLOBALS['tmpl']->assign('list',$lists);
 		$GLOBALS['tmpl']->assign('totalCount',$totalCount);
 		$GLOBALS['tmpl']->assign('param',$param);
 		

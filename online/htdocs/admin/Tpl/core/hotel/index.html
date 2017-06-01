@@ -56,27 +56,6 @@ function blursort(dom,id)
 						<input type="text" name="name" value="{$param.name}"/>
 						</td>
 						<td>
-						{lang v="HAS_TICKET"}：
-						</td>
-						<td>
-						<select name="has_ticket" class="combox">
-							<option value="3">{lang v="EMPTY_SELECT"}</option>
-							<option value="0" {if $param.has_ticket eq 0}selected=selected{/if}>无</option>
-							<option value="1" {if $param.has_ticket eq 1}selected=selected{/if}>有</option>
-						</select>
-						</td>
-						<td>
-						{lang v="SPOT_CATE"}：
-						</td>
-						<td>
-						<select name="spot_cate" class="combox">
-							<option value="">{lang v="EMPTY_SELECT"}</option>
-							{foreach from=$spot_cate item=cate}
-							<option value="{$cate.name}" {if $param.spot_cate eq $cate.name}selected=selected{/if}>{$cate.name}</option>
-							{/foreach}
-						</select>
-						</td>
-						<td>
 						<div class="buttonActive"><div class="buttonContent"><button type="submit">{lang v="SEARCH"}</button></div></div>
 						</td>
 					</tr>
@@ -84,7 +63,6 @@ function blursort(dom,id)
 				
 			</div>
 
-			
 			
 		</div>
 
@@ -109,7 +87,7 @@ function blursort(dom,id)
 				<th width="60">{lang v="SPOT_LEVEl"}</th>
 				<th width="60">成交记录</th>
 				<th width="220">详细地址</th>
-				<th width="60">{lang v="HAS_TICKET"}</th>
+				
 				<th width="100">门票价格</th>
 				<th width="60"  orderField="sort" {if $param.orderField eq 'sort'} class="{$param.orderDirection}"{/if}>{lang v="SORT"}</th>
 				<th width="150">{lang v="TAG_LANG_OPERATE"}</th>
@@ -123,16 +101,15 @@ function blursort(dom,id)
 				<td>{$item.id}</td>
 				<td>{$item.name}</td>
 				<td>{$item.company_name}</td>
-				<td>{$item.level_format}</td>
+				<td>{$item.star_level}星级</td>
 				<td>{if $item.show_sale_list eq 1}显示{else}隐藏{/if}</td>
 				<td title="{$item.address}">{$item.address}</td>
-				<td>{if $item.has_ticket eq 0}无{else}有{/if}</td>
-				<td>{$item.ticket_price_format}起</td>
+				<td>{$item.price}起</td>
 				<td><a href="javascript:void(0);" onclick="setsort(this,{$item.id});">{$item.sort}</a></td>
 				<td>
 					<a title="{lang v="CONFIRM_DELETE"}" target="ajaxTodo" href="{$delurl}&id={$item.id}" class="btnDel">{lang v="DEL"}</a>
 					<a title="{lang v="EDIT"}{lang v="NAME"}{$item.name}" rel="spot_editpage_{$item.id}" target="navTab" href="{$editurl}&id={$item.id}"  class="btnEdit">{lang v="EDIT"}</a>
-					<a title="预览" href="{$item.preview_url}" class="btnLook" target="_blank">预览</a>
+					<a title="预览" href="{$previewurl}&id={$item.id}" class="btnLook" target="_blank">预览</a>
 					
 					<a title="验证码管理{$item.name}" rel="spot_code_listpage_{$item.id}" target="navTab" href="{$verifycodelisturl}&spot_id={$item.id}"  class="btnView">验证码管理</a>
 					

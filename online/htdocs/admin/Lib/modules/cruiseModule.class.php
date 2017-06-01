@@ -2,17 +2,16 @@
 
 
 
-class tourlineModule extends AuthModule
+class cruiseModule extends AuthModule
 
 {
 
   function index() {
 
-    	$param = array();	
-
+    $param = array();	
 		//条件
 
-		$condition = " 1 = 1 and is_cruise != 1 ";
+		$condition = " 1 = 1 and is_cruise = 1 ";
 
 		if(isset($_REQUEST['name']))
 
@@ -31,7 +30,6 @@ class tourlineModule extends AuthModule
 			$condition.=" and name like '%".$name_key."%' ";
 
 		}
-
 		
 
 		if(isset($_REQUEST['supplier_id']))
@@ -66,7 +64,6 @@ class tourlineModule extends AuthModule
 
 		}
 
-		
 
     	if(isset($_REQUEST['start_city_city_id']))
 
@@ -248,25 +245,25 @@ class tourlineModule extends AuthModule
 
 		
 
-		$GLOBALS['tmpl']->assign("formaction",admin_url("tourline"));
+		$GLOBALS['tmpl']->assign("formaction",admin_url("cruise"));
 
-		$GLOBALS['tmpl']->assign("setsorturl",admin_url("tourline#set_sort",array("ajax"=>1)));
+		$GLOBALS['tmpl']->assign("setsorturl",admin_url("cruise#set_sort",array("ajax"=>1)));
 
-		$GLOBALS['tmpl']->assign("delurl",admin_url("tourline#foreverdelete",array('ajax'=>1)));
+		$GLOBALS['tmpl']->assign("delurl",admin_url("cruise#foreverdelete",array('ajax'=>1)));
 
-		$GLOBALS['tmpl']->assign("seteffecturl",admin_url("tourline#set_effect",array("ajax"=>1)));
+		$GLOBALS['tmpl']->assign("seteffecturl",admin_url("cruise#set_effect",array("ajax"=>1)));
 
 		$GLOBALS['tmpl']->assign("searchstartcityurl",admin_url("tour_city#search_city_radio"),array("ajax"=>1));
 
     	$GLOBALS['tmpl']->assign("searchsupplierurl",admin_url("supplier#search_supplier",array("ajax"=>1)));	
 
-		$GLOBALS['tmpl']->assign("editurl",admin_url("tourline#edit"));
+		$GLOBALS['tmpl']->assign("editurl",admin_url("cruise#edit"));
 
-		$GLOBALS['tmpl']->assign("addurl",admin_url("tourline#add"));
+		$GLOBALS['tmpl']->assign("addurl",admin_url("cruise#add"));
 
 		$GLOBALS['tmpl']->display("core/tourline/index.html");
 
-    }
+  }
 
     
 
@@ -349,14 +346,7 @@ class tourlineModule extends AuthModule
 			showErr(lang("INVALID_OPERATION"),$ajax);
 
 		}
-
-
-
 	}
-
-	
-
-	
 
 	public function add()
 
@@ -381,7 +371,6 @@ class tourlineModule extends AuthModule
     	$GLOBALS['tmpl']->assign("searchtagurl",admin_url("tour_place_tag#search_tag"),array("ajax"=>1));
 
     	$GLOBALS['tmpl']->assign("searchprovinceurl",admin_url("tour_province#search_province"),array("ajax"=>1));
-
     	
 
     	$tuan_cates = $GLOBALS['db']->getAll("select id,name from ".DB_PREFIX."tuan_cate ORDER BY sort DESC");
@@ -400,18 +389,12 @@ class tourlineModule extends AuthModule
 
     	$GLOBALS['tmpl']->assign("edititem",admin_url("tourline_item#edit",array("ajax"=>1)));
 
-		
 
-		$GLOBALS['tmpl']->assign("formaction",admin_url("tourline#insert",array("ajax"=>1)));
+		$GLOBALS['tmpl']->assign("formaction",admin_url("cruise#insert",array("ajax"=>1)));
 
 		$GLOBALS['tmpl']->display("core/tourline/add.html");
 
 	}
-
-	
-
-	
-
 	
 
 	public function insert() {
@@ -429,10 +412,6 @@ class tourlineModule extends AuthModule
 			showErr(lang("TOURLINE_NAME_EMPTY"),$ajax);
 
 		}
-
-		
-
-	
 
 		
 
@@ -543,8 +522,7 @@ class tourlineModule extends AuthModule
 		$data['show_in_api'] = intval($_REQUEST['show_in_api']);
 
 		$data['tour_guide_key'] = strim($_REQUEST["tour_guide_key"]);
-
-		
+		$data['is_cruise'] = 1;
 
 		if(isset($_REQUEST['image'])){
 
@@ -1017,7 +995,7 @@ class tourlineModule extends AuthModule
 
 			save_log($log_info.lang("INSERT_SUCCESS"),1);
 
-			showSuccess(lang("INSERT_SUCCESS"),$ajax,admin_url("tourline#add"));
+			showSuccess(lang("INSERT_SUCCESS"),$ajax,admin_url("cruise#add"));
 
 		} else {
 
@@ -1030,10 +1008,6 @@ class tourlineModule extends AuthModule
 
 
 	}
-
-	
-
-	
 
 	
 
