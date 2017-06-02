@@ -9,11 +9,10 @@
 
 //交易处理类
 class Transaction{
-	
 		/**
 		 * 产生交易单号
 		 * @param array $user_data 用户数据，主要是包含id，表示user_id
-		 * @param int $order_type  订单类型1.线路2.门票3.酒店 4.充值单 ...后续可扩展
+		 * @param int $order_type  订单类型1.线路2.门票3.酒店 4.充值单 5.邮轮 ...后续可扩展
 		 * @param string $order_sn 订单编号
 		 * @param float $money  需支付的金额，元，入库前需转为分
 		 * @param boolean $is_yuan  true 元，入库前需转为分；false 分，直接入库
@@ -84,9 +83,7 @@ class Transaction{
 				$result["status"] = 3;
 				$result["message"] = "数据库出错".$GLOBALS['db']->error();
 				return $result;
-			}
-			
-			
+			}	
 		}
 }
 ?>

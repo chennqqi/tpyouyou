@@ -76,7 +76,6 @@ if (isset($read_modules) && $read_modules == true)
     /* 名称 */
     $module['name']    = $payment_lang['name'];
 
-
   	 $module['bank'] = 1; //直连支付
 
     /* 配送 */
@@ -121,13 +120,12 @@ class AlipayBank_payment implements payment {
 		if(empty($payment_info))app_redirect(url("index"));
 		$payment_info['config'] = unserialize($payment_info['config']);
 
-		
 		$data_return_url = url("transaction#response",array("class_name"=>"AlipayBank"));
 		$data_notify_url = url("transaction#notify",array("class_name"=>"AlipayBank"));
 
 		$service = 'create_direct_pay_by_user';
 		/* 银行类型 */
-        $bank_type = strim($_REQUEST['bank_type']);
+    $bank_type = strim($_REQUEST['bank_type']);
 		
 		$parameter = array(
             'service'           => $service,

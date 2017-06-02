@@ -8,43 +8,35 @@
 // +----------------------------------------------------------------------
 
 $payment_lang = array(
-	'name'	=>	'支付宝支付',
-	'alipay_partner'	=>	'合作者身份ID',
-	'alipay_account'	=>	'支付宝帐号',
-	'alipay_key'		=>	'校验码',
-	'alipay_service'	=>	'接口方式',
-	'alipay_service_0'	=>	'使用标准双接口',
-	'alipay_service_1'	=>	'担保交易接口',
-	'alipay_service_2'	=>	'即时到帐接口',
-	'GO_TO_PAY'	=>	'前往支付宝在线支付',
+	'name'	=>	'银联网关支付',
+	'unionpay_partner'	=>	'合作者身份ID',
+	'unionpay_account'	=>	'银联商户号',
+	'unionpay_key'		=>	'校验码',
+	'unionpay_service'	=>	'接口方式',
+	'GO_TO_PAY'	=>	'前往银联网关支付',
 	'VALID_ERROR'	=>	'支付验证失败',
 	'PAY_FAILED'	=>	'支付失败',
 );
 $config = array(
-	'alipay_partner'	=>	array(
+	'unionpay_partner'	=>	array(
 		'INPUT_TYPE'	=>	'0',
 	), //合作者身份ID
-	'alipay_account'	=>	array(
+	'unionpay_account'	=>	array(
 		'INPUT_TYPE'	=>	'0'
 	), //支付宝帐号: 
-	'alipay_key'	=>	array(
+	'unionpay_key'	=>	array(
 		'INPUT_TYPE'	=>	'0'
-	), //校验码
-	'alipay_service'	=>	array(
-		'INPUT_TYPE'	=>	'1',
-		'VALUES'	=> 	array(0,1,2)
-	),
+	)
 );
 /* 模块的基本信息 */
 if (isset($read_modules) && $read_modules == true)
 {
-    $module['class_name']    = 'Alipay';
+    $module['class_name']    = 'Unionpay';
 
     /* 名称 */
     $module['name']    = $payment_lang['name'];
 	
-    $module['bank'] = 0; //非直连支付
-
+    $module['bank'] = 1; // 直连支付
 
     $module['config'] = $config;
     
@@ -52,19 +44,19 @@ if (isset($read_modules) && $read_modules == true)
     return $module;
 }
 
-// 支付宝支付模型
+// 银联网关支付模型
 require_once(APP_ROOT_PATH.'system/libs/payment.php');
-class Alipay_payment implements payment { 
+class Unionpay_payment implements payment { 
 
 	public function get_payment_code($user_data,$order_type,$order_sn,$subject,$money)
 	{
 		require_once APP_ROOT_PATH."system/libs/transaction.php";
 		$payment_notice_sn = Transaction::make_payment($user_data, $order_type, $order_sn, $money);
-		$GLOBALS['db']->query("update ".DB_PREFIX."payment_notice set payment_class='Alipay',payment_name='支付宝支付' where notice_sn = '".$payment_notice_sn."'");
+		$GLOBALS['db']->query("update ".DB_PREFIX."payment_notice set payment_class='Unionpay',payment_name='银联网关支付' where notice_sn = '".$payment_notice_sn."'");
 		$payment_notice = $GLOBALS['db']->getRow("select * from ".DB_PREFIX."payment_notice where notice_sn = '".$payment_notice_sn."'");
 		
 		$money = format_price_to_display($payment_notice['money']);
-		$payment_info = $GLOBALS['db']->getRow("select id,config,logo from ".DB_PREFIX."payment where class_name = 'Alipay' ");
+		$payment_info = $GLOBALS['db']->getRow("select id,config,logo from ".DB_PREFIX."payment where class_name = 'Unionpay' ");
 		if(empty($payment_info))app_redirect(url("index"));
 		$payment_info['config'] = unserialize($payment_info['config']);
 
@@ -122,12 +114,11 @@ class Alipay_payment implements payment {
         $param = substr($param, 0, -1);
         $sign  = substr($sign, 0, -1). $payment_info['config']['alipay_key'];
         $sign_md5 = md5($sign);
-
 		
-		$payLinks = '<a style="font-size:12px; text-decoration:none; color:#000;" id="jump" href="https://mapi.alipay.com/gateway.do?'.$param. '&sign='.$sign_md5.'&sign_type=MD5">前往支付宝在线支付</a>';
-		
-		$payLinks=$payLinks."<script>document.getElementById('jump').click();</script>";
-        return $payLinks;
+				$payLinks = '<a style="font-size:12px; text-decoration:none; color:#000;" id="jump" href="https://mapi.alipay.com/gateway.do?'.$param. '&sign='.$sign_md5.'&sign_type=MD5">前往支付宝在线支付</a>';
+				
+				$payLinks=$payLinks."<script>document.getElementById('jump').click();</script>";
+		        return $payLinks;
 	}
 	
 	public function response($request)
@@ -139,7 +130,6 @@ class Alipay_payment implements payment {
 		);
 		$payment = $GLOBALS['db']->getRow("select id,config from ".DB_PREFIX."payment where class_name='Alipay'");  
     	$payment['config'] = unserialize($payment['config']);
-    	
     	
         /* 检查数字签名是否正确 */
         ksort($request);
@@ -196,7 +186,7 @@ class Alipay_payment implements payment {
 					require_once APP_ROOT_PATH."system/libs/tourline.php";					
 					tourline_order_paid($payment_notice['order_sn'],$payment_notice['money']);
 					app_redirect(url("transaction#done",array("sn"=>$payment_notice['order_sn'],"ot"=>1)));
-				}	
+				}
 				else if($payment_notice['order_type']==2){
 					require_once APP_ROOT_PATH."system/libs/spot.php";					
 					ticket_order_online_pay($payment_notice['order_sn'],$payment_notice['money']);					

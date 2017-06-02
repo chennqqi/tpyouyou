@@ -107,7 +107,7 @@ class transactionModule extends BaseModule
 				app_redirect(url("index"));
 			}
 			else
-			{   
+			{ 
 				$end_time=to_timespan($order_data['end_time']) +24*60*60;
 				if($order_data['order_status']==4)
 				{
@@ -179,7 +179,6 @@ class transactionModule extends BaseModule
 		
 		$GLOBALS['tmpl']->display("transaction_pay.html");
 	}
-	
 	
 	public function dopay()
 	{
@@ -292,8 +291,7 @@ class transactionModule extends BaseModule
 			{
 				app_redirect(url("index"));
 			}
-		}
-		
+		}	
 	}
 
   public  function order_save_success(){
