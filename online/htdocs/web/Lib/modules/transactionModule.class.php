@@ -176,7 +176,6 @@ class transactionModule extends BaseModule
 			}
 			//输出相应的订单显示
 		}
-		
 		$GLOBALS['tmpl']->display("transaction_pay.html");
 	}
 	

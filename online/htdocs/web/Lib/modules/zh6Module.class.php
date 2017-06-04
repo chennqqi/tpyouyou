@@ -1,7 +1,6 @@
 <?php
 class zh6Module extends BaseModule {
     
-    
     public function index() {
         
         global_run();       
