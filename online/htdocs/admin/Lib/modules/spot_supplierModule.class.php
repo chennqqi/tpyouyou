@@ -299,9 +299,7 @@ class spot_supplierModule extends AuthModule {
 		$data['adv2_name'] = strim($_REQUEST['adv2_name']);
 		$data['adv2_image'] = format_domain_to_relative(strim($_REQUEST['adv2_image']));
 		$data['adv2_url'] = strim($_REQUEST['adv2_url']);
-		
-		
-		
+				
 		// 更新数据
 		
 		$log_info = $data['name'];

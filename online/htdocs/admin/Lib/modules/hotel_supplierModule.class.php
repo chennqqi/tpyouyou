@@ -80,7 +80,7 @@ class hotel_supplierModule extends AuthModule {
 				
 				$list[$k]['ticket_price_format'] = format_price(format_price_to_display($v['ticket_price']));
 				
-				$list[$k]['preview_url'] = url("spot#view",array("sid"=>$v['id']));
+				$list[$k]['preview_url'] = url("hotel#view",array("sid"=>$v['id']));
 			}
 		}
 		
@@ -169,7 +169,6 @@ class hotel_supplierModule extends AuthModule {
 			$GLOBALS['tmpl']->assign ( 'tickets', $tickets );
 		}
 		
-		
 		$GLOBALS['tmpl']->assign("searchcityurl",admin_url("tour_city#search_city"),array("ajax"=>1));
 		$GLOBALS['tmpl']->assign("searchareaurl",admin_url("tour_area#search_area"),array("ajax"=>1));
 		$GLOBALS['tmpl']->assign("searchtagurl",admin_url("tour_place_tag#search_tag"),array("ajax"=>1));
@@ -236,13 +235,14 @@ class hotel_supplierModule extends AuthModule {
 		$data['x_point'] = strim($_REQUEST['xpoint']);
 		$data['y_point'] = strim($_REQUEST['ypoint']);
 		$data['sort'] = intval($_REQUEST['sort']);
+		$data['tel'] = intval($_REQUEST['tel']);
 
 		// 更新数据
 		$log_info = $data['name'];
 		$mode= "";
 		if($hotel_id > 0){
 			$mode = "update";
-			$GLOBALS['db']->autoExecute(DB_PREFIX."hotel",$data,"UPDATE","id=".$spot_id,"SILENT");
+			$GLOBALS['db']->autoExecute(DB_PREFIX."hotel",$data,"UPDATE","id=".$hotel_id,"SILENT");
 		}
 		else{
 			$mode = "insert";

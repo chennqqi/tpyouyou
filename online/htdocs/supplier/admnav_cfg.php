@@ -34,7 +34,7 @@ return array(
 				'酒店管理'	=>	array(
 						array("name"=>"销售中的酒店","module"=>"hotel","action"=>"index"),
 						array("name"=>"审核中的酒店","module"=>"hotel_supplier","action"=>"index"),
-						// array("name"=>"酒店订单","module"=>"hotel_room_order","action"=>"index")
+						array("name"=>"酒店订单","module"=>"hotel_order","action"=>"index")
 				),
 				'邮轮管理'	=>	array(
 						array("name"=>"销售中的邮轮仓位","module"=>"cruise","action"=>"index"),

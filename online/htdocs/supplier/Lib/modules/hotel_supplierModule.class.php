@@ -72,7 +72,7 @@ class hotel_supplierModule extends AuthModule{
 				$list[$k]['ticket_price_format'] = format_price(format_price_to_display($v['ticket_price']));
 				
 				$list[$k]['create_time_format'] = to_date($v['create_time']);
-				$list[$k]['preview_url'] = url("spot#view",array("sid"=>$v['id']));
+				$list[$k]['preview_url'] = url("hotel#view",array("sid"=>$v['id']));
 				$supplier_ids[] = $v['supplier_id'];
 			}
 			

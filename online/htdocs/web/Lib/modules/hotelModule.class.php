@@ -410,7 +410,7 @@ class hotelModule extends BaseModule
 	  	
 	  	if($sid == 0){
 	    	//相册
-	    	$images = $GLOBALS['db']->getAll("SELECT `image` FROM ".DB_PREFIX."spot_image WHERE spot_id = $id ORDER BY sort ASC");
+	    	$images = $GLOBALS['db']->getAll("SELECT `image` FROM ".DB_PREFIX."hotel_image WHERE hotel_id = $id ORDER BY sort ASC");
 	  	}
 	  	else{
 	  		//相册

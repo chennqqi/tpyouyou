@@ -113,7 +113,6 @@ class hotelModule extends AuthModule
 			}
 	 }
 	
-	
 	public function add()
 	{	
 		$sort = $GLOBALS['db']->getOne("select max(sort) from ".DB_PREFIX."spot")+1;	
@@ -131,7 +130,6 @@ class hotelModule extends AuthModule
 		$GLOBALS['tmpl']->assign("formaction",admin_url("hotel#insert",array("ajax"=>1)));
 		$GLOBALS['tmpl']->display("core/hotel/add.html");
 	}
-	
 	
 	public function insert() {
 		$ajax = intval($_REQUEST['ajax']);
@@ -292,7 +290,6 @@ class hotelModule extends AuthModule
 			//错误提示
 			showErr(lang("INSERT_FAILED")."<br />".$GLOBALS['db']->error(),$ajax);
 		}	
-
 	}
 		
 	public function edit() {		
@@ -389,6 +386,8 @@ class hotelModule extends AuthModule
 		$data['star_level'] = intval($_REQUEST["star_level"]);
 	
 		$data['brief'] = strim($_REQUEST["brief"]);
+
+		$data['tel'] = strim($_REQUEST["tel"]);
 		$data['appointment_desc'] = format_domain_to_relative(btrim($_REQUEST["appointment_desc"]));
 		$data['description'] = format_domain_to_relative(btrim($_REQUEST['description']));
 		
@@ -544,11 +543,11 @@ class hotelModule extends AuthModule
 			
 			require APP_ROOT_PATH."system/libs/hotel.php";
 			//更新门票冗余信息
-			update_spot_ticket($spot_id);
+			update_spot_ticket($hotel_id);
 					
 			//成功提示
 			save_log($log_info.lang("UPDATE_SUCCESS"),1);
-			showSuccess(lang("UPDATE_SUCCESS"),$ajax,admin_url("hotel#edit",array("id"=>$spot_id)));
+			showSuccess(lang("UPDATE_SUCCESS"),$ajax,admin_url("hotel#edit",array("id"=>$hotel_id)));
 		} else {
 			//错误提示
 			showErr(lang("UPDATE_FAILED")."<br />".$GLOBALS['db']->error(),$ajax);

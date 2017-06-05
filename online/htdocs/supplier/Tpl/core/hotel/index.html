@@ -85,6 +85,7 @@ function blursort(dom,id)
 					<td>{$item.price}起</td>
 					<td>
 						<a title="{lang v="EDIT"}酒店{$item.name}" rel="hotel_editpage_{$item.id}" target="navTab" href="{$editurl}&id={$item.id}"  class="btnEdit">{lang v="EDIT"}</a>
+						<a title="预览" href="{$item.preview_url}" class="btnLook" target="_blank">预览</a>
 					</td>
 				</tr>
 			{/foreach}

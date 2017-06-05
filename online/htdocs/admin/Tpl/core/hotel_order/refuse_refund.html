@@ -1,0 +1,132 @@
+<script type="text/javascript">
+function opdone(json){
+	DWZ.ajaxDone(json);
+	if (json.statusCode == DWZ.statusCode.ok){
+		navTab.reload(json.forwardUrl);
+		$.pdialog.closeCurrent();
+	}
+}
+
+function sw_refund_row(t)
+{
+	if(t==2)
+	{
+		$("#refund_amount_row").show();
+	}
+	else
+	{
+		$("#refund_amount_row").hide();
+	}
+}
+
+</script>
+<form action="{$formaction}" method="post" class="pageForm required-validate" onsubmit="return validateCallback(this, opdone)">
+<div class="pageContent">
+<div class="pageFormContent" layoutH="60">		
+
+			<table class="formtable">	
+			
+			{if $order.is_divide eq 1}
+			<tr>			
+			<td colspan = 4>	
+					
+				<table class="table" width="100%">
+						
+							<thead>
+								<tr>
+									
+									<th width="118">验证码</th>
+									
+									<th width="118">预约时间</th>
+									
+									<th width="125">验证时间</th>
+									<th width="118">是否有效</th>
+									
+								</tr>
+							</thead>
+							<tbody>
+							{foreach from=$ticketlist item=item}
+							<tr  rel="{$item.id}">							
+								<td>{$item.verify_code}</td>
+								<td>{$item.appoint_time_format}</td>
+								<td>{$item.verify_time_format}</td>
+								<td>
+									{if $item.is_verify_code_invalid eq 0}
+											是
+										{else}
+											否
+										{/if}
+								</td>														
+							</tr>
+							{/foreach}
+						</tbody>
+					</table>
+				</td>
+			</tr>
+			{else}
+			<tr>
+				<td class="item_title">购买数量：</td>
+				<td class="item_input">
+					{$order.sale_count}
+				</td>
+			</tr>		
+			<tr>
+				<td class="item_title">已退数量：</td>
+				<td class="item_input">
+					{$order.refund_count}
+				</td>
+			</tr>				
+			<tr>
+				<td class="item_title">本次退票数量：</td>
+				<td class="item_input">
+					{$order.ref_refund_count}
+				</td>
+			</tr>			
+			{/if}
+			
+			<tr>
+				<td class="item_title">商家审核状态：</td>
+				<td class="item_input">
+					{$order.supplier_confirm_format}
+				</td>
+			</tr>
+				
+			<tr>
+				<td class="item_title">商家操作时间：</td>
+				<td class="item_input">
+					{$order.supplier_confirm_time_format}
+				</td>
+			</tr>
+									
+			<tr>
+				<td class="item_title">操作：</td>
+				<td class="item_input">
+					<label><input name="refund_status" type="radio"  value="2" onclick="sw_refund_row(2);" checked=checked /><span>同意</span></label>
+					<label><input name="refund_status" type="radio"  value="3" onclick="sw_refund_row(3);" /><span>拒绝 </span></label>
+				</td>
+			</tr>	
+			<tr id="refund_amount_row">
+				<td class="item_title">可退金额:</td>
+				<td class="item_input">
+					<label class="tip">{$refund_amount} 元， 将 </label><label class="tip"><input type="text" class="textInput number" name="refund_amount" value="{$refund_amount}" /> </label><label class="tip"> 元 退到会员帐户余额中</label>
+				</td>	
+																						
+			</tr>		
+			<tr>
+				<td class="item_title">原因：</td>
+				<td class="item_input">
+					<textarea class="textInput required" name="refuse_reason" style="width:300px; height:100px;">{$refuse_reason}</textarea>
+				</td>
+			</tr>			
+			</table>
+					
+	</div>
+	<div class="formBar">
+		<ul>			
+			<input type="hidden" name="id" value="{$order.id}" />
+			<li><div class="buttonActive"><div class="buttonContent"><button type="submit">确定</button></div></div></li>
+			<li><div class="button"><div class="buttonContent"><button class="close" type="button">{lang v="CLOSE"}</button></div></div></li>
+		</ul>
+	</div>
+</div>
+</form>
