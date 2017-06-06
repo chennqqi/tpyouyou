@@ -19,7 +19,6 @@ include_once $_SERVER ['DOCUMENT_ROOT'] . '/upacp_demo_b2c/sdk/acp_service.php';
  * 交易说明:1）以后台通知或交易状态查询交易确定交易成功
  *       2）消费撤销仅能对当清算日的消费做，必须为全额，一般当日或第二日到账。
  */
- 
 
 $params = array(
 		
