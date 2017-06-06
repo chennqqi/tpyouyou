@@ -329,6 +329,10 @@ class hotelModule extends AuthModule
 			$tickets_ids[] = $v['id'];
 		}
 
+		foreach($tickets as $k=>$v){
+			$tickets[$k]['ticket_data'] = base64_encode(serialize($tickets[$k]));
+		}
+
 		$GLOBALS['tmpl']->assign ( 'tickets', $tickets );
 		
 		$GLOBALS['tmpl']->assign("searchcityurl",admin_url("tour_city#search_city"),array("ajax"=>1));

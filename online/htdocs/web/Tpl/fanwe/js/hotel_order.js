@@ -572,8 +572,8 @@ function summitCart(){
 				return false;
 			}
 			if(ajaxobj.status==1){
-				// window.location.href = ajaxobj.jump;
 				console.log('ajaxobj.jump;', ajaxobj.jump)
+				window.location.href = ajaxobj.jump;
 			}
 			else{
 				$.showErr(ajaxobj.info);

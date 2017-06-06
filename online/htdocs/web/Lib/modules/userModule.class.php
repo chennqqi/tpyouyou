@@ -107,7 +107,6 @@ class userModule extends BaseModule
 		app_redirect(get_gopreview(),0,$res['msg']);
 		else
 		app_redirect(get_gopreview());
-		
 	}
 	
 	public function regist()

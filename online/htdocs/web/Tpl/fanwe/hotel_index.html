@@ -855,12 +855,17 @@
             <div class="item clearfix">
                 <div class="spot clearfix">
                     <div class="thumb f_l">
-                        <a href="{$item.url}"><img src="{function name="get_spec_image" v=$item.image w=140 h=90 g=1}" /></a>
+                        <a target="_blank" href="{$item.url}"><img src="{function name="get_spec_image" v=$item.image w=140 h=90 g=1}" /></a>
                     </div>
                     <div class="info f_l">
                         <div class="hd">
-                            <a href="{$item.url}" class="tit f_l">{$item.name}</a>
-                            <span class="level f_l">{$item.star_level}星级酒店</span>
+                            <a target="_blank" href="{$item.url}" class="tit f_l">{$item.name}</a>
+                            
+                            {if $item.star_level == 0}
+                            {elseif $item.star_level != 0}
+                              <span class="level f_l">{$item.star_level}星级酒店</span>
+                            {/if}
+                            
                         </div>
                         <div class="static">
                             游客满意度：<span>{$item.satify}</span>%，游客点评<span>{$item.review_total}</span>条
@@ -873,8 +878,8 @@
                         </div>
                     </div>
                     <div class="opvi f_r">
-                        <div class="price">&yen;<em>{function name="format_price_to_display" v=$item.ticket_price}</em>起</div>
-                        <a href="{$item.url}" class="view">去看看</a>
+                        <!-- <div class="price">&yen;<em>{function name="format_price_to_display" v=$item.ticket_price}</em>起</div> -->
+                        <a target="_blank" href="{$item.url}" class="view">去看看</a>
                     </div>
                 </div>
                 <div class="blank25"></div>
@@ -903,9 +908,9 @@
                         <div class="pay f_l">{if $tk.sale_price eq 0}线下支付{else}网上支付{/if}</div>
                         <div class="op f_r">
                             {if $tk.is_tuan eq 1}
-                            <a href="{url r="tuan#detail" p="did=$tk.tuan_id"}">团购</a>
+                            <a target="_blank" href="{url r="tuan#detail" p="did=$tk.tuan_id"}">团购</a>
                             {else}
-                            <a href="{url r="hotel_order#index" p="id=$tk.id"}">预订</a>
+                            <a target="_blank" vhref="{url r="hotel_order#index" p="id=$tk.id"}">预订</a>
                             {/if}
                         </div>
                     </div>

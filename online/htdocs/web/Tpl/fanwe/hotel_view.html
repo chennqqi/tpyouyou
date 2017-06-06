@@ -15,6 +15,9 @@
 ?>
 {include file="inc/header.html"} 
 {include file="inc/ur_here.html"}
+<link rel="stylesheet" type="text/css" href="{$TMPL}/js/viewer/viewer.min.css">
+<script type="text/javascript" src="{$TMPL}/js/viewer/viewer.min.js"></script>
+
 <div class="wrap">
 	<div class="w210 f_l">
 		{include file="inc/side_supplier.html"}
@@ -34,18 +37,18 @@
 				</div>
 				<div class="hd-r f_r">
 					<div class="price f_l">
-						酒店价格<br>
-						<em>{function name="format_price_to_display" v="$spot.ticket_price"}</em>元起
+<!-- 						酒店价格<br>
+ -->						<!-- <em>{function name="format_price_to_display" v="$spot.ticket_price"}</em>元起 -->
 					</div>
-					<a href="#tickets" class="to_ord f_r">预&nbsp;&nbsp;订</a>
+					<!-- <a href="#tickets" class="to_ord f_r">预&nbsp;&nbsp;订</a> -->
 				</div>
 			</div>
 			
 			<div class="spot-cont">
-				<div class="spot-pic">
+				<div class="spot-pic" id="images">
 					{foreach from=$images key=key item=image}
 					<div class="pi li_{$key}">
-						<a href="{$image.image}">
+						<!-- <a href="{$image.image}"> -->
 							{if $key eq 0}
 							<img src="{function name="get_spec_image" v=$image.image w=190 h=200 g=1}" />
 							{elseif $key eq 1 || $key eq 6}
@@ -55,7 +58,7 @@
 							{elseif $key eq 3 || $key eq 4}
 							<img src="{function name="get_spec_image" v=$image.image w=220 h=95 g=1}" />
 							{/if}
-						</a>
+						<!-- </a> -->
 					</div>
 					{/foreach}
 				</div>
@@ -337,6 +340,10 @@
 		
       });  
     }) ;
+
+    // View some images
+    var vieweroption = {}
+    var viewer = new Viewer(document.getElementById('images'), vieweroption);
     
 </script>
 {include file="inc/footer.html"} 

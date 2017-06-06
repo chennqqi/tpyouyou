@@ -69,6 +69,7 @@ class hotelModule extends AuthModule{
 		    $list[$k]['preview_url'] = url("hotel#view",array("id"=>$v['id']));
 			}
 		}
+		
 		$GLOBALS['tmpl']->assign('list',$list);
 		$GLOBALS['tmpl']->assign('totalCount',$totalCount);
 		$GLOBALS['tmpl']->assign('param',$param);
