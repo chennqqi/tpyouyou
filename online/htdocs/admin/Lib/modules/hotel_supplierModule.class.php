@@ -267,7 +267,7 @@ class hotel_supplierModule extends AuthModule {
 				}
 			}
 			
-			//门票			
+			//门票
 			if(isset($_REQUEST['tickets'])){
 				foreach($_REQUEST['tickets'] as $k=>$v){
 					$ticket = unserialize(base64_decode($v));

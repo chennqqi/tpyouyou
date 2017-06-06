@@ -144,41 +144,6 @@
 						<td class="item_input" id="tickets" editurl="{$edittickets}">
 							<a class="button" href="{$addtickets}" target="dialog" title="{lang v="ADD_TICKETS"}" width="800" height="480" mask="true"  rel="dlg_tickets"><span>{lang v="ADD_TICKETS"}</span></a>
 							<div >
-<!-- 								<table class="list nowrap " width="100%" style="clear: both;">
-									<thead>
-										<tr>
-											<th>门票</th>
-											<th width="100">原价</th>
-											<th width="100">现价</th>
-											<th width="100">销售价</th>
-											<th width="60">排序</th>
-											<th width="100">必须证件号</th>
-											<th width="50">团购</th>
-											<th width="50">状态</th>
-											<th width="100">操作</th>
-										</tr>
-									</thead>
-									<tbody>
-										{foreach from=$tickets item="ticket"}
-										<tr>
-											<td>
-												{$ticket.name}<input type="hidden" name="tickets[]" value="{$ticket.ticket_data}">
-											</td>
-											<td align="center">{$ticket.origin_price}</td>
-											<td align="center">{$ticket.current_price}</td>
-											<td align="center">{$ticket.sale_price}</td>
-											<td align="center">{$ticket.sort}</td>
-											<td align="center">{if $ticket.paper_must eq 1}是{else}否{/if}</td>
-											<td align="center">{if $ticket.is_tuan eq 1}是{else}否{/if}</td>
-											<td align="center">{if $ticket.is_effect eq 1}有效{else}无效{/if}</td>
-											<td align="center">
-												<a href="javascript:void(0)" class="edit_ticket">编辑</a>&nbsp;
-												<a href="javascript:void(0)" class="remove_ticket">删除</a>
-											</td>
-										</tr>
-										{/foreach}
-									</tbody>
-								</table> -->
 								<table class="list nowrap " width="100%" style="clear: both;">
 									<thead>
 										<tr>

@@ -72,11 +72,11 @@
 			{if $spot.list}
 			<div class="blank15"></div>
 			<div class="spot-tickets" id="J_spotv_tickets">
-				<div class="dt" id="tickets" name="tickets">门票预订</div>
+				<div class="dt" id="tickets" name="tickets">酒店预订</div>
 				<div class="dx">
 					<div class="hd">
 						<div class="tit f_l">产品名称</div>
-						<div class="ori_price f_l">景点报价</div>
+						<div class="ori_price f_l">酒店报价</div>
 						<div class="cur_price f_l">{$LANG.SITE_PRICE}</div>
 						<div class="pay f_l">支付方式</div>
 						<div class="op f_r"></div>
@@ -107,7 +107,7 @@
 						</div>
 						<div class="des clearfix">
 							<ul class="clearfix">
-								<li><strong>门票类型：</strong><span>电子票{if $tk.is_delivery eq 1}、实体票{/if}</span></li>
+								<li><strong>酒店类型：</strong><span>电子票{if $tk.is_delivery eq 1}、实体票{/if}</span></li>
 								<li><strong>预定方式：</strong><span>{if $tk.pay_type eq 1}全款在线支付{elseif $tk.pay_type eq 2}定金支付、到景点付全款{elseif $tk.pay_type eq 3}到景点支付{/if}</span></li>
 		                        <li><strong>入园方式：</strong><span>数字码换票{if $tk.is_delivery eq 1}、实体票{/if}入园</span></li>
 		                        <li><strong>退票说明：</strong><span>{if $tk.is_appoint_time eq 0 && $tk.is_refund eq 1}可退{elseif $tk.is_appoint_time eq 1 && $tk.is_refund eq 1}可退改{else}不可退{/if}{if $tk.is_refund eq 1 && $tk.refund_desc},{$tk.refund_desc}{/if}</span></li>
@@ -152,7 +152,7 @@
 			<div class="spot-tab-box">
 				<div class="nav">
 					<ul id="J_navbar">
-						<li class="cur"><a href="javascript:void(0);" rel="0">景点介绍</a></li>
+						<li class="cur"><a href="javascript:void(0);" rel="0">酒店介绍</a></li>
 						<li><a href="javascript:void(0);" rel="1">预订须知</a></li>
 						{if $spot.spot_desc_1_name neq ''}
 						<li><a href="javascript:void(0);" rel="s1">{$spot.spot_desc_1_name}</a></li>
@@ -184,7 +184,7 @@
 				{/if}
 				<!--景点介绍-->
 				<div class="box" id="J_nbox_0">
-					<div class="t">景点介绍</div>
+					<div class="t">酒店介绍</div>
 					<div class="bx">{$spot.description}</div>
 				</div>
 				<!--预订须知-->

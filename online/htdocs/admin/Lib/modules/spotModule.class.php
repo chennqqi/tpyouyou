@@ -456,9 +456,7 @@ class spotModule extends AuthModule
 		}	
 
 	}
-	
-	
-	
+		
 	public function edit() {		
 		$id = intval($_REQUEST ['id']);
 		$vo =$GLOBALS['db']->getRow("select * from ".DB_PREFIX."spot where id = ".$id);

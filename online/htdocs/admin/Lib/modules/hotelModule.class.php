@@ -439,16 +439,12 @@ class hotelModule extends AuthModule
 					$t_ids[] = $v["id"];
 				}
 				$dt_ids = array_merge($t_ids,$dt_ids);				
-				if($t_ids){
-					//删除代金券
-					$GLOBALS['db']->query("DELETE FROM ".DB_PREFIX."voucher_promote WHERE voucher_promote =1 and voucher_rel_id in(".implode(",",$t_ids).")");
-									
-				}
 				
 				$GLOBALS['db']->query("DELETE FROM ".DB_PREFIX."hotel_room WHERE hotel_id=".$hotel_id." AND id not in(".implode(",",$ticket_ids).")");
 			}
-			else
+			else {
 				$GLOBALS['db']->query("DELETE FROM ".DB_PREFIX."hotel_room WHERE hotel_id=".$hotel_id);
+			}
 			
 			//添加门票
 			if(isset($_REQUEST['tickets'])){	
