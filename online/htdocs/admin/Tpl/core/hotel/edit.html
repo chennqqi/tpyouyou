@@ -85,9 +85,7 @@
 							<label class="tip"></label>
 						</td>
 					</tr>
-					
-					
-					
+										
 					<tr>
 						<td class="item_title">预订须知:</td>
 						<td class="item_input">
@@ -143,6 +141,7 @@
 									<thead>
 										<tr>
 											<th>房型</th>
+											<th>早餐</th>
 											<th width="100">原价</th>
 											<th width="100">现价</th>
 											<th width="100">销售价</th>
@@ -155,6 +154,7 @@
 											<td>
 												{$ticket.name}<input type="hidden" name="tickets[]" value="{$ticket.ticket_data}">
 											</td>
+											<td align="center">{if $ticket.is_breakfast eq 0}无{else}有{/if}</td>
 											<td align="center">{$ticket.origin_price}</td>
 											<td align="center">{$ticket.current_price}</td>
 											<td align="center">{$ticket.sale_price}</td>

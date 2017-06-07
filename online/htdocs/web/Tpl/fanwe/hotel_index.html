@@ -860,7 +860,6 @@
                     <div class="info f_l">
                         <div class="hd">
                             <a target="_blank" href="{$item.url}" class="tit f_l">{$item.name}</a>
-                            
                             {if $item.star_level == 0}
                             {elseif $item.star_level != 0}
                               <span class="level f_l">{$item.star_level}星级酒店</span>
@@ -896,7 +895,7 @@
                     <div class="tk clearfix" {if $smarty.foreach.tks.first} style="border-top:0"{/if}>
                         <div class="tit f_l">
                             <label>
-                            <a href="{$item.url}" title="&lt;{$tk.name}&gt;{$tk.name_brief}"><em>&lt;{$tk.name}&gt;</em>{$tk.name_brief}</a>
+                            <a target="_blank" href="{$item.url}" title="&lt;{$tk.name}&gt;{$tk.name_brief}"><em>&lt;{$tk.name}&gt;</em>{$tk.name_brief}</a>
                             </label>
                             {if $tk.return_money > 0}
                             <span class="return_price">
@@ -910,7 +909,7 @@
                             {if $tk.is_tuan eq 1}
                             <a target="_blank" href="{url r="tuan#detail" p="did=$tk.tuan_id"}">团购</a>
                             {else}
-                            <a target="_blank" vhref="{url r="hotel_order#index" p="id=$tk.id"}">预订</a>
+                            <a target="_blank" href="{url r="hotel_order#index" p="id=$tk.id"}">预订</a>
                             {/if}
                         </div>
                     </div>

@@ -136,6 +136,16 @@ $(document).ready(function(){
 								<label class="tip">选 是 无法改签</label>
 							</td>
 						</tr>
+
+						<tr>
+							<td class="item_title">是否有早餐:</td>
+							<td class="item_input">
+								<select name="is_breakfast" class="combox">
+									<option value="0" {if $ticket.is_breakfast eq 0}selected="selected"{/if}>否</option>
+									<option value="1" {if $ticket.is_breakfast eq 1}selected="selected"{/if}>是</option>
+								</select>
+							</td>
+						</tr>
 						
 						<tr class="end_time_box" {if $ticket.is_appoint_time eq 1}style="display:none"{/if}>
 							<td class="item_title">截止时间类型:</td>

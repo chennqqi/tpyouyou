@@ -316,6 +316,7 @@ class hotelModule extends AuthModule
 			$tickets[$k]['origin_price'] = format_price_to_display($v['origin_price']);
 			$tickets[$k]['current_price'] = format_price_to_display($v['current_price']);
 			$tickets[$k]['sale_price'] = format_price_to_display($v['sale_price']);
+			$tickets[$k]['is_breakfast'] = intval($v['is_breakfast']);
 			if($v['end_time']!=0){
 				$tickets[$k]['end_time'] = to_date($v['end_time'],"Y-m-d");
 			}
@@ -419,42 +420,16 @@ class hotelModule extends AuthModule
 				}
 			}
 			
-			//删除无关门票
-			$ticket_ids=array();
-			$dt_ids = array();
-			if(isset($_REQUEST['tickets'])){
-				foreach($_REQUEST['tickets'] as $k=>$v){
-					$ticket = unserialize(base64_decode($v));
-					if(intval($ticket["id"]) > 0){
-						$ticket_ids[] = $ticket["id"];
-						if($ticket['is_effect']==0)
-						{
-							$dt_ids[] = $ticket["id"];
-						}
-					}
-				}
-			}
-			
-			if(count($ticket_ids) > 0){
-				
-				$temp_ids =  $GLOBALS['db']->getAll("SELECT id FROM ".DB_PREFIX."hotel_room WHERE hotel_id=".$hotel_id." AND id not in(".implode(",",$ticket_ids).")");				
-				$t_ids = array();				
-				foreach($temp_ids as $k=>$v){
-					$t_ids[] = $v["id"];
-				}
-				$dt_ids = array_merge($t_ids,$dt_ids);				
-				
-				$GLOBALS['db']->query("DELETE FROM ".DB_PREFIX."hotel_room WHERE hotel_id=".$hotel_id." AND id not in(".implode(",",$ticket_ids).")");
-			}
-			else {
-				$GLOBALS['db']->query("DELETE FROM ".DB_PREFIX."hotel_room WHERE hotel_id=".$hotel_id);
-			}
+			// //删除无关房型
+			$GLOBALS['db']->query("DELETE FROM ".DB_PREFIX."hotel_room WHERE hotel_id=".$hotel_id);
 			
 			//添加门票
+			$love = 1;
 			if(isset($_REQUEST['tickets'])){	
 				foreach($_REQUEST['tickets'] as $k=>$v){
 					$ticket = unserialize(base64_decode($v));
-					if($ticket['name']!="" && intval($ticket['id']) ==0 ){
+					$love = intval($ticket['id']);
+					if($ticket['name']!=""){
 						$ticket_data = array();
 						$t_data = array();
 						
@@ -477,13 +452,9 @@ class hotelModule extends AuthModule
 							$ticket_data['end_time_day'] = intval($ticket['end_time_day']);
 						}
 						
-						$ticket_data['is_delivery'] = intval($ticket['is_delivery']);
-						$ticket_data['paper_must'] = intval($ticket['paper_must']);
-						$ticket_data['show_in_api'] = intval($ticket['show_in_api']);
 						$ticket_data['is_effect'] = intval($ticket['is_effect']);
 						$ticket_data['is_history'] = intval($ticket['is_history']);
 						$ticket_data['sort'] = intval($ticket['sort']);
-						$ticket_data['is_divide']= intval($ticket['is_divide']);
 						$ticket_data['pay_type']= intval($ticket['pay_type']);
 						$ticket_data['order_status']= intval($ticket['order_status']);
 						$ticket_data['origin_price']= format_price_to_db($ticket['origin_price']);
@@ -496,9 +467,6 @@ class hotelModule extends AuthModule
 							$ticket_data['sale_price'] = 0;
 						$ticket_data['sale_virtual_total']= intval($ticket['sale_virtual_total']);
 						$ticket_data['supplier_id']= $data['supplier_id'];
-						$ticket_data['min_buy']= intval($ticket['min_buy']);
-						$ticket_data['max_buy']= intval($ticket['max_buy']);
-						$ticket_data['sale_max']= intval($ticket['sale_max']);
 						$ticket_data['return_money']= format_price_to_db($ticket['return_money']);
 						$ticket_data['return_score']= intval($ticket['return_score']);
 						$ticket_data['return_exp']= intval($ticket['return_exp']);
@@ -515,24 +483,17 @@ class hotelModule extends AuthModule
 						$ticket_data['tuan_is_pre']=intval($ticket['tuan_is_pre']);
 						$ticket_data['is_tuan']=intval($ticket['is_tuan']);
 						$ticket_data['tuan_cate']=intval($ticket['tuan_cate']);
-						
-						if(strim($ticket['tuan_begin_time'])!=""){
-							$ticket_data['tuan_begin_time']=to_timespan($ticket['tuan_begin_time']);
-							
-						}else{
-							$ticket_data['tuan_begin_time'] = 0;
-						}							
-										
-						if(strim($ticket['tuan_end_time'])!=""){
-							$ticket_data['tuan_end_time']=to_timespan($ticket['tuan_end_time']);
-						}							
-						else{
-							$ticket_data['tuan_end_time'] = 0;
-						}
+						$ticket_data['is_breakfast'] = intval($ticket['is_breakfast']);
 							
 						$ticket_data['tuan_success_count']=intval($ticket['tuan_success_count']);
-						
+
 						$GLOBALS['db']->autoExecute(DB_PREFIX."hotel_room",$ticket_data,"INSERT","","SILENT");
+
+						// if (intval($ticket['id']) ==0) {
+						// 	$GLOBALS['db']->autoExecute(DB_PREFIX."hotel_room",$ticket_data,"INSERT","","SILENT");
+						// } else {
+						//   $GLOBALS['db']->autoExecute(DB_PREFIX."hotel_room",$ticket_data,"UPDATE","id=".intval($ticket['id']),"SILENT");
+						// }
 						
 						if($GLOBALS['db']->error()==""){
 							$ticket_id  = $GLOBALS['db']->insert_id();
@@ -548,10 +509,12 @@ class hotelModule extends AuthModule
 			//成功提示
 			save_log($log_info.lang("UPDATE_SUCCESS"),1);
 			showSuccess(lang("UPDATE_SUCCESS"),$ajax,admin_url("hotel#edit",array("id"=>$hotel_id)));
+			// showSuccess(unserialize(base64_decode($_REQUEST['tickets']['0'])),$ajax,admin_url("hotel#edit",array("id"=>$hotel_id)));
+			// showSuccess($love,$ajax,admin_url("hotel#edit",array("id"=>$hotel_id)));
 		} else {
 			//错误提示
 			showErr(lang("UPDATE_FAILED")."<br />".$GLOBALS['db']->error(),$ajax);
-		}	
+		}
 	}
 	
 	public function set_sort()

@@ -1,7 +1,7 @@
 <?php
 	$this->_var['pagecss'][] = TMPL_REAL."/css/style.css";
 	$this->_var['pagecss'][] = TMPL_REAL."/css/weebox.css";
-	$this->_var['pagecss'][] = TMPL_REAL."/css/spot.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/hotel.css";
 	$this->_var['pagecss'][] = TMPL_REAL."/css/review.css";
 	$this->_var['pagecss'][] = TMPL_REAL."/css/spot_sale_list.css";
 	$this->_var['pagejs'][] = TMPL_REAL."/js/jquery.bgiframe.js";
@@ -17,6 +17,19 @@
 {include file="inc/ur_here.html"}
 <link rel="stylesheet" type="text/css" href="{$TMPL}/js/viewer/viewer.min.css">
 <script type="text/javascript" src="{$TMPL}/js/viewer/viewer.min.js"></script>
+
+<style>
+	#images img {
+		max-width: 24%;
+	}
+	.hotel_pi {
+		display: inline!important;
+		float: none!important;
+	}
+	.hotel-pic {
+		overflow: hidden;
+	}
+</style>
 
 <div class="wrap">
 	<div class="w210 f_l">
@@ -45,20 +58,10 @@
 			</div>
 			
 			<div class="spot-cont">
-				<div class="spot-pic" id="images">
+				<div class="spot-pic hotel-pic" id="images">
 					{foreach from=$images key=key item=image}
-					<div class="pi li_{$key}">
-						<!-- <a href="{$image.image}"> -->
-							{if $key eq 0}
-							<img src="{function name="get_spec_image" v=$image.image w=190 h=200 g=1}" />
-							{elseif $key eq 1 || $key eq 6}
-							<img src="{function name="get_spec_image" v=$image.image w=145 h=95 g=1}" />
-							{elseif $key eq 2 || $key eq 5}
-							<img src="{function name="get_spec_image" v=$image.image w=220 h=95 g=1}" />
-							{elseif $key eq 3 || $key eq 4}
-							<img src="{function name="get_spec_image" v=$image.image w=220 h=95 g=1}" />
-							{/if}
-						<!-- </a> -->
+					<div class="pi li_{$key} hotel_pi">
+						<img src="{function name="get_spec_image" v=$image.image w= h= g=1}" />
 					</div>
 					{/foreach}
 				</div>
@@ -79,6 +82,7 @@
 				<div class="dx">
 					<div class="hd">
 						<div class="tit f_l">产品名称</div>
+						<div class="ori_price f_l">有无早餐</div>
 						<div class="ori_price f_l">酒店报价</div>
 						<div class="cur_price f_l">{$LANG.SITE_PRICE}</div>
 						<div class="pay f_l">支付方式</div>
@@ -92,6 +96,13 @@
 							{if $tk.return_money > 0}
 							<span class="return_price">
 							{function name="format_price_to_display" v=$tk.return_money}</span>
+							{/if}
+						</div>
+						<div class="ori_price f_l">
+							{if $tk.is_breakfast > 0}
+							 有
+							{else}
+							 无
 							{/if}
 						</div>
 						<div class="ori_price f_l"><em class="u">&yen;</em><em class="p">{function name="format_price_to_display" v=$tk.origin_price}</em></div>

@@ -191,7 +191,7 @@ class hotelModule extends AuthModule{
 		$GLOBALS['tmpl']->assign ( 'vo', $vo );
 		
 		//相册
-		$timage_list = $GLOBALS['db']->getAll("select `image` from ".DB_PREFIX."spot_image where spot_id = ".$vo['id']." ORDER BY sort ASC");
+		$timage_list = $GLOBALS['db']->getAll("select `image` from ".DB_PREFIX."hotel_image where hotel_id = ".$vo['id']." ORDER BY sort ASC");
 		if($timage_list){
 			foreach($timage_list as $k=>$v){
 				$image_list[] = $v['image'];

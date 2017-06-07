@@ -670,7 +670,7 @@ class spotModule extends AuthModule
 			}
 			
 			
-			//删除无关门票
+			//删除无关房型
 			$ticket_ids=array();
 			$dt_ids = array();
 			if(isset($_REQUEST['tickets'])){

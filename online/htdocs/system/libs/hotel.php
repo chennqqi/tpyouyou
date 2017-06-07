@@ -243,7 +243,7 @@ function update_spot_ticket($spot_id,$tuan_id){
 	else
 	{
 		$spot_tickets_data['room_list'] = '';
-		$GLOBALS['db']->autoExecute(DB_PREFIX."spot",$spot_tickets_data,"UPDATE","id=".$spot_id,"SILENT");
+		$GLOBALS['db']->autoExecute(DB_PREFIX."hotel",$spot_tickets_data,"UPDATE","id=".$spot_id,"SILENT");
 	}
 }
 

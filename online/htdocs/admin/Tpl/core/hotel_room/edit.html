@@ -49,7 +49,7 @@ $(document).ready(function(){
 					</ul>
 				</div>
 			</div>
-			<div class="tabsContent cf" >
+			<div class="tabsContent cf">
 				<div>
 					<table class="formtable">			
 						<tr>
@@ -134,6 +134,17 @@ $(document).ready(function(){
 									<option value="1" {if $ticket.is_appoint_time eq 1}selected="selected"{/if}>是</option>
 								</select>
 								<label class="tip">选 是 无法改签</label>
+							</td>
+						</tr>
+
+						<tr>
+							<td class="item_title">是否有早餐:</td>
+							<td class="item_input">
+								<select name="is_breakfast" class="combox">
+									<option value="0" {if $ticket.is_breakfast eq 0}selected="selected"{/if}>否</option>
+									<option value="1" {if $ticket.is_breakfast eq 1}selected="selected"{/if}>是</option>
+								</select>
+								<label class="tip">选 是 有早餐</label>
 							</td>
 						</tr>
 						
@@ -222,60 +233,6 @@ $(document).ready(function(){
 					</table>
 				</div>
 				
-				<!--团购设置-->
-<!-- 				<div>
-					<table class="formtable">	
-						<tr >
-							<td class="item_title">是否团购:</td>
-							<td class="item_input">
-								<select name="is_tuan" class="combox">
-									<option value="0" {if $ticket.is_tuan eq 0}selected="selected"{/if}>否</option>
-									<option value="1" {if $ticket.is_tuan eq 1}selected="selected"{/if}>是</option>
-								</select>
-								<label class="tip">选 是 下面设置才生效</label>
-							</td>
-						</tr>
-						
-						<tr >
-							<td class="item_title">团购分类:</td>
-							<td class="item_input">
-								<select name="tuan_cate" class="combox">
-									<option value="0">未选择</option>
-									{foreach from="$tuan_cates" item="cate"}
-									<option value="{$cate.id}" {if $ticket.tuan_cate eq $cate.id}selected="selected"{/if}>{$cate.name}</option>
-									{/foreach}
-								</select>
-							</td>
-						</tr>
-						
-						<tr class="tuan_box">
-							<td class="item_title">团购开始时间:</td>
-							<td class="item_input">
-								<input type="text" name="tuan_begin_time" value="{$ticket.tuan_begin_time}" class="date textInput readonly valid" datefmt="yyyy-MM-dd HH:mm:ss"  readonly="true">
-								<a class="inputDateButton" href="javascript:;">选择</a>
-								<label class="tip">留空表示团购立即开始</label>
-							</td>
-						</tr>
-						
-						<tr class="tuan_box">
-							<td class="item_title">团购结束时间:</td>
-							<td class="item_input">
-								<input type="text" name="tuan_end_time" value="{$ticket.tuan_end_time}" class="date textInput readonly valid" datefmt="yyyy-MM-dd HH:mm:ss" readonly="true">
-								<a class="inputDateButton" href="javascript:;">选择</a>
-								<label class="tip">留空表示团购永久有效</label>
-							</td>
-						</tr>
-						
-						<tr class="tuan_box">
-							<td class="item_title">成团数量:</td>
-							<td class="item_input">
-								<input type="text" class="textInput digits"   maxlength="10" name="tuan_success_count" value="{$ticket.tuan_success_count}">
-								<label class="tip"></label>
-							</td>
-						</tr>
-												
-					</table>
-				</div> -->
 				
 			</div>
 			

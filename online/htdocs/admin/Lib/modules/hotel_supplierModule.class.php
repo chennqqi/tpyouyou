@@ -326,6 +326,8 @@ class hotel_supplierModule extends AuthModule {
 						$ticket_data['is_expire_refund']= intval($ticket['is_expire_refund']);
 						
 						$ticket_data['is_tuan']=intval($ticket['is_tuan']);
+
+						$ticket_data['is_breakfast']=intval($ticket['is_breakfast']);
 						
 						$ticket_data['tuan_cate']=intval($ticket['tuan_cate']);
 							

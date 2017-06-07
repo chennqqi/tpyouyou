@@ -64,15 +64,13 @@ class hotel_roomModule extends AuthModule{
     	
     	if(intval($_REQUEST['id']) > 0){
     		
-    		$old_ticket = $GLOBALS['db']->getRow("select * from ".DB_PREFIX."ticket where supplier_id=".$this->supplier_id." and id=".intval($_REQUEST['id']));
-    		
+    		$old_ticket = $GLOBALS['db']->getRow("select * from ".DB_PREFIX."hotel_room where supplier_id=".$this->supplier_id." and id=".intval($_REQUEST['id']));
     		
     		$_REQUEST['sale_virtual_total'] = $old_ticket['sale_virtual_total'];
     		$_REQUEST['return_money'] = $old_ticket['return_money'];
     		$_REQUEST['return_score'] = $old_ticket['return_score'];
     		$_REQUEST['return_exp'] = $old_ticket['return_exp'];
     		$_REQUEST['show_in_api'] = $old_ticket['show_in_api'];
-    		
     		
     		$_REQUEST['voucher'] = $GLOBALS['db']->getOne("SELECT voucher_type_id FROM ".DB_PREFIX."voucher_promote where voucher_promote_type =1 and voucher_promote = 1 and voucher_rel_id=".$old_ticket['id']);
     		$_REQUEST['is_review_return'] = $old_ticket['is_review_return'];

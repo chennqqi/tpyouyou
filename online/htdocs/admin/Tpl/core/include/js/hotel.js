@@ -35,6 +35,7 @@ function SpotTicketCallBack(args){
 	
 	var ticket_data = '<tr>';
 		ticket_data += '<td>'+$($.pdialog.getCurrent()).find("input[name='name']").val()+'<input type="hidden" name="tickets[]" value="'+args.message+'" /></td>';
+		ticket_data += '<td align="center">'+$($.pdialog.getCurrent()).find("select[name='is_breakfast']").val()+'</td>';
 		ticket_data += '<td align="center">'+$($.pdialog.getCurrent()).find("input[name='origin_price']").val()+'</td>';
 		ticket_data += '<td align="center">'+$($.pdialog.getCurrent()).find("input[name='current_price']").val()+'</td>';
 		ticket_data += '<td align="center">'+$($.pdialog.getCurrent()).find("input[name='sale_price']").val()+'</td>';
@@ -56,6 +57,7 @@ function SpotTicketCallBackEdit(args){
 	}
 	var ticket_data = '';
 		ticket_data += '<td>'+$($.pdialog.getCurrent()).find("input[name='name']").val()+'<input type="hidden" name="tickets[]" value="'+args.message+'" /></td>';
+		ticket_data += '<td align="center">'+$($.pdialog.getCurrent()).find("select[name='is_breakfast']").val()+'</td>';
 		ticket_data += '<td align="center">'+$($.pdialog.getCurrent()).find("input[name='origin_price']").val()+'</td>';
 		ticket_data += '<td align="center">'+$($.pdialog.getCurrent()).find("input[name='current_price']").val()+'</td>';
 		ticket_data += '<td align="center">'+$($.pdialog.getCurrent()).find("input[name='sale_price']").val()+'</td>';
