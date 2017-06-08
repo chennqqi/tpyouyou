@@ -15,7 +15,14 @@
 ?>
 {include file="inc/header.html"} 
 {include file="inc/ur_here.html"}
+
+<link rel="stylesheet" href="{$TMPL}/js/jquery-ui/jquery-ui.min.css" type="text/css" />
 <link rel="stylesheet" type="text/css" href="{$TMPL}/js/viewer/viewer.min.css">
+
+<script type="text/javascript" src="{$TMPL}/js/jquery/jquery-1.9.0.min.js"></script>
+<script type="text/javascript" src="{$TMPL}/js/jquery-ui/jquery-ui.min.js"></script>
+<script type="text/javascript" src="{$TMPL}/js/jquery-ui/jquery.ui.datepicker-zh-CN.js"></script>
+<script type="text/javascript" src="{$TMPL}/js/hotel_view.js"></script>
 <script type="text/javascript" src="{$TMPL}/js/viewer/viewer.min.js"></script>
 
 <style>
@@ -28,6 +35,18 @@
 	}
 	.hotel-pic {
 		overflow: hidden;
+	}
+	.bx img {
+		max-width: 60px;
+	}
+	.hotel-time {
+		padding: 15px;
+	}
+	.hotel-time div.time{
+		display: inline-block;
+	}
+	.dibu_gn {
+		display: none;
 	}
 </style>
 
@@ -45,15 +64,12 @@
 		<div class="spot-box">
 			<div class="hd clearfix">
 				<div class="hd-l f_l">
-					<h3>{$spot.name}</h3>
+					<h3>{$spot.name} <span style="font-size: 14px;color:#f60;">{$spot.cate_match_row}</span> </h3>
 					<div class="adr">具体地址：{$spot.address}</div>
 				</div>
 				<div class="hd-r f_r">
 					<div class="price f_l">
-<!-- 						酒店价格<br>
- -->						<!-- <em>{function name="format_price_to_display" v="$spot.ticket_price"}</em>元起 -->
 					</div>
-					<!-- <a href="#tickets" class="to_ord f_r">预&nbsp;&nbsp;订</a> -->
 				</div>
 			</div>
 			
@@ -79,6 +95,16 @@
 			<div class="blank15"></div>
 			<div class="spot-tickets" id="J_spotv_tickets">
 				<div class="dt" id="tickets" name="tickets">酒店预订</div>
+				<div class="hotel-time">
+					<div class="item time">
+					    <label for="checkInTime">入住日期</label>
+					    <input id="checkInTime" name="checkindate" class="go" type="text"  placeholder="出发时间"/>
+					</div>
+					<div class="item time">
+					    <label for="checkOutTime">离店日期</label>
+					    <input id="checkOutTime" name="checkoutdate" class="return" type="text"  placeholder="返回时间" />
+					</div>
+				</div>
 				<div class="dx">
 					<div class="hd">
 						<div class="tit f_l">产品名称</div>

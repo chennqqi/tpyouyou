@@ -147,6 +147,8 @@ class BaseModule{
 
 				MODULE_NAME=="help"&&ACTION_NAME=="show"||
 
+				MODULE_NAME=="hotel"&&ACTION_NAME=="index"||
+
 				MODULE_NAME=="index"&&ACTION_NAME=="index"||
 
 				MODULE_NAME=="link"&&ACTION_NAME=="index"||

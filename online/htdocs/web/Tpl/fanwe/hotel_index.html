@@ -864,6 +864,9 @@
                             {elseif $item.star_level != 0}
                               <span class="level f_l">{$item.star_level}星级酒店</span>
                             {/if}
+                            {if $item.cate_match_row}
+                              <span class="level f_l">{$item.cate_match_row}</span>
+                            {/if}
                             
                         </div>
                         <div class="static">

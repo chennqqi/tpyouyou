@@ -3,8 +3,9 @@
 class hotel_orderModule extends BaseModule{
 
     function index() {
+        set_gopreview();
     	global_run();
-            	
+         	
     	$ajax = intval($_REQUEST['ajax']);
     	
     	if(!$GLOBALS['user']){

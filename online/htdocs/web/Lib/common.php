@@ -394,7 +394,7 @@ function showSuccess($msg,$ajax=0,$jump='',$stay=0,$script="")
 		$result['jump'] = $jump;
 		$result['script'] = $script;
 		header("Content-Type:text/html; charset=utf-8");
-        echo(json_encode($result));exit;
+    echo(json_encode($result));exit;
 	}
 	else if($ajax==2)
 	{
@@ -403,7 +403,7 @@ function showSuccess($msg,$ajax=0,$jump='',$stay=0,$script="")
 			$result['jump'] = $jump;
 			$result['script'] = $script;
 			$json = json_encode($result);
-			 header("Content-Type:text/html; charset=utf-8");
+			header("Content-Type:text/html; charset=utf-8");
 			echo $_GET['callback']."(".$json.")";exit;
 	}
 	else
@@ -482,7 +482,7 @@ function get_current_url()
 function set_gopreview()
 {
 	es_session::start();
-	$url =  get_current_url();
+	$url = get_current_url();
 	es_session::set("gopreview",$url); 
 	es_session::close();
 }	

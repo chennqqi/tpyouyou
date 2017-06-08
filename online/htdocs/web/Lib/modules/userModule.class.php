@@ -36,6 +36,7 @@ class userModule extends BaseModule
 			$GLOBALS['tmpl']->assign("site_keyword","会员登录,".app_conf("SITE_KEYWORD"));
 			$GLOBALS['tmpl']->assign("site_description","会员登录,".app_conf("SITE_DESCRIPTION"));
 		}
+		$GLOBALS['tmpl']->assign("loginpreview", get_gopreview());
 		$GLOBALS['tmpl']->display("user_login.html",$cache_id);
 	}
 	
@@ -244,7 +245,6 @@ class userModule extends BaseModule
 				}
 			}
 		}
-		
 		
 		$user_data = array();
 		$user_data['user_name'] = $user_name;

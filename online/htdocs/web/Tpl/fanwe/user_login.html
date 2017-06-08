@@ -23,9 +23,10 @@ $this->_var['pagejs'][] = TMPL_REAL."/js/script.js";
 $this->_var['cpagejs'][] = TMPL_REAL."/js/script.js";
 if(app_conf("APP_MSG_SENDER_OPEN")==1)
 {
-$this->_var['pagejs'][] = TMPL_REAL."/js/msg_sender.js";
-$this->_var['cpagejs'][] = TMPL_REAL."/js/msg_sender.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/msg_sender.js";
+	$this->_var['cpagejs'][] = TMPL_REAL."/js/msg_sender.js";
 }
+
 ?>
 
 <link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$pagecss"}" />
@@ -40,6 +41,8 @@ var IS_RUN_CRON = 1;
 var IS_RUN_CRON = 0;
 {/if}
 var DEAL_MSG_URL = '{url r="cron#deal_msg_list"}';
+var loginpreview = '{$loginpreview}';
+console.log('login_qq.html', loginpreview);
 </script>
 {include file="inc/define_js_url.html"}
 <script type="text/javascript" src="{$APP_ROOT}/public/runtime/<?php echo  APP_NAME;?>/lang.js"></script>
@@ -112,7 +115,7 @@ var DEAL_MSG_URL = '{url r="cron#deal_msg_list"}';
     $('#qqLoginBtn').click(function () {
 	    QC.Login.showPopup({
 	       appId:"101391679",
-	       redirectURI: "http://www.uu-club.com/index.php?ctl=login&act=qq"
+	       redirectURI: "http://www.uu-club.com/index.php?ctl=login&act=qq&preview=" + loginpreview
 	    });    	
     })
 </script>

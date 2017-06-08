@@ -28,6 +28,7 @@ return array(
 				),
 				'酒店管理'	=>	array(
 						array("name"=>"酒店","module"=>"hotel","action"=>"index"),
+						array("name"=>"酒店分类","module"=>"hotel_cate","action"=>"index"),
 						array("name"=>"酒店订单","module"=>"hotel_order","action"=>"index"),
 						array("name"=>"商家提交","module"=>"hotel_supplier","action"=>"index"),
 				),

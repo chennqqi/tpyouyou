@@ -22,6 +22,7 @@ class hotelModule extends BaseModule
 	// }
 
   public function index(){
+  	set_gopreview();
     global_run();
     $page=intval($_REQUEST['p']);
     if($page==0)
@@ -387,6 +388,7 @@ class hotelModule extends BaseModule
 	 * 详情
 	 */
 	function view(){
+		  set_gopreview();
 	  	global_run();
 	  	
 	  	$id = intval($_REQUEST['id']);

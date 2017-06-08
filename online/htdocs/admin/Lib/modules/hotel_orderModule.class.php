@@ -7,7 +7,6 @@ class hotel_orderModule extends AuthModule
 		$param = array();
 		//条件
 		$condition = " 1 = 1 ";
-	
 		//订单号
 		if(isset($_REQUEST['sn']))
 			$sn = strim($_REQUEST['sn']);

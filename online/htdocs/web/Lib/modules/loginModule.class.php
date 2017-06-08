@@ -9,24 +9,19 @@ class loginModule extends BaseModule
 	{
 		set_gopreview();
 		global_run();
-		init_app_page();		
-		$GLOBALS['tmpl']->display("user_index.html");
+		init_app_page();
+		$GLOBALS['tmpl']->display("login_qq.html");
 	}
 	
 	public function qq()
 	{		
 		global_run();
-		$GLOBALS['tmpl']->caching = true;
-		$GLOBALS['tmpl']->cache_lifetime = 600;  //关于用会登录页的缓存
-		$cache_id  = md5(MODULE_NAME.ACTION_NAME);		
-		if (!$GLOBALS['tmpl']->is_cached('login_qq.html', $cache_id))
-		{
-			init_app_page();
-			$GLOBALS['tmpl']->assign("site_name","qq登录 - ".app_conf("SITE_NAME"));
-			$GLOBALS['tmpl']->assign("site_keyword","qq登录,".app_conf("SITE_KEYWORD"));
-			$GLOBALS['tmpl']->assign("site_description","qq登录,".app_conf("SITE_DESCRIPTION"));
-		}
-		$GLOBALS['tmpl']->display("login_qq.html",$cache_id);
+		init_app_page();
+		$GLOBALS['tmpl']->assign("site_name","qq登录 - ".app_conf("SITE_NAME"));
+		$GLOBALS['tmpl']->assign("site_keyword","qq登录,".app_conf("SITE_KEYWORD"));
+		$GLOBALS['tmpl']->assign("site_description","qq登录,".app_conf("SITE_DESCRIPTION"));
+		$GLOBALS['tmpl']->assign("preview", get_gopreview());
+		$GLOBALS['tmpl']->display("login_qq.html");
 	}
 
 	public function check()
@@ -55,7 +50,7 @@ class loginModule extends BaseModule
 				$relresult = User::do_rel($user['user_name'],$user['user_pwd'],$user_openid);
 				ajax_return(array("status"=>2,"info"=>"第一次使用qq登录本平台，登录成功","jump"=>get_gopreview())); 
 			} else {
-				ajax_return(array("status"=>3,"info"=>"登录失败","jump"=>get_gopreview()));
+				ajax_return(array("status"=>3,"info"=>"登录失败","jump"=>""));
 			}
 		}
 	}
@@ -180,7 +175,7 @@ class loginModule extends BaseModule
 			}
 			else
 			{
-				$GLOBALS['db']->query("update ".DB_PREFIX."user set cookie_key ='',cookie_expire =0 where id = ".$GLOBALS['user']['id']);		
+				$GLOBALS['db']->query("update ".DB_PREFIX."user set cookie_key ='',cookie_expire =0 where id = ".$GLOBALS['user']['id']);
 			}
 			showSuccess($result['message'],$ajax,get_gopreview(),0,$result['script']);
 		}
@@ -205,6 +200,6 @@ class loginModule extends BaseModule
 		es_session::close();
 		echo $login_type;
 	}
-	
+
 }
 ?>

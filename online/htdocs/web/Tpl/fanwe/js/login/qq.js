@@ -1,3 +1,11 @@
+// 获取路径参数
+function GetQueryString (name) {
+  const reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)')
+  const params = window.location.search.substr(1).match(reg)
+  if (params !== null) return params[2]
+  return null
+}
+
 $(document).ready(function() {
   //从页面收集OpenAPI必要的参数。get_user_info不需要输入参数，因此paras中没有参数
   var paras = {};
@@ -45,8 +53,8 @@ $(document).ready(function() {
               console.log('obj 1')
               console.log('obj', obj)
               if (obj.status !== 3) {
-                // const jump = obj.jump ? obj.jump : './'
-                window.location.href = './'
+                const preview = GetQueryString('preview')
+                window.location.href = preview ? preview : './'
               } else {
                 // go_index.hide();
                 // box_main.show();

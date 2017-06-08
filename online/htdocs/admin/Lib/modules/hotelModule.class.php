@@ -60,7 +60,7 @@ class hotelModule extends AuthModule
 		$GLOBALS['tmpl']->assign('totalCount',$totalCount);
 		$GLOBALS['tmpl']->assign('param',$param);
 		
-		$spot_cate = $GLOBALS['db']->getAll("select id,name from ".DB_PREFIX."spot_cate ORDER BY sort DESC,id ASC");
+		$spot_cate = $GLOBALS['db']->getAll("select id,name from ".DB_PREFIX."hotel_cate ORDER BY sort DESC,id ASC");
 		$GLOBALS['tmpl']->assign('spot_cate',$spot_cate);
 		
 		$GLOBALS['tmpl']->assign("formaction",admin_url("hotel"));
@@ -120,7 +120,7 @@ class hotelModule extends AuthModule
 		$GLOBALS['tmpl']->assign("searchcityurl",admin_url("tour_city#search_city"),array("ajax"=>1));
 		$GLOBALS['tmpl']->assign("searchareaurl",admin_url("tour_area#search_area"),array("ajax"=>1));
 		$GLOBALS['tmpl']->assign("searchtagurl",admin_url("tour_place_tag#search_tag"),array("ajax"=>1));
-		$GLOBALS['tmpl']->assign("searchcateurl",admin_url("spot_cate#search_cate"),array("ajax"=>1));
+		$GLOBALS['tmpl']->assign("searchcateurl",admin_url("hotel_cate#search_cate"),array("ajax"=>1));
 		$GLOBALS['tmpl']->assign("searchplaceurl",admin_url("tour_place#search_place"),array("ajax"=>1));
     	$GLOBALS['tmpl']->assign("searchsupplierurl",admin_url("supplier#search_supplier",array("ajax"=>1)));
     	
@@ -149,6 +149,10 @@ class hotelModule extends AuthModule
 		{
 			showErr("请输入内容",$ajax);
 		}
+		if(!check_empty("tour_cate_cate_name"))
+		{
+			showErr("请选择分类",$ajax);
+		}
 		if(!check_empty("xpoint") || !check_empty("ypoint") )
 		{
 			showErr("请定位地图",$ajax);
@@ -163,9 +167,11 @@ class hotelModule extends AuthModule
 			$data['image'] ="";
 		}
 		
-		
 		$data['city_match'] = format_fulltext_key(strim($_REQUEST['tour_city_py']));
 		$data['city_match_row'] = strim($_REQUEST['tour_city_name']);
+
+		$data['cate_match'] = str_to_unicode_string_depart(strim($_REQUEST['tour_cate_cate_name']));
+		$data['cate_match_row'] = strim($_REQUEST['tour_cate_cate_name']);
 	
 		$data['star_level'] = intval($_REQUEST["star_level"]);
 		
@@ -176,6 +182,7 @@ class hotelModule extends AuthModule
 		$data['address'] = strim($_REQUEST['address']);
 		$data['x_point'] = strim($_REQUEST['xpoint']);
 		$data['y_point'] = strim($_REQUEST['ypoint']);
+		$data['tel'] = strim($_REQUEST['tel']);
 		$data['sort'] = intval($_REQUEST['sort']);
 		
 		// 更新数据
@@ -339,9 +346,9 @@ class hotelModule extends AuthModule
 		$GLOBALS['tmpl']->assign("searchcityurl",admin_url("tour_city#search_city"),array("ajax"=>1));
 		$GLOBALS['tmpl']->assign("searchareaurl",admin_url("tour_area#search_area"),array("ajax"=>1));
 		$GLOBALS['tmpl']->assign("searchtagurl",admin_url("tour_place_tag#search_tag"),array("ajax"=>1));
-		$GLOBALS['tmpl']->assign("searchcateurl",admin_url("spot_cate#search_cate"),array("ajax"=>1));
+		$GLOBALS['tmpl']->assign("searchcateurl",admin_url("hotel_cate#search_cate"),array("ajax"=>1));
 		$GLOBALS['tmpl']->assign("searchplaceurl",admin_url("tour_place#search_place"),array("ajax"=>1));
-    	$GLOBALS['tmpl']->assign("searchsupplierurl",admin_url("supplier#search_supplier",array("ajax"=>1)));
+    $GLOBALS['tmpl']->assign("searchsupplierurl",admin_url("supplier#search_supplier",array("ajax"=>1)));
     	
 		$GLOBALS['tmpl']->assign("addtickets",admin_url("hotel_room#add"),array("ajax"=>1));
     	$GLOBALS['tmpl']->assign("edittickets",admin_url("hotel_room#edit",array("ajax"=>1)));
@@ -377,6 +384,11 @@ class hotelModule extends AuthModule
 		{
 			showErr("请定位地图",$ajax);
 		}
+		if(!check_empty("tour_cate_cate_name"))
+		{
+			showErr("请选择分类",$ajax);
+		}
+	
 		$data = array();
 		$hotel_id = intval($_REQUEST['id']);
 		$data['name'] = strim($_REQUEST['name']);
@@ -391,6 +403,9 @@ class hotelModule extends AuthModule
 		$data['star_level'] = intval($_REQUEST["star_level"]);
 	
 		$data['brief'] = strim($_REQUEST["brief"]);
+
+		$data['cate_match'] = str_to_unicode_string_depart(strim($_REQUEST['tour_cate_cate_name']));
+		$data['cate_match_row'] = strim($_REQUEST['tour_cate_cate_name']);
 
 		$data['tel'] = strim($_REQUEST["tel"]);
 		$data['appointment_desc'] = format_domain_to_relative(btrim($_REQUEST["appointment_desc"]));

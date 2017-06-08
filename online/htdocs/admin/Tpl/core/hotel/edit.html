@@ -52,6 +52,14 @@
 							<a class="btnLook" href="{$searchcityurl}" lookupGroupSelect="tour_city">{lang v="SELECT_TOUR_CITY"}</a>
 						</td>
 					</tr>
+
+					<tr>
+						<td class="item_title">{lang v="SPOT_CATE"}:</td>
+						<td class="item_input">
+							<input class="required" size="80" name="tour_cate.cate_name" lookupSend="tour_cate_data"  type="text"  readonly="true" value="{$vo.cate_match_row}" />
+							<a class="btnLook" href="{$searchcateurl}" lookupGroupSelect="tour_cate">{lang v="SELECT_SPOT_CATE"}</a>
+						</td>
+					</tr>
 					
 					<tr>
 						<td class="item_title">酒店星级:</td>
