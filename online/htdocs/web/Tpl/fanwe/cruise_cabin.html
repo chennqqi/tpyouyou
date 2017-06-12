@@ -1,0 +1,133 @@
+<?php
+	$this->_var['pagecss'][] = TMPL_REAL."/css/style.css";
+	$this->_var['pagecss'][] = TMPL_REAL."/css/cruise_order.css";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/lazyload.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/script.js";
+	$this->_var['cpagejs'][] = TMPL_REAL."/js/script.js";
+	$this->_var['pagejs'][] = TMPL_REAL."/js/cruise.js";
+?>
+    {include file="inc/header_order.html"}
+    <script type="text/javascript">
+    var buy_count = '{$buy_count}';
+    var is_namelist = '{$tourline_info.is_namelist}';
+    var youke_number = '{$youke_number}';
+    </script>
+    <div class="wrap">
+        <div class="t_nav">
+            <ul class="clearfix">
+                {if $tourline_info.order_confirm_type neq 2}
+                <li class="f_l cur">1.选择舱房</li>
+                <li class="f_l">2.填写订单</li>
+                <li class="f_l">3.网上支付</li>
+                <li class="f_l" style="margin-right:0px;">4.预定成功</li>
+                {else}
+                <li class="f_l cur">1.选择舱房</li>
+                <li class="f_l li_width">2.填写订单</li>
+                <li class="f_l li_width">3.商家确定</li>
+                <li class="f_l li_width">4.网上支付</li>
+                <li class="f_l li_width" style="margin-right:0px;">5.预定成功</li>
+                {/if}
+            </ul>
+        </div>
+        <div class="" style="background: #f5f5f5;">
+          <form action="{url a="tourline_order#index"}" method="post" name="form_m">
+            <div class="youlun-wrap">
+                <!--产品简介-->
+                <div class="youlun-summary clearfix">
+                  <h3> 【公主邮轮-盛世公主号】上海-长崎-上海4晚5天 7月15日
+	                  <small>产品编号：<span id="productId">1058830</span></small>
+	                </h3>
+                </div>
+
+                <!-- 舱房列表展示 -->
+                <div class="carbin-box">
+                    <div class="cabin-type" id="cabin-ncf">
+                        <ul class="cabin-list">
+													{foreach from=$cabin_info item=item key=key}
+                          <li>
+                              <div class="cl-left cabin_introduct">
+                                  <dl>
+                                      <dt><a class="JS-carbin-info" href="javascript:;" title="标准内舱双人房">{$item.name}</a></dt>
+                                      <dt>{$item.cate_match_row}</dt>
+                                      <dd class="dd-sm">
+                                          <span class="area" title="15m²">{$item.area}m²</span>
+                                          <br>
+                                          <span class="deck_floor" title="8-15层">8-15层</span>
+                                          </dd>
+                                      <dd>
+                                          <input type="hidden" name="maxOccupantNumber" value="2-2">
+                                          <span class="maxOccupantNumber" title="2人">{$item.people_num}人</span>
+                                          <br>
+                                          <span class="window_balcony">
+                                           {if $item.has_window == 1}
+                                           有窗
+                                           {else}
+                                           无窗
+                                           {/if}
+                                           {if $item.has_balcony == 1}
+                                           有阳台
+                                           {else}
+                                           无阳台
+                                           {/if}
+                                           </span>
+                                          <span class="cabinIntroduct" style="display: none">待定</span>
+                                      </dd>
+                                  </dl>
+                              </div>
+                              <div class="cl-center">
+                                  <div class="carbin-price-info">
+                                      <p class="cpi-price">价格：<em style="border-bottom:0px dashed #f60;"><i>¥</i>{$item.adult_price}</em>起/人</p>
+                                  </div>
+                                  <i class="v-middle"></i>
+                              </div>
+                              <div class="cl-right cl-right-5554381-2017-07-15">
+                                  <div class="cl-num-adjust">
+                                      <select name="adult_count">
+                                      		<option value="0">0</option>
+                                      		<option value="1">1</option>
+                                      		<option value="2">2</option>
+                                      		<option value="3">3</option>
+                                      		<option value="4">4</option>
+                                      		<option value="5">5</option>
+                                      		<option value="6">6</option>
+                                      		<option value="7">7</option>
+                                      		<option value="8">8</option>
+                                      </select> 
+                                      <span class="f_l ptn" style="margin-right:5px;">成人</span>
+                                  </div>
+                                  <div class="cl-num-adjust">
+                                      <select name="adult_count">
+                                      		<option value="0">0</option>
+                                      		<option value="1">1</option>
+                                      		<option value="2">2</option>
+                                      		<option value="3">3</option>
+                                      		<option value="4">4</option>
+                                      		<option value="5">5</option>
+                                      		<option value="6">6</option>
+                                      		<option value="7">7</option>
+                                      		<option value="8">8</option>
+                                      </select> 
+                                      <span class="f_l ptn" style="margin-right:5px;">儿童</span>
+                                      <span class="cl-num-tip">6个月-13岁</span>
+                                  </div>
+                                  <div class="cl-num-adjust">
+                                      <span class="cl-num-title">房间数</span>
+                                      <div class="nova-number-box">
+                                          <input class="" value="0" type="text">
+                                      </div>
+                                  </div>
+                              </div>
+                          </li>
+													{/foreach}
+                        </ul>
+                    </div>
+                </div>
+
+                <input type="button" name="to_order" id="cabin_next" class="to_pay_button f_l" value=" 立即预定">
+
+            </div>
+          </form>
+        </div>
+    </div>
+    <div class="blank20"></div>
+    {include file="inc/footer_order.html"}

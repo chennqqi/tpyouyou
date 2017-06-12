@@ -1,41 +1,14 @@
 $(document).ready(function(){ 
 
-	$(document.body).click(function(e) {
-		if($(e.target).attr("class")!='fc-event-title')
-    	{
-    		$(".mid-buy_box").hide();
-    	}
-    });
 	
-	$(".place_choose .place_tit").click(function(){
-	
-		var a = $(".place_choose .place_con")
-		for (var i = 0; i <=11; i++) {
-	             if($(a[i]).css("display")=="block") $(a[i]).css('display','none'); 
-		}
-		
-		$(this).next().show();	
-	})
-	
-	$(".child_norm").hover(
-		 function () {
-		    $(this).find(".norm_a").addClass("hover_a");
-			$(this).find(".norm_value").show();
-		  },
-		  function () {
-			$(this).find(".norm_a").removeClass("hover_a");
-			$(this).find(".norm_value").hide();
-		  }
-
-	);
-	
-	$(".to_pay_button").click(function(){
+	$("#cabin_next").click(function(){
 		var parent_box=$(this).parent().parent();
 		tourline_id=$(parent_box).find("input[name='tourline_id']").val();
 		if($(parent_box).attr("name") =="form_m")
 			tourline_item_id=$(parent_box).find("select[name='tourline_item_id']").val();
 		else
 			tourline_item_id=$(parent_box).find("input[name='tourline_item_id']").val();
+		
 		adult_count=$(parent_box).find("select[name='adult_count']").val();
 		child_count=$(parent_box).find("select[name='child_count']").val();
 

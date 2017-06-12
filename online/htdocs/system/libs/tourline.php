@@ -1310,10 +1310,7 @@ function get_tourline($id=0){
 	
 
 	return $tourline;
-
 }
-
-
 
 /**
 
@@ -1322,12 +1319,9 @@ function get_tourline($id=0){
  * */
 
 function get_tourline_supplier($sid=0)
-
 {
 
 	$tourline=$GLOBALS['db']->getRow("select * from ".DB_PREFIX."tourline_supplier where id=".intval($sid)." ");
-
-	
 
 	$tourline['tour_desc'] = format_html_content_image($tourline['tour_desc'], 760,0);
 
@@ -1392,10 +1386,7 @@ function get_tourline_supplier($sid=0)
 	$tourline['tourline_item']=tourline_item_format($tourline_item_all);
 
 	return $tourline;
-
 }
-
-
 
 /*
 

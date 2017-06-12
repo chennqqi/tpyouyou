@@ -213,6 +213,7 @@ class tourline_orderModule extends BaseModule{
 		
     	$GLOBALS['tmpl']->display("tourline_order.html");
     }
+    
     function submit_cart(){
     	//print_r($_POST);
     	
@@ -595,10 +596,6 @@ class tourline_orderModule extends BaseModule{
 	    	$jump_url=url("transaction#pay",array("ot"=>1,"sn"=>$order_data['sn']));
 	    	showSuccess("提交成功",1,$jump_url);
     	}
-    	
-    	
     }
-    
-  
 }
 ?>

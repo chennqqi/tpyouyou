@@ -64,7 +64,7 @@ class toursModule extends BaseModule{
     	set_gopreview();
     	global_run();
     	init_app_page();
-    	$id=intval($_REQUEST['id']);
+    	$id = intval($_REQUEST['id']);
     	$preview=intval($_REQUEST['preview']);
     	$sid=intval($_REQUEST['sid']);
     	
@@ -75,14 +75,19 @@ class toursModule extends BaseModule{
     	/*线路*/
     	if($sid >0)
     	{
-    		$tourline=get_tourline_supplier($sid);
-    		$tourline_id=intval($tourline['tourline_id']);
+    		$tourline = get_tourline_supplier($sid);
+            $is_cruise=$GLOBALS['db']->getOne("select is_cruise from ".DB_PREFIX."tourline_supplier where id=".intval($sid)." ");
+    		$tourline_id = intval($tourline['tourline_id']);
     	}
     	else
     	{
     		$tourline=get_tourline($id);
+            $is_cruise=$GLOBALS['db']->getOne("select is_cruise from ".DB_PREFIX."tourline where id=".intval($id)." ");
     		$tourline_id=intval($tourline['id']);
     	}
+
+
+        $GLOBALS['tmpl']->assign("is_cruise",$is_cruise);
     		
     	if(!$tourline)
     		showErr("线路不存在",0,url("index"));
@@ -156,11 +161,7 @@ class toursModule extends BaseModule{
     	{
     		$tourline['review_return_money'] = $tourline['review_return_money'] > 0 ? $tourline['review_return_money'] : format_price_to_display(app_conf("REVIEW_MONEY"));
     	}
-    	$GLOBALS['tmpl']->assign("tourline",$tourline);
-
-
-        
-        
+        $GLOBALS['tmpl']->assign("tourline",$tourline);
     	
     	/*右边区域筛选列表*/
     	$nav_return=load_auto_cache("tourline_tourlist_nav",array("type"=>$tourline['type_range']));
@@ -230,7 +231,11 @@ class toursModule extends BaseModule{
 		$GLOBALS['tmpl']->assign("json_item",json_encode($json_item));
 		$GLOBALS['tmpl']->assign("tourline_item_array",json_encode($tourline['tourline_item']));
 		//订单提交页链接
-		$GLOBALS['tmpl']->assign('tourline_order_url',url("tourline_order#index"));
+        if ($is_cruise == 1) {
+		  $GLOBALS['tmpl']->assign('tourline_order_url',url("cruise_order#index"));
+        } else {
+          $GLOBALS['tmpl']->assign('tourline_order_url',url("tourline_order#index"));
+        }
 		
     	//成交记录
     	if($tourline['show_sale_list'] && $id >0){
@@ -342,8 +347,6 @@ class toursModule extends BaseModule{
     	
     }
      
-
-
     /*
     下载
     ***/
