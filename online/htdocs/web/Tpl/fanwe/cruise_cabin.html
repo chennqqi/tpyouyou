@@ -11,7 +11,16 @@
     var buy_count = '{$buy_count}';
     var is_namelist = '{$tourline_info.is_namelist}';
     var youke_number = '{$youke_number}';
+    var cruise_order_url = '{$cruise_order_url}';
     </script>
+
+<style type="text/css">
+  .p-money {
+    padding: 1rem;
+    font-size: 18px;
+  }
+</style>
+
     <div class="wrap">
         <div class="t_nav">
             <ul class="clearfix">
@@ -30,12 +39,14 @@
             </ul>
         </div>
         <div class="" style="background: #f5f5f5;">
-          <form action="{url a="tourline_order#index"}" method="post" name="form_m">
+          <form action="{url a="cruise_order#addform"}" method="post" name="form_m">
+          <input type="hidden" name="tourline_id" value="{$tourline_id}">
+          <input type="hidden" name="tourline_item_id" value="{$tourline_item_id}">
             <div class="youlun-wrap">
                 <!--产品简介-->
                 <div class="youlun-summary clearfix">
-                  <h3> 【公主邮轮-盛世公主号】上海-长崎-上海4晚5天 7月15日
-	                  <small>产品编号：<span id="productId">1058830</span></small>
+                  <h3>邮轮: {$tourline_info.name} 启航时间:{$tourline_item_start_time}
+	                  <small>产品编号：<span id="productId">{$tourline_info.id}</span></small>
 	                </h3>
                 </div>
 
@@ -43,8 +54,19 @@
                 <div class="carbin-box">
                     <div class="cabin-type" id="cabin-ncf">
                         <ul class="cabin-list">
-													{foreach from=$cabin_info item=item key=key}
-                          <li>
+                          <input type="hidden" class="cabins-input" name="cabins" value="">
+                          <input type="hidden" name="money" value="">
+                          <input type="hidden" name="adult_count_total" value="">
+                          <input type="hidden" name="adult_price_total" value="">
+                          <input type="hidden" name="child_count_total" value="">
+                          <input type="hidden" name="child_price_total" value="">
+                          <input type="hidden" name="money" value="">
+                          {foreach from=$cabin_info item=item key=key}
+                          <li class="uu-cabin-li" >
+                            <input type="hidden" name="cabin_id" value="{$item.id}">
+                            <input type="hidden" name="cabin_people_num" value="{$item.people_num}">
+                            <input type="hidden" name="cabin_adult_price" value="{$item.adult_price}">
+                            <input type="hidden" name="cabin_child_price" value="{$item.child_price}">
                               <div class="cl-left cabin_introduct">
                                   <dl>
                                       <dt><a class="JS-carbin-info" href="javascript:;" title="标准内舱双人房">{$item.name}</a></dt>
@@ -52,10 +74,9 @@
                                       <dd class="dd-sm">
                                           <span class="area" title="15m²">{$item.area}m²</span>
                                           <br>
-                                          <span class="deck_floor" title="8-15层">8-15层</span>
+                                          <!-- <span class="deck_floor" title="8-15层">8-15层</span> -->
                                           </dd>
                                       <dd>
-                                          <input type="hidden" name="maxOccupantNumber" value="2-2">
                                           <span class="maxOccupantNumber" title="2人">{$item.people_num}人</span>
                                           <br>
                                           <span class="window_balcony">
@@ -96,7 +117,7 @@
                                       <span class="f_l ptn" style="margin-right:5px;">成人</span>
                                   </div>
                                   <div class="cl-num-adjust">
-                                      <select name="adult_count">
+                                      <select name="child_count">
                                       		<option value="0">0</option>
                                       		<option value="1">1</option>
                                       		<option value="2">2</option>
@@ -113,7 +134,7 @@
                                   <div class="cl-num-adjust">
                                       <span class="cl-num-title">房间数</span>
                                       <div class="nova-number-box">
-                                          <input class="" value="0" type="text">
+                                          <input name="room_count" class="" value="0" type="text">
                                       </div>
                                   </div>
                               </div>
@@ -122,6 +143,8 @@
                         </ul>
                     </div>
                 </div>
+
+                <p class="p-money">共: ￥ <span class="span-money"></span></p>
 
                 <input type="button" name="to_order" id="cabin_next" class="to_pay_button f_l" value=" 立即预定">
 

@@ -65,6 +65,14 @@ class cruise_orderModule extends BaseModule{
     	
         $GLOBALS['tmpl']->assign("tourline_info",$tourline_info);
 
+        $GLOBALS['tmpl']->assign("cruise_order_url",url("cruise_order#addform"));
+
+        $GLOBALS['tmpl']->assign("tourline_id",$tourline_id);
+
+        $GLOBALS['tmpl']->assign("tourline_item_id",$tourline_item_id);
+
+        $GLOBALS['tmpl']->assign("tourline_item_start_time",$tourline_item_start_time);
+
     	$GLOBALS['tmpl']->assign("cabin_info",$cabin_info);
     	
         $GLOBALS['tmpl']->assign("json_list",json_encode($tourline_info));
@@ -88,11 +96,13 @@ class cruise_orderModule extends BaseModule{
         
         $ajax=intval($_REQUEST['ajax']);
         $tourline_id=intval($_REQUEST['tourline_id']);
-        $adult_count=intval($_REQUEST['adult_count']);
-        $child_count=intval($_REQUEST['child_count']);
+        $adult_count=intval($_REQUEST['adult_count_total']);
+        $child_count=intval($_REQUEST['child_count_total']);
         $adult_price_total = intval($_REQUEST['adult_price_total']);
         $child_price_total = intval($_REQUEST['child_price_total']);
-        
+
+        $cabins = base64_encode(strim($_REQUEST['cabins']));
+
         $id_start_time=strim($_REQUEST['tourline_item_id']);
         $array_id_start_time=explode('_',$id_start_time);
         $tourline_item_id=intval($array_id_start_time['0']);
@@ -187,7 +197,6 @@ class cruise_orderModule extends BaseModule{
                 showErr("团购已结束",$ajax);
         }
         
-        
         if($ajax == 1)
             showSuccess("成功",$ajax);
             
@@ -210,10 +219,10 @@ class cruise_orderModule extends BaseModule{
         
         $tourline_info['buy_adult_count']=$adult_count;
         $tourline_info['buy_child_count']=$child_count;
-        $tourline_info['adult_price_total']=$tourline_info['adult_price']*$adult_count;
-        $tourline_info['child_price_total']=$tourline_info['child_price']*$child_count;
-        $tourline_info['adult_sale_price_total']=$tourline_info['adult_sale_price']*$adult_count;
-        $tourline_info['child_sale_price_total']=$tourline_info['child_sale_price']*$child_count;
+        $tourline_info['adult_price_total']=$adult_price_total;
+        $tourline_info['child_price_total']=$child_price_total;
+        $tourline_info['adult_sale_price_total']=$adult_price_total;
+        $tourline_info['child_sale_price_total']=$child_price_total;;
         
         $GLOBALS['tmpl']->assign("tourline_info",$tourline_info);
         $GLOBALS['tmpl']->assign("json_list",json_encode($tourline_info));
@@ -289,6 +298,16 @@ class cruise_orderModule extends BaseModule{
         $GLOBALS['tmpl']->assign("api_list",$api_list);
         
         init_app_page();
+
+        $order_item_data['list'] = $cabins;
+        $order_item_data['type'] = 1;
+
+        $GLOBALS['db']->autoExecute(DB_PREFIX."tourline_order_item",$order_item_data,"INSERT","","SILENT");
+
+        $order_item_id = $GLOBALS['db']->insert_id();
+
+        $GLOBALS['tmpl']->assign("cruise_order_item_id", $order_item_id);
+        
         //输出SEO元素
         $GLOBALS['tmpl']->assign("site_name","旅游线路 - ".app_conf("SITE_NAME"));
         $GLOBALS['tmpl']->assign("site_keyword","旅游线路,".app_conf("SITE_KEYWORD"));

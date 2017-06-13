@@ -499,58 +499,62 @@
 							</p>
 
 							<div class="blank"></div>
+							{if $is_cruise == "1"}
+							 <div></div>
+							{else}
+								<div class="clearfix">
 
-							<div class="clearfix">
+									<div class="f_l">
 
-								<div class="f_l">
+										<select name="adult_count" style="width:37px;*width:45px;">
 
-									<select name="adult_count" style="width:37px;*width:45px;">
+											{foreach from=$select_adult_people item=select_item key=key}
 
-										{foreach from=$select_adult_people item=select_item key=key}
+												<option value="{$select_item.value}" {if $key eq 1}selected=selected{/if}>
 
-											<option value="{$select_item.value}" {if $key eq 1}selected=selected{/if}>
+													{$select_item.value}
 
-												{$select_item.value}
+												</option>
 
-											</option>
+											{/foreach}
 
-										{/foreach}
+										</select> <span class="f_l ptn" style="margin-right:5px;">成人</span>
 
-									</select> <span class="f_l ptn" style="margin-right:5px;">成人</span>
+										<select name="child_count" style="width:37px;*width:45px;">
 
-									<select name="child_count" style="width:37px;*width:45px;">
+											{foreach from=$select_child_people item=select_item}
 
-										{foreach from=$select_child_people item=select_item}
+												<option value="{$select_item.value}">
 
-											<option value="{$select_item.value}">
+													{$select_item.value}
 
-												{$select_item.value}
+												</option>
 
-											</option>
+											{/foreach}
 
-										{/foreach}
-
-									</select> <span class="f_l ptn" >儿童</span>
-
-								</div>
-
-								{if $tourline.child_norm}
-
-								<div class="child_norm f_r">
-
-									<a href="javascript:viod(0);" class="norm_a">儿童标准&nbsp;&nbsp;▼</a>
-
-									<div class="norm_value">
-
-										{$tourline.child_norm}
+										</select> <span class="f_l ptn" >儿童</span>
 
 									</div>
 
+									{if $tourline.child_norm}
+
+									<div class="child_norm f_r">
+
+										<a href="javascript:viod(0);" class="norm_a">儿童标准&nbsp;&nbsp;▼</a>
+
+										<div class="norm_value">
+
+											{$tourline.child_norm}
+
+										</div>
+
+									</div>
+
+									{/if}
+
 								</div>
+							{/if}
 
-								{/if}
-
-							</div>
 
 							<div class="blank"></div>
 
@@ -800,9 +804,9 @@
 
 						<div class="buy_box">
 						  {if $is_cruise == "1"}
-						   <form action="{url a="cruise_order#index"}" method="post" name="form_m">
+						   <form action="{url a="cruise_order#index"}" method="post" name="form_l">
 						  {else}
-						    <form action="{url a="tourline_order#index"}" method="post" name="form_m">
+						    <form action="{url a="tourline_order#index"}" method="post" name="form_l">
 						  {/if}
 
 							<p>

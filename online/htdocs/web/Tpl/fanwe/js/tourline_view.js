@@ -32,7 +32,7 @@ $(document).ready(function(){
 	$(".to_pay_button").click(function(){
 		var parent_box=$(this).parent().parent();
 		tourline_id=$(parent_box).find("input[name='tourline_id']").val();
-		if($(parent_box).attr("name") =="form_m")
+		if($(parent_box).attr("name") =="form_l")
 			tourline_item_id=$(parent_box).find("select[name='tourline_item_id']").val();
 		else
 			tourline_item_id=$(parent_box).find("input[name='tourline_item_id']").val();
