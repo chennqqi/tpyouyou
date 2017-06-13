@@ -369,9 +369,6 @@ class spot_supplierModule extends AuthModule {
 				$GLOBALS['db']->query("DELETE FROM ".DB_PREFIX."tuan where type=2 and rel_id in (".implode(",",$dt_ids).")");
 			}
 			
-			
-			
-			
 			if(isset($_REQUEST['tickets'])){
 				foreach($_REQUEST['tickets'] as $k=>$v){
 					$ticket = unserialize(base64_decode($v));

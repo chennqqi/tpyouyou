@@ -1012,7 +1012,6 @@ class cruiseModule extends AuthModule
 		}
 	}
 
-	
 
 	public function edit() {
 
@@ -1556,10 +1555,8 @@ class cruiseModule extends AuthModule
 		$data['adv2_url'] = strim($_REQUEST['adv2_url']);
 
 
-
 		// 删除无关舱房
 		$cabins_ids = array();
-		$dt_ids = array();
 		if(isset($_REQUEST['tickets'])){
 			foreach($_REQUEST['tickets'] as $k=>$v){
 				$ticket = unserialize(base64_decode($v));

@@ -1,14 +1,13 @@
 <?php
 
 
-
 class cruise_supplierModule extends AuthModule
 
 {
 
   function index() {
 
-    	$param = array();		
+    $param = array();		
 
 		//条件
 
@@ -182,7 +181,6 @@ class cruise_supplierModule extends AuthModule
 
 				$list[$k]['preview_url'] = url("tours#view",array("sid"=>$v['id'],"preview"=>1));
 
-				
 
 			}
 
@@ -194,11 +192,8 @@ class cruise_supplierModule extends AuthModule
 
 		$GLOBALS['tmpl']->assign('param',$param);
 
-		
 
-		
-
-		$GLOBALS['tmpl']->assign("formaction",admin_url("tourline_supplier"));
+		$GLOBALS['tmpl']->assign("formaction",admin_url("cruise_supplier"));
 
 		$GLOBALS['tmpl']->assign("setsorturl",admin_url("cruise_supplier#set_sort",array("ajax"=>1)));
 
@@ -206,17 +201,15 @@ class cruise_supplierModule extends AuthModule
 
 		$GLOBALS['tmpl']->assign("searchstartcityurl",admin_url("tour_city#search_city_radio"),array("ajax"=>1));
 
-    	$GLOBALS['tmpl']->assign("searchsupplierurl",admin_url("supplier#search_supplier",array("ajax"=>1)));
+    $GLOBALS['tmpl']->assign("searchsupplierurl",admin_url("supplier#search_supplier",array("ajax"=>1)));
 
 		$GLOBALS['tmpl']->assign("editurl",admin_url("cruise_supplier#edit"));
 
 		$GLOBALS['tmpl']->assign("addurl",admin_url("cruise#add"));
 
-		$GLOBALS['tmpl']->display("core/tourline_supplier/index.html");
+		$GLOBALS['tmpl']->display("core/cruise_supplier/index.html");
 
-    }
-
-    
+  }
 
 	public function edit() {		
 
@@ -224,12 +217,9 @@ class cruise_supplierModule extends AuthModule
 
 		$vo =$GLOBALS['db']->getRow("select * from ".DB_PREFIX."tourline_supplier where id = ".$id);
 
-		
-
 		//city_name
 
 		$vo['city_name'] = $GLOBALS['db']->getOne("select `name` from ".DB_PREFIX."tour_city where id = ".$vo['city_id']);
-
 	
 
 		$vo['city_match'] = unformat_fulltext_key($vo['city_match']);
@@ -241,9 +231,6 @@ class cruise_supplierModule extends AuthModule
 		$vo['place_match'] = unformat_fulltext_key($vo['place_match']);
 
 		$vo['around_city_match'] = unformat_fulltext_key($vo['around_city_match']);
-
-		
-
 		
 
 		$insurance_cfg=unserialize($vo['insurance_cfg']);
@@ -268,21 +255,13 @@ class cruise_supplierModule extends AuthModule
 
 		}
 
-		
-
-		
-
 		//商家
 
 		if($vo['supplier_id'] >0)
 
 			$vo['company_name'] = $GLOBALS['db']->getOne("select `company_name` from ".DB_PREFIX."supplier where id = ".$vo['supplier_id']);
 
-
-
 		$GLOBALS['tmpl']->assign ( 'vo', $vo );
-
-		
 
 		/*新增保险*/
 
@@ -342,9 +321,21 @@ class cruise_supplierModule extends AuthModule
 
 			$tourline_items=array();
 
-		$GLOBALS['tmpl']->assign ( 'tourline_items', $tourline_items );
+    // 舱房 cabins
+    if($vo['cabin_list']!=""){
+    	$ttickets = unserialize($vo['cabin_list']);
+    	foreach($ttickets as $k=>$v){
+    		$cabins[$k] = unserialize(base64_decode($v));
+    		$cabins[$k]['ticket_data'] = $v;
+    	}
+      $GLOBALS['tmpl']->assign("cabins", $cabins);
+    }
 
-		
+		$GLOBALS['tmpl']->assign("addcabin",admin_url("cabin#add"));
+
+		$GLOBALS['tmpl']->assign("editcabin",admin_url("cabin#edit"));
+
+		$GLOBALS['tmpl']->assign ( 'tourline_items', $tourline_items );		
 
 		$GLOBALS['tmpl']->assign("searchstartcityurl",admin_url("tour_city#search_city_radio"),array("ajax"=>1));
 
@@ -370,7 +361,20 @@ class cruise_supplierModule extends AuthModule
 
     	$GLOBALS['tmpl']->assign("tuan_cates",$tuan_cates);
 
-    	
+   // 舱房 cabins
+   if($vo['cabin_list']!=""){
+   	$ttickets = unserialize($vo['cabin_list']);
+   	foreach($ttickets as $k=>$v){
+   		$cabins[$k] = unserialize(base64_decode($v));
+   		$cabins[$k]['ticket_data'] = $v;
+   	}
+     $GLOBALS['tmpl']->assign("cabins", $cabins);
+   }
+
+   $GLOBALS['tmpl']->assign("addcabin",admin_url("cabin#add"));
+
+   $GLOBALS['tmpl']->assign("editcabin",admin_url("cabin#edit"));
+
 
 		$GLOBALS['tmpl']->assign("additem",admin_url("tourline_item#add",array("ajax"=>1,"tourline_id"=>$vo['rel_id'],"is_supplier_submit"=>1)));
 
@@ -381,10 +385,9 @@ class cruise_supplierModule extends AuthModule
 
 		
 
-		$GLOBALS['tmpl']->display("core/tourline_supplier/edit.html");
+		$GLOBALS['tmpl']->display("core/cruise_supplier/edit.html");
 
 	}
-
 
 
 	
@@ -547,8 +550,6 @@ class cruise_supplierModule extends AuthModule
 
 		$data['city_id'] =intval($_REQUEST['start_city_city_id']);
 
-		
-
 		if(intval($_REQUEST['show_all_city']) == 1){
 
 			$city_info = $GLOBALS['db']->getRow("SELECT GROUP_CONCAT(`name`) AS tour_city_name,GROUP_CONCAT(`py`) AS tour_city_py FROM ".DB_PREFIX."tour_city ORDER BY py_first ASC");
@@ -566,33 +567,27 @@ class cruise_supplierModule extends AuthModule
 			$data['city_match_row'] = strim($_REQUEST['tour_city_name']);
 
 		}
-
 		
 
 		$data['around_city_match'] = format_fulltext_key(strim($_REQUEST['around_city_py']));
 
 		$data['around_city_match_row'] = strim($_REQUEST['around_city_name']);
-
 		
 
 		$data['province_match'] = format_fulltext_key(strim($_REQUEST['tour_province_py']));
 
 		$data['province_match_row'] = strim($_REQUEST['tour_province_name']);
 
-		
 
 		$data['area_match'] = format_fulltext_key(strim($_REQUEST['tour_area_py']));
 
 		$data['area_match_row'] = strim($_REQUEST['tour_area_name']);
-
-		
 
 		$data['place_match'] = format_fulltext_key(strim($_REQUEST['tour_place_py']));
 
 		$data['place_match_row'] = strim($_REQUEST['tour_place_name']);
 
 		
-
 		$data['tag_match'] = str_to_unicode_string_depart(strim($_REQUEST['tour_place_tag_tag_name']));
 
 		$data['tag_match_row'] = strim($_REQUEST['tour_place_tag_tag_name']);
@@ -724,8 +719,37 @@ class cruise_supplierModule extends AuthModule
 			{
 
 				$tourline_id = $tourline_supplier['rel_id'];
+				// 舱位
+				//删除无关舱位
+				$cabins_ids=array();
+				if(isset($_REQUEST['tickets'])){
+					foreach($_REQUEST['tickets'] as $k=>$v){
+						$ticket = unserialize(base64_decode($v));
+						if(intval($ticket["id"]) > 0){
+							$cabins_ids[] = $ticket["id"];
+						}
+					}
+				}
 
-				
+				//删除被删除的舱位
+				if(count($cabins_ids) > 0){
+					$GLOBALS['db']->query("DELETE FROM ".DB_PREFIX."cabin WHERE cruise_id=".$tourline_id." AND id not in(".implode(",",$cabins_ids).")");
+				}
+				else
+					$GLOBALS['db']->query("DELETE FROM ".DB_PREFIX."cabin WHERE cruise_id=".$tourline_id);
+
+				//添加舱房
+				if(isset($_REQUEST['tickets'])){
+					foreach($_REQUEST['tickets'] as $k=>$v){
+						$ticket = unserialize(base64_decode($v));
+						if($ticket['name']!="" && intval($ticket['id']) == 0 ){
+							$ticket['cruise_id'] = $tourline_id;
+							$GLOBALS['db']->autoExecute(DB_PREFIX."cabin",$ticket,"INSERT","","SILENT");
+						} elseif ($ticket['name']!="" && intval($ticket['id']) != 0) {
+							$GLOBALS['db']->autoExecute(DB_PREFIX."cabin",$ticket,"UPDATE","id=".intval($ticket['id']),"SILENT");
+						}
+					}
+				}
 
 				//删除无关时间价格
 
@@ -1062,7 +1086,17 @@ class cruise_supplierModule extends AuthModule
 
 				$tourline_id = $GLOBALS['db']->insert_id();
 
-				
+				// 舱位
+				//添加舱房
+				if(isset($_REQUEST['tickets'])){
+					foreach($_REQUEST['tickets'] as $k=>$v){
+						$ticket = unserialize(base64_decode($v));
+						if($ticket['name']!="" && intval($ticket['id']) == 0 ){
+							$ticket['cruise_id'] = $tourline_id;
+							$GLOBALS['db']->autoExecute(DB_PREFIX."cabin",$ticket,"INSERT","","SILENT");
+						}
+					}
+				}
 
 				//时间价格
 

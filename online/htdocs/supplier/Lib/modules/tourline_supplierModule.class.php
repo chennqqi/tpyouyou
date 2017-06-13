@@ -4,13 +4,13 @@ class tourline_supplierModule extends AuthModule
 
 {
 
-    function index() {
+  function index() {
 
-    	$param = array();		
+    $param = array();		
 
 		//条件
 
-		$condition = " supplier_id =  ".$this->supplier_id."";
+		$condition = " supplier_id =  ".$this->supplier_id." and is_cruise != 1";
 
 		if(isset($_REQUEST['name']))
 
@@ -219,8 +219,6 @@ class tourline_supplierModule extends AuthModule
 		$id = intval($_REQUEST ['id']);
 
 		$vo =$GLOBALS['db']->getRow("select * from ".DB_PREFIX."tourline_supplier where id = ".$id);
-
-		
 
 		//city_name
 
