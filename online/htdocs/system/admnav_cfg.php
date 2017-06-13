@@ -34,6 +34,7 @@ return array(
 				),
 				'邮轮管理'	=>	array(
 						array("name"=>" 邮轮线路","module"=>"cruise","action"=>"index"),
+						array("name"=>"舱位分类","module"=>"cabin_cate","action"=>"index"),
 						array("name"=>"邮轮订单","module"=>"cruise_order","action"=>"index"),
 						array("name"=>"商家提交","module"=>"cruise_supplier","action"=>"index"),
 				),

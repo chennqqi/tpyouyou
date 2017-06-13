@@ -27,6 +27,8 @@
 	var json_namelist_idlist={$json_namelist_idlist};
 	
 	var AJAX_SUBMIT_CART_URL= "{url x="tourline_order#submit_cart"}";
+	var cruise_order_item_id = "{$cruise_order_item_id}";
+	console.log('asd', cruise_order_item_id)
 </script>
 <div class="wrap">
 	<div class="t_nav">
@@ -49,6 +51,7 @@
 			
 			<form name="tourline_order_form" id="tourline_order_form" method="post">
 			 <input type="hidden" value="{$tourline_info.id}" name="tourline_id">
+			 <input type="hidden" value="{$cruise_order_item_id}" name="cruise_order_item_id">
 			 <input type="hidden" value="{$tourline_info.tourline_item_id}" name="tourline_item_id">
 			  <input type="hidden" value="{$tourline_item_start_time}" name="tourline_item_start_time">
 			 <input type="hidden" value="{$adult_count}" name="buy_adult_count">
@@ -192,23 +195,29 @@
 		<div class="blank15"></div>
 		<div id="summaryInfo">
 			<div class="hd">结算信息</div>
-			<div class="part">
-				<p class="part_name">出游团费</p>
-				<div id="basic_fare">
-					{if $tourline_info.buy_adult_count >0}
-					<p class="clearfix pn ">
-						<span class="pn_1 f_l">{$tourline_info.buy_adult_count}成人 × ¥{$tourline_info.adult_price}</span>
-						<span class="pn_2 f_r">¥{$tourline_info.adult_price_total}</span>
-					</p>
-					{/if}
-					{if $tourline_info.buy_child_count >0}
-					<p class="clearfix pn">
-						<span class="f_l pn_1">{$tourline_info.buy_child_count}儿童 × ¥{$tourline_info.child_price}</span>
-						<span class="f_r pn_2">¥{$tourline_info.child_price_total}</span>
-					</p>
-					{/if}
-				</div>
+			{if $cruise_order_item_id}
+			<div>
+				邮轮订单
 			</div>
+			{else}
+				<div class="part">
+					<p class="part_name">出游团费</p>
+					<div id="basic_fare">
+						{if $tourline_info.buy_adult_count >0}
+						<p class="clearfix pn ">
+							<span class="pn_1 f_l">{$tourline_info.buy_adult_count}成人 × ¥{$tourline_info.adult_price}</span>
+							<span class="pn_2 f_r">¥{$tourline_info.adult_price_total}</span>
+						</p>
+						{/if}
+						{if $tourline_info.buy_child_count >0}
+						<p class="clearfix pn">
+							<span class="f_l pn_1">{$tourline_info.buy_child_count}儿童 × ¥{$tourline_info.child_price}</span>
+							<span class="f_r pn_2">¥{$tourline_info.child_price_total}</span>
+						</p>
+						{/if}
+					</div>
+				</div>
+			{/if}
 			<div id="insurance_summary" style="display:none">
 				
 			</div>

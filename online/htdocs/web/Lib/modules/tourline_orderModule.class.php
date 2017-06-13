@@ -3,7 +3,6 @@ require APP_ROOT_PATH . "system/libs/tourline.php";
 class tourline_orderModule extends BaseModule{
     function index() {
     	global_run();
-    	
     	$ajax=intval($_REQUEST['ajax']);
     	$tourline_id=intval($_REQUEST['tourline_id']);
     	$adult_count=intval($_REQUEST['adult_count']);
@@ -213,9 +212,9 @@ class tourline_orderModule extends BaseModule{
 		
     	$GLOBALS['tmpl']->display("tourline_order.html");
     }
+    
     function submit_cart(){
     	//print_r($_POST);
-    	
     	$return = array("status"=>0,"info"=>"","jump");
     	$GLOBALS['user'] = User::load_user();
 		if(empty($GLOBALS['user']))User::auto_do_login();
@@ -226,7 +225,8 @@ class tourline_orderModule extends BaseModule{
 			ajax_return($return);
 		}
 
-		$tourline_id=intval($_POST['tourline_id']);/*线路id*/
+        $tourline_id=intval($_POST['tourline_id']);/*线路id*/
+		$cruise_order_item_id=intval($_POST['cruise_order_item_id']);/*order_item id*/
 		$tourline_item_id=intval($_POST['tourline_item_id']);
 		$tourline_item_start_time=strim($_POST['tourline_item_start_time']);
 	    $buy_adult_count=intval($_POST['buy_adult_count']);
@@ -256,7 +256,7 @@ class tourline_orderModule extends BaseModule{
     	$buy_count=$buy_adult_count+$buy_child_count;/*购买总数*/
     	
     	if(!$tourline_id){
-	    		showErr("请选择旅游线路！",1);
+	    	showErr("请选择旅游线路！",1);
     	}
     	
     	if(!$tourline_item_id){
@@ -522,6 +522,9 @@ class tourline_orderModule extends BaseModule{
     	
     	if($order_id>0)
     	{
+            // 更新order item id
+            $order_item_data['order_id'] = $order_id;
+            $GLOBALS['db']->autoExecute(DB_PREFIX."tourline_order_item",$order_item_data,"UPDATE","id=".$cruise_order_item_id);
 	    	 //插入保险
 	    	 if($insurance_list)
 	    	 {
@@ -583,9 +586,7 @@ class tourline_orderModule extends BaseModule{
 
 	    	//更新订单状态
 	    	tourline_order_paid($order_data['sn'],0,$account_pay,$tmp_voucher_price);
-			
-	    	
-	    	
+
 	    	//发微博
 	    	if(intval($_POST['share_order']) == 1){
 	    		$image_list[] = $tourline_info['image'];
@@ -595,10 +596,6 @@ class tourline_orderModule extends BaseModule{
 	    	$jump_url=url("transaction#pay",array("ot"=>1,"sn"=>$order_data['sn']));
 	    	showSuccess("提交成功",1,$jump_url);
     	}
-    	
-    	
     }
-    
-  
 }
 ?>

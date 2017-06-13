@@ -1,0 +1,145 @@
+</script>
+<form action="{$formaction}" method="post" class="pageForm required-validate" onsubmit="return validateCallback(this, CabinCallBack)">
+<div class="pageContent">
+	<div class="pageFormContent" layoutH="57">
+		<div class="tabs">
+			<div class="tabsHeader">
+				<div class="tabsHeaderContent">
+					<ul>					
+						<li class="selected"><a href="javascript:void(0)"><span>价格数量</span></a></li>
+						<li><a href="javascript:void(0)"><span>内容设置</span></a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="tabsContent cf" >
+				<div>
+					<table class="formtable">			
+						<tr>
+							<td class="item_title">{lang v="NAME"}:</td>
+							<td class="item_input">
+								<input type="text" class="required textInput valid"   minlength="3"  size="50" name="name">
+								<label class="tip"></label>
+							</td>
+						</tr>
+
+						<tr>
+							<td class="item_title">所属分类:</td>
+							<td class="item_input">
+								<select name="cate_match_row" class="combox">
+								  {foreach from=$cabin_cates item=item}
+									  <option value="{$item.name}">{$item.name}</option>
+									{/foreach}
+								</select>
+							</td>
+						</tr>
+						
+						<tr>
+							<td class="item_title">{lang v="ORIGIN_PRICE"}:</td>
+							<td class="item_input">
+								<input type="text" class="textInput number"   maxlength="10" name="original_price" value="0.00">
+								<label class="tip"></label>
+							</td>
+						</tr>
+						
+						<tr>
+							<td class="item_title">成人价格:</td>
+							<td class="item_input">
+								<input type="text" class="textInput number"   maxlength="10" name="adult_price" value="0.00">
+								<label class="tip"></label>
+							</td>
+						</tr>
+
+						<tr>
+							<td class="item_title">儿童价格:</td>
+							<td class="item_input">
+								<input type="text" class="textInput number"   maxlength="10" name="child_price" value="0.00">
+								<label class="tip"></label>
+							</td>
+						</tr>
+												
+						<tr>
+							<td class="item_title">库存:</td>
+							<td class="item_input">
+								<input type="text" class="textInput digits"   maxlength="10" name="repertory" value="0">
+								<label class="tip">0表示无限制</label>
+							</td>
+						</tr>
+						
+					</table>
+				</div>
+				
+				<!--内容-->
+				<div>
+					<table class="formtable">
+						<tr>
+							<td class="item_title">面积:</td>
+							<td class="item_input">
+								<input type="text" class="required textInput valid"   minlength="1"  size="50" name="area">
+								<label class="tip"></label>
+							</td>
+						</tr>
+
+						<tr>
+							<td class="item_title">简介:</td>
+							<td class="item_input">
+								<input type="text" name="intro">
+								<label class="tip"></label>
+							</td>
+						</tr>
+
+						<tr>
+							<td class="item_title">入住人数:</td>
+							<td class="item_input">
+								<input type="text" class="required textInput valid"   minlength="1"  size="50" name="people_num">
+								<label class="tip"></label>
+							</td>
+						</tr>
+						
+						<tr >
+							<td class="item_title">是否有窗户:</td>
+							<td class="item_input">
+								<select name="has_window" class="combox">
+									<option value="0">无</option>
+									<option value="1">有</option>
+								</select>
+							</td>
+						</tr>
+						
+						<tr >
+							<td class="item_title">是否有阳台:</td>
+							<td class="item_input">
+								<select name="has_balcony" class="combox">
+									<option value="0">无</option>
+									<option value="1">有</option>
+								</select>
+							</td>
+						</tr>
+						
+						<tr >
+							<td class="item_title">是否有效:</td>
+							<td class="item_input">
+								<select name="is_effect" class="combox">
+									<option value="1">是</option>
+									<option value="0">否</option>
+								</select>
+							</td>
+						</tr>
+					</table>
+				</div>
+				
+			</div>
+			
+			<div class="tabsFooter">
+				<div class="tabsFooterContent"></div>
+			</div>
+		</div>
+		
+	</div>
+	<div class="formBar">
+		<ul>
+			<li><div class="buttonActive"><div class="buttonContent"><button type="submit">{lang v="SAVE"}</button></div></div></li>
+			<li><div class="button"><div class="buttonContent"><button class="close" type="button">{lang v="CLOSE"}</button></div></div></li>
+		</ul>
+	</div>
+</div>
+</form>

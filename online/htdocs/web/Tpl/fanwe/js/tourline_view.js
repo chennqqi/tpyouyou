@@ -39,10 +39,36 @@ $(document).ready(function(){
 		adult_count=$(parent_box).find("select[name='adult_count']").val();
 		child_count=$(parent_box).find("select[name='child_count']").val();
 
-		if( tourline_item_id <= 0)
+		if(tourline_item_id <= 0)
 		{
 			$.showErr("请选择成人日期!");
 			return false;
+		}
+
+		if (is_cruise === 1) {
+			var cruise = new Object();
+			cruise.tourline_id = tourline_id;
+			cruise.tourline_item_id = tourline_item_id;
+			cruise.ajax=1;
+			$.ajax({
+				url:tourline_order_url,
+				data:cruise,
+				type:"post",
+				dataType:"json",
+				success:function(ajaxobj){
+					if(ajaxobj.status==2){
+						ajax_login();
+						return false;
+					}
+					else if(ajaxobj.status==0){
+						$.showErr(ajaxobj.info);
+						return false;
+					}
+					else if(ajaxobj.status==1){
+						$(parent_box).submit();
+					}
+				}
+			});
 		}
 		
 		if( adult_count <= 0 && child_count<=0)
