@@ -6,6 +6,13 @@ function GetQueryString (name) {
   return null
 }
 
+// 获取preview后所有参数
+function GetPreviewBack () {
+  const href = window.location.href
+  const jumpUrl = href.split(/preview=/g)[1]
+  return jumpUrl
+}
+
 $(document).ready(function() {
   //从页面收集OpenAPI必要的参数。get_user_info不需要输入参数，因此paras中没有参数
   var paras = {};
@@ -49,10 +56,8 @@ $(document).ready(function() {
             type: "POST",
             global: false,
             success: function(obj) {
-              console.log('obj 1')
-              console.log('obj', obj)
               if (obj.status !== 3) {
-                const preview = GetQueryString('preview')
+                var preview = GetPreviewBack('preview')
                 window.location.href = preview ? preview : './'
               } else {
                 // go_index.hide();

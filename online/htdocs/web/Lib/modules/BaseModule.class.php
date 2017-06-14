@@ -27,7 +27,7 @@ class BaseModule{
 
 		$adm_id = intval($adm_session['id']);
           print_r($adm_id);
-	    
+
 		if(intval(app_conf("SITE_STATUS"))==0)
 
 		{
@@ -39,6 +39,7 @@ class BaseModule{
 			$GLOBALS['tmpl']->assign("site_title",app_conf("SITE_TITLE"));
 
 			$GLOBALS['tmpl']->assign("site_keyword",app_conf("SITE_KEYWORD"));
+			
 
 			$GLOBALS['tmpl']->assign("site_description",app_conf("SITE_DESCRIPTION"));
 
@@ -107,7 +108,6 @@ class BaseModule{
 
 
 		//开始设置回跳
-
 		if(
 
 				MODULE_NAME=="account"&&ACTION_NAME=="money"||
