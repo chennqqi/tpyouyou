@@ -20,6 +20,7 @@ class BaseModule{
 	public function __construct()
 
 	{
+		header('Access-Control-Allow-Origin:*');
 
 		if(intval(app_conf("SITE_STATUS"))==0)
 

@@ -72,25 +72,27 @@
                                       <dt><a class="JS-carbin-info" href="javascript:;" title="标准内舱双人房">{$item.name}</a></dt>
                                       <dt>{$item.cate_match_row}</dt>
                                       <dd class="dd-sm">
-                                          <span class="area" title="15m²">{$item.area}m²</span>
-                                          <br>
-                                          <!-- <span class="deck_floor" title="8-15层">8-15层</span> -->
-                                          </dd>
-                                      <dd>
                                           <span class="maxOccupantNumber" title="2人">{$item.people_num}人</span>
                                           <br>
-                                          <span class="window_balcony">
-                                           {if $item.has_window == 1}
-                                           有窗
-                                           {else}
-                                           无窗
-                                           {/if}
-                                           {if $item.has_balcony == 1}
-                                           有阳台
-                                           {else}
-                                           无阳台
-                                           {/if}
-                                           </span>
+                                          {if $item.area}
+                                            <span class="area" title="15m²">{$item.area}m²</span>
+                                          {/if}
+                                         <!-- <span class="deck_floor" title="8-15层">8-15层</span> -->
+                                          </dd>
+                                      <dd>
+                                        <span class="window_balcony">
+                                         {if $item.has_window == 1}
+                                         有窗
+                                         {else}
+                                         无窗
+                                         {/if}
+                                         {if $item.has_balcony == 1}
+                                         有阳台
+                                         {else}
+                                         无阳台
+                                         {/if}
+                                         </span>
+                                          <br>
                                           <span class="cabinIntroduct" style="display: none">待定</span>
                                       </dd>
                                   </dl>

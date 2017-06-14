@@ -19,6 +19,7 @@ class BaseModule{
 	public function __construct()
 
 	{
+		header('Access-Control-Allow-Origin:*');
 
 		$adm_session = es_session::get(md5(app_conf("AUTH_KEY")."supplier"));
 

@@ -3,7 +3,7 @@
 class cruise_orderModule extends AuthModule
 {
   function index() {
-    	$param = array();		
+    $param = array();		
 		//条件
 		$condition = " 1 = 1 ";
 		
@@ -17,8 +17,6 @@ class cruise_orderModule extends AuthModule
 		{
 			$condition.=" and t.sn = '".$sn."' ";
 		}
-		
-
 				
 		//线路ID
 		if(isset($_REQUEST['tourline_id']))
@@ -131,7 +129,6 @@ class cruise_orderModule extends AuthModule
 		if(!empty($create_time_begin) && !empty($create_time_end))
 		{
 			$condition.=" and t.create_time >= '".to_timespan($create_time_begin)."' and t.create_time <='". (to_timespan($create_time_end) + 3600 * 24 - 1)."' ";
-		
 		}
 		
 		//出发时间
@@ -164,7 +161,6 @@ class cruise_orderModule extends AuthModule
 			$page = 1;
 		$limit = (($page-1)*$param['pageSize']).",".$param['pageSize'];
 		$param['pageNum'] = $page;
-		
 		
 		//排序
 		if(isset($_REQUEST['orderField']))
@@ -218,13 +214,13 @@ class cruise_orderModule extends AuthModule
 		$GLOBALS['tmpl']->assign('totalCount',$totalCount);
 		$GLOBALS['tmpl']->assign('param',$param);
 		
-		$GLOBALS['tmpl']->assign("formaction",admin_url("tourline_order"));		
-		$GLOBALS['tmpl']->assign("editurl",admin_url("tourline_order#order"));
-		$GLOBALS['tmpl']->assign("delurl",admin_url("tourline_order#del_order",array("ajax"=>1)));
-		$GLOBALS['tmpl']->assign("exporturl",admin_url("tourline_order#export_csv"));
+		$GLOBALS['tmpl']->assign("formaction",admin_url("cruise_order"));		
+		$GLOBALS['tmpl']->assign("editurl",admin_url("cruise_order#order"));
+		$GLOBALS['tmpl']->assign("delurl",admin_url("cruise_order#del_order",array("ajax"=>1)));
+		$GLOBALS['tmpl']->assign("exporturl",admin_url("cruise_order#export_csv"));
 		
 		$GLOBALS['tmpl']->display("core/tourline_order/index.html");
-    }
+  }
     
     public function export_csv($page = 1)
     {

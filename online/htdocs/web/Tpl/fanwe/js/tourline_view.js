@@ -26,7 +26,6 @@ $(document).ready(function(){
 			$(this).find(".norm_a").removeClass("hover_a");
 			$(this).find(".norm_value").hide();
 		  }
-
 	);
 	
 	$(".to_pay_button").click(function(){

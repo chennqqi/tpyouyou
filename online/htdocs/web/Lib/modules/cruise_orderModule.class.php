@@ -2,6 +2,7 @@
 require APP_ROOT_PATH . "system/libs/tourline.php";
 class cruise_orderModule extends BaseModule{
     function index() {
+        header('Access-Control-Allow-Origin:*');
     	global_run();
     	
     	$ajax=intval($_REQUEST['ajax']);
@@ -92,6 +93,7 @@ class cruise_orderModule extends BaseModule{
     }
 
     function addform() {
+        header('Access-Control-Allow-Origin:*');
         global_run();
         
         $ajax=intval($_REQUEST['ajax']);
@@ -467,7 +469,7 @@ class cruise_orderModule extends BaseModule{
         $order_data['online_pay'] = 0;
         
         //成人价*成人个数+儿童价*儿童个数
-        $order_data['tourline_total_price']+=$tourline_total_price;
+        $order_data['tourline_total_price']+= intval($tourline_total_price)*100;
         
         //签证总价=签证价*签证数
         $order_data['tourline_total_price']+=$tourline_info['visa_price']*$visa_count;
