@@ -97,6 +97,13 @@ class toursModule extends BaseModule{
 	    	if($tourline['is_effect'] ==0)
 	    		showErr("线路已下架",0,url("index"));
     	}
+
+        // 如果是邮轮信息，则将邮轮中的舱位信息引入
+        if ($is_cruise == 1) {
+            # code...
+            $cabin_info = $GLOBALS['db']->getAll("select * from ".DB_PREFIX."cabin where cruise_id=".$tourline_id." order by id");
+            $GLOBALS['tmpl']->assign("cabin_info",$cabin_info);
+        }
     	
     	if($tourline['is_tuan'])
     	{

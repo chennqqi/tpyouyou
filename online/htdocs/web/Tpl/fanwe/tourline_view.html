@@ -12,7 +12,7 @@
 
 	$this->_var['pagejs'][] = TMPL_REAL."/js/lazyload.js";
 
-    $this->_var['pagejs'][] = TMPL_REAL."/js/ajax_pages_more.js";
+  $this->_var['pagejs'][] = TMPL_REAL."/js/ajax_pages_more.js";
 
 	$this->_var['pagejs'][] = TMPL_REAL."/js/script.js";
 
@@ -22,15 +22,55 @@
 
 	$this->_var['pagejs'][] = TMPL_REAL."/js/ajax_pages_more.js";
 
-    $this->_var['pagecss'][] = TMPL_REAL."/css/tourline_viwe.css";
+  $this->_var['pagecss'][] = TMPL_REAL."/css/tourline_viwe.css";
 
-    $this->_var['pagecss'][] = TMPL_REAL."/css/review.css";
+  $this->_var['pagecss'][] = TMPL_REAL."/css/review.css";
 
 ?>
 
 {include file="inc/header.html"}
 
 {include file="inc/ur_here.html"}
+
+<style type="text/css" media="screen">
+/*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/  
+::-webkit-scrollbar  
+{  
+  width: 10px;  
+  height: 11px;  
+  background-color: #F5F5F5;  
+}
+  
+/*定义滚动条轨道 内阴影+圆角*/  
+::-webkit-scrollbar-track  
+{  
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);  
+  border-radius: 10px;  
+  background-color: #F5F5F5;  
+}  
+  
+/*定义滑块 内阴影+圆角*/  
+::-webkit-scrollbar-thumb  
+{  
+  border-radius: 10px;  
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);  
+  background-color: #555;  
+}
+.cabin-list {
+  overflow: auto;
+  max-height: 251px;
+}
+.cabin-list-detail {
+	padding: 10px;
+}
+.cabin-list-detail--cate {
+	font-weight: 600;
+	padding-bottom: 8px;
+}
+.cabin-list-detail--info {
+	padding-left: 10px;
+}
+</style>
 
 <script>
 
@@ -60,7 +100,6 @@
 		$("select").sSelect();
 
 		
-
 		//日历价格
 
 	$('#calendar').fullCalendar({
@@ -96,48 +135,38 @@
                 week: '周',
 
                 day: '天'
-
-            },
+      },
 
 			height: 400,
 
 			events: {$json_item},
 
-		    eventClick: function(calEvent, jsEvent, view) {
-
-				$(".mid-buy_box").show();
-
-				$(".mid-buy_box").css({"position":"absolute","left":jsEvent.pageX-100,"top":jsEvent.pageY+20});				$(".mid-buy_box").find(".mid_tourline_item_id").val(calEvent.id);
-
+	    eventClick: function(calEvent, jsEvent, view) {
+				$(".mid-buy_box").show();	
+				// $(".mid-buy_box").css({"position":"absolute","left":jsEvent.pageX + 250,"top":jsEvent.pageY+20});		
+				var left = '63%';
+				var top = '88%';
+				$(".mid-buy_box").css({"position":"absolute","left":left,"top":top});
+				$(".mid-buy_box").find(".mid_tourline_item_id").val(calEvent.id);
 				$(".mid-buy_box").find(".mid_tourline_item_time").val($.fullCalendar.formatDate( calEvent.start, 'yyyy-MM-d'));
-
-		    },
-
+	    },
 			eventMouseover: function(calEvent, jsEvent, view) {
 
-				if(calEvent.content.length >0 )
+				$(".mid-buy_box").show();
+				// $(".mid-buy_box").css({"position":"absolute","left":jsEvent.pageX + 250,"top":jsEvent.pageY+20});				
+				var left = '62.8%';
+				var top = '88%';
+				$(".mid-buy_box").css({"position":"absolute","left":left,"top":top});				
+				$(".mid-buy_box").find(".mid_tourline_item_id").val(calEvent.id);
 
-				{
-
-					$(".calendar_mouseover").html(calEvent.content);
-
-					$(".calendar_mouseover").show();
-
-					$(".calendar_mouseover").css({"position":"absolute","left":jsEvent.pageX+20,"top":jsEvent.pageY-50});
-
-				}
-
-								
-
-		    }, 
+				$(".mid-buy_box").find(".mid_tourline_item_time").val($.fullCalendar.formatDate( calEvent.start, 'yyyy-MM-d'));			
+		  }, 
 
 			eventMouseout: function(calEvent, jsEvent, view) {
 
-				$(".calendar_mouseover").hide();				
+				$(".calendar_mouseover").hide();
 
-		    },
-
-			    
+		  },
 
 			loading: function(bool) {
 
@@ -327,7 +356,7 @@
 				.scroll p span{ display:block; text-align:center}
 				</style>
                 
-                <script type="text/javascript">
+<script type="text/javascript">
 					function addEventSimple(obj,evt,fn){
 						if(obj.addEventListener){
 							obj.addEventListener(evt,fn,false);
@@ -370,7 +399,7 @@
 					function out(){
 						scrollingInterval = setInterval("scrolling()",50);
 					}
-					</script>
+</script>
                 
                 <div class="scroll" id="xst">
                 
@@ -500,7 +529,33 @@
 
 							<div class="blank"></div>
 							{if $is_cruise == "1"}
-							 <div>iojiojasiodji</div>
+								<div>舱位介绍:</div>
+								<div class="cabin-list">
+								 {foreach from=$cabin_info item=item key=key}
+								 <div class="cabin-list-detail">
+									 	<p class="cabin-list-detail--cate">类型: {$item.cate_match_row}</p>
+									 	<div class="cabin-list-detail--info">
+										 	舱位名: {$item.name}，可住{$item.people_num}人，
+										 	{if $item.area}
+										 	  <span class="area" title="15m²">面积: {$item.area}m²</span>
+										 	{/if}
+										 	<span class="window_balcony">
+										 	 {if $item.has_window == 1}
+										 	 有窗
+										 	 {else}
+										 	 无窗
+										 	 {/if}
+										 	 {if $item.has_balcony == 1}
+										 	 有阳台
+										 	 {else}
+										 	 无阳台
+										 	 {/if}
+										 	 </span>
+										 	 <span class="cpi-price">，价格：<em style="border-bottom:0px dashed #f60;"><i>¥</i>{$item.adult_price}</em>起/人</span>
+									 	</div>
+								 </div>
+								 {/foreach}
+								</div>
 							{else}
 								<div class="clearfix">
 
