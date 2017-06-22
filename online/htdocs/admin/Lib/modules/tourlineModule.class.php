@@ -8,7 +8,7 @@ class tourlineModule extends AuthModule
 
   function index() {
 
-    	$param = array();	
+    $param = array();	
 
 		//条件
 
@@ -1031,11 +1031,6 @@ class tourlineModule extends AuthModule
 
 	}
 
-	
-
-	
-
-	
 
 	public function edit() {
 

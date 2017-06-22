@@ -388,10 +388,7 @@ class cruise_supplierModule extends AuthModule
 		$GLOBALS['tmpl']->display("core/cruise_supplier/edit.html");
 
 	}
-
-
 	
-
 	public function update() {
 
 		$ajax = intval($_REQUEST['ajax']);
@@ -633,8 +630,9 @@ class cruise_supplierModule extends AuthModule
 		$data['child_norm'] = strim($_REQUEST["child_norm"]);
 
 		$data['advance_day'] = intval($_REQUEST["advance_day"]);
-
-		
+		// 市场价 1/2人 3/4人
+		$data['origin_price_level1'] = intval($_REQUEST['origin_price_level1']);
+		$data['origin_price_level2'] = intval($_REQUEST['origin_price_level2']);
 
 		/*退改配置*/
 

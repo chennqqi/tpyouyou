@@ -430,7 +430,9 @@ class cruiseModule extends AuthModule
 		$data['child_norm'] = strim($_REQUEST["child_norm"]);
 
 		$data['advance_day'] = intval($_REQUEST["advance_day"]);
-
+		// 市场价 1/2人 3/4人
+		$data['origin_price_level1'] = intval($_REQUEST['origin_price_level1']);
+		$data['origin_price_level2'] = intval($_REQUEST['origin_price_level2']);
 
 
 		/*退改配置*/
@@ -876,7 +878,9 @@ class cruiseModule extends AuthModule
 		$data['child_norm'] = strim($_REQUEST["child_norm"]);
 
 		$data['advance_day'] = intval($_REQUEST["advance_day"]);
-
+		// 市场价 1/2人 3/4人
+		$data['origin_price_level1'] = intval($_REQUEST['origin_price_level1']);
+		$data['origin_price_level2'] = intval($_REQUEST['origin_price_level2']);
 		
 
 		/*退改配置*/
@@ -886,8 +890,6 @@ class cruiseModule extends AuthModule
 		$data['refund_desc'] = strim($_REQUEST["refund_desc"]);
 
 		$data['is_expire_refund]'] = intval($_REQUEST["is_expire_refund]"]);
-
-		
 
 		/*团购配置*/
 

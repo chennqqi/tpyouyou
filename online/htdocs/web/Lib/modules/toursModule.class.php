@@ -102,6 +102,8 @@ class toursModule extends BaseModule{
         if ($is_cruise == 1) {
             # code...
             $cabin_info = $GLOBALS['db']->getAll("select * from ".DB_PREFIX."cabin where cruise_id=".$tourline_id." order by id");
+            $cabin_price_detail = Array();
+            
             $GLOBALS['tmpl']->assign("cabin_info",$cabin_info);
         }
     	

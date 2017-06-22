@@ -670,7 +670,9 @@ class cruiseModule extends AuthModule
 
 		$data['is_buy_return'] = intval($_REQUEST['is_buy_return']);
 
-		
+		// 市场价 1/2人 3/4人
+		$data['origin_price_level1'] = intval($_REQUEST['origin_price_level1']);
+		$data['origin_price_level2'] = intval($_REQUEST['origin_price_level2']);
 
 		/*退改配置*/
 
@@ -1183,7 +1185,7 @@ class cruiseModule extends AuthModule
 			showErr(lang("TOURLINE_NAME_EMPTY"),$ajax);
 
 		}
-		
+
 
 		if(!check_empty("start_city_city_id") || intval($_REQUEST['start_city_city_id']) == 0 )
 
@@ -1303,6 +1305,10 @@ class cruiseModule extends AuthModule
 		$data['tour_total_day'] = intval($_REQUEST['tour_total_day']);
 
 		$data['show_in_api'] = intval($_REQUEST['show_in_api']);
+
+		// 市场价 1/2人 3/4人
+		$data['origin_price_level1'] = intval($_REQUEST['origin_price_level1']);
+		$data['origin_price_level2'] = intval($_REQUEST['origin_price_level2']);
 
 		$data['tour_guide_key'] = strim($_REQUEST["tour_guide_key"]);
 
@@ -1435,9 +1441,6 @@ class cruiseModule extends AuthModule
 		$data['package_4']= intval($_REQUEST['package_4']);
 		$data['package_5']= intval($_REQUEST['package_5']);
 
-		
-
-		
 
 		/*返利设置*/
 

@@ -529,32 +529,23 @@
 
 							<div class="blank"></div>
 							{if $is_cruise == "1"}
-								<div>舱位介绍:</div>
 								<div class="cabin-list">
-								 {foreach from=$cabin_info item=item key=key}
-								 <div class="cabin-list-detail">
-									 	<p class="cabin-list-detail--cate">类型: {$item.cate_match_row}</p>
-									 	<div class="cabin-list-detail--info">
-										 	舱位名: {$item.name}，可住{$item.people_num}人，
-										 	{if $item.area}
-										 	  <span class="area" title="15m²">面积: {$item.area}m²</span>
-										 	{/if}
-										 	<span class="window_balcony">
-										 	 {if $item.has_window == 1}
-										 	 有窗
-										 	 {else}
-										 	 无窗
-										 	 {/if}
-										 	 {if $item.has_balcony == 1}
-										 	 有阳台
-										 	 {else}
-										 	 无阳台
-										 	 {/if}
-										 	 </span>
-										 	 <span class="cpi-price">，价格：<em style="border-bottom:0px dashed #f60;"><i>¥</i>{$item.adult_price}</em>起/人</span>
-									 	</div>
-								 </div>
-								 {/foreach}
+								 <table>
+								 	<thead>
+								 		<tr>
+								 			<th>价格类型</th>
+								 			<th>同舱第1/2人</th>
+								 			<th>同舱第3/4人</th>
+								 		</tr>
+								 	</thead>
+								 	<tbody>
+								 		<tr>
+								 			<td>市场价:</td>
+								 			<td>￥{$tourline.origin_price_level1}</td>
+								 			<td>￥{$tourline.origin_price_level2}</td>
+								 		</tr>
+								 	</tbody>
+								 </table>
 								</div>
 							{else}
 								<div class="clearfix">
