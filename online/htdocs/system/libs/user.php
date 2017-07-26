@@ -1352,5 +1352,65 @@ class User{
 		return false;
   	
   }
+
+  /**
+   * 手机号 密码 登录
+   * @param string $user__mobile
+   * @param string $user_pwd
+   * 返回 result(status,message,extra)extra表示为同步登录的一些信息
+   * status:0不存在 1未通过验证 2会员被禁用 3密码不对 4成功
+   */
+  public static function mobile_login($user_mobile,$user_pwd)
+  {
+  	$integrate  = $GLOBALS['db']->getRow("select class_name from ".DB_PREFIX."integrate");
+  	if($integrate)
+  	{
+  		$directory = APP_ROOT_PATH."system/integrate/";
+  		$file = $directory.$integrate['class_name']."_integrate.php";
+  		if(file_exists($file))
+  		{
+  			require_once($file);
+  			$integrate_class = $integrate['class_name']."_integrate";
+  			$integrate_item = new $integrate_class;
+  			$integrate_res = $integrate_item->login($user_name,$user_pwd);
+  		}
+  	}
+  	$user = $GLOBALS['db']->getRow("select * from ".DB_PREFIX."user where ( mobile = '".$user_mobile."')  limit 1");
+  	if($user)
+  	{
+  		if($user['is_verify']==0)
+  		{
+  			$result['status'] = 1;
+  			$result['message'] = "会员未通过验证";
+  			$result['user'] = $user;
+  		}
+  		elseif($user['is_effect'] == 0)
+  		{
+  			$result['status'] = 2;
+  			$result['message'] = "会员被管理员禁用";
+  			$result['user'] = $user;
+  		}
+  		elseif($user['user_pwd'] != md5($user_pwd.$user['salt']))
+  		{
+  			$result['status'] = 3;
+  			$result['message'] = "密码不匹配";
+  			$result['user'] = $user;
+  		}
+  		else
+  		{
+  			$result['script'] = $integrate_res['msg'];
+  			$result['status'] = 4;
+  			$result['message'] = "登录成功";
+  			$result['user'] = $user;
+  		}
+  	}
+  	else
+  	{
+  		$result['status'] = 0;
+  		$result['message'] = "会员不存在";
+  		$result['user'] = $user;
+  	}
+  	return $result;
+  }
 }
 ?>

@@ -88,7 +88,7 @@
 	      <label for="">手机：</label><input type="text" name="" placeholder="请输入手机号" disabled value="{$phone}">
         </div>
         <div class="bind-container-form">
-	      <label for="">密码：</label><input type="text" name="" placeholder="请输入密码">
+	      <label for="">密码：</label><input id="pwd" type="password" name="" placeholder="请输入密码">
         </div>
     	<div class="btn">
     	  <button type="" class="login">登录</button>
@@ -103,8 +103,25 @@
 	<script type="text/javascript">
 	    // login func
 		const $login = $('.login');
+		var loginUrl = '{url r="wanyitong#dologin"}';
+		var userKey = {$phone};
 		$login.click(function () {
-			console.log('login')
+			$.ajax({
+				url: loginUrl,
+				type: 'POST',
+				dataType: 'json',
+				data: {
+					user_key: userKey,
+					user_pwd: $('#pwd').val()
+				}
+			})
+			.done(function() {
+				console.log("success");
+			})
+			.fail(function() {
+				console.log("error");
+				alert('网络出错啦!')
+			})
 		})
 	</script>
 	<script type="text/javascript">
