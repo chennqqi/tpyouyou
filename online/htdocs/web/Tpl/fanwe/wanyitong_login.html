@@ -92,7 +92,7 @@
         </div>
     	<div class="btn">
     	  <button type="" class="login">登录</button>
-    	  <a href="{url r="wanyitong#regist" p="phone=$phone"}" class="register">
+    	  <a href="{url r="wanyitong#regist" p="phone=$phone&backurl=$backurl"}" class="register">
     	    注册
     	  </a>
 
@@ -101,10 +101,12 @@
     </div>
 	</div>
 	<script type="text/javascript">
-	    // login func
+	  // login func
 		const $login = $('.login');
 		var loginUrl = '{url r="wanyitong#dologin"}';
+		var backurl = '{$backurl}';
 		var userKey = {$phone};
+		console.log('asda', backurl)
 		$login.click(function () {
 			$.ajax({
 				url: loginUrl,
@@ -115,8 +117,18 @@
 					user_pwd: $('#pwd').val()
 				}
 			})
-			.done(function() {
-				console.log("success");
+			.done(function(data) {
+				console.log("success", data);
+				if (data.status === 0) {
+				 alert(data.info);
+				 return
+				}
+
+				if (Number(data.code) !== 0) {
+					alert(data.info);
+					return
+				}
+				window.location.href = backurl
 			})
 			.fail(function() {
 				console.log("error");

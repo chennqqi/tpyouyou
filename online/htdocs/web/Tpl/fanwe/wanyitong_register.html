@@ -76,20 +76,65 @@
 	      <label for="">手机：</label><input type="text" name="" placeholder="请输入手机号" disabled value="{$phone}">
         </div>
         <div class="bind-container-form">
-	      <label for="">用户名：</label><input type="text" name="" placeholder="请输入用户名">
+	      <label for="">用户名：</label><input id="userName" type="text" name="" placeholder="请输入用户名">
         </div>
         <div class="bind-container-form">
-	      <label for="">密码：</label><input type="text" name="" placeholder="请输入密码">
+	      <label for="">密码：</label><input id="userPwd" type="text" name="" placeholder="请输入密码">
         </div>
         <div class="bind-container-form">
-	      <label for="">重复密码：</label><input type="text" name="" placeholder="请再次输入密码">
+	      <label for="">重复密码：</label><input id="cfmUserPwd" type="text" name="" placeholder="请再次输入密码">
         </div>
     	<div class="btn">
-    	  <button type="" class="doregister">立即注册</button>
+    	  <button type="" class="doregister" id="register">立即注册</button>
     	</div>
       </div>
     </div>
 	</div>
+	<script type="text/javascript">
+	  // register func
+		const $register = $('#register');
+		var registUrl = '{url r="wanyitong#doregist"}';
+		var backurl = '{$backurl}';
+		var mobile = {$phone};
+		console.log('backurl', backurl);
+		$register.click(function () {
+			var userName = $('#userName').val();
+			var userPwd = $('#userPwd').val();
+			var cfmUserPwd = $('#cfmUserPwd').val();
+			if (userPwd !== cfmUserPwd) {
+				alert('密码不一致!')
+				return
+			}
+			$.ajax({
+				url: registUrl,
+				type: 'POST',
+				dataType: 'json',
+				data: {
+					user_name: userName,
+					user_pwd: userPwd,
+					cfm_user_pwd: cfmUserPwd,
+					mobile: mobile
+				}
+			})
+			.success(function(data) {
+				console.log("success", data);
+				if (data.status === 0) {
+				 alert(data.info);
+				 return
+				}
+
+				if (Number(data.code) !== 0) {
+					alert(data.info);
+					return
+				}
+				window.location.href = backurl
+			})
+			.fail(function(err) {
+				console.log("error", err);
+				alert('网络出错啦!')
+			})
+		})
+	</script>
 	<script type="text/javascript">
 		// canvas 动画效果
 		// 定义画布宽高和生成点的个数
