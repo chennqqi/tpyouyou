@@ -4,7 +4,8 @@ class wanyitongModule extends BaseModule{
     
     public function __construct () {
         $this->callbackUrl = 'http://szqy.ffan.com/test/apiserver/notify';
-        $this->clientId = '123456';
+        $this->clientId = 'ppc000002';
+        $this->key = '202cb962ac59075b964b07152d234b70';
     }
 
     function index () {
@@ -65,7 +66,7 @@ class wanyitongModule extends BaseModule{
             $post_data['clientId'] = $this->clientId;
             $post_data['timestamp'] = time();
             // 获取 sign
-            $str = md5($post_data['clientId'].$post_data['telNo'].$post_data['timestamp'].$post_data['uid']);
+            $str = md5('clientId'.$post_data['clientId'].'telNo'.$post_data['telNo'].'timestamp'.$post_data['timestamp'].'uid'.$post_data['uid'].$this->key);
             $post_data['sign'] = $str;
             $res = $this->request_post($url, $post_data);
             header("Content-Type:text/html; charset=utf-8");
@@ -278,10 +279,12 @@ class wanyitongModule extends BaseModule{
         $coupon = array(
             array()
         );
+
         $voucher_type = array(
             '1' =>'线路优惠',
             '2' =>'门票优惠',
             '3' =>'酒店优惠',
+            '4' => '所有优惠'
         );
 
         foreach ($voucher as $key => $value) {
@@ -345,7 +348,7 @@ class wanyitongModule extends BaseModule{
         } else {
             ajax_return(array(
                 'code'=> '01',
-                'msg'=> '查询失败'
+                'msg'=> '冻结失败'
             ));
         }
     }
@@ -375,6 +378,16 @@ class wanyitongModule extends BaseModule{
         $txnId = strim($_POST['txnId']);
         $sign  = strim($_POST['sign']);
         $timestamp  = strim($_POST['timestamp']);
+
+        $voucherTransfer = $GLOBALS['db']->getOne("select txnId, transId from ".DB_PREFIX."voucher_transfer where txnId = '".$txnId."'");
+
+        if ($voucherTransfer) {
+            ajax_return(array(
+                'code'=> '04',
+                'msg'=> '请勿重复交易'
+            ));
+            exit;
+        }
 
         $voucher = $GLOBALS['db']->getAll("select * from ".DB_PREFIX."voucher where user_id = '".$sellUid."' and voucher_type_id = '".$cardExCode."' and is_used = 0 and is_effect = 0 limit 1");
         if (!$voucher) {
